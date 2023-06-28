@@ -1,0 +1,8 @@
+{
+	"name": "galdocs-machining",
+	"version": "0.0.1",
+	"title": "Galdoc's Machining",
+	"author": "Galdoc",
+	"factorio_version": "1.1",
+	"dependencies": ["base >= 1.1"]
+}

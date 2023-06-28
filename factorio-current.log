@@ -1,0 +1,713 @@
+   0.001 2023-04-26 13:30:55; Factorio 1.1.80 (build 60618, win64, steam)
+   0.001 Operating system: Windows 10 (build 19045) 
+   0.001 Program arguments: "D:\Games\Steam\steamapps\common\Factorio\bin\x64\Factorio.exe" 
+   0.001 Config path: C:/Users/derri/AppData/Roaming/Factorio/config/config.ini
+   0.001 Read data path: D:/Games/Steam/steamapps/common/Factorio/data
+   0.001 Write data path: C:/Users/derri/AppData/Roaming/Factorio [40551/953252MB]
+   0.001 Binaries path: D:/Games/Steam/steamapps/common/Factorio/bin
+   0.023 System info: [CPU: Intel(R) Core(TM) i7-8700K CPU @ 3.70GHz, 12 cores, RAM: 27575/65447 MB, page: 46734/79101 MB, virtual: 4339/134217727 MB, extended virtual: 0 MB]
+   0.062 Memory info:
+   0.063  [0]: G-Skill F4-3600C19-16GVRB 16384 MB 2133 MHz 1.2 v
+   0.063  [1]: G-Skill F4-3600C19-16GVRB 16384 MB 2133 MHz 1.2 v
+   0.063  [2]: G-Skill F4-3600C19-16GVRB 16384 MB 2133 MHz 1.2 v
+   0.063  [3]: G-Skill F4-3600C19-16GVRB 16384 MB 2133 MHz 1.2 v
+   0.064 Display options: [FullScreen: 1] [VSync: 1] [UIScale: custom (150.0%)] [Native DPI: 1] [Screen: 255] [Special: lmw] [Lang: en]
+   0.087 Available displays: 4
+   0.087  [3]: \\.\DISPLAY4 - NVIDIA GeForce GTX 1070 Ti {0x05, [0,0], 3840x2160, 32bit, 60Hz}
+   0.088  [0]: \\.\DISPLAY1 - NVIDIA GeForce GTX 1070 Ti {0x01, [-1920,1098], 1920x1080, 32bit, 60Hz}
+   0.088  [1]: \\.\DISPLAY2 - NVIDIA GeForce GTX 1070 Ti {0x01, [1906,2160], 1920x1080, 32bit, 60Hz}
+   0.089  [2]: \\.\DISPLAY3 - NVIDIA GeForce GTX 1070 Ti {0x01, [3840,1098], 1920x1080, 32bit, 60Hz}
+   0.224 [Direct3D11] Display: 0, Output: 0, DisplayAdapter: 0, RenderingAdapter: 0; d3dcompiler_47.dll
+   0.442 Initialised Direct3D[0]: NVIDIA GeForce GTX 1070 Ti; id: 10de-1b82; driver: nvldumdx.dll 31.0.15.2686
+   0.442   D3D Feature Level: 11.1, DXGI 1.5+, SwapChain: 3,flip-discard,-,-,-,none
+   0.442   [Local Video Memory] Budget: 7305MB, CurrentUsage: 4MB, Reservation: 0/3780MB
+   0.442   [Non-Local Vid.Mem.] Budget: 31955MB, CurrentUsage: 1MB, Reservation: 0/16105MB
+   0.442   Tiled resources: Tier 2
+   0.442   Unified Memory Architecture: No
+   0.442   BGR 565 Supported: Yes
+   0.442   MaximumFrameLatency: 3, GPUThreadPriority: 0
+   0.442 Graphics settings preset: very-high
+   0.442   Dedicated video memory size 8073 MB
+   0.504 Desktop composition is active.
+   0.504 Graphics options: [Graphics quality: high] [Video memory usage: all] [DXT: high-quality] [Color: 32bit]
+   0.504                   [Max threads (load/render): 32/12] [Max texture size: 0] [Tex.Stream.: 0] [Rotation quality: normal] [Other: STDCWT] [B:0,C:0,S:100]
+   0.539 [Audio] Backend:SDL(default); Driver:wasapi, Device:Default device, Depth:16, Channels:2, Frequency:44100
+   0.647 Razer Chroma Controller initialized.
+   1.723 Loading mod settings miniloader 1.15.6 (settings.lua)
+   1.723 Loading mod settings creative-mod 1.8.1 (settings.lua)
+   1.726 Loading mod settings galdocs-machining 0.0.1 (settings.lua)
+   1.726 Loading mod settings galdocs-machining 0.0.1 (settings-updates.lua)
+   1.726 Loading mod settings galdocs-machining 0.0.1 (settings-final-fixes.lua)
+   1.728 Loading mod core 0.0.0 (data.lua)
+   1.768 Loading mod base 1.1.80 (data.lua)
+   1.964 Loading mod miniloader 1.15.6 (data.lua)
+   1.981 Loading mod creative-mod 1.8.1 (data.lua)
+   2.009 Loading mod galdocs-machining 0.0.1 (data.lua)
+   2.015 Script @__galdocs-machining__/intermediates/intermediates2.lua:301: [item-group-name]
+   2.015 Script @__galdocs-machining__/intermediates/intermediates2.lua:315: galdocs-machining-stocks-iron=Iron Stocks
+   2.015 Script @__galdocs-machining__/intermediates/intermediates2.lua:315: galdocs-machining-stocks-copper=Copper Stocks
+   2.015 Script @__galdocs-machining__/intermediates/intermediates2.lua:315: galdocs-machining-stocks-lead=Lead Stocks
+   2.015 Script @__galdocs-machining__/intermediates/intermediates2.lua:315: galdocs-machining-stocks-titanium=Titanium Stocks
+   2.015 Script @__galdocs-machining__/intermediates/intermediates2.lua:315: galdocs-machining-stocks-zinc=Zinc Stocks
+   2.015 Script @__galdocs-machining__/intermediates/intermediates2.lua:315: galdocs-machining-stocks-steel=Steel Stocks
+   2.015 Script @__galdocs-machining__/intermediates/intermediates2.lua:315: galdocs-machining-stocks-brass=Brass Stocks
+   2.015 Script @__galdocs-machining__/intermediates/intermediates2.lua:315: galdocs-machining-stocks-galvanized-steel=Galvanized Steel Stocks
+   2.015 Script @__galdocs-machining__/intermediates/intermediates2.lua:355: galdocs-machining-machined-parts-basic=Basic Machined Parts
+   2.015 Script @__galdocs-machining__/intermediates/intermediates2.lua:355: galdocs-machining-machined-parts-load-bearing=Load Bearing Machined Parts
+   2.015 Script @__galdocs-machining__/intermediates/intermediates2.lua:355: galdocs-machining-machined-parts-electrically-conductive=Electrically Conductive Machined Parts
+   2.015 Script @__galdocs-machining__/intermediates/intermediates2.lua:355: galdocs-machining-machined-parts-high-tensile=High Tensile Machined Parts
+   2.015 Script @__galdocs-machining__/intermediates/intermediates2.lua:355: galdocs-machining-machined-parts-corrosion-resistant=Corrosion Resistant Machined Parts
+   2.015 Script @__galdocs-machining__/intermediates/intermediates2.lua:355: galdocs-machining-machined-parts-lightweight=Lightweight Machined Parts
+   2.015 Script @__galdocs-machining__/intermediates/intermediates2.lua:355: galdocs-machining-machined-parts-ductile=Ductile Machined Parts
+   2.015 Script @__galdocs-machining__/intermediates/intermediates2.lua:355: galdocs-machining-machined-parts-thermally-stable=Thermally Stable Machined Parts
+   2.015 Script @__galdocs-machining__/intermediates/intermediates2.lua:355: galdocs-machining-machined-parts-thermally-conductive=Thermally Conductive Machined Parts
+   2.015 Script @__galdocs-machining__/intermediates/intermediates2.lua:355: galdocs-machining-machined-parts-radiation-resistant=Radiation Resistant Machined Parts
+   2.015 Script @__galdocs-machining__/intermediates/intermediates2.lua:355: galdocs-machining-machined-parts-heavy-load-bearing=Heavy Load Bearing Machined Parts
+   2.015 Script @__galdocs-machining__/intermediates/intermediates2.lua:355: galdocs-machining-machined-parts-very-high-tensile=Very High Tensile Machined Parts
+   2.016 Script @__galdocs-machining__/intermediates/intermediates2.lua:407: [item-name]
+   2.016 Script @__galdocs-machining__/intermediates/intermediates2.lua:447: iron-plate-stock=Iron Plate Stock
+   2.016 Script @__galdocs-machining__/intermediates/intermediates2.lua:450: [recipe-name]
+   2.016 Script @__galdocs-machining__/intermediates/intermediates2.lua:484: iron-plate-stock=Iron Plate Stock
+   2.016 Script @__galdocs-machining__/intermediates/intermediates2.lua:407: [item-name]
+   2.016 Script @__galdocs-machining__/intermediates/intermediates2.lua:447: iron-sheet-stock=Iron Sheet Stock
+   2.016 Script @__galdocs-machining__/intermediates/intermediates2.lua:450: [recipe-name]
+   2.016 Script @__galdocs-machining__/intermediates/intermediates2.lua:468: iron-sheet-stock=Iron Sheet Stock
+   2.016 Script @__galdocs-machining__/intermediates/intermediates2.lua:407: [item-name]
+   2.016 Script @__galdocs-machining__/intermediates/intermediates2.lua:447: iron-square-stock=Iron Square Stock
+   2.016 Script @__galdocs-machining__/intermediates/intermediates2.lua:450: [recipe-name]
+   2.016 Script @__galdocs-machining__/intermediates/intermediates2.lua:468: iron-square-stock=Iron Square Stock
+   2.016 Script @__galdocs-machining__/intermediates/intermediates2.lua:407: [item-name]
+   2.016 Script @__galdocs-machining__/intermediates/intermediates2.lua:447: iron-angle-stock=Iron Angle Stock
+   2.016 Script @__galdocs-machining__/intermediates/intermediates2.lua:450: [recipe-name]
+   2.016 Script @__galdocs-machining__/intermediates/intermediates2.lua:468: iron-angle-stock=Iron Angle Stock
+   2.016 Script @__galdocs-machining__/intermediates/intermediates2.lua:407: [item-name]
+   2.016 Script @__galdocs-machining__/intermediates/intermediates2.lua:447: iron-girder-stock=Iron Girder Stock
+   2.016 Script @__galdocs-machining__/intermediates/intermediates2.lua:450: [recipe-name]
+   2.016 Script @__galdocs-machining__/intermediates/intermediates2.lua:468: iron-girder-stock=Iron Girder Stock
+   2.016 Script @__galdocs-machining__/intermediates/intermediates2.lua:407: [item-name]
+   2.016 Script @__galdocs-machining__/intermediates/intermediates2.lua:447: iron-wire-stock=Iron Wire Stock
+   2.016 Script @__galdocs-machining__/intermediates/intermediates2.lua:450: [recipe-name]
+   2.016 Script @__galdocs-machining__/intermediates/intermediates2.lua:468: iron-wire-stock=Iron Wire Stock
+   2.016 Script @__galdocs-machining__/intermediates/intermediates2.lua:407: [item-name]
+   2.016 Script @__galdocs-machining__/intermediates/intermediates2.lua:447: iron-gear-stock=Iron Gear Stock
+   2.016 Script @__galdocs-machining__/intermediates/intermediates2.lua:450: [recipe-name]
+   2.016 Script @__galdocs-machining__/intermediates/intermediates2.lua:468: iron-gear-stock=Iron Gear Stock
+   2.016 Script @__galdocs-machining__/intermediates/intermediates2.lua:407: [item-name]
+   2.016 Script @__galdocs-machining__/intermediates/intermediates2.lua:447: iron-fine-gear-stock=Iron Fine Gear Stock
+   2.016 Script @__galdocs-machining__/intermediates/intermediates2.lua:450: [recipe-name]
+   2.016 Script @__galdocs-machining__/intermediates/intermediates2.lua:468: iron-fine-gear-stock=Iron Fine Gear Stock
+   2.016 Script @__galdocs-machining__/intermediates/intermediates2.lua:407: [item-name]
+   2.016 Script @__galdocs-machining__/intermediates/intermediates2.lua:447: iron-pipe-stock=Iron Pipe Stock
+   2.016 Script @__galdocs-machining__/intermediates/intermediates2.lua:450: [recipe-name]
+   2.016 Script @__galdocs-machining__/intermediates/intermediates2.lua:468: iron-pipe-stock=Iron Pipe Stock
+   2.016 Script @__galdocs-machining__/intermediates/intermediates2.lua:407: [item-name]
+   2.016 Script @__galdocs-machining__/intermediates/intermediates2.lua:447: iron-fine-pipe-stock=Iron Fine Pipe Stock
+   2.016 Script @__galdocs-machining__/intermediates/intermediates2.lua:450: [recipe-name]
+   2.016 Script @__galdocs-machining__/intermediates/intermediates2.lua:468: iron-fine-pipe-stock=Iron Fine Pipe Stock
+   2.016 Script @__galdocs-machining__/intermediates/intermediates2.lua:407: [item-name]
+   2.016 Script @__galdocs-machining__/intermediates/intermediates2.lua:447: copper-plate-stock=Copper Plate Stock
+   2.016 Script @__galdocs-machining__/intermediates/intermediates2.lua:450: [recipe-name]
+   2.016 Script @__galdocs-machining__/intermediates/intermediates2.lua:484: copper-plate-stock=Copper Plate Stock
+   2.016 Script @__galdocs-machining__/intermediates/intermediates2.lua:407: [item-name]
+   2.016 Script @__galdocs-machining__/intermediates/intermediates2.lua:447: copper-sheet-stock=Copper Sheet Stock
+   2.016 Script @__galdocs-machining__/intermediates/intermediates2.lua:450: [recipe-name]
+   2.016 Script @__galdocs-machining__/intermediates/intermediates2.lua:468: copper-sheet-stock=Copper Sheet Stock
+   2.016 Script @__galdocs-machining__/intermediates/intermediates2.lua:407: [item-name]
+   2.016 Script @__galdocs-machining__/intermediates/intermediates2.lua:447: copper-square-stock=Copper Square Stock
+   2.016 Script @__galdocs-machining__/intermediates/intermediates2.lua:450: [recipe-name]
+   2.016 Script @__galdocs-machining__/intermediates/intermediates2.lua:468: copper-square-stock=Copper Square Stock
+   2.016 Script @__galdocs-machining__/intermediates/intermediates2.lua:407: [item-name]
+   2.016 Script @__galdocs-machining__/intermediates/intermediates2.lua:447: copper-wire-stock=Copper Wire Stock
+   2.016 Script @__galdocs-machining__/intermediates/intermediates2.lua:450: [recipe-name]
+   2.016 Script @__galdocs-machining__/intermediates/intermediates2.lua:468: copper-wire-stock=Copper Wire Stock
+   2.016 Script @__galdocs-machining__/intermediates/intermediates2.lua:407: [item-name]
+   2.016 Script @__galdocs-machining__/intermediates/intermediates2.lua:447: copper-gear-stock=Copper Gear Stock
+   2.016 Script @__galdocs-machining__/intermediates/intermediates2.lua:450: [recipe-name]
+   2.016 Script @__galdocs-machining__/intermediates/intermediates2.lua:468: copper-gear-stock=Copper Gear Stock
+   2.016 Script @__galdocs-machining__/intermediates/intermediates2.lua:407: [item-name]
+   2.016 Script @__galdocs-machining__/intermediates/intermediates2.lua:447: copper-fine-gear-stock=Copper Fine Gear Stock
+   2.016 Script @__galdocs-machining__/intermediates/intermediates2.lua:450: [recipe-name]
+   2.016 Script @__galdocs-machining__/intermediates/intermediates2.lua:468: copper-fine-gear-stock=Copper Fine Gear Stock
+   2.016 Script @__galdocs-machining__/intermediates/intermediates2.lua:407: [item-name]
+   2.016 Script @__galdocs-machining__/intermediates/intermediates2.lua:447: copper-pipe-stock=Copper Pipe Stock
+   2.016 Script @__galdocs-machining__/intermediates/intermediates2.lua:450: [recipe-name]
+   2.016 Script @__galdocs-machining__/intermediates/intermediates2.lua:468: copper-pipe-stock=Copper Pipe Stock
+   2.016 Script @__galdocs-machining__/intermediates/intermediates2.lua:407: [item-name]
+   2.016 Script @__galdocs-machining__/intermediates/intermediates2.lua:447: copper-fine-pipe-stock=Copper Fine Pipe Stock
+   2.016 Script @__galdocs-machining__/intermediates/intermediates2.lua:450: [recipe-name]
+   2.016 Script @__galdocs-machining__/intermediates/intermediates2.lua:468: copper-fine-pipe-stock=Copper Fine Pipe Stock
+   2.016 Script @__galdocs-machining__/intermediates/intermediates2.lua:407: [item-name]
+   2.016 Script @__galdocs-machining__/intermediates/intermediates2.lua:447: lead-plate-stock=Lead Plate Stock
+   2.016 Script @__galdocs-machining__/intermediates/intermediates2.lua:450: [recipe-name]
+   2.016 Script @__galdocs-machining__/intermediates/intermediates2.lua:484: lead-plate-stock=Lead Plate Stock
+   2.016 Script @__galdocs-machining__/intermediates/intermediates2.lua:407: [item-name]
+   2.016 Script @__galdocs-machining__/intermediates/intermediates2.lua:447: lead-sheet-stock=Lead Sheet Stock
+   2.017 Script @__galdocs-machining__/intermediates/intermediates2.lua:450: [recipe-name]
+   2.017 Script @__galdocs-machining__/intermediates/intermediates2.lua:468: lead-sheet-stock=Lead Sheet Stock
+   2.017 Script @__galdocs-machining__/intermediates/intermediates2.lua:407: [item-name]
+   2.017 Script @__galdocs-machining__/intermediates/intermediates2.lua:447: lead-pipe-stock=Lead Pipe Stock
+   2.017 Script @__galdocs-machining__/intermediates/intermediates2.lua:450: [recipe-name]
+   2.017 Script @__galdocs-machining__/intermediates/intermediates2.lua:468: lead-pipe-stock=Lead Pipe Stock
+   2.017 Script @__galdocs-machining__/intermediates/intermediates2.lua:407: [item-name]
+   2.017 Script @__galdocs-machining__/intermediates/intermediates2.lua:447: lead-fine-pipe-stock=Lead Fine Pipe Stock
+   2.017 Script @__galdocs-machining__/intermediates/intermediates2.lua:450: [recipe-name]
+   2.017 Script @__galdocs-machining__/intermediates/intermediates2.lua:468: lead-fine-pipe-stock=Lead Fine Pipe Stock
+   2.017 Script @__galdocs-machining__/intermediates/intermediates2.lua:407: [item-name]
+   2.017 Script @__galdocs-machining__/intermediates/intermediates2.lua:447: titanium-plate-stock=Titanium Plate Stock
+   2.017 Script @__galdocs-machining__/intermediates/intermediates2.lua:450: [recipe-name]
+   2.017 Script @__galdocs-machining__/intermediates/intermediates2.lua:484: titanium-plate-stock=Titanium Plate Stock
+   2.017 Script @__galdocs-machining__/intermediates/intermediates2.lua:407: [item-name]
+   2.017 Script @__galdocs-machining__/intermediates/intermediates2.lua:447: titanium-sheet-stock=Titanium Sheet Stock
+   2.017 Script @__galdocs-machining__/intermediates/intermediates2.lua:450: [recipe-name]
+   2.017 Script @__galdocs-machining__/intermediates/intermediates2.lua:468: titanium-sheet-stock=Titanium Sheet Stock
+   2.017 Script @__galdocs-machining__/intermediates/intermediates2.lua:407: [item-name]
+   2.017 Script @__galdocs-machining__/intermediates/intermediates2.lua:447: titanium-square-stock=Titanium Square Stock
+   2.017 Script @__galdocs-machining__/intermediates/intermediates2.lua:450: [recipe-name]
+   2.017 Script @__galdocs-machining__/intermediates/intermediates2.lua:468: titanium-square-stock=Titanium Square Stock
+   2.017 Script @__galdocs-machining__/intermediates/intermediates2.lua:407: [item-name]
+   2.017 Script @__galdocs-machining__/intermediates/intermediates2.lua:447: titanium-angle-stock=Titanium Angle Stock
+   2.017 Script @__galdocs-machining__/intermediates/intermediates2.lua:450: [recipe-name]
+   2.017 Script @__galdocs-machining__/intermediates/intermediates2.lua:468: titanium-angle-stock=Titanium Angle Stock
+   2.017 Script @__galdocs-machining__/intermediates/intermediates2.lua:407: [item-name]
+   2.017 Script @__galdocs-machining__/intermediates/intermediates2.lua:447: titanium-girder-stock=Titanium Girder Stock
+   2.017 Script @__galdocs-machining__/intermediates/intermediates2.lua:450: [recipe-name]
+   2.017 Script @__galdocs-machining__/intermediates/intermediates2.lua:468: titanium-girder-stock=Titanium Girder Stock
+   2.017 Script @__galdocs-machining__/intermediates/intermediates2.lua:407: [item-name]
+   2.017 Script @__galdocs-machining__/intermediates/intermediates2.lua:447: titanium-wire-stock=Titanium Wire Stock
+   2.017 Script @__galdocs-machining__/intermediates/intermediates2.lua:450: [recipe-name]
+   2.017 Script @__galdocs-machining__/intermediates/intermediates2.lua:468: titanium-wire-stock=Titanium Wire Stock
+   2.017 Script @__galdocs-machining__/intermediates/intermediates2.lua:407: [item-name]
+   2.017 Script @__galdocs-machining__/intermediates/intermediates2.lua:447: titanium-gear-stock=Titanium Gear Stock
+   2.017 Script @__galdocs-machining__/intermediates/intermediates2.lua:450: [recipe-name]
+   2.017 Script @__galdocs-machining__/intermediates/intermediates2.lua:468: titanium-gear-stock=Titanium Gear Stock
+   2.017 Script @__galdocs-machining__/intermediates/intermediates2.lua:407: [item-name]
+   2.017 Script @__galdocs-machining__/intermediates/intermediates2.lua:447: titanium-fine-gear-stock=Titanium Fine Gear Stock
+   2.017 Script @__galdocs-machining__/intermediates/intermediates2.lua:450: [recipe-name]
+   2.017 Script @__galdocs-machining__/intermediates/intermediates2.lua:468: titanium-fine-gear-stock=Titanium Fine Gear Stock
+   2.017 Script @__galdocs-machining__/intermediates/intermediates2.lua:407: [item-name]
+   2.017 Script @__galdocs-machining__/intermediates/intermediates2.lua:447: titanium-pipe-stock=Titanium Pipe Stock
+   2.017 Script @__galdocs-machining__/intermediates/intermediates2.lua:450: [recipe-name]
+   2.017 Script @__galdocs-machining__/intermediates/intermediates2.lua:468: titanium-pipe-stock=Titanium Pipe Stock
+   2.017 Script @__galdocs-machining__/intermediates/intermediates2.lua:407: [item-name]
+   2.017 Script @__galdocs-machining__/intermediates/intermediates2.lua:447: titanium-fine-pipe-stock=Titanium Fine Pipe Stock
+   2.017 Script @__galdocs-machining__/intermediates/intermediates2.lua:450: [recipe-name]
+   2.017 Script @__galdocs-machining__/intermediates/intermediates2.lua:468: titanium-fine-pipe-stock=Titanium Fine Pipe Stock
+   2.017 Script @__galdocs-machining__/intermediates/intermediates2.lua:407: [item-name]
+   2.017 Script @__galdocs-machining__/intermediates/intermediates2.lua:447: zinc-plate-stock=Zinc Plate Stock
+   2.017 Script @__galdocs-machining__/intermediates/intermediates2.lua:450: [recipe-name]
+   2.017 Script @__galdocs-machining__/intermediates/intermediates2.lua:484: zinc-plate-stock=Zinc Plate Stock
+   2.017 Script @__galdocs-machining__/intermediates/intermediates2.lua:407: [item-name]
+   2.017 Script @__galdocs-machining__/intermediates/intermediates2.lua:447: steel-plate-stock=Steel Plate Stock
+   2.017 Script @__galdocs-machining__/intermediates/intermediates2.lua:450: [recipe-name]
+   2.017 Script @__galdocs-machining__/intermediates/intermediates2.lua:484: steel-plate-stock=Steel Plate Stock
+   2.017 Script @__galdocs-machining__/intermediates/intermediates2.lua:407: [item-name]
+   2.017 Script @__galdocs-machining__/intermediates/intermediates2.lua:447: steel-sheet-stock=Steel Sheet Stock
+   2.017 Script @__galdocs-machining__/intermediates/intermediates2.lua:450: [recipe-name]
+   2.017 Script @__galdocs-machining__/intermediates/intermediates2.lua:468: steel-sheet-stock=Steel Sheet Stock
+   2.017 Script @__galdocs-machining__/intermediates/intermediates2.lua:407: [item-name]
+   2.017 Script @__galdocs-machining__/intermediates/intermediates2.lua:447: steel-square-stock=Steel Square Stock
+   2.017 Script @__galdocs-machining__/intermediates/intermediates2.lua:450: [recipe-name]
+   2.017 Script @__galdocs-machining__/intermediates/intermediates2.lua:468: steel-square-stock=Steel Square Stock
+   2.017 Script @__galdocs-machining__/intermediates/intermediates2.lua:407: [item-name]
+   2.017 Script @__galdocs-machining__/intermediates/intermediates2.lua:447: steel-angle-stock=Steel Angle Stock
+   2.017 Script @__galdocs-machining__/intermediates/intermediates2.lua:450: [recipe-name]
+   2.017 Script @__galdocs-machining__/intermediates/intermediates2.lua:468: steel-angle-stock=Steel Angle Stock
+   2.017 Script @__galdocs-machining__/intermediates/intermediates2.lua:407: [item-name]
+   2.017 Script @__galdocs-machining__/intermediates/intermediates2.lua:447: steel-girder-stock=Steel Girder Stock
+   2.017 Script @__galdocs-machining__/intermediates/intermediates2.lua:450: [recipe-name]
+   2.017 Script @__galdocs-machining__/intermediates/intermediates2.lua:468: steel-girder-stock=Steel Girder Stock
+   2.017 Script @__galdocs-machining__/intermediates/intermediates2.lua:407: [item-name]
+   2.018 Script @__galdocs-machining__/intermediates/intermediates2.lua:447: steel-wire-stock=Steel Wire Stock
+   2.018 Script @__galdocs-machining__/intermediates/intermediates2.lua:450: [recipe-name]
+   2.018 Script @__galdocs-machining__/intermediates/intermediates2.lua:468: steel-wire-stock=Steel Wire Stock
+   2.018 Script @__galdocs-machining__/intermediates/intermediates2.lua:407: [item-name]
+   2.018 Script @__galdocs-machining__/intermediates/intermediates2.lua:447: steel-gear-stock=Steel Gear Stock
+   2.018 Script @__galdocs-machining__/intermediates/intermediates2.lua:450: [recipe-name]
+   2.018 Script @__galdocs-machining__/intermediates/intermediates2.lua:468: steel-gear-stock=Steel Gear Stock
+   2.018 Script @__galdocs-machining__/intermediates/intermediates2.lua:407: [item-name]
+   2.018 Script @__galdocs-machining__/intermediates/intermediates2.lua:447: steel-fine-gear-stock=Steel Fine Gear Stock
+   2.018 Script @__galdocs-machining__/intermediates/intermediates2.lua:450: [recipe-name]
+   2.018 Script @__galdocs-machining__/intermediates/intermediates2.lua:468: steel-fine-gear-stock=Steel Fine Gear Stock
+   2.018 Script @__galdocs-machining__/intermediates/intermediates2.lua:407: [item-name]
+   2.018 Script @__galdocs-machining__/intermediates/intermediates2.lua:447: steel-pipe-stock=Steel Pipe Stock
+   2.018 Script @__galdocs-machining__/intermediates/intermediates2.lua:450: [recipe-name]
+   2.018 Script @__galdocs-machining__/intermediates/intermediates2.lua:468: steel-pipe-stock=Steel Pipe Stock
+   2.018 Script @__galdocs-machining__/intermediates/intermediates2.lua:407: [item-name]
+   2.018 Script @__galdocs-machining__/intermediates/intermediates2.lua:447: steel-fine-pipe-stock=Steel Fine Pipe Stock
+   2.018 Script @__galdocs-machining__/intermediates/intermediates2.lua:450: [recipe-name]
+   2.018 Script @__galdocs-machining__/intermediates/intermediates2.lua:468: steel-fine-pipe-stock=Steel Fine Pipe Stock
+   2.018 Script @__galdocs-machining__/intermediates/intermediates2.lua:407: [item-name]
+   2.018 Script @__galdocs-machining__/intermediates/intermediates2.lua:447: brass-plate-stock=Brass Plate Stock
+   2.018 Script @__galdocs-machining__/intermediates/intermediates2.lua:450: [recipe-name]
+   2.018 Script @__galdocs-machining__/intermediates/intermediates2.lua:484: brass-plate-stock=Brass Plate Stock
+   2.018 Script @__galdocs-machining__/intermediates/intermediates2.lua:407: [item-name]
+   2.018 Script @__galdocs-machining__/intermediates/intermediates2.lua:447: brass-sheet-stock=Brass Sheet Stock
+   2.018 Script @__galdocs-machining__/intermediates/intermediates2.lua:450: [recipe-name]
+   2.018 Script @__galdocs-machining__/intermediates/intermediates2.lua:468: brass-sheet-stock=Brass Sheet Stock
+   2.018 Script @__galdocs-machining__/intermediates/intermediates2.lua:407: [item-name]
+   2.018 Script @__galdocs-machining__/intermediates/intermediates2.lua:447: brass-square-stock=Brass Square Stock
+   2.018 Script @__galdocs-machining__/intermediates/intermediates2.lua:450: [recipe-name]
+   2.018 Script @__galdocs-machining__/intermediates/intermediates2.lua:468: brass-square-stock=Brass Square Stock
+   2.018 Script @__galdocs-machining__/intermediates/intermediates2.lua:407: [item-name]
+   2.018 Script @__galdocs-machining__/intermediates/intermediates2.lua:447: brass-angle-stock=Brass Angle Stock
+   2.018 Script @__galdocs-machining__/intermediates/intermediates2.lua:450: [recipe-name]
+   2.018 Script @__galdocs-machining__/intermediates/intermediates2.lua:468: brass-angle-stock=Brass Angle Stock
+   2.018 Script @__galdocs-machining__/intermediates/intermediates2.lua:407: [item-name]
+   2.018 Script @__galdocs-machining__/intermediates/intermediates2.lua:447: brass-girder-stock=Brass Girder Stock
+   2.018 Script @__galdocs-machining__/intermediates/intermediates2.lua:450: [recipe-name]
+   2.018 Script @__galdocs-machining__/intermediates/intermediates2.lua:468: brass-girder-stock=Brass Girder Stock
+   2.018 Script @__galdocs-machining__/intermediates/intermediates2.lua:407: [item-name]
+   2.018 Script @__galdocs-machining__/intermediates/intermediates2.lua:447: brass-wire-stock=Brass Wire Stock
+   2.018 Script @__galdocs-machining__/intermediates/intermediates2.lua:450: [recipe-name]
+   2.018 Script @__galdocs-machining__/intermediates/intermediates2.lua:468: brass-wire-stock=Brass Wire Stock
+   2.018 Script @__galdocs-machining__/intermediates/intermediates2.lua:407: [item-name]
+   2.018 Script @__galdocs-machining__/intermediates/intermediates2.lua:447: brass-gear-stock=Brass Gear Stock
+   2.018 Script @__galdocs-machining__/intermediates/intermediates2.lua:450: [recipe-name]
+   2.018 Script @__galdocs-machining__/intermediates/intermediates2.lua:468: brass-gear-stock=Brass Gear Stock
+   2.018 Script @__galdocs-machining__/intermediates/intermediates2.lua:407: [item-name]
+   2.018 Script @__galdocs-machining__/intermediates/intermediates2.lua:447: brass-fine-gear-stock=Brass Fine Gear Stock
+   2.018 Script @__galdocs-machining__/intermediates/intermediates2.lua:450: [recipe-name]
+   2.018 Script @__galdocs-machining__/intermediates/intermediates2.lua:468: brass-fine-gear-stock=Brass Fine Gear Stock
+   2.018 Script @__galdocs-machining__/intermediates/intermediates2.lua:407: [item-name]
+   2.018 Script @__galdocs-machining__/intermediates/intermediates2.lua:447: brass-pipe-stock=Brass Pipe Stock
+   2.018 Script @__galdocs-machining__/intermediates/intermediates2.lua:450: [recipe-name]
+   2.018 Script @__galdocs-machining__/intermediates/intermediates2.lua:468: brass-pipe-stock=Brass Pipe Stock
+   2.018 Script @__galdocs-machining__/intermediates/intermediates2.lua:407: [item-name]
+   2.019 Script @__galdocs-machining__/intermediates/intermediates2.lua:447: brass-fine-pipe-stock=Brass Fine Pipe Stock
+   2.019 Script @__galdocs-machining__/intermediates/intermediates2.lua:450: [recipe-name]
+   2.019 Script @__galdocs-machining__/intermediates/intermediates2.lua:468: brass-fine-pipe-stock=Brass Fine Pipe Stock
+   2.019 Script @__galdocs-machining__/intermediates/intermediates2.lua:407: [item-name]
+   2.019 Script @__galdocs-machining__/intermediates/intermediates2.lua:447: galvanized-steel-plate-stock=Galvanized Steel Plate Stock
+   2.019 Script @__galdocs-machining__/intermediates/intermediates2.lua:450: [recipe-name]
+   2.019 Script @__galdocs-machining__/intermediates/intermediates2.lua:484: galvanized-steel-plate-stock=Galvanized Steel Plate Stock
+   2.019 Script @__galdocs-machining__/intermediates/intermediates2.lua:407: [item-name]
+   2.019 Script @__galdocs-machining__/intermediates/intermediates2.lua:447: galvanized-steel-sheet-stock=Galvanized Steel Sheet Stock
+   2.019 Script @__galdocs-machining__/intermediates/intermediates2.lua:450: [recipe-name]
+   2.019 Script @__galdocs-machining__/intermediates/intermediates2.lua:468: galvanized-steel-sheet-stock=Galvanized Steel Sheet Stock
+   2.019 Script @__galdocs-machining__/intermediates/intermediates2.lua:407: [item-name]
+   2.019 Script @__galdocs-machining__/intermediates/intermediates2.lua:447: galvanized-steel-square-stock=Galvanized Steel Square Stock
+   2.019 Script @__galdocs-machining__/intermediates/intermediates2.lua:450: [recipe-name]
+   2.019 Script @__galdocs-machining__/intermediates/intermediates2.lua:468: galvanized-steel-square-stock=Galvanized Steel Square Stock
+   2.019 Script @__galdocs-machining__/intermediates/intermediates2.lua:407: [item-name]
+   2.019 Script @__galdocs-machining__/intermediates/intermediates2.lua:447: galvanized-steel-angle-stock=Galvanized Steel Angle Stock
+   2.019 Script @__galdocs-machining__/intermediates/intermediates2.lua:450: [recipe-name]
+   2.019 Script @__galdocs-machining__/intermediates/intermediates2.lua:468: galvanized-steel-angle-stock=Galvanized Steel Angle Stock
+   2.019 Script @__galdocs-machining__/intermediates/intermediates2.lua:407: [item-name]
+   2.019 Script @__galdocs-machining__/intermediates/intermediates2.lua:447: galvanized-steel-girder-stock=Galvanized Steel Girder Stock
+   2.019 Script @__galdocs-machining__/intermediates/intermediates2.lua:450: [recipe-name]
+   2.019 Script @__galdocs-machining__/intermediates/intermediates2.lua:468: galvanized-steel-girder-stock=Galvanized Steel Girder Stock
+   2.019 Script @__galdocs-machining__/intermediates/intermediates2.lua:407: [item-name]
+   2.019 Script @__galdocs-machining__/intermediates/intermediates2.lua:447: galvanized-steel-wire-stock=Galvanized Steel Wire Stock
+   2.019 Script @__galdocs-machining__/intermediates/intermediates2.lua:450: [recipe-name]
+   2.019 Script @__galdocs-machining__/intermediates/intermediates2.lua:468: galvanized-steel-wire-stock=Galvanized Steel Wire Stock
+   2.019 Script @__galdocs-machining__/intermediates/intermediates2.lua:407: [item-name]
+   2.019 Script @__galdocs-machining__/intermediates/intermediates2.lua:447: galvanized-steel-gear-stock=Galvanized Steel Gear Stock
+   2.019 Script @__galdocs-machining__/intermediates/intermediates2.lua:450: [recipe-name]
+   2.019 Script @__galdocs-machining__/intermediates/intermediates2.lua:468: galvanized-steel-gear-stock=Galvanized Steel Gear Stock
+   2.019 Script @__galdocs-machining__/intermediates/intermediates2.lua:407: [item-name]
+   2.020 Script @__galdocs-machining__/intermediates/intermediates2.lua:447: galvanized-steel-fine-gear-stock=Galvanized Steel Fine Gear Stock
+   2.020 Script @__galdocs-machining__/intermediates/intermediates2.lua:450: [recipe-name]
+   2.020 Script @__galdocs-machining__/intermediates/intermediates2.lua:468: galvanized-steel-fine-gear-stock=Galvanized Steel Fine Gear Stock
+   2.020 Script @__galdocs-machining__/intermediates/intermediates2.lua:407: [item-name]
+   2.020 Script @__galdocs-machining__/intermediates/intermediates2.lua:447: galvanized-steel-pipe-stock=Galvanized Steel Pipe Stock
+   2.020 Script @__galdocs-machining__/intermediates/intermediates2.lua:450: [recipe-name]
+   2.020 Script @__galdocs-machining__/intermediates/intermediates2.lua:468: galvanized-steel-pipe-stock=Galvanized Steel Pipe Stock
+   2.020 Script @__galdocs-machining__/intermediates/intermediates2.lua:407: [item-name]
+   2.020 Script @__galdocs-machining__/intermediates/intermediates2.lua:447: galvanized-steel-fine-pipe-stock=Galvanized Steel Fine Pipe Stock
+   2.020 Script @__galdocs-machining__/intermediates/intermediates2.lua:450: [recipe-name]
+   2.020 Script @__galdocs-machining__/intermediates/intermediates2.lua:468: galvanized-steel-fine-pipe-stock=Galvanized Steel Fine Pipe Stock
+   2.020 Script @__galdocs-machining__/intermediates/intermediates2.lua:493: [item-name]
+   2.020 Script @__galdocs-machining__/intermediates/intermediates2.lua:530: basic-panelling-machined-part=Basic Panelling Machined Part
+   2.020 Script @__galdocs-machining__/intermediates/intermediates2.lua:533: [recipe-name]
+   2.020 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: basic-panelling-from-iron-sheet=Basic Panelling from Iron Sheet
+   2.020 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: basic-panelling-from-copper-sheet=Basic Panelling from Copper Sheet
+   2.020 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: basic-panelling-from-lead-sheet=Basic Panelling from Lead Sheet
+   2.020 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: basic-panelling-from-titanium-sheet=Basic Panelling from Titanium Sheet
+   2.020 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: basic-panelling-from-steel-sheet=Basic Panelling from Steel Sheet
+   2.020 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: basic-panelling-from-brass-sheet=Basic Panelling from Brass Sheet
+   2.020 Script @__galdocs-machining__/intermediates/intermediates2.lua:530: basic-large-panelling-machined-part=Basic Large Panelling Machined Part
+   2.020 Script @__galdocs-machining__/intermediates/intermediates2.lua:533: [recipe-name]
+   2.020 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: basic-large-panelling-from-iron-sheet=Basic Large Panelling from Iron Sheet
+   2.020 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: basic-large-panelling-from-copper-sheet=Basic Large Panelling from Copper Sheet
+   2.020 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: basic-large-panelling-from-lead-sheet=Basic Large Panelling from Lead Sheet
+   2.020 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: basic-large-panelling-from-titanium-sheet=Basic Large Panelling from Titanium Sheet
+   2.020 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: basic-large-panelling-from-steel-sheet=Basic Large Panelling from Steel Sheet
+   2.021 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: basic-large-panelling-from-brass-sheet=Basic Large Panelling from Brass Sheet
+   2.021 Script @__galdocs-machining__/intermediates/intermediates2.lua:530: basic-framing-machined-part=Basic Framing Machined Part
+   2.021 Script @__galdocs-machining__/intermediates/intermediates2.lua:533: [recipe-name]
+   2.021 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: basic-framing-from-iron-angle=Basic Framing from Iron Angle
+   2.021 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: basic-framing-from-titanium-angle=Basic Framing from Titanium Angle
+   2.021 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: basic-framing-from-steel-angle=Basic Framing from Steel Angle
+   2.021 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: basic-framing-from-brass-angle=Basic Framing from Brass Angle
+   2.021 Script @__galdocs-machining__/intermediates/intermediates2.lua:530: basic-girdering-machined-part=Basic Girdering Machined Part
+   2.021 Script @__galdocs-machining__/intermediates/intermediates2.lua:533: [recipe-name]
+   2.021 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: basic-girdering-from-iron-girder=Basic Girdering from Iron Girder
+   2.021 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: basic-girdering-from-titanium-girder=Basic Girdering from Titanium Girder
+   2.021 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: basic-girdering-from-steel-girder=Basic Girdering from Steel Girder
+   2.021 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: basic-girdering-from-brass-girder=Basic Girdering from Brass Girder
+   2.021 Script @__galdocs-machining__/intermediates/intermediates2.lua:530: basic-gearing-machined-part=Basic Gearing Machined Part
+   2.021 Script @__galdocs-machining__/intermediates/intermediates2.lua:533: [recipe-name]
+   2.021 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: basic-gearing-from-iron-gear=Basic Gearing from Iron Gear
+   2.021 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: basic-gearing-from-copper-gear=Basic Gearing from Copper Gear
+   2.021 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: basic-gearing-from-titanium-gear=Basic Gearing from Titanium Gear
+   2.021 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: basic-gearing-from-steel-gear=Basic Gearing from Steel Gear
+   2.021 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: basic-gearing-from-brass-gear=Basic Gearing from Brass Gear
+   2.021 Script @__galdocs-machining__/intermediates/intermediates2.lua:530: basic-fine-gearing-machined-part=Basic Fine Gearing Machined Part
+   2.021 Script @__galdocs-machining__/intermediates/intermediates2.lua:533: [recipe-name]
+   2.021 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: basic-fine-gearing-from-iron-fine-gear=Basic Fine Gearing from Iron Fine Gear
+   2.021 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: basic-fine-gearing-from-copper-fine-gear=Basic Fine Gearing from Copper Fine Gear
+   2.022 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: basic-fine-gearing-from-titanium-fine-gear=Basic Fine Gearing from Titanium Fine Gear
+   2.022 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: basic-fine-gearing-from-steel-fine-gear=Basic Fine Gearing from Steel Fine Gear
+   2.022 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: basic-fine-gearing-from-brass-fine-gear=Basic Fine Gearing from Brass Fine Gear
+   2.022 Script @__galdocs-machining__/intermediates/intermediates2.lua:530: basic-piping-machined-part=Basic Piping Machined Part
+   2.022 Script @__galdocs-machining__/intermediates/intermediates2.lua:533: [recipe-name]
+   2.022 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: basic-piping-from-iron-pipe=Basic Piping from Iron Pipe
+   2.022 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: basic-piping-from-copper-pipe=Basic Piping from Copper Pipe
+   2.022 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: basic-piping-from-lead-pipe=Basic Piping from Lead Pipe
+   2.022 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: basic-piping-from-titanium-pipe=Basic Piping from Titanium Pipe
+   2.022 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: basic-piping-from-steel-pipe=Basic Piping from Steel Pipe
+   2.022 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: basic-piping-from-brass-pipe=Basic Piping from Brass Pipe
+   2.022 Script @__galdocs-machining__/intermediates/intermediates2.lua:530: basic-fine-piping-machined-part=Basic Fine Piping Machined Part
+   2.022 Script @__galdocs-machining__/intermediates/intermediates2.lua:533: [recipe-name]
+   2.022 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: basic-fine-piping-from-iron-fine-pipe=Basic Fine Piping from Iron Fine Pipe
+   2.022 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: basic-fine-piping-from-copper-fine-pipe=Basic Fine Piping from Copper Fine Pipe
+   2.022 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: basic-fine-piping-from-lead-fine-pipe=Basic Fine Piping from Lead Fine Pipe
+   2.022 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: basic-fine-piping-from-titanium-fine-pipe=Basic Fine Piping from Titanium Fine Pipe
+   2.022 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: basic-fine-piping-from-steel-fine-pipe=Basic Fine Piping from Steel Fine Pipe
+   2.022 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: basic-fine-piping-from-brass-fine-pipe=Basic Fine Piping from Brass Fine Pipe
+   2.022 Script @__galdocs-machining__/intermediates/intermediates2.lua:530: basic-shafting-machined-part=Basic Shafting Machined Part
+   2.022 Script @__galdocs-machining__/intermediates/intermediates2.lua:533: [recipe-name]
+   2.022 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: basic-shafting-from-iron-square=Basic Shafting from Iron Square
+   2.022 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: basic-shafting-from-copper-square=Basic Shafting from Copper Square
+   2.022 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: basic-shafting-from-titanium-square=Basic Shafting from Titanium Square
+   2.022 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: basic-shafting-from-steel-square=Basic Shafting from Steel Square
+   2.022 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: basic-shafting-from-brass-square=Basic Shafting from Brass Square
+   2.023 Script @__galdocs-machining__/intermediates/intermediates2.lua:530: basic-bolts-machined-part=Basic Bolts Machined Part
+   2.023 Script @__galdocs-machining__/intermediates/intermediates2.lua:533: [recipe-name]
+   2.023 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: basic-bolts-from-iron-wire=Basic Bolts from Iron Wire
+   2.023 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: basic-bolts-from-copper-wire=Basic Bolts from Copper Wire
+   2.023 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: basic-bolts-from-titanium-wire=Basic Bolts from Titanium Wire
+   2.023 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: basic-bolts-from-steel-wire=Basic Bolts from Steel Wire
+   2.023 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: basic-bolts-from-brass-wire=Basic Bolts from Brass Wire
+   2.023 Script @__galdocs-machining__/intermediates/intermediates2.lua:530: basic-rivets-machined-part=Basic Rivets Machined Part
+   2.023 Script @__galdocs-machining__/intermediates/intermediates2.lua:533: [recipe-name]
+   2.023 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: basic-rivets-from-iron-wire=Basic Rivets from Iron Wire
+   2.023 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: basic-rivets-from-copper-wire=Basic Rivets from Copper Wire
+   2.023 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: basic-rivets-from-titanium-wire=Basic Rivets from Titanium Wire
+   2.023 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: basic-rivets-from-steel-wire=Basic Rivets from Steel Wire
+   2.023 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: basic-rivets-from-brass-wire=Basic Rivets from Brass Wire
+   2.023 Script @__galdocs-machining__/intermediates/intermediates2.lua:493: [item-name]
+   2.023 Script @__galdocs-machining__/intermediates/intermediates2.lua:530: load-bearing-framing-machined-part=Load Bearing Framing Machined Part
+   2.023 Script @__galdocs-machining__/intermediates/intermediates2.lua:533: [recipe-name]
+   2.023 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: load-bearing-framing-from-iron-angle=Load Bearing Framing from Iron Angle
+   2.023 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: load-bearing-framing-from-steel-angle=Load Bearing Framing from Steel Angle
+   2.023 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: load-bearing-framing-from-galvanized-steel-angle=Load Bearing Framing from Galvanized Steel Angle
+   2.023 Script @__galdocs-machining__/intermediates/intermediates2.lua:530: load-bearing-girdering-machined-part=Load Bearing Girdering Machined Part
+   2.023 Script @__galdocs-machining__/intermediates/intermediates2.lua:533: [recipe-name]
+   2.023 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: load-bearing-girdering-from-iron-girder=Load Bearing Girdering from Iron Girder
+   2.023 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: load-bearing-girdering-from-steel-girder=Load Bearing Girdering from Steel Girder
+   2.023 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: load-bearing-girdering-from-galvanized-steel-girder=Load Bearing Girdering from Galvanized Steel Girder
+   2.023 Script @__galdocs-machining__/intermediates/intermediates2.lua:530: load-bearing-shafting-machined-part=Load Bearing Shafting Machined Part
+   2.023 Script @__galdocs-machining__/intermediates/intermediates2.lua:533: [recipe-name]
+   2.024 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: load-bearing-shafting-from-iron-square=Load Bearing Shafting from Iron Square
+   2.024 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: load-bearing-shafting-from-steel-square=Load Bearing Shafting from Steel Square
+   2.024 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: load-bearing-shafting-from-galvanized-steel-square=Load Bearing Shafting from Galvanized Steel Square
+   2.024 Script @__galdocs-machining__/intermediates/intermediates2.lua:493: [item-name]
+   2.024 Script @__galdocs-machining__/intermediates/intermediates2.lua:530: electrically-conductive-wiring-machined-part=Electrically Conductive Wiring Machined Part
+   2.024 Script @__galdocs-machining__/intermediates/intermediates2.lua:533: [recipe-name]
+   2.024 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: electrically-conductive-wiring-from-copper-wire=Electrically Conductive Wiring from Copper Wire
+   2.024 Script @__galdocs-machining__/intermediates/intermediates2.lua:493: [item-name]
+   2.024 Script @__galdocs-machining__/intermediates/intermediates2.lua:530: high-tensile-panelling-machined-part=High Tensile Panelling Machined Part
+   2.024 Script @__galdocs-machining__/intermediates/intermediates2.lua:533: [recipe-name]
+   2.024 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: high-tensile-panelling-from-steel-sheet=High Tensile Panelling from Steel Sheet
+   2.024 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: high-tensile-panelling-from-galvanized-steel-sheet=High Tensile Panelling from Galvanized Steel Sheet
+   2.024 Script @__galdocs-machining__/intermediates/intermediates2.lua:530: high-tensile-large-panelling-machined-part=High Tensile Large Panelling Machined Part
+   2.024 Script @__galdocs-machining__/intermediates/intermediates2.lua:533: [recipe-name]
+   2.024 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: high-tensile-large-panelling-from-steel-sheet=High Tensile Large Panelling from Steel Sheet
+   2.024 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: high-tensile-large-panelling-from-galvanized-steel-sheet=High Tensile Large Panelling from Galvanized Steel Sheet
+   2.024 Script @__galdocs-machining__/intermediates/intermediates2.lua:530: high-tensile-framing-machined-part=High Tensile Framing Machined Part
+   2.024 Script @__galdocs-machining__/intermediates/intermediates2.lua:533: [recipe-name]
+   2.024 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: high-tensile-framing-from-steel-angle=High Tensile Framing from Steel Angle
+   2.024 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: high-tensile-framing-from-galvanized-steel-angle=High Tensile Framing from Galvanized Steel Angle
+   2.024 Script @__galdocs-machining__/intermediates/intermediates2.lua:530: high-tensile-girdering-machined-part=High Tensile Girdering Machined Part
+   2.024 Script @__galdocs-machining__/intermediates/intermediates2.lua:533: [recipe-name]
+   2.024 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: high-tensile-girdering-from-steel-girder=High Tensile Girdering from Steel Girder
+   2.024 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: high-tensile-girdering-from-galvanized-steel-girder=High Tensile Girdering from Galvanized Steel Girder
+   2.024 Script @__galdocs-machining__/intermediates/intermediates2.lua:530: high-tensile-gearing-machined-part=High Tensile Gearing Machined Part
+   2.024 Script @__galdocs-machining__/intermediates/intermediates2.lua:533: [recipe-name]
+   2.025 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: high-tensile-gearing-from-steel-gear=High Tensile Gearing from Steel Gear
+   2.025 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: high-tensile-gearing-from-galvanized-steel-gear=High Tensile Gearing from Galvanized Steel Gear
+   2.025 Script @__galdocs-machining__/intermediates/intermediates2.lua:530: high-tensile-fine-gearing-machined-part=High Tensile Fine Gearing Machined Part
+   2.025 Script @__galdocs-machining__/intermediates/intermediates2.lua:533: [recipe-name]
+   2.025 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: high-tensile-fine-gearing-from-steel-fine-gear=High Tensile Fine Gearing from Steel Fine Gear
+   2.025 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: high-tensile-fine-gearing-from-galvanized-steel-fine-gear=High Tensile Fine Gearing from Galvanized Steel Fine Gear
+   2.025 Script @__galdocs-machining__/intermediates/intermediates2.lua:530: high-tensile-shafting-machined-part=High Tensile Shafting Machined Part
+   2.025 Script @__galdocs-machining__/intermediates/intermediates2.lua:533: [recipe-name]
+   2.025 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: high-tensile-shafting-from-steel-square=High Tensile Shafting from Steel Square
+   2.025 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: high-tensile-shafting-from-galvanized-steel-square=High Tensile Shafting from Galvanized Steel Square
+   2.025 Script @__galdocs-machining__/intermediates/intermediates2.lua:530: high-tensile-bolts-machined-part=High Tensile Bolts Machined Part
+   2.025 Script @__galdocs-machining__/intermediates/intermediates2.lua:533: [recipe-name]
+   2.025 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: high-tensile-bolts-from-steel-wire=High Tensile Bolts from Steel Wire
+   2.025 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: high-tensile-bolts-from-galvanized-steel-wire=High Tensile Bolts from Galvanized Steel Wire
+   2.025 Script @__galdocs-machining__/intermediates/intermediates2.lua:530: high-tensile-rivets-machined-part=High Tensile Rivets Machined Part
+   2.025 Script @__galdocs-machining__/intermediates/intermediates2.lua:533: [recipe-name]
+   2.025 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: high-tensile-rivets-from-steel-wire=High Tensile Rivets from Steel Wire
+   2.025 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: high-tensile-rivets-from-galvanized-steel-wire=High Tensile Rivets from Galvanized Steel Wire
+   2.025 Script @__galdocs-machining__/intermediates/intermediates2.lua:493: [item-name]
+   2.025 Script @__galdocs-machining__/intermediates/intermediates2.lua:530: corrosion-resistant-panelling-machined-part=Corrosion Resistant Panelling Machined Part
+   2.025 Script @__galdocs-machining__/intermediates/intermediates2.lua:533: [recipe-name]
+   2.025 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: corrosion-resistant-panelling-from-galvanized-steel-sheet=Corrosion Resistant Panelling from Galvanized Steel Sheet
+   2.025 Script @__galdocs-machining__/intermediates/intermediates2.lua:530: corrosion-resistant-large-panelling-machined-part=Corrosion Resistant Large Panelling Machined Part
+   2.025 Script @__galdocs-machining__/intermediates/intermediates2.lua:533: [recipe-name]
+   2.025 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: corrosion-resistant-large-panelling-from-galvanized-steel-sheet=Corrosion Resistant Large Panelling from Galvanized Steel Sheet
+   2.025 Script @__galdocs-machining__/intermediates/intermediates2.lua:530: corrosion-resistant-piping-machined-part=Corrosion Resistant Piping Machined Part
+   2.025 Script @__galdocs-machining__/intermediates/intermediates2.lua:533: [recipe-name]
+   2.026 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: corrosion-resistant-piping-from-galvanized-steel-pipe=Corrosion Resistant Piping from Galvanized Steel Pipe
+   2.026 Script @__galdocs-machining__/intermediates/intermediates2.lua:530: corrosion-resistant-fine-piping-machined-part=Corrosion Resistant Fine Piping Machined Part
+   2.026 Script @__galdocs-machining__/intermediates/intermediates2.lua:533: [recipe-name]
+   2.026 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: corrosion-resistant-fine-piping-from-galvanized-steel-fine-pipe=Corrosion Resistant Fine Piping from Galvanized Steel Fine Pipe
+   2.026 Script @__galdocs-machining__/intermediates/intermediates2.lua:530: corrosion-resistant-shielding-machined-part=Corrosion Resistant Shielding Machined Part
+   2.026 Script @__galdocs-machining__/intermediates/intermediates2.lua:533: [recipe-name]
+   2.026 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: corrosion-resistant-shielding-from-galvanized-steel-plate=Corrosion Resistant Shielding from Galvanized Steel Plate
+   2.026 Script @__galdocs-machining__/intermediates/intermediates2.lua:530: corrosion-resistant-bolts-machined-part=Corrosion Resistant Bolts Machined Part
+   2.026 Script @__galdocs-machining__/intermediates/intermediates2.lua:533: [recipe-name]
+   2.026 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: corrosion-resistant-bolts-from-galvanized-steel-wire=Corrosion Resistant Bolts from Galvanized Steel Wire
+   2.026 Script @__galdocs-machining__/intermediates/intermediates2.lua:530: corrosion-resistant-rivets-machined-part=Corrosion Resistant Rivets Machined Part
+   2.026 Script @__galdocs-machining__/intermediates/intermediates2.lua:533: [recipe-name]
+   2.026 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: corrosion-resistant-rivets-from-galvanized-steel-wire=Corrosion Resistant Rivets from Galvanized Steel Wire
+   2.026 Script @__galdocs-machining__/intermediates/intermediates2.lua:493: [item-name]
+   2.026 Script @__galdocs-machining__/intermediates/intermediates2.lua:530: lightweight-panelling-machined-part=Lightweight Panelling Machined Part
+   2.026 Script @__galdocs-machining__/intermediates/intermediates2.lua:533: [recipe-name]
+   2.026 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: lightweight-panelling-from-titanium-sheet=Lightweight Panelling from Titanium Sheet
+   2.026 Script @__galdocs-machining__/intermediates/intermediates2.lua:530: lightweight-large-panelling-machined-part=Lightweight Large Panelling Machined Part
+   2.026 Script @__galdocs-machining__/intermediates/intermediates2.lua:533: [recipe-name]
+   2.026 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: lightweight-large-panelling-from-titanium-sheet=Lightweight Large Panelling from Titanium Sheet
+   2.026 Script @__galdocs-machining__/intermediates/intermediates2.lua:530: lightweight-framing-machined-part=Lightweight Framing Machined Part
+   2.026 Script @__galdocs-machining__/intermediates/intermediates2.lua:533: [recipe-name]
+   2.026 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: lightweight-framing-from-titanium-angle=Lightweight Framing from Titanium Angle
+   2.026 Script @__galdocs-machining__/intermediates/intermediates2.lua:530: lightweight-girdering-machined-part=Lightweight Girdering Machined Part
+   2.026 Script @__galdocs-machining__/intermediates/intermediates2.lua:533: [recipe-name]
+   2.026 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: lightweight-girdering-from-titanium-girder=Lightweight Girdering from Titanium Girder
+   2.026 Script @__galdocs-machining__/intermediates/intermediates2.lua:530: lightweight-shafting-machined-part=Lightweight Shafting Machined Part
+   2.027 Script @__galdocs-machining__/intermediates/intermediates2.lua:533: [recipe-name]
+   2.027 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: lightweight-shafting-from-titanium-square=Lightweight Shafting from Titanium Square
+   2.027 Script @__galdocs-machining__/intermediates/intermediates2.lua:493: [item-name]
+   2.027 Script @__galdocs-machining__/intermediates/intermediates2.lua:530: ductile-panelling-machined-part=Ductile Panelling Machined Part
+   2.027 Script @__galdocs-machining__/intermediates/intermediates2.lua:533: [recipe-name]
+   2.027 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: ductile-panelling-from-brass-sheet=Ductile Panelling from Brass Sheet
+   2.027 Script @__galdocs-machining__/intermediates/intermediates2.lua:530: ductile-large-panelling-machined-part=Ductile Large Panelling Machined Part
+   2.027 Script @__galdocs-machining__/intermediates/intermediates2.lua:533: [recipe-name]
+   2.027 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: ductile-large-panelling-from-brass-sheet=Ductile Large Panelling from Brass Sheet
+   2.027 Script @__galdocs-machining__/intermediates/intermediates2.lua:530: ductile-framing-machined-part=Ductile Framing Machined Part
+   2.027 Script @__galdocs-machining__/intermediates/intermediates2.lua:533: [recipe-name]
+   2.027 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: ductile-framing-from-brass-angle=Ductile Framing from Brass Angle
+   2.027 Script @__galdocs-machining__/intermediates/intermediates2.lua:530: ductile-girdering-machined-part=Ductile Girdering Machined Part
+   2.027 Script @__galdocs-machining__/intermediates/intermediates2.lua:533: [recipe-name]
+   2.027 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: ductile-girdering-from-brass-girder=Ductile Girdering from Brass Girder
+   2.027 Script @__galdocs-machining__/intermediates/intermediates2.lua:530: ductile-gearing-machined-part=Ductile Gearing Machined Part
+   2.027 Script @__galdocs-machining__/intermediates/intermediates2.lua:533: [recipe-name]
+   2.027 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: ductile-gearing-from-brass-gear=Ductile Gearing from Brass Gear
+   2.027 Script @__galdocs-machining__/intermediates/intermediates2.lua:530: ductile-fine-gearing-machined-part=Ductile Fine Gearing Machined Part
+   2.027 Script @__galdocs-machining__/intermediates/intermediates2.lua:533: [recipe-name]
+   2.027 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: ductile-fine-gearing-from-brass-fine-gear=Ductile Fine Gearing from Brass Fine Gear
+   2.027 Script @__galdocs-machining__/intermediates/intermediates2.lua:530: ductile-wiring-machined-part=Ductile Wiring Machined Part
+   2.027 Script @__galdocs-machining__/intermediates/intermediates2.lua:533: [recipe-name]
+   2.027 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: ductile-wiring-from-brass-wire=Ductile Wiring from Brass Wire
+   2.027 Script @__galdocs-machining__/intermediates/intermediates2.lua:530: ductile-shielding-machined-part=Ductile Shielding Machined Part
+   2.027 Script @__galdocs-machining__/intermediates/intermediates2.lua:533: [recipe-name]
+   2.027 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: ductile-shielding-from-brass-plate=Ductile Shielding from Brass Plate
+   2.027 Script @__galdocs-machining__/intermediates/intermediates2.lua:493: [item-name]
+   2.027 Script @__galdocs-machining__/intermediates/intermediates2.lua:530: thermally-stable-panelling-machined-part=Thermally Stable Panelling Machined Part
+   2.027 Script @__galdocs-machining__/intermediates/intermediates2.lua:533: [recipe-name]
+   2.027 Script @__galdocs-machining__/intermediates/intermediates2.lua:530: thermally-stable-large-panelling-machined-part=Thermally Stable Large Panelling Machined Part
+   2.027 Script @__galdocs-machining__/intermediates/intermediates2.lua:533: [recipe-name]
+   2.028 Script @__galdocs-machining__/intermediates/intermediates2.lua:530: thermally-stable-framing-machined-part=Thermally Stable Framing Machined Part
+   2.028 Script @__galdocs-machining__/intermediates/intermediates2.lua:533: [recipe-name]
+   2.028 Script @__galdocs-machining__/intermediates/intermediates2.lua:530: thermally-stable-girdering-machined-part=Thermally Stable Girdering Machined Part
+   2.028 Script @__galdocs-machining__/intermediates/intermediates2.lua:533: [recipe-name]
+   2.028 Script @__galdocs-machining__/intermediates/intermediates2.lua:530: thermally-stable-gearing-machined-part=Thermally Stable Gearing Machined Part
+   2.028 Script @__galdocs-machining__/intermediates/intermediates2.lua:533: [recipe-name]
+   2.028 Script @__galdocs-machining__/intermediates/intermediates2.lua:530: thermally-stable-fine-gearing-machined-part=Thermally Stable Fine Gearing Machined Part
+   2.028 Script @__galdocs-machining__/intermediates/intermediates2.lua:533: [recipe-name]
+   2.028 Script @__galdocs-machining__/intermediates/intermediates2.lua:530: thermally-stable-piping-machined-part=Thermally Stable Piping Machined Part
+   2.028 Script @__galdocs-machining__/intermediates/intermediates2.lua:533: [recipe-name]
+   2.028 Script @__galdocs-machining__/intermediates/intermediates2.lua:530: thermally-stable-fine-piping-machined-part=Thermally Stable Fine Piping Machined Part
+   2.028 Script @__galdocs-machining__/intermediates/intermediates2.lua:533: [recipe-name]
+   2.028 Script @__galdocs-machining__/intermediates/intermediates2.lua:530: thermally-stable-wiring-machined-part=Thermally Stable Wiring Machined Part
+   2.028 Script @__galdocs-machining__/intermediates/intermediates2.lua:533: [recipe-name]
+   2.028 Script @__galdocs-machining__/intermediates/intermediates2.lua:530: thermally-stable-shielding-machined-part=Thermally Stable Shielding Machined Part
+   2.028 Script @__galdocs-machining__/intermediates/intermediates2.lua:533: [recipe-name]
+   2.028 Script @__galdocs-machining__/intermediates/intermediates2.lua:530: thermally-stable-shafting-machined-part=Thermally Stable Shafting Machined Part
+   2.028 Script @__galdocs-machining__/intermediates/intermediates2.lua:533: [recipe-name]
+   2.028 Script @__galdocs-machining__/intermediates/intermediates2.lua:530: thermally-stable-bolts-machined-part=Thermally Stable Bolts Machined Part
+   2.028 Script @__galdocs-machining__/intermediates/intermediates2.lua:533: [recipe-name]
+   2.028 Script @__galdocs-machining__/intermediates/intermediates2.lua:530: thermally-stable-rivets-machined-part=Thermally Stable Rivets Machined Part
+   2.028 Script @__galdocs-machining__/intermediates/intermediates2.lua:533: [recipe-name]
+   2.028 Script @__galdocs-machining__/intermediates/intermediates2.lua:493: [item-name]
+   2.028 Script @__galdocs-machining__/intermediates/intermediates2.lua:493: [item-name]
+   2.028 Script @__galdocs-machining__/intermediates/intermediates2.lua:530: radiation-resistant-panelling-machined-part=Radiation Resistant Panelling Machined Part
+   2.028 Script @__galdocs-machining__/intermediates/intermediates2.lua:533: [recipe-name]
+   2.028 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: radiation-resistant-panelling-from-lead-sheet=Radiation Resistant Panelling from Lead Sheet
+   2.028 Script @__galdocs-machining__/intermediates/intermediates2.lua:530: radiation-resistant-large-panelling-machined-part=Radiation Resistant Large Panelling Machined Part
+   2.028 Script @__galdocs-machining__/intermediates/intermediates2.lua:533: [recipe-name]
+   2.028 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: radiation-resistant-large-panelling-from-lead-sheet=Radiation Resistant Large Panelling from Lead Sheet
+   2.028 Script @__galdocs-machining__/intermediates/intermediates2.lua:530: radiation-resistant-shielding-machined-part=Radiation Resistant Shielding Machined Part
+   2.028 Script @__galdocs-machining__/intermediates/intermediates2.lua:533: [recipe-name]
+   2.028 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: radiation-resistant-shielding-from-lead-plate=Radiation Resistant Shielding from Lead Plate
+   2.028 Script @__galdocs-machining__/intermediates/intermediates2.lua:493: [item-name]
+   2.028 Script @__galdocs-machining__/intermediates/intermediates2.lua:530: heavy-load-bearing-framing-machined-part=Heavy Load Bearing Framing Machined Part
+   2.029 Script @__galdocs-machining__/intermediates/intermediates2.lua:533: [recipe-name]
+   2.029 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: heavy-load-bearing-framing-from-steel-angle=Heavy Load Bearing Framing from Steel Angle
+   2.029 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: heavy-load-bearing-framing-from-galvanized-steel-angle=Heavy Load Bearing Framing from Galvanized Steel Angle
+   2.029 Script @__galdocs-machining__/intermediates/intermediates2.lua:530: heavy-load-bearing-girdering-machined-part=Heavy Load Bearing Girdering Machined Part
+   2.029 Script @__galdocs-machining__/intermediates/intermediates2.lua:533: [recipe-name]
+   2.029 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: heavy-load-bearing-girdering-from-steel-girder=Heavy Load Bearing Girdering from Steel Girder
+   2.029 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: heavy-load-bearing-girdering-from-galvanized-steel-girder=Heavy Load Bearing Girdering from Galvanized Steel Girder
+   2.029 Script @__galdocs-machining__/intermediates/intermediates2.lua:530: heavy-load-bearing-shafting-machined-part=Heavy Load Bearing Shafting Machined Part
+   2.029 Script @__galdocs-machining__/intermediates/intermediates2.lua:533: [recipe-name]
+   2.029 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: heavy-load-bearing-shafting-from-steel-square=Heavy Load Bearing Shafting from Steel Square
+   2.029 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: heavy-load-bearing-shafting-from-galvanized-steel-square=Heavy Load Bearing Shafting from Galvanized Steel Square
+   2.029 Script @__galdocs-machining__/intermediates/intermediates2.lua:493: [item-name]
+   2.029 Script @__galdocs-machining__/intermediates/intermediates2.lua:530: very-high-tensile-panelling-machined-part=Very High Tensile Panelling Machined Part
+   2.029 Script @__galdocs-machining__/intermediates/intermediates2.lua:533: [recipe-name]
+   2.029 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: very-high-tensile-panelling-from-titanium-sheet=Very High Tensile Panelling from Titanium Sheet
+   2.029 Script @__galdocs-machining__/intermediates/intermediates2.lua:530: very-high-tensile-large-panelling-machined-part=Very High Tensile Large Panelling Machined Part
+   2.029 Script @__galdocs-machining__/intermediates/intermediates2.lua:533: [recipe-name]
+   2.029 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: very-high-tensile-large-panelling-from-titanium-sheet=Very High Tensile Large Panelling from Titanium Sheet
+   2.029 Script @__galdocs-machining__/intermediates/intermediates2.lua:530: very-high-tensile-framing-machined-part=Very High Tensile Framing Machined Part
+   2.029 Script @__galdocs-machining__/intermediates/intermediates2.lua:533: [recipe-name]
+   2.029 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: very-high-tensile-framing-from-titanium-angle=Very High Tensile Framing from Titanium Angle
+   2.029 Script @__galdocs-machining__/intermediates/intermediates2.lua:530: very-high-tensile-girdering-machined-part=Very High Tensile Girdering Machined Part
+   2.029 Script @__galdocs-machining__/intermediates/intermediates2.lua:533: [recipe-name]
+   2.029 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: very-high-tensile-girdering-from-titanium-girder=Very High Tensile Girdering from Titanium Girder
+   2.029 Script @__galdocs-machining__/intermediates/intermediates2.lua:530: very-high-tensile-gearing-machined-part=Very High Tensile Gearing Machined Part
+   2.029 Script @__galdocs-machining__/intermediates/intermediates2.lua:533: [recipe-name]
+   2.029 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: very-high-tensile-gearing-from-titanium-gear=Very High Tensile Gearing from Titanium Gear
+   2.030 Script @__galdocs-machining__/intermediates/intermediates2.lua:530: very-high-tensile-fine-gearing-machined-part=Very High Tensile Fine Gearing Machined Part
+   2.030 Script @__galdocs-machining__/intermediates/intermediates2.lua:533: [recipe-name]
+   2.030 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: very-high-tensile-fine-gearing-from-titanium-fine-gear=Very High Tensile Fine Gearing from Titanium Fine Gear
+   2.030 Script @__galdocs-machining__/intermediates/intermediates2.lua:530: very-high-tensile-shafting-machined-part=Very High Tensile Shafting Machined Part
+   2.030 Script @__galdocs-machining__/intermediates/intermediates2.lua:533: [recipe-name]
+   2.030 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: very-high-tensile-shafting-from-titanium-square=Very High Tensile Shafting from Titanium Square
+   2.030 Script @__galdocs-machining__/intermediates/intermediates2.lua:530: very-high-tensile-bolts-machined-part=Very High Tensile Bolts Machined Part
+   2.030 Script @__galdocs-machining__/intermediates/intermediates2.lua:533: [recipe-name]
+   2.030 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: very-high-tensile-bolts-from-titanium-wire=Very High Tensile Bolts from Titanium Wire
+   2.030 Script @__galdocs-machining__/intermediates/intermediates2.lua:530: very-high-tensile-rivets-machined-part=Very High Tensile Rivets Machined Part
+   2.030 Script @__galdocs-machining__/intermediates/intermediates2.lua:533: [recipe-name]
+   2.030 Script @__galdocs-machining__/intermediates/intermediates2.lua:570: very-high-tensile-rivets-from-titanium-wire=Very High Tensile Rivets from Titanium Wire
+   2.047 Loading mod base 1.1.80 (data-updates.lua)
+   2.060 Loading mod miniloader 1.15.6 (data-updates.lua)
+   2.073 Loading mod galdocs-machining 0.0.1 (data-updates.lua)
+   2.091 Loading mod creative-mod 1.8.1 (data-final-fixes.lua)
+   2.128 Loading mod galdocs-machining 0.0.1 (data-final-fixes.lua)
+   2.226 Checksum for core: 3955387189
+   2.226 Checksum of base: 434889501
+   2.226 Checksum of miniloader: 1335857783
+   2.226 Checksum of creative-mod: 3603949784
+   2.226 Checksum of galdocs-machining: 813948228
+   2.473 Prototype list checksum: 282097682
+   2.525 Loading sounds...
+   2.636 Info PlayerData.cpp:73: Local player-data.json unavailable
+   2.636 Info PlayerData.cpp:76: Cloud player-data.json available, timestamp 1682530207
+   2.822 Initial atlas bitmap size is 16384
+   2.855 Created atlas bitmap 16384x16380 [none]
+   2.859 Created atlas bitmap 16384x13888 [none]
+   2.859 Created atlas bitmap 8192x4188 [decal]
+   2.860 Created atlas bitmap 16384x5568 [low-object, linear-minification]
+   2.861 Created atlas bitmap 8192x4432 [mipmap, linear-minification, linear-magnification, linear-mip-level]
+   2.861 Created atlas bitmap 16384x6064 [terrain, mipmap, linear-minification, linear-mip-level]
+   2.862 Created atlas bitmap 4096x3216 [terrain-effect-map, mipmap, linear-minification, linear-mip-level]
+   2.862 Created atlas bitmap 4096x1856 [smoke, mipmap, linear-minification, linear-magnification]
+   2.862 Created atlas bitmap 4096x3088 [mipmap]
+   2.863 Created atlas bitmap 8192x2544 [icon, not-compressed, mipmap, linear-minification, linear-magnification, linear-mip-level]
+   2.863 Created atlas bitmap 8192x1496 [alpha-mask]
+   2.866 Created atlas bitmap 16384x15024 [shadow, linear-magnification, alpha-mask]
+   2.866 Created atlas bitmap 8192x2352 [shadow, mipmap, linear-magnification, alpha-mask]
+   2.867 Created atlas bitmap 2048x336 [icon-background, not-compressed, mipmap, linear-minification, linear-magnification, linear-mip-level, ]
+   2.871 Texture processor created (2048). GPU accelerated compression Supported: yes, Enabled: yes/yes. Test passed. YCoCgDXT PSNR: 35.83, BC3 PSNR: 33.82
+   3.598 Parallel Sprite Loader initialized (threads: 11)
+   9.759 Warning! Sprite at {0,0; 32x32} from __creative-mod__/graphics/icons/autofill-requester-chest.png is defined with 4 mipmap levels, but level 1 is expected to be at {32,0; 16x16} which is out of bounds of the source image.
+   9.759 Warning! Sprite at {0,0; 32x32} from __creative-mod__/graphics/icons/creative-chest.png is defined with 4 mipmap levels, but level 1 is expected to be at {32,0; 16x16} which is out of bounds of the source image.
+   9.759 Warning! Sprite at {0,0; 32x32} from __creative-mod__/graphics/icons/creative-provider-chest.png is defined with 4 mipmap levels, but level 1 is expected to be at {32,0; 16x16} which is out of bounds of the source image.
+   9.762 Warning! Sprite at {0,0; 32x32} from __creative-mod__/graphics/icons/void-chest.png is defined with 4 mipmap levels, but level 1 is expected to be at {32,0; 16x16} which is out of bounds of the source image.
+   9.762 Warning! Sprite at {0,0; 32x32} from __creative-mod__/graphics/icons/void-requester-chest.png is defined with 4 mipmap levels, but level 1 is expected to be at {32,0; 16x16} which is out of bounds of the source image.
+   9.762 Warning! Sprite at {0,0; 32x32} from __creative-mod__/graphics/icons/void-storage-chest.png is defined with 4 mipmap levels, but level 1 is expected to be at {32,0; 16x16} which is out of bounds of the source image.
+   9.773 Warning! Sprite at {0,0; 64x64} from __galdocs-machining__/graphics/icons/intermediates/stocks/brass/brass-angle-stock-0000.png is defined with 4 mipmap levels, but level 1 is expected to be at {64,0; 32x32} which is out of bounds of the source image.
+   9.773 Warning! Sprite at {0,0; 64x64} from __galdocs-machining__/graphics/icons/intermediates/stocks/brass/brass-fine-gear-stock-0000.png is defined with 4 mipmap levels, but level 1 is expected to be at {64,0; 32x32} which is out of bounds of the source image.
+   9.774 Warning! Sprite at {0,0; 64x64} from __galdocs-machining__/graphics/icons/intermediates/stocks/brass/brass-fine-pipe-stock-0000.png is defined with 4 mipmap levels, but level 1 is expected to be at {64,0; 32x32} which is out of bounds of the source image.
+   9.774 Warning! Sprite at {0,0; 64x64} from __galdocs-machining__/graphics/icons/intermediates/stocks/brass/brass-gear-stock-0000.png is defined with 4 mipmap levels, but level 1 is expected to be at {64,0; 32x32} which is out of bounds of the source image.
+   9.774 Warning! Sprite at {0,0; 64x64} from __galdocs-machining__/graphics/icons/intermediates/stocks/brass/brass-girder-stock-0000.png is defined with 4 mipmap levels, but level 1 is expected to be at {64,0; 32x32} which is out of bounds of the source image.
+   9.774 Warning! Sprite at {0,0; 64x64} from __galdocs-machining__/graphics/icons/intermediates/stocks/brass/brass-pipe-stock-0000.png is defined with 4 mipmap levels, but level 1 is expected to be at {64,0; 32x32} which is out of bounds of the source image.
+   9.774 Warning! Sprite at {0,0; 64x64} from __galdocs-machining__/graphics/icons/intermediates/stocks/brass/brass-plate-stock-0000.png is defined with 4 mipmap levels, but level 1 is expected to be at {64,0; 32x32} which is out of bounds of the source image.
+   9.774 Warning! Sprite at {0,0; 64x64} from __galdocs-machining__/graphics/icons/intermediates/stocks/brass/brass-sheet-stock-0000.png is defined with 4 mipmap levels, but level 1 is expected to be at {64,0; 32x32} which is out of bounds of the source image.
+   9.775 Warning! Sprite at {0,0; 64x64} from __galdocs-machining__/graphics/icons/intermediates/stocks/brass/brass-square-stock-0000.png is defined with 4 mipmap levels, but level 1 is expected to be at {64,0; 32x32} which is out of bounds of the source image.
+   9.775 Warning! Sprite at {0,0; 64x64} from __galdocs-machining__/graphics/icons/intermediates/stocks/brass/brass-wire-stock-0000.png is defined with 4 mipmap levels, but level 1 is expected to be at {64,0; 32x32} which is out of bounds of the source image.
+   9.775 Warning! Sprite at {0,0; 64x64} from __galdocs-machining__/graphics/icons/intermediates/stocks/copper/copper-fine-gear-stock-0000.png is defined with 4 mipmap levels, but level 1 is expected to be at {64,0; 32x32} which is out of bounds of the source image.
+   9.775 Warning! Sprite at {0,0; 64x64} from __galdocs-machining__/graphics/icons/intermediates/stocks/copper/copper-fine-pipe-stock-0000.png is defined with 4 mipmap levels, but level 1 is expected to be at {64,0; 32x32} which is out of bounds of the source image.
+   9.775 Warning! Sprite at {0,0; 64x64} from __galdocs-machining__/graphics/icons/intermediates/stocks/copper/copper-gear-stock-0000.png is defined with 4 mipmap levels, but level 1 is expected to be at {64,0; 32x32} which is out of bounds of the source image.
+   9.776 Warning! Sprite at {0,0; 64x64} from __galdocs-machining__/graphics/icons/intermediates/stocks/copper/copper-pipe-stock-0000.png is defined with 4 mipmap levels, but level 1 is expected to be at {64,0; 32x32} which is out of bounds of the source image.
+   9.780 Warning! Sprite at {0,0; 64x64} from __galdocs-machining__/graphics/icons/intermediates/stocks/copper/copper-plate-stock-0000.png is defined with 4 mipmap levels, but level 1 is expected to be at {64,0; 32x32} which is out of bounds of the source image.
+   9.780 Warning! Sprite at {0,0; 64x64} from __galdocs-machining__/graphics/icons/intermediates/stocks/copper/copper-sheet-stock-0000.png is defined with 4 mipmap levels, but level 1 is expected to be at {64,0; 32x32} which is out of bounds of the source image.
+   9.781 Warning! Sprite at {0,0; 64x64} from __galdocs-machining__/graphics/icons/intermediates/stocks/copper/copper-square-stock-0000.png is defined with 4 mipmap levels, but level 1 is expected to be at {64,0; 32x32} which is out of bounds of the source image.
+   9.781 Warning! Sprite at {0,0; 64x64} from __galdocs-machining__/graphics/icons/intermediates/stocks/copper/copper-wire-stock-0000.png is defined with 4 mipmap levels, but level 1 is expected to be at {64,0; 32x32} which is out of bounds of the source image.
+   9.782 Warning! Sprite at {0,0; 64x64} from __galdocs-machining__/graphics/icons/intermediates/stocks/galvanized-steel/galvanized-steel-angle-stock-0000.png is defined with 4 mipmap levels, but level 1 is expected to be at {64,0; 32x32} which is out of bounds of the source image.
+   9.785 Warning! Sprite at {0,0; 64x64} from __galdocs-machining__/graphics/icons/intermediates/stocks/galvanized-steel/galvanized-steel-fine-gear-stock-0000.png is defined with 4 mipmap levels, but level 1 is expected to be at {64,0; 32x32} which is out of bounds of the source image.
+   9.785 Warning! Sprite at {0,0; 64x64} from __galdocs-machining__/graphics/icons/intermediates/stocks/galvanized-steel/galvanized-steel-fine-pipe-stock-0000.png is defined with 4 mipmap levels, but level 1 is expected to be at {64,0; 32x32} which is out of bounds of the source image.
+   9.785 Warning! Sprite at {0,0; 64x64} from __galdocs-machining__/graphics/icons/intermediates/stocks/galvanized-steel/galvanized-steel-gear-stock-0000.png is defined with 4 mipmap levels, but level 1 is expected to be at {64,0; 32x32} which is out of bounds of the source image.
+   9.786 Warning! Sprite at {0,0; 64x64} from __galdocs-machining__/graphics/icons/intermediates/stocks/galvanized-steel/galvanized-steel-girder-stock-0000.png is defined with 4 mipmap levels, but level 1 is expected to be at {64,0; 32x32} which is out of bounds of the source image.
+   9.786 Warning! Sprite at {0,0; 64x64} from __galdocs-machining__/graphics/icons/intermediates/stocks/galvanized-steel/galvanized-steel-pipe-stock-0000.png is defined with 4 mipmap levels, but level 1 is expected to be at {64,0; 32x32} which is out of bounds of the source image.
+   9.786 Warning! Sprite at {0,0; 64x64} from __galdocs-machining__/graphics/icons/intermediates/stocks/galvanized-steel/galvanized-steel-plate-stock-0000.png is defined with 4 mipmap levels, but level 1 is expected to be at {64,0; 32x32} which is out of bounds of the source image.
+   9.786 Warning! Sprite at {0,0; 64x64} from __galdocs-machining__/graphics/icons/intermediates/stocks/galvanized-steel/galvanized-steel-sheet-stock-0000.png is defined with 4 mipmap levels, but level 1 is expected to be at {64,0; 32x32} which is out of bounds of the source image.
+   9.786 Warning! Sprite at {0,0; 64x64} from __galdocs-machining__/graphics/icons/intermediates/stocks/galvanized-steel/galvanized-steel-square-stock-0000.png is defined with 4 mipmap levels, but level 1 is expected to be at {64,0; 32x32} which is out of bounds of the source image.
+   9.787 Warning! Sprite at {0,0; 64x64} from __galdocs-machining__/graphics/icons/intermediates/stocks/galvanized-steel/galvanized-steel-wire-stock-0000.png is defined with 4 mipmap levels, but level 1 is expected to be at {64,0; 32x32} which is out of bounds of the source image.
+   9.787 Warning! Sprite at {0,0; 64x64} from __galdocs-machining__/graphics/icons/intermediates/stocks/iron/iron-angle-stock-0000.png is defined with 4 mipmap levels, but level 1 is expected to be at {64,0; 32x32} which is out of bounds of the source image.
+   9.787 Warning! Sprite at {0,0; 64x64} from __galdocs-machining__/graphics/icons/intermediates/stocks/iron/iron-fine-gear-stock-0000.png is defined with 4 mipmap levels, but level 1 is expected to be at {64,0; 32x32} which is out of bounds of the source image.
+   9.787 Warning! Sprite at {0,0; 64x64} from __galdocs-machining__/graphics/icons/intermediates/stocks/iron/iron-fine-pipe-stock-0000.png is defined with 4 mipmap levels, but level 1 is expected to be at {64,0; 32x32} which is out of bounds of the source image.
+   9.787 Warning! Sprite at {0,0; 64x64} from __galdocs-machining__/graphics/icons/intermediates/stocks/iron/iron-gear-stock-0000.png is defined with 4 mipmap levels, but level 1 is expected to be at {64,0; 32x32} which is out of bounds of the source image.
+   9.791 Warning! Sprite at {0,0; 64x64} from __galdocs-machining__/graphics/icons/intermediates/stocks/iron/iron-girder-stock-0000.png is defined with 4 mipmap levels, but level 1 is expected to be at {64,0; 32x32} which is out of bounds of the source image.
+   9.791 Warning! Sprite at {0,0; 64x64} from __galdocs-machining__/graphics/icons/intermediates/stocks/iron/iron-pipe-stock-0000.png is defined with 4 mipmap levels, but level 1 is expected to be at {64,0; 32x32} which is out of bounds of the source image.
+   9.791 Warning! Sprite at {0,0; 64x64} from __galdocs-machining__/graphics/icons/intermediates/stocks/iron/iron-plate-stock-0000.png is defined with 4 mipmap levels, but level 1 is expected to be at {64,0; 32x32} which is out of bounds of the source image.
+   9.792 Warning! Sprite at {0,0; 64x64} from __galdocs-machining__/graphics/icons/intermediates/stocks/iron/iron-sheet-stock-0000.png is defined with 4 mipmap levels, but level 1 is expected to be at {64,0; 32x32} which is out of bounds of the source image.
+   9.792 Warning! Sprite at {0,0; 64x64} from __galdocs-machining__/graphics/icons/intermediates/stocks/iron/iron-square-stock-0000.png is defined with 4 mipmap levels, but level 1 is expected to be at {64,0; 32x32} which is out of bounds of the source image.
+   9.792 Warning! Sprite at {0,0; 64x64} from __galdocs-machining__/graphics/icons/intermediates/stocks/iron/iron-wire-stock-0000.png is defined with 4 mipmap levels, but level 1 is expected to be at {64,0; 32x32} which is out of bounds of the source image.
+   9.792 Warning! Sprite at {0,0; 64x64} from __galdocs-machining__/graphics/icons/intermediates/stocks/lead/lead-fine-pipe-stock-0000.png is defined with 4 mipmap levels, but level 1 is expected to be at {64,0; 32x32} which is out of bounds of the source image.
+   9.792 Warning! Sprite at {0,0; 64x64} from __galdocs-machining__/graphics/icons/intermediates/stocks/lead/lead-pipe-stock-0000.png is defined with 4 mipmap levels, but level 1 is expected to be at {64,0; 32x32} which is out of bounds of the source image.
+   9.792 Warning! Sprite at {0,0; 64x64} from __galdocs-machining__/graphics/icons/intermediates/stocks/lead/lead-plate-stock-0000.png is defined with 4 mipmap levels, but level 1 is expected to be at {64,0; 32x32} which is out of bounds of the source image.
+   9.792 Warning! Sprite at {0,0; 64x64} from __galdocs-machining__/graphics/icons/intermediates/stocks/lead/lead-sheet-stock-0000.png is defined with 4 mipmap levels, but level 1 is expected to be at {64,0; 32x32} which is out of bounds of the source image.
+   9.793 Warning! Sprite at {0,0; 64x64} from __galdocs-machining__/graphics/icons/intermediates/stocks/steel/steel-angle-stock-0000.png is defined with 4 mipmap levels, but level 1 is expected to be at {64,0; 32x32} which is out of bounds of the source image.
+   9.793 Warning! Sprite at {0,0; 64x64} from __galdocs-machining__/graphics/icons/intermediates/stocks/steel/steel-fine-gear-stock-0000.png is defined with 4 mipmap levels, but level 1 is expected to be at {64,0; 32x32} which is out of bounds of the source image.
+   9.793 Warning! Sprite at {0,0; 64x64} from __galdocs-machining__/graphics/icons/intermediates/stocks/steel/steel-fine-pipe-stock-0000.png is defined with 4 mipmap levels, but level 1 is expected to be at {64,0; 32x32} which is out of bounds of the source image.
+   9.793 Warning! Sprite at {0,0; 64x64} from __galdocs-machining__/graphics/icons/intermediates/stocks/steel/steel-gear-stock-0000.png is defined with 4 mipmap levels, but level 1 is expected to be at {64,0; 32x32} which is out of bounds of the source image.
+   9.793 Warning! Sprite at {0,0; 64x64} from __galdocs-machining__/graphics/icons/intermediates/stocks/steel/steel-girder-stock-0000.png is defined with 4 mipmap levels, but level 1 is expected to be at {64,0; 32x32} which is out of bounds of the source image.
+   9.793 Warning! Sprite at {0,0; 64x64} from __galdocs-machining__/graphics/icons/intermediates/stocks/steel/steel-pipe-stock-0000.png is defined with 4 mipmap levels, but level 1 is expected to be at {64,0; 32x32} which is out of bounds of the source image.
+   9.799 Warning! Sprite at {0,0; 64x64} from __galdocs-machining__/graphics/icons/intermediates/stocks/steel/steel-plate-stock-0000.png is defined with 4 mipmap levels, but level 1 is expected to be at {64,0; 32x32} which is out of bounds of the source image.
+   9.799 Warning! Sprite at {0,0; 64x64} from __galdocs-machining__/graphics/icons/intermediates/stocks/steel/steel-sheet-stock-0000.png is defined with 4 mipmap levels, but level 1 is expected to be at {64,0; 32x32} which is out of bounds of the source image.
+   9.799 Warning! Sprite at {0,0; 64x64} from __galdocs-machining__/graphics/icons/intermediates/stocks/steel/steel-square-stock-0000.png is defined with 4 mipmap levels, but level 1 is expected to be at {64,0; 32x32} which is out of bounds of the source image.
+   9.799 Warning! Sprite at {0,0; 64x64} from __galdocs-machining__/graphics/icons/intermediates/stocks/steel/steel-wire-stock-0000.png is defined with 4 mipmap levels, but level 1 is expected to be at {64,0; 32x32} which is out of bounds of the source image.
+   9.800 Warning! Sprite at {0,0; 64x64} from __galdocs-machining__/graphics/icons/intermediates/stocks/titanium/titanium-angle-stock-0000.png is defined with 4 mipmap levels, but level 1 is expected to be at {64,0; 32x32} which is out of bounds of the source image.
+   9.800 Warning! Sprite at {0,0; 64x64} from __galdocs-machining__/graphics/icons/intermediates/stocks/titanium/titanium-fine-gear-stock-0000.png is defined with 4 mipmap levels, but level 1 is expected to be at {64,0; 32x32} which is out of bounds of the source image.
+   9.800 Warning! Sprite at {0,0; 64x64} from __galdocs-machining__/graphics/icons/intermediates/stocks/titanium/titanium-fine-pipe-stock-0000.png is defined with 4 mipmap levels, but level 1 is expected to be at {64,0; 32x32} which is out of bounds of the source image.
+   9.800 Warning! Sprite at {0,0; 64x64} from __galdocs-machining__/graphics/icons/intermediates/stocks/titanium/titanium-gear-stock-0000.png is defined with 4 mipmap levels, but level 1 is expected to be at {64,0; 32x32} which is out of bounds of the source image.
+   9.800 Warning! Sprite at {0,0; 64x64} from __galdocs-machining__/graphics/icons/intermediates/stocks/titanium/titanium-girder-stock-0000.png is defined with 4 mipmap levels, but level 1 is expected to be at {64,0; 32x32} which is out of bounds of the source image.
+   9.800 Warning! Sprite at {0,0; 64x64} from __galdocs-machining__/graphics/icons/intermediates/stocks/titanium/titanium-pipe-stock-0000.png is defined with 4 mipmap levels, but level 1 is expected to be at {64,0; 32x32} which is out of bounds of the source image.
+   9.801 Warning! Sprite at {0,0; 64x64} from __galdocs-machining__/graphics/icons/intermediates/stocks/titanium/titanium-plate-stock-0000.png is defined with 4 mipmap levels, but level 1 is expected to be at {64,0; 32x32} which is out of bounds of the source image.
+   9.801 Warning! Sprite at {0,0; 64x64} from __galdocs-machining__/graphics/icons/intermediates/stocks/titanium/titanium-sheet-stock-0000.png is defined with 4 mipmap levels, but level 1 is expected to be at {64,0; 32x32} which is out of bounds of the source image.
+   9.801 Warning! Sprite at {0,0; 64x64} from __galdocs-machining__/graphics/icons/intermediates/stocks/titanium/titanium-square-stock-0000.png is defined with 4 mipmap levels, but level 1 is expected to be at {64,0; 32x32} which is out of bounds of the source image.
+   9.801 Warning! Sprite at {0,0; 64x64} from __galdocs-machining__/graphics/icons/intermediates/stocks/titanium/titanium-wire-stock-0000.png is defined with 4 mipmap levels, but level 1 is expected to be at {64,0; 32x32} which is out of bounds of the source image.
+   9.802 Warning! Sprite at {0,0; 64x64} from __galdocs-machining__/graphics/icons/intermediates/stocks/zinc/zinc-plate-stock-0000.png is defined with 4 mipmap levels, but level 1 is expected to be at {64,0; 32x32} which is out of bounds of the source image.
+   9.802 Warning! Sprite at {0,0; 256x256} from __galdocs-machining__/graphics/technology-icons/lathe-technology-icon.png is defined with 4 mipmap levels, but level 1 is expected to be at {256,0; 128x128} which is out of bounds of the source image.
+   9.840 Sprites loaded
+   9.853 Generated mipmaps (4) for atlas [3] of size 16384x5568   
+   9.865 Generated mipmaps (3) for atlas [4] of size 8192x4432   
+   9.876 Generated mipmaps (3) for atlas [5] of size 16384x6064   
+   9.887 Generated mipmaps (3) for atlas [6] of size 4096x3216   
+   9.898 Generated mipmaps (3) for atlas [7] of size 4096x1856   
+   9.985 Generated mipmaps (3) for atlas [8] of size 4096x3088   
+   9.998 Generated mipmaps (5) for atlas [9] of size 8192x2544   
+  10.009 Generated mipmaps (3) for atlas [12] of size 8192x2352   
+  10.028 Custom mipmaps uploaded.
+  10.241 Factorio initialised
+  10.243 Steam Storage Quota: 3886/4768
+  25.756 Quitting: user-quit.
+  26.038 Steam API shutdown.
+  26.043 Goodbye
