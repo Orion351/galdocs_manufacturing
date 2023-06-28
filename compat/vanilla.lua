@@ -72,7 +72,8 @@ local intermediates_to_remove = { -- list of item-names
   ["steel-plate"] = true,
   ["iron-gear-wheel"] = true,
   ["copper-cable"] = true,
-  ["iron-stick"] = true
+  ["iron-stick"] = true,
+  ["pipe"] = true
 }
 
 --[[ 
@@ -229,7 +230,7 @@ local intermediates_to_add_table = { -- {name, ingredients_to_add}, where ingred
   ["iron-chest"]                       = {{"basic-paneling", 1}, {"basic-bolts", 1}},
   ["steel-chest"]                      = {{"high-tensile-paneling", 1}, {"high-tensile-bolts", 1}},
 
-  ["storage-tank"]                     = {{"corrosion-resistant-large-paneling", 1}, {"high-tensile-girdering", 1}, {"basic-rivets", 1}},
+  ["storage-tank"]                     = {{"corrosion-resistant-large-paneling", 1}, {"high-tensile-girdering", 1}, {"corrosion-resistant-fine-piping", 1}, {"basic-rivets", 1}},
 
   ["transport-belt"]                   = {{"basic-paneling", 1}, {"basic-fine-gearing", 1}, {"basic-bolts", 1}},
   ["fast-transport-belt"]              = {{"high-tensile-framing", 1}, {"ductile-fine-gearing", 1}, {"basic-bolts", 1}},
@@ -247,9 +248,9 @@ local intermediates_to_add_table = { -- {name, ingredients_to_add}, where ingred
   ["inserter"]                         = {{"load-bearing-framing", 1}, {"load-bearing-shafting", 1}, {"basic-fine-gearing", 1}, {"basic-bolts", 1}},
   ["long-handed-inserter"]             = {{"heavy-load-bearing-framing", 1}, {"ductile-fine-gearing", 1}, {"high-tensile-bolts", 1}},
   ["fast-inserter"]                    = {{"heavy-load-bearing-framing", 1}, {"ductile-fine-gearing", 1}, {"high-tensile-bolts", 1}},
-  ["filter-inserter"]                  = {},
+  -- ["filter-inserter"]                  = {},
   ["stack-inserter"]                   = {{"heavy-load-bearing-framing", 1}, {"high-tensile-fine-gearing", 1}, {"very-high-tensile-bolts", 1}},
-  ["stack-filter-inserter"]            = {},
+  -- ["stack-filter-inserter"]            = {},
 
   ["small-electric-pole"]              = {{"electrically-conductive-wiring", 1}},
   ["medium-electric-pole"]             = {{"electrically-conductive-wiring", 1}, {"load-bearing-girdering", 1}, {"basic-bolts", 1}},
@@ -258,7 +259,7 @@ local intermediates_to_add_table = { -- {name, ingredients_to_add}, where ingred
 
   ["pipe"]                             = {{"corrosion-resistant-piping", 1}, {"basic-rivets", 1}},
   ["pipe-to-ground"]                   = {{"corrosion-resistant-piping", 1}, {"basic-rivets", 1}},
-  ["pump"]                             = {{"corrosion-resistant-piping", 1}, {"load-bearing-framing", 1}, {"basic-rivets", 1}},
+  ["pump"]                             = {{"corrosion-resistant-fine-piping", 1}, {"load-bearing-framing", 1}, {"basic-rivets", 1}},
 
   ["rail"]                             = {{"high-tensile-girdering", 1}, {"basic-rivets", 1}},
   ["train-stop"]                       = {{"high-tensile-girdering", 1}, {"high-tensile-large-paneling", 1}, {"electrically-conductive-wiring", 1}, {"high-tensile-rivets", 1}},
@@ -267,22 +268,22 @@ local intermediates_to_add_table = { -- {name, ingredients_to_add}, where ingred
 
   ["locomotive"]                       = {{"load-bearing-girdering", 1}, {"high-tensile-large-paneling", 1}, {"high-tensile-gearing", 1}, {"high-tensile-shafting", 1}, {"high-tensile-rivets", 1}},
   ["cargo-wagon"]                      = {{"load-bearing-girdering", 1}, {"high-tensile-large-paneling", 1}, {"high-tensile-shafting", 1}, {"high-tensile-rivets", 1}},
-  ["fluid-wagon"]                      = {{"load-bearing-girdering", 1}, {"corrosion-resistant-large-paneling", 1}, {"high-tensile-shafting", 1}, {"high-tensile-rivets", 1}},
+  ["fluid-wagon"]                      = {{"load-bearing-girdering", 1}, {"corrosion-resistant-large-paneling", 1}, {"high-tensile-shafting", 1}, {"corrosion-resistant-fine-piping", 1}, {"high-tensile-rivets", 1}},
   ["artillery-wagon"]                  = {{"load-bearing-girdering", 1}, {"very-high-tensile-large-paneling", 1}, {"high-tensile-shafting", 1}, {"high-tensile-rivets", 1}, {"electrically-conductive-wiring", 1}},
 
   ["car"]                              = {{"load-bearing-framing", 1}, {"high-tensile-paneling", 1}, {"ductile-gearing", 1}, {"high-tensile-shafting", 1}, {"high-tensile-bolts", 1}},
   ["tank"]                             = {{"heavy-load-bearing-framing", 1}, {"very-high-tensile-paneling", 1}, {"very-high-tensile-gearing", 1}, {"thermally-stable-shielding", 1}, {"very-high-tensile-bolts", 1}},
   ["spidertron"]                       = {{"heavy-load-bearing-framing", 1}, {"very-high-tensile-paneling", 1}, {"very-high-tensile-gearing", 1}, {"thermally-stable-shielding", 1}, {"very-high-tensile-bolts", 1}}, -- FIXME
-  ["spidertron-remote"]                = {}, -- FIXME
+  -- ["spidertron-remote"]                = {}, -- FIXME
 
   ["logistic-robot"]                   = {{"lightweight-framing", 1}, {"lightweight-paneling", 1}, {"high-tensile-bolts", 1}},
   ["construction-robot"]               = {{"lightweight-framing", 1}, {"lightweight-paneling", 1}, {"high-tensile-bolts", 1}},
 
-  ["logistic-chest-active-provider"]   = {}, 
-  ["logistic-chest-passive-provider"]  = {}, 
-  ["logistic-chest-storage"]           = {}, 
-  ["logistic-chest-buffer"]            = {}, 
-  ["logistic-chest-requester"]         = {}, 
+  -- ["logistic-chest-active-provider"]   = {}, 
+  -- ["logistic-chest-passive-provider"]  = {}, 
+  -- ["logistic-chest-storage"]           = {}, 
+  -- ["logistic-chest-buffer"]            = {}, 
+  -- ["logistic-chest-requester"]         = {}, 
 
   ["roboport"]                         = {{"load-bearing-girdering", 1}, {"high-tensile-large-paneling", 1}, {"ductile-gearing", 1}, {"electrically-conductive-wiring", 1}, {"high-tensile-rivets", 1}},
 
@@ -298,68 +299,67 @@ local intermediates_to_add_table = { -- {name, ingredients_to_add}, where ingred
   ["programmable-speaker"]             = {{"basic-paneling", 1}, {"basic-rivets", 1}, {"electrically-conductive-wiring", 1}},
 
   -- Production
-  ["repair-pack"]                      = {}, -- FIXME
+  -- ["repair-pack"]                      = {}, -- FIXME
 
-  ["boiler"]                           = {{"load-bearing-girdering", 1}, {"corrosion-resistant-paneling", 1}, {"corrosion-resistant-piping", 1}, {"basic-rivets", 1}},
-  ["steam-engine"]                     = {{"load-bearing-girdering", 1}, {"corrosion-resistant-paneling", 1}, {"corrosion-resistant-piping", 1}, {"basic-gearing", 1}, {"basic-rivets", 1}, {"electrically-conductive-wiring", 1}},
+  ["boiler"]                           = {{"load-bearing-girdering", 1}, {"corrosion-resistant-paneling", 1}, {"corrosion-resistant-fine-piping", 1}, {"basic-rivets", 1}},
+  ["steam-engine"]                     = {{"load-bearing-girdering", 1}, {"corrosion-resistant-paneling", 1}, {"corrosion-resistant-fine-piping", 1}, {"basic-gearing", 1}, {"basic-rivets", 1}, {"electrically-conductive-wiring", 1}},
 
   ["solar-panel"]                      = {{"load-bearing-girdering", 1}, {"electrically-conductive-wiring", 1}, {"high-tensile-rivets", 1}},
   ["accumulator"]                      = {{"load-bearing-girdering", 1}, {"electrically-conductive-wiring", 1}, {"basic-rivets", 1}},
 
   ["nuclear-reactor"]                  = {{"heavy-load-bearing-girdering", 1}, {"radiation-resistant-shielding", 1}, {"thermally-stable-shielding", 1}, {"electrically-conductive-wiring", 1}, {"thermally-conductive-shafting", 1}, {"very-high-tensile-rivets", 1}, {"corrosion-resistant-piping", 1}}, -- FIXME (Needs thermally stable something)
   ["heat-pipe"]                        = {{"thermally-conductive-shafting", 1}}, -- FIXME (Needs thermally stable something)
-  --[[
-  ["heat-exchanger"]                   = {{"load-bearing-girdering", 1}, {"", 1}, {"", 1}, {"", 1}, {"", 1}, {"", 1}}, -- FIXME (Needs thermally stable something)
-  ["steam-turbine"]                    = {{"load-bearing-girdering", 1}, {"", 1}, {"", 1}, {"", 1}, {"", 1}, {"", 1}}, -- FIXME (Needs thermally stable something)
+  
+  ["heat-exchanger"]                   = {{"load-bearing-girdering", 1}, {"corrosion-resistant-paneling", 1}, {"thermally-conductive-shafting", 1}, {"corrosion-resistant-fine-piping", 1}, {"high-tensile-rivets", 1}}, -- FIXME (Needs thermally stable something)
+  ["steam-turbine"]                    = {{"load-bearing-girdering", 1}, {"corrosion-resistant-paneling", 1}, {"thermally-conductive-shafting", 1}, {"corrosion-resistant-fine-piping", 1}, {"ductile-gearing", 1}, {"high-tensile-rivets", 1}}, -- FIXME (Needs thermally stable something)
 
-  ["burner-mining-drill"]              = {{"", 1}, {"", 1}, {"", 1}, {"", 1}, {"", 1}, {"", 1}},
-  ["electric-mining-drill"]            = {{"", 1}, {"", 1}, {"", 1}, {"", 1}, {"", 1}, {"", 1}},
+  ["burner-mining-drill"]              = {{"load-bearing-girdering", 1}, {"load-bearing-shafting", 1}, {"electrically-conductive-wiring", 1}, {"basic-rivets", 1}},
+  ["electric-mining-drill"]            = {{"load-bearing-girdering", 1}, {"load-bearing-shafting", 1}, {"corrosion-resistant-fine-piping", 1}, {"ductile-gearing", 1}, {"electrically-conductive-wiring", 1}},
 
-  ["offshore-pump"]                    = {{"", 1}, {"", 1}, {"", 1}, {"", 1}, {"", 1}, {"", 1}},
+  ["offshore-pump"]                    = {{"load-bearing-framing", 1}, {"corrosion-resistant-piping", 1}, {"basic-paneling", 1}, {"electrically-conductive-wiring", 1}, {"basic-bolts", 1}},
 
-  ["pumpjack"]                         = {{"", 1}, {"", 1}, {"", 1}, {"", 1}, {"", 1}, {"", 1}},
+  ["pumpjack"]                         = {{"heavy-load-bearing-girdering", 1}, {"corrosion-resistant-paneling", 1}, {"corrosion-resistant-fine-piping", 1}, {"high-tensile-shafting", 1}, {"high-tensile-rivets", 1}, {"electrically-conductive-wiring", 1}},
 
-  ["steel-furnace"]                    = {{"", 1}, {"", 1}, {"", 1}, {"", 1}, {"", 1}, {"", 1}},
-  ["electric-furnace"]                 = {{"", 1}, {"", 1}, {"", 1}, {"", 1}, {"", 1}, {"", 1}},
+  ["steel-furnace"]                    = {{"heavy-load-bearing-girdering", 1}, {"high-tensile-rivets", 1}}, -- FIXME (needs thermally stable something)
+  ["electric-furnace"]                 = {{"heavy-load-bearing-girdering", 1}, {"electrically-conductive-wiring", 1}, {"high-tensile-rivets", 1}}, -- FIXME (needs thermally stable something)
 
-  ["assembling-machine-1"]             = {{"", 1}, {"", 1}, {"", 1}, {"", 1}, {"", 1}, {"", 1}},
-  ["assembling-machine-2"]             = {{"", 1}, {"", 1}, {"", 1}, {"", 1}, {"", 1}, {"", 1}},
-  ["assembling-machine-3"]             = {{"", 1}, {"", 1}, {"", 1}, {"", 1}, {"", 1}, {"", 1}},
+  ["assembling-machine-1"]             = {{"load-bearing-girdering", 1}, {"basic-gearing", 1}, {"load-bearing-shafting", 1}, {"basic-paneling", 1}, {"electrically-conductive-wiring", 1}, {"basic-rivets", 1}},
+  ["assembling-machine-2"]             = {{"heavy-load-bearing-girdering", 1}, {"corrosion-resistant-fine-piping", 1}, {"ductile-gearing", 1}, {"high-tensile-paneling", 1}, {"heavy-load-bearing-shafting", 1}, {"electrically-conductive-wiring", 1}, {"high-tensile-rivets", 1}},
+  ["assembling-machine-3"]             = {{"heavy-load-bearing-girdering", 1}, {"corrosion-resistant-fine-piping", 1}, {"ductile-gearing", 1}, {"very-high-tensile-paneling", 1}, {"heavy-load-bearing-shafting", 1}, {"electrically-conductive-wiring", 1}, {"very-high-tensile-rivets", 1}}, -- FIXME (needs thermally stable something)
 
-  ["oil-refinery"]                     = {{"", 1}, {"", 1}, {"", 1}, {"", 1}, {"", 1}, {"", 1}},
-  ["chemical-plant"]                   = {{"", 1}, {"", 1}, {"", 1}, {"", 1}, {"", 1}, {"", 1}},
+  ["oil-refinery"]                     = {{"heavy-load-bearing-girdering", 1}, {"corrosion-resistant-fine-piping", 1}, {"corrosion-resistant-paneling", 1}, {"electrically-conductive-wiring", 1}, {"high-tensile-rivets", 1}}, -- FIXME (needs thermally stable something)
+  ["chemical-plant"]                   = {{"heavy-load-bearing-girdering", 1}, {"corrosion-resistant-fine-piping", 1}, {"corrosion-resistant-paneling", 1}, {"electrically-conductive-wiring", 1}, {"high-tensile-rivets", 1}}, -- FIXME (needs thermally stable something) 
 
-  ["centrifuge"]                       = {{"", 1}, {"", 1}, {"", 1}, {"", 1}, {"", 1}, {"", 1}},
+  ["centrifuge"]                       = {{"heavy-load-bearing-girdering", 1}, {"high-tensile-paneling", 1}, {"radiation-resistant-shielding", 1}, {"very-high-tensile-gearing", 1}, {"ductile-gearing", 1}, {"high-tensile-rivets", 1}},
 
-  ["lab"]                              = {{"", 1}, {"", 1}, {"", 1}, {"", 1}, {"", 1}, {"", 1}},
+  ["lab"]                              = {{"load-bearing-girdering", 1}, {"basic-paneling", 1}, {"basic-gearing", 1}, {"electrically-conductive-wiring", 1}, {"basic-rivets", 1}},
 
-  ["beacon"]                           = {{"", 1}, {"", 1}, {"", 1}, {"", 1}, {"", 1}, {"", 1}},
+  ["beacon"]                           = {{"heavy-load-bearing-girdering", 1}, {"high-tensile-paneling", 1}, {"electrically-conductive-wiring", 1}, {"high-tensile-rivets", 1}},
 
-  ["satellite"]                        = {{"", 1}, {"", 1}, {"", 1}, {"", 1}, {"", 1}, {"", 1}},
+  ["rocket-silo"]                      = {{"heavy-load-bearing-girdering", 1}, {"very-high-tensile-paneling", 1}, {"radiation-resistant-shielding", 1}, {"ductile-gearing", 1},  {"electrically-conductive-wiring", 1}, {"very-high-tensile-rivets", 1}},
+  ["satellite"]                        = {{"ductile-paneling", 1}, {"radiation-resistant-shielding", 1}, {"high-tensile-gearing", 1}, {"ductile-framing", 1}, {"electrically-conductive-wiring", 1}, {"very-high-tensile-rivets", 1}},
 
   -- Intermediate Products
-  ["battery"]                          = {{"", 1}, {"", 1}, {"", 1}, {"", 1}, {"", 1}, {"", 1}},
-  ["engine-unit"]                      = {{"", 1}, {"", 1}, {"", 1}, {"", 1}, {"", 1}, {"", 1}},
-  ["electric-engine-unit"]             = {{"", 1}, {"", 1}, {"", 1}, {"", 1}, {"", 1}, {"", 1}},
-  ["flying-robot-frame"]               = {{"", 1}, {"", 1}, {"", 1}, {"", 1}, {"", 1}, {"", 1}},
-  ["rocket-part"]                      = {{"", 1}, {"", 1}, {"", 1}, {"", 1}, {"", 1}, {"", 1}},
-  ["rocket-control-unit"]              = {{"", 1}, {"", 1}, {"", 1}, {"", 1}, {"", 1}, {"", 1}},
-  ["low-density-structure"]            = {{"", 1}, {"", 1}, {"", 1}, {"", 1}, {"", 1}, {"", 1}},
-  ["uranium-fuel-cell"]                = {{"", 1}, {"", 1}, {"", 1}, {"", 1}, {"", 1}, {"", 1}},
+  ["battery"]                          = {{"electrically-conductive-wiring", 1}, {"corrosion-resistant-paneling", 1}},
+  ["engine-unit"]                      = {{"ductile-gearing", 1}, {"basic-paneling", 1}, {"corrosion-resistant-fine-piping", 1}, {"basic-bolts", 1}},
+  ["electric-engine-unit"]             = {{"ductile-gearing", 1}, {"basic-paneling", 1}, {"electrically-conductive-wiring", 1}, {"high-tensile-bolts", 1}},
+  ["flying-robot-frame"]               = {{"lightweight-paneling", 1}, {"lightweight-framing", 1}, {"electrically-conductive-wiring", 1}, {"high-tensile-bolts", 1}},
+  ["rocket-control-unit"]              = {{"lightweight-paneling", 1}, {"electrically-conductive-wiring", 1}, {"high-tensile-bolts", 1}},
+  -- ["low-density-structure"]            = {{"", 1}, {"", 1}, {"", 1}, {"", 1}, {"", 1}, {"", 1}}, -- FIXME
+  ["uranium-fuel-cell"]                = {{"radiation-resistant-paneling", 1}, {"high-tensile-bolts", 1}},
 
   -- Combat FIXME: do this thing
-  ["land-mine"]                        = {{"", 1}, {"", 1}, {"", 1}, {"", 1}, {"", 1}, {"", 1}},
+  ["land-mine"]                        = {{"ductile-paneling", 1}, {"electrically-conductive-wiring", 1}, {"high-tensile-bolts", 1}},
 
-  ["gate"]                             = {{"", 1}, {"", 1}, {"", 1}, {"", 1}, {"", 1}, {"", 1}},
+  ["gate"]                             = {{"high-tensile-paneling", 1}, {"radiation-resistant-shielding", 1}, {"electrically-conductive-wiring", 1}, {"high-tensile-bolts", 1}},
 
-  ["gun-turret"]                       = {{"", 1}, {"", 1}, {"", 1}, {"", 1}, {"", 1}, {"", 1}},
-  ["laser-turret"]                     = {{"", 1}, {"", 1}, {"", 1}, {"", 1}, {"", 1}, {"", 1}},
-  ["flamethrower-turret"]              = {{"", 1}, {"", 1}, {"", 1}, {"", 1}, {"", 1}, {"", 1}},
-  ["artillery-turret"]                 = {{"", 1}, {"", 1}, {"", 1}, {"", 1}, {"", 1}, {"", 1}},
-  ["radar"]                            = {{"", 1}, {"", 1}, {"", 1}, {"", 1}, {"", 1}, {"", 1}},
+  ["gun-turret"]                       = {{"load-bearing-girdering", 1}, {"high-tensile-gearing", 1}, {"ductile-large-paneling", 1}, {"electrically-conductive-wiring", 1}, {"high-tensile-rivets", 1}},
+  ["laser-turret"]                     = {{"load-bearing-girdering", 1}, {"high-tensile-gearing", 1}, {"ductile-large-paneling", 1}, {"electrically-conductive-wiring", 1}, {"high-tensile-rivets", 1}},
+  ["flamethrower-turret"]              = {{"heavy-load-bearing-girdering", 1}, {"high-tensile-gearing", 1}, {"ductile-large-paneling", 1}, {"electrically-conductive-wiring", 1}, {"high-tensile-rivets", 1}}, -- FIXME - invar
+  ["artillery-turret"]                 = {{"heavy-load-bearing-girdering", 1}, {"very-high-tensile-gearing", 1}, {"ductile-large-paneling", 1}, {"electrically-conductive-wiring", 1}, {"very-high-tensile-rivets", 1}},
+  ["radar"]                            = {{"load-bearing-girdering", 1}, {"basic-gearing", 1}, {"basic-large-paneling", 1}, {"electrically-conductive-wiring", 1}, {"basic-rivets", 1}},
 
-  ["artillery-targeting-remote"]       = {{"", 1}, {"", 1}, {"", 1}, {"", 1}, {"", 1}, {"", 1}}
---]]
+  -- ["artillery-targeting-remote"]       = {} -- FIXME
 }
 
 -- Append "-machined-part" onto the intermediate names; this keeps it consistent with their creation but also easy to type above
@@ -390,3 +390,8 @@ for name, ingredients in pairs(intermediates_to_add_table) do
   data.raw.recipe[name].normal = nil
   data.raw.recipe[name].expensive = nil
 end
+
+
+-- Handcraft Basic materials, build Minisemblers from Basic materials, use those to build All The Rest Of The Stoof
+
+-- Give basic armor a 10x1 grid into which you can put Power Tools, one at a time, each of which enable you to make a specific kind of Basic [part]

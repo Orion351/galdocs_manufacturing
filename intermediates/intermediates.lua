@@ -271,7 +271,7 @@ if advanced then -- property_machined_part_pairs : [property | list of machined 
 else
   property_machined_part_pairs = {
     ["basic"]                   = map{"paneling", "framing", "gearing", "piping",                        "shafting", "bolts", "rivets"},
-    ["load-bearing"]            = map{             "framing",                                             "shafting"                  },
+    ["load-bearing"]            = map{             "framing",                                            "shafting"                   },
     ["electrically-conductive"] = map{                                             "wiring"                                           },
     ["high-tensile"]            = map{"paneling", "framing", "gearing",                                  "shafting", "bolts", "rivets"},
     ["corrosion-resistant"]     = map{"paneling",                       "piping",           "shielding",             "bolts", "rivets"},
