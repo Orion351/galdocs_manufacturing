@@ -1,4 +1,4 @@
-require("intermediates.intermediates8")
+require("intermediates.intermediates")
 require("compat.vanilla")
 --[[local resource_autoplace = require("resource-autoplace")
 local params = {}
