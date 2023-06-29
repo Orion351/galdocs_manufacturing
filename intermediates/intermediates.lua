@@ -72,18 +72,20 @@ end
 
 -- Declare all of the things needed to make the intermediates and minisemblers. All of these tables need to agree, manually, but they're all in one spot.
 local metal_properties_pairs = { -- [metal | list of properties]
-  -- pure metals
+  -- elemental metal
   ["iron"]             = map{"basic", "load-bearing", "ferromagnetic"},
   ["copper"]           = map{"basic", "thermally-conductive", "electrically-conductive"},
   ["lead"]             = map{"basic", "radiation-resistant"},
   ["titanium"]         = map{"basic", "load-bearing", "heavy-load-bearing", "very-high-tensile", "lightweight", "high-melting-point"},
   ["zinc"]             = map{"basic"},
+  ["nickel"]           = map{"basic", "load-bearing", "ductile"}, -- FIXME add more properties
 
-  -- alloys
+  -- alloyed metal
   ["steel"]            = map{"basic", "high-tensile", "load-bearing", "heavy-load-bearing", "ferromagnetic"},
   ["brass"]            = map{"basic", "ductile"},
+  ["invar"]            = map{"basic", "load-bearing", "thermally-stable"}, -- FIXME add more properties
 
-  -- treatments
+  -- treatmetreated metalts
   ["galvanized-steel"] = map{"corrosion-resistant", "high-tensile", "load-bearing", "heavy-load-bearing"},
 
   -- Add in Nickel, Invar, Nitionl, and ... maybe Nichrome if we add in chrome
@@ -109,24 +111,35 @@ local function gamma_correct_rgb(rgba)
 end
 --["copper"]           = {{r = 1.0,   g = 0.46211545714481866, b = 0.13889976909582746, a = 1.0}, {r = 0.414416936925898, g = 0.45516584579748814, b = 0.3997152758125342, a = 1.0}},
 
+local function hex_to_rgba(hex)
+  return {
+      r = tonumber("0x" .. hex:sub(1, 2)) / 256,
+      g = tonumber("0x" .. hex:sub(3, 4)) / 256,
+      b = tonumber("0x" .. hex:sub(5, 6)) / 256,
+      a = 1
+    }
+end
+
+
 local metal_tinting_pairs = { -- [metal | {primary RGBA, secondary RGBA}]
+  -- elemental metal
   ["iron"]             = {gamma_correct_rgb{r = 0.32,  g = 0.32,  b = 0.32,  a = 1.0}, gamma_correct_rgb{r = 0.206, g = 0.077, b = 0.057, a = 1.0}},
   ["copper"]           = {gamma_correct_rgb{r = 1.0,   g = 0.183, b = 0.013, a = 1.0}, gamma_correct_rgb{r = 0.144, g = 0.177, b = 0.133, a = 1.0}},
   ["lead"]             = {gamma_correct_rgb{r = 0.241, g = 0.241, b = 0.241, a = 1.0}, gamma_correct_rgb{r = 0.847, g = 0.748, b = 0.144, a = 1.0}},
   ["titanium"]         = {gamma_correct_rgb{r = 0.32,  g = 0.32,  b = 0.32,  a = 1.0}, gamma_correct_rgb{r = 1.0,   g = 1.0,   b = 1.0,   a = 1.0}},
   ["zinc"]             = {gamma_correct_rgb{r = 0.241, g = 0.241, b = 0.241, a = 1.0}, gamma_correct_rgb{r = 0.205, g = 0.076, b = 0.0,   a = 1.0}},
+  ["nickel"]           = {gamma_correct_rgb{r = 0.984, g = 0.984, b = 0.984, a = 1.0}, gamma_correct_rgb{r = 0.388, g = 0.463, b = 0.314, a = 1.0}},
+  -- ["nickel"]           = {gamma_correct_rgb{hex_to_rgba("637650")}, gamma_correct_rgb{r = 0.205, g = 0.076, b = 0.0,   a = 1.0}},
+
+  -- alloyed metal
   ["steel"]            = {gamma_correct_rgb{r = 0.111, g = 0.111, b = 0.111, a = 1.0}, gamma_correct_rgb{r = 0.186, g = 0.048, b = 0.026, a = 1.0}},
   ["brass"]            = {gamma_correct_rgb{r = 1.0,   g = 0.4,   b = 0.071, a = 1.0}, gamma_correct_rgb{r = 0.069, g = 0.131, b = 0.018, a = 1.0}},
-  ["galvanized-steel"] = {gamma_correct_rgb{r = 0.095, g = 0.104, b = 0.148, a = 1.0}, gamma_correct_rgb{r = 0.095, g = 0.104, b = 0.148, a = 1.0}}
-}
+  ["invar"]            = {gamma_correct_rgb{r = 0.984, g = 0.965, b = 0.807, a = 1.0}, gamma_correct_rgb{r = 0.427, g = 0.333, b = 0.220, a = 1.0}},
 
-local function hex_to_rgba(hex)
-  return {
-      tonumber("0x" .. hex:sub(1, 2)) / 256,
-      tonumber("0x" .. hex:sub(3, 4)) / 256,
-      tonumber("0x" .. hex:sub(5, 6)) / 256,
-    1}
-end
+  -- treated metal
+  ["galvanized-steel"] = {gamma_correct_rgb{r = 0.095, g = 0.104, b = 0.148, a = 1.0}, gamma_correct_rgb{r = 0.095, g = 0.104, b = 0.148, a = 1.0}}
+  
+}
 
 local machined_part_property_tinting_pairs = { -- [machined part property | primary RGBA] -- Not sure if this will ever be needed, but if so, here it is.
   ["basic"]                   = hex_to_rgba("847F7F"),
@@ -145,18 +158,20 @@ local machined_part_property_tinting_pairs = { -- [machined part property | prim
 
 if advanced then -- metal_stocks_pairs : [metal | list of stocks that it has]
   metal_stocks_pairs = {
-    -- pure metals
+    -- elemental metal
     ["iron"]              = map{"plate", "sheet", "square", "angle", "girder", "wire", "gear", "fine-gear", "pipe", "fine-pipe"},
     ["copper"]            = map{"plate", "sheet", "square",                    "wire", "gear", "fine-gear", "pipe", "fine-pipe"},
     ["lead"]              = map{"plate", "sheet",                                                           "pipe", "fine-pipe"},
     ["titanium"]          = map{"plate", "sheet", "square", "angle", "girder", "wire", "gear", "fine-gear", "pipe", "fine-pipe"},
     ["zinc"]              = map{"plate"                                                                                        },
+    ["nickel"]            = map{"plate", "sheet", "square", "angle", "girder",         "gear", "fine-gear", "pipe", "fine-pipe"},
 
-    -- alloys
+    -- alloyed metal
     ["steel"]             = map{"plate", "sheet", "square", "angle", "girder", "wire", "gear", "fine-gear", "pipe", "fine-pipe"},
     ["brass"]             = map{"plate", "sheet", "square", "angle", "girder", "wire", "gear", "fine-gear", "pipe", "fine-pipe"},
+    ["invar"]             = map{"plate", "sheet", "square", "angle", "girder",         "gear", "fine-gear", "pipe", "fine-pipe"},
 
-    -- treatments
+    -- treated metal
     ["galvanized-steel"]  = map{"plate", "sheet", "square", "angle", "girder", "wire", "gear", "fine-gear", "pipe", "fine-pipe"}
   }
 else
@@ -167,10 +182,12 @@ else
     ["lead"]              = map{"plate",         },
     ["titanium"]          = map{"plate", "square"},
     ["zinc"]              = map{"plate"          },
+    ["nickel"]            = map{"plate"},
 
     -- alloys
     ["steel"]             = map{"plate", "square"},
     ["brass"]             = map{"plate", "square"},
+    ["invar"]             = map{"plate"},
 
     -- treatments
     ["galvanized-steel"]  = map{"plate", "square"}
@@ -199,8 +216,8 @@ end
 
 if advanced then -- machined_part_minisembler_pairs : [machined part | minisembler]
   machined_part_minisembler_pairs = {
-    ["paneling"]       = "welder",
-    ["large-paneling"] = "welder",
+    ["paneling"]        = "welder",
+    ["large-paneling"]  = "welder",
     ["framing"]         = "drill-press",
     ["girdering"]       = "grinder",
     ["gearing"]         = "grinder",
@@ -215,7 +232,7 @@ if advanced then -- machined_part_minisembler_pairs : [machined part | minisembl
   }
 else 
   machined_part_minisembler_pairs = {
-    ["paneling"] = "mill",
+    ["paneling"]  = "mill",
     ["framing"]   = "bender",
     ["gearing"]   = "mill",
     ["piping"]    = "roller",
