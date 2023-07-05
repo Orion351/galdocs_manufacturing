@@ -1,10 +1,4 @@
-local hit_effects = require ("__base__.prototypes.entity.hit-effects")
-local sounds = require("__base__.prototypes.entity.sounds")
-local explosion_animations = require("__base__.prototypes.entity.explosion-animations")
-local resource_autoplace = require("resource-autoplace")
-
-
---[[ note to future me
+--[[ Note to future me
 Okay look. I have four lists: metals, prroperties, stocks and machined parts. There are relationships between them, which I try to outline below.
 The problem is that a lot of the lists MUST agree with one another, or everything explodes. Because this is such a cumbersome thing, I have tried to make it as neat as possible, in one file.
 Good luck, future me.
@@ -14,50 +8,49 @@ local all_machiend_parts_advanced = {"paneling", "large-paneling", "framing", "g
 local all_machiend_parts_simple = {"paneling", "framing", "gearing", "piping", "wiring", "shielding", "shafting", "bolts", "rivets"}
 local all_stocks_advanced = {"plate", "sheet", "square", "angle", "girder", "wire", "gear", "fine-gear", "pipe", "fine-pipe"}
 local all_stocks_simple = {"plate", "square"}
-local all_metals = {"iron", "copper", "lead", "titanium", "zinc", "steel", "brass", "galvanized-steel"}
+local all_metals = {"iron", "copper", "lead", "titanium", "zinc", "nickel", "steel", "brass", "invar", "galvanized-steel"}
 local all_properties = {"basic", "load-bearing", "heavy-load-bearing", "electrically_conductive", "high_tensile", "very_high_tensile", "corrosion_resistant", "lightweight", "ductile", "thermally_stable", "thermally_conductive", "radiation_resistant"}
---]]
 
---[[ fanout of locale words; these have been put in the new file
-locale words:
+Locale Fanout; these have been put in the new file
 parts: "paneling", "large-paneling", "framing", "girdering", "gearing", "fine-gearing", "piping", "fine-piping", "wiring", "shielding", "shafting", "bolts", "rivets"
 stocks: "plate", "sheet", "square", "angle", "girder", "wire", "gear", "fine-gear", "pipe", "fine-pipe"
-metals: "iron", "copper", "lead", "titanium", "zinc", "steel", "brass", "galvanized-steel"
+metals: "iron", "copper", "lead", "titanium", "zinc", "nickel", "steel", "brass", "invar", "galvanized-steel"
 properties: "basic", "load-bearing", "heavy-load-bearing", "electrically_conductive", "high_tensile", "very_high_tensile", "corrosion_resistant", "lightweight", "ductile", "thermally_stable", "thermally_conductive", "radiation_resistant"
 minisemblers: "roller", "metal-bandsaw", "bender", "mill", "metal-extruder", "metal-lathe", "grinder", "welder", "drill-press", "threader"
 --]]
 
+
+
+-- *********
+-- Variables
+-- *********
+
+local hit_effects = require ("__base__.prototypes.entity.hit-effects")
+local sounds = require("__base__.prototypes.entity.sounds")
+local explosion_animations = require("__base__.prototypes.entity.explosion-animations")
+local resource_autoplace = require("resource-autoplace")
+
 -- Utility variables
 local order_count
 
--- Balance values
+-- Game Balance values
 local machined_part_stack_size = 100
 local stock_stack_size = 100
+local ore_stack_size = 200
 
--- challenge variables
+-- Challenge variables
 local advanced = true
 local specialty_parts = false -- not implimented yet
 local consumable_parts = false -- not implemented yet
 
 -- Settings variables
-local show_property_badges = false
+local show_property_badges = settings.startup["galdocs-machining-show-badges"].value
 
--- ***********
--- Game Tables
--- ***********
 
--- Game Tables
-local machined_part_subgroup
-local metal_stocks_pairs
-local stock_minisembler_pairs
-local machined_part_minisembler_pairs
-local property_machined_part_pairs
-local stocks_precurors
-local machined_parts_precurors
-local minisemblers_rgba_pairs
-local minisemblers_recipe_parameters
-local minisemblers_rendering_data
--- local minisemblers_entity_parameters
+
+-- ****************
+-- Helper Functions
+-- ****************
 
 -- Credit: Code_Green for the map function and general layout advice. Thanks again!
 ---@param t table<int,string>
@@ -70,35 +63,6 @@ local function map(t) -- helper function
   return r
 end
 
--- Declare all of the things needed to make the intermediates and minisemblers. All of these tables need to agree, manually, but they're all in one spot.
-local metal_properties_pairs = { -- [metal | list of properties]
-  -- elemental metal
-  ["iron"]             = map{"basic", "load-bearing", "ferromagnetic"},
-  ["copper"]           = map{"basic", "thermally-conductive", "electrically-conductive"},
-  ["lead"]             = map{"basic", "radiation-resistant"},
-  ["titanium"]         = map{"basic", "load-bearing", "heavy-load-bearing", "very-high-tensile", "lightweight", "high-melting-point"},
-  ["zinc"]             = map{"basic"},
-  ["nickel"]           = map{"basic", "load-bearing", "ductile"}, -- FIXME add more properties
-
-  -- alloyed metal
-  ["steel"]            = map{"basic", "high-tensile", "load-bearing", "heavy-load-bearing", "ferromagnetic"},
-  ["brass"]            = map{"basic", "ductile"},
-  ["invar"]            = map{"basic", "load-bearing", "thermally-stable"}, -- FIXME add more properties
-
-  -- treatmetreated metalts
-  ["galvanized-steel"] = map{"corrosion-resistant", "high-tensile", "load-bearing", "heavy-load-bearing"},
-
-  -- Add in Nickel, Invar, Nitionl, and ... maybe Nichrome if we add in chrome
-}
-
-local ore_list = {
-  ["iron"] = true,
-  ["copper"] = true,
-  ["lead"] = true,
-  ["titanium"] = true,
-  ["zinc"] = true
-}
-
 local gamma_correction = 1/2.2
 local function gamma_correct_rgb(rgba)
   return 
@@ -109,7 +73,6 @@ local function gamma_correct_rgb(rgba)
     rgba.a
   }
 end
---["copper"]           = {{r = 1.0,   g = 0.46211545714481866, b = 0.13889976909582746, a = 1.0}, {r = 0.414416936925898, g = 0.45516584579748814, b = 0.3997152758125342, a = 1.0}},
 
 local function hex_to_rgba(hex)
   return {
@@ -121,6 +84,56 @@ local function hex_to_rgba(hex)
 end
 
 
+-- ***********
+-- Game Tables
+-- ***********
+
+-- Game Tables Declared ... and here and not above because REASONS
+local machined_part_subgroup
+local metal_stocks_pairs
+local stock_minisembler_pairs
+local machined_part_minisembler_pairs
+local property_machined_part_pairs
+local stocks_precurors
+local machined_parts_precurors
+local minisemblers_rgba_pairs
+local minisemblers_recipe_parameters
+local minisemblers_rendering_data
+-- local minisemblers_entity_parameters
+
+-- Declare all of the things needed to make the intermediates and minisemblers. All of these tables need to agree, manually, but they're all in one spot.
+local ores_to_add = { -- ***ORE***
+  ["lead"] = true,
+  ["titanium"] = true,
+  ["zinc"] = true,
+  ["nickel"] = true
+}
+
+local alloy_recipe = {
+  ["steel"] = {{"iron-plate-stock", 5}, {"coal", 1}},
+  ["brass"] = {{"copper-plate-stock", 3}, {"zinc-plate-stock", 1}},
+  ["invar"] = {{"iron-plate-stock", 3}, {"nickel-plate-stock", 2}},
+  ["galvanized-steel"] = {{"steel-plate-stock", 5}, {"zinc-plate-stock", 1}}
+}
+
+local metal_properties_pairs = { -- [metal | list of properties] 
+  -- elemental metal
+  ["iron"]             = map{"basic", "load-bearing"},
+  ["copper"]           = map{"basic", "thermally-conductive", "electrically-conductive"},
+  ["lead"]             = map{"basic", "radiation-resistant"},
+  ["titanium"]         = map{"basic", "load-bearing", "heavy-load-bearing", "very-high-tensile", "lightweight", "high-melting-point"},
+  ["zinc"]             = map{"basic"},
+  ["nickel"]           = map{"basic", "load-bearing", "ductile"},
+
+  -- alloyed metal
+  ["steel"]            = map{"basic", "high-tensile", "load-bearing", "heavy-load-bearing"},
+  ["brass"]            = map{"basic", "ductile", "corrosion-resistant"},
+  ["invar"]            = map{"basic", "load-bearing", "thermally-stable", "high-tensile"},
+
+  -- treated metals
+  ["galvanized-steel"] = map{"basic", "corrosion-resistant", "high-tensile", "load-bearing", "heavy-load-bearing"},
+}
+
 local metal_tinting_pairs = { -- [metal | {primary RGBA, secondary RGBA}]
   -- elemental metal
   ["iron"]             = {gamma_correct_rgb{r = 0.32,  g = 0.32,  b = 0.32,  a = 1.0}, gamma_correct_rgb{r = 0.206, g = 0.077, b = 0.057, a = 1.0}},
@@ -129,7 +142,6 @@ local metal_tinting_pairs = { -- [metal | {primary RGBA, secondary RGBA}]
   ["titanium"]         = {gamma_correct_rgb{r = 0.32,  g = 0.32,  b = 0.32,  a = 1.0}, gamma_correct_rgb{r = 1.0,   g = 1.0,   b = 1.0,   a = 1.0}},
   ["zinc"]             = {gamma_correct_rgb{r = 0.241, g = 0.241, b = 0.241, a = 1.0}, gamma_correct_rgb{r = 0.205, g = 0.076, b = 0.0,   a = 1.0}},
   ["nickel"]           = {gamma_correct_rgb{r = 0.984, g = 0.984, b = 0.984, a = 1.0}, gamma_correct_rgb{r = 0.388, g = 0.463, b = 0.314, a = 1.0}},
-  -- ["nickel"]           = {gamma_correct_rgb{hex_to_rgba("637650")}, gamma_correct_rgb{r = 0.205, g = 0.076, b = 0.0,   a = 1.0}},
 
   -- alloyed metal
   ["steel"]            = {gamma_correct_rgb{r = 0.111, g = 0.111, b = 0.111, a = 1.0}, gamma_correct_rgb{r = 0.186, g = 0.048, b = 0.026, a = 1.0}},
@@ -137,8 +149,7 @@ local metal_tinting_pairs = { -- [metal | {primary RGBA, secondary RGBA}]
   ["invar"]            = {gamma_correct_rgb{r = 0.984, g = 0.965, b = 0.807, a = 1.0}, gamma_correct_rgb{r = 0.427, g = 0.333, b = 0.220, a = 1.0}},
 
   -- treated metal
-  ["galvanized-steel"] = {gamma_correct_rgb{r = 0.095, g = 0.104, b = 0.148, a = 1.0}, gamma_correct_rgb{r = 0.095, g = 0.104, b = 0.148, a = 1.0}}
-  
+  ["galvanized-steel"] = {gamma_correct_rgb{r = 0.095, g = 0.104, b = 0.148, a = 1.0}, gamma_correct_rgb{r = 0.095, g = 0.104, b = 0.148, a = 1.0}}  
 }
 
 local machined_part_property_tinting_pairs = { -- [machined part property | primary RGBA] -- Not sure if this will ever be needed, but if so, here it is.
@@ -194,9 +205,27 @@ else
   }
 end
 
+local metal_technology_pairs = {
+  -- pure metals
+  ["iron"]              = {"vanilla", "starter"},
+  ["copper"]            = {"vanilla", "starter"},
+  ["lead"]              = {"vanilla", "uranium-processing"},
+  ["titanium"]          = {"vanilla", "lubricant"},
+  ["zinc"]              = {"vanilla", "starter"},
+  ["nickel"]            = {"vanilla", "steel-processing"},
+
+  -- alloys 
+  ["steel"]             = {"vanilla", "steel-processing"},
+  ["brass"]             = {"vanilla", "starter"},
+  ["invar"]             = {"vanilla", "steel-processing"},
+
+  -- treatments 
+  ["galvanized-steel"]  = {"vanilla", "steel-processing"},
+}
+
 if advanced then -- stock_minisembler_pairs : [stock | minisembler]
   stock_minisembler_pairs = {
-    ["plate"]     = "none",
+    ["plate"]     = "smelting",
     ["sheet"]     = "roller",
     ["square"]    = "metal-bandsaw",
     ["angle"]     = "bender",
@@ -209,7 +238,7 @@ if advanced then -- stock_minisembler_pairs : [stock | minisembler]
   }
 else 
   stock_minisembler_pairs = {
-    ["plate"]     = "none",
+    ["plate"]     = "smelting",
     ["square"]    = "metal-bandsaw"
   }
 end
@@ -299,15 +328,16 @@ else
     ["radiation-resistant"]     = map{"paneling",                                           "shielding"                               }
   }
 end
+
 -- duplicate the advancement properties over
-property_machined_part_pairs["heavy-load-bearing"]  = property_machined_part_pairs["load-bearing"]
-property_machined_part_pairs["very-high-tensile"]   = property_machined_part_pairs["high-tensile"]
+property_machined_part_pairs["heavy-load-bearing"] = property_machined_part_pairs["load-bearing"]
+property_machined_part_pairs["very-high-tensile"]  = property_machined_part_pairs["high-tensile"]
 
 if advanced then -- stocks_precursors : [stock | stock that crafts it] {stock that crafts it, how many it makes}]
   stocks_precurors = {
-    ["angle"]         = {"sheet", 4},
-    ["fine-gear"]     = {"sheet", 4},
-    ["fine-pipe"]     = {"sheet", 4},
+    ["angle"]         = {"sheet", 2},
+    ["fine-gear"]     = {"sheet", 2},
+    ["fine-pipe"]     = {"sheet", 2},
     ["sheet"]         = {"plate", 2},
     ["pipe"]          = {"plate", 2},
     ["girder"]        = {"plate", 2},
@@ -317,14 +347,14 @@ if advanced then -- stocks_precursors : [stock | stock that crafts it] {stock th
   }
 else
   stocks_precurors = {
-    ["square"] = {"plate", 2}
+    ["square"]        = {"plate", 2}
   }
 end
 
 if advanced then -- machined_parts_precurors : [machined part | stock from which it's crafted] THIS IS ALWAYS 1-TO-1
   machined_parts_precurors = {
-    ["paneling"]       = "sheet",
-    ["large-paneling"] = "sheet",
+    ["paneling"]        = "sheet",
+    ["large-paneling"]  = "sheet",
     ["framing"]         = "angle",
     ["girdering"]       = "girder",
     ["gearing"]         = "gear",
@@ -339,7 +369,7 @@ if advanced then -- machined_parts_precurors : [machined part | stock from which
   }
 else
   machined_parts_precurors = {
-    ["paneling"]       = "plate",
+    ["paneling"]        = "plate",
     ["framing"]         = "plate",
     ["gearing"]         = "plate",
     ["piping"]          = "plate",
@@ -356,9 +386,64 @@ end
 -- Data Extend land
 -- ****************
 
+-- *************************
+-- Pull Original Prototeypes
+-- *************************
+
+-- Copper, Steel, Iron? FIXME
+
 -- *************
 -- Intermediates
 -- *************
+
+-- ***
+-- Ore
+-- ***
+
+-- Make new ores
+for ore, _ in pairs(ores_to_add) do
+  data:extend({
+    {
+      type = "item",
+      name = ore .. "-ore",
+      icon = "__galdocs-machining__/graphics/icons/intermediates/ore/" .. ore .. "/" .. ore .. "-ore-1.png",
+      icon_size = 64,
+      icon_mipmaps = 4,
+      pictures =
+      {
+        { size = 64, filename = "__galdocs-machining__/graphics/icons/intermediates/ore/" .. ore .. "/" .. ore .. "-ore-1.png", scale = 0.25, mipmap_count = 4 },
+        { size = 64, filename = "__galdocs-machining__/graphics/icons/intermediates/ore/" .. ore .. "/" .. ore .. "-ore-2.png", scale = 0.25, mipmap_count = 4 },
+        { size = 64, filename = "__galdocs-machining__/graphics/icons/intermediates/ore/" .. ore .. "/" .. ore .. "-ore-3.png", scale = 0.25, mipmap_count = 4 },
+        { size = 64, filename = "__galdocs-machining__/graphics/icons/intermediates/ore/" .. ore .. "/" .. ore .. "-ore-4.png", scale = 0.25, mipmap_count = 4 }
+      },
+      subgroup = "raw-resource",
+      order = "f[" .. ore .. "-ore]",
+      stack_size = 50,
+      localised_name = {"galdocs-machining.ore-item-name", {"galdocs-machining." .. ore}}
+    },
+  })
+end
+
+-- Replace original ores
+local original_ores = {
+  ["copper"] = true,
+  ["iron"] = true,
+  -- ["uranium-ore"] = true,
+  -- ["coal"] = true,
+  -- ["stone"] = true
+}
+
+for ore, _ in pairs(original_ores) do
+  data.raw.item[ore .. "-ore"].icon = "__galdocs-machining__/graphics/icons/intermediates/ore/" .. ore .. "/" .. ore .. "-ore-1.png"
+  data.raw.item[ore .. "-ore"].pictures =
+    {
+      { size = 64, filename = "__galdocs-machining__/graphics/icons/intermediates/ore/" .. ore .. "/" .. ore .. "-ore-1.png", scale = 0.25, mipmap_count = 4 },
+      { size = 64, filename = "__galdocs-machining__/graphics/icons/intermediates/ore/" .. ore .. "/" .. ore .. "-ore-2.png", scale = 0.25, mipmap_count = 4 },
+      { size = 64, filename = "__galdocs-machining__/graphics/icons/intermediates/ore/" .. ore .. "/" .. ore .. "-ore-3.png", scale = 0.25, mipmap_count = 4 },
+      { size = 64, filename = "__galdocs-machining__/graphics/icons/intermediates/ore/" .. ore .. "/" .. ore .. "-ore-4.png", scale = 0.25, mipmap_count = 4 }
+    }
+end
+
 data:extend({ -- Create item group
   {
     type = "item-group",
@@ -381,6 +466,15 @@ for metal, _ in pairs(metal_stocks_pairs) do -- Make [Metal] [Stock] Subgroups
   })
   order_count = order_count + 1
 end
+
+data:extend({ -- add alloy recipe category
+  {
+    type = "recipe-category",
+    name = "galdocs-machining-alloys",
+    order = "a" .. "galdocs-machining-alloy" .. order_count,
+    -- localised_name = {"galdocs-machining.recipe-category", {"galdocs-machining." .. metal}}
+  }
+})
 
 local machined_part_fanout = { -- ONLY ONE SHOULD BE TRUE
   ["full"]      = false,
@@ -513,7 +607,7 @@ for metal, stocks in pairs(metal_stocks_pairs) do -- Make the [Metal] [Stock] It
         { -- recipe
           type = "recipe",
           name = metal .. "-" .. stock .. "-stock",
-          enabled = true,
+          enabled = metal_technology_pairs[metal][2] == "starter",
           ingredients =
           {
             {metal .. "-" .. stocks_precurors[stock][1] .. "-stock", 1}
@@ -529,25 +623,44 @@ for metal, stocks in pairs(metal_stocks_pairs) do -- Make the [Metal] [Stock] It
         }
       })
     else
-      data:extend({
-        { -- recipe
-          type = "recipe",
-          name = metal .. "-" .. stock .. "-stock",
-          enabled = true,
-          ingredients =
-          {
-            {"iron-plate", 1}
-          },
-          crafting_machine_tint = {
-            primary = metal_tinting_pairs[metal][1],
-            secondary = metal_tinting_pairs[metal][2]
-          },
-          result = metal .. "-" .. stock .. "-stock",
-          localised_name = {"galdocs-machining.metal-stock-item-name", {"galdocs-machining." .. metal}, {"galdocs-machining." .. stock}}
-        }
-      })
+      if ores_to_add[metal] ~= nil then
+        data:extend({
+          { -- recipe
+            type = "recipe",
+            name = metal .. "-" .. stock .. "-stock",
+            enabled = metal_technology_pairs[metal][2] == "starter",
+            ingredients =
+            {
+              {metal .. "-ore", 1}
+            },
+            crafting_machine_tint = {
+              primary = metal_tinting_pairs[metal][1],
+              secondary = metal_tinting_pairs[metal][2]
+            },
+            result = metal .. "-" .. stock .. "-stock",
+            category = "smelting",
+            localised_name = {"galdocs-machining.metal-stock-item-name", {"galdocs-machining." .. metal}, {"galdocs-machining." .. stock}}
+          }
+        })
+      end
     end
   end
+end
+
+local ingredients_table
+for alloy, ingredients in pairs(alloy_recipe) do -- Add alloy plate recipes
+  data:extend({
+    {
+      type = "recipe",
+      name = alloy .. "-plate-stock",
+      enabled = metal_technology_pairs[alloy][2] == "starter",
+      ingredients = ingredients,
+      result = alloy .. "-plate-stock",
+      result_count = 1,
+      category = "galdocs-machining-alloys",
+      -- localised_name = {"galdocs-machining.metal-stock-item-name", {"galdocs-machining." .. metal}, {"galdocs-machining." .. stock}}
+    }
+  })
 end
 
 order_count = 0
@@ -559,7 +672,7 @@ for property, parts in pairs(property_machined_part_pairs) do -- Make the [Prope
     if machined_part_fanout["full"] == true then machined_part_subgroup = "galdocs-machining-machined-parts-" .. property .. "-" .. part end
     if machined_part_fanout["property"] == true then machined_part_subgroup = "galdocs-machining-machined-parts-" .. property end
     if machined_part_fanout["part"] == true then machined_part_subgroup = "galdocs-machining-machined-parts-" .. part end
-    if show_property_badges then 
+    if show_property_badges == "all" then
       icons_data_item = {
           {
             icon = "__galdocs-machining__/graphics/icons/intermediates/machined-parts/" .. property .. "/" .. property .. "-" .. part .. ".png",
@@ -568,7 +681,7 @@ for property, parts in pairs(property_machined_part_pairs) do -- Make the [Prope
           {
             scale = 0.4,
             icon = "__galdocs-machining__/graphics/icons/intermediates/property-icons/" .. property .. ".png",
-            shift = {-10, 10},
+            shift = {-10, -10},
             icon_size = 64
           }
         }
@@ -585,13 +698,6 @@ for property, parts in pairs(property_machined_part_pairs) do -- Make the [Prope
         type = "item",
         name = property .. "-" .. part .. "-machined-part",
         icons = icons_data_item,
-        pictures = 
-        {
-          filename = "__galdocs-machining__/graphics/icons/intermediates/machined-parts/" .. property .. "/" .. property .. "-" .. part .. ".png",
-          width = 64,
-          height = 64,
-          scale = 0.25,
-        },
         subgroup = machined_part_subgroup,
         order = order_count .. "galdocs-machining-machined-parts-" .. part,
         stack_size = machined_part_stack_size,
@@ -601,7 +707,7 @@ for property, parts in pairs(property_machined_part_pairs) do -- Make the [Prope
     })
     for metal, metal_properties in pairs(metal_properties_pairs) do
       if (metal_properties[property] == true and metal_stocks_pairs[metal][machined_parts_precurors[part]] == true) then
-        if show_property_badges then 
+        if show_property_badges == "recipes" or show_property_badges == "all" then
           icons_data_recipe = {
             {
               icon = "__galdocs-machining__/graphics/icons/intermediates/machined-parts/" .. property .. "/" .. property .. "-" .. part .. ".png",
@@ -657,6 +763,8 @@ for property, parts in pairs(property_machined_part_pairs) do -- Make the [Prope
     end
   end
 end
+
+
 
 -- ************
 -- Minisemblers
@@ -1012,15 +1120,43 @@ for minisembler, rgba in pairs(minisemblers_rgba_pairs) do -- build current_anim
   order_count = order_count + 1
 end
 
---[[
+
+
+-- ****
+-- Ores
+-- ****
+
+-- Redo the art for the current ores
+local base_resources_to_replace_with_ore_in_the_stupid_name = {
+  ["copper"] = true,
+  ["iron"] = true,
+  -- ["uranium"] = true,
+}
+
+local base_resources_to_replace_without_ore_in_the_stupid_name = {
+  -- ["coal"] = true,
+  -- ["stone"] = true,
+}
+
+for resource, _ in pairs(base_resources_to_replace_with_ore_in_the_stupid_name) do
+  data.raw.resource[resource .. "-ore"].stages.sheet.filename = "__galdocs-machining__/graphics/entity/resource/" .. resource .. "/" .. resource .. "-ore.png"
+  data.raw.resource[resource .. "-ore"].stages.sheet.hr_version.filename = "__galdocs-machining__/graphics/entity/resource/" .. resource .. "/hr-" .. resource .. "-ore.png"
+  data.raw.resource[resource .. "-ore"].icon = "__galdocs-machining__/graphics/icons/intermediates/ore/" .. resource .. "/" .. resource .. "-ore-1.png"
+end
+
+for resource, _ in pairs(base_resources_to_replace_without_ore_in_the_stupid_name) do
+  data.raw.resource[resource].stages.sheet.filename = "__galdocs-machining__/graphics/entity/resource/" .. resource .. "/" .. resource .. ".png"
+  data.raw.resource[resource].stages.sheet.hr_version.filename = "__galdocs-machining__/graphics/entity/resource/" .. resource .. "/hr-" .. resource .. ".png"
+  data.raw.resource[resource].icon = "__galdocs-machining__/graphics/icons/intermediates/ore/" .. resource .. "/" .. resource .. "-1.png"
+end
+
 local function resource(resource_parameters, autoplace_parameters)
   if coverage == nil then coverage = 0.02 end
-
   return
   {
     type = "resource",
-    name = resource_parameters.name,
-    icon = "__base__/graphics/icons/" .. resource_parameters.name .. ".png",
+    name = resource_parameters.name .. "-ore",
+    icon = "__galdocs-machining__/graphics/icons/intermediates/ore/" .. resource_parameters.name .. "/" .. resource_parameters.name .. "-ore-1.png",
     icon_size = 64,
     icon_mipmaps = 4,
     flags = {"placeable-neutral"},
@@ -1031,7 +1167,7 @@ local function resource(resource_parameters, autoplace_parameters)
     {
       -- mining_particle = resource_parameters.name .. "-particle",
       mining_time = resource_parameters.mining_time,
-      -- result = resource_parameters.name
+      result = resource_parameters.name .. "-ore"
     },
     walking_sound = resource_parameters.walking_sound,
     collision_box = {{-0.1, -0.1}, {0.1, 0.1}},
@@ -1039,27 +1175,27 @@ local function resource(resource_parameters, autoplace_parameters)
     -- autoplace = autoplace_settings(name, order, coverage),
     autoplace = resource_autoplace.resource_autoplace_settings
     {
-      name = resource_parameters.name,
+      name = resource_parameters.name .. "-ore",
       order = resource_parameters.order,
       base_density = autoplace_parameters.base_density,
       has_starting_area_placement = true,
       regular_rq_factor_multiplier = autoplace_parameters.regular_rq_factor_multiplier,
       starting_rq_factor_multiplier = autoplace_parameters.starting_rq_factor_multiplier,
-      candidate_spot_count = autoplace_parameters.candidate_spot_count
+      candidate_spot_count = autoplace_parameters.candidate_spot_count,
     },
     stage_counts = {15000, 9500, 5500, 2900, 1300, 400, 150, 80},
     stages =
     {
       sheet =
       {
-        filename = "__base__/graphics/entity/" .. resource_parameters.name .. "/" .. resource_parameters.name .. ".png",
+        filename = "__galdocs-machining__/graphics/entity/resource/" .. resource_parameters.name .. "/" .. resource_parameters.name .. "-ore.png",
         priority = "extra-high",
         size = 64,
         frame_count = 8,
         variation_count = 8,
         hr_version =
         {
-          filename = "__base__/graphics/entity/" .. resource_parameters.name .. "/hr-" .. resource_parameters.name .. ".png",
+          filename = "__galdocs-machining__/graphics/entity/resource/" .. resource_parameters.name .. "/hr-" .. resource_parameters.name .. "-ore.png",
           priority = "extra-high",
           size = 128,
           frame_count = 8,
@@ -1073,17 +1209,24 @@ local function resource(resource_parameters, autoplace_parameters)
   }
 end
 
-local current_resource
-
-for ore, _ in pairs(ore_list) do
+for ore, _ in pairs(ores_to_add) do
   data:extend({
+    { -- autoplace-control = new game mapgen menu item to toggle ore generation options (frequency,size,richness,etc.)
+        type = "autoplace-control",
+        name = ore .. "-ore",
+        richness = true,
+        order = "x-b" .. ore,
+        category = "resource",
+        localised_name = {"", "[entity=" .. ore .. "-ore] ", {"entity-name." .. ore .. "-ore"}}
+    },
     resource(
       { -- resource_parameters
         name = ore,
         order = "c",
         walking_sound = sounds.ore,
         mining_time = 1,
-        map_color = {r = 1.0, g = 1.0, b = 1.0}
+        map_color = metal_tinting_pairs[ore][2]
+        -- map_color = {r = 1.0, g = 1.0, b = 1.0}
       },
       { -- autoplace_parameters
         base_density = 8,
@@ -1094,4 +1237,13 @@ for ore, _ in pairs(ore_list) do
     )
   })
 end
---]]
+
+-- technology
+for metal, techology_data in pairs(metal_technology_pairs) do
+  if techology_data[2] ~= "starter" and techology_data[1] == "vanilla" then
+    local new_technology = data.raw.technology[techology_data[2]].effects
+    for stock, _ in pairs(metal_stocks_pairs[metal]) do
+      table.insert(new_technology, {type = "unlock-recipe", recipe = metal .. "-" .. stock .. "-stock"})
+    end
+  end
+end
