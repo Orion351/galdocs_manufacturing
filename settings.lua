@@ -4,7 +4,6 @@ data:extend({
     name = "galdocs-machining-show-badges",
     setting_type = "startup",
     default_value = "none",
-    allow_blank = false,
     allowed_values = {"none", "recipes", "all"}
   },
   { -- Advanced mode setting
