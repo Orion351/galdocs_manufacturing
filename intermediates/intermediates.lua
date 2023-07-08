@@ -709,6 +709,7 @@ data:extend({ -- Create item group
     type = "item-group",
     name = "galdocs-manufacturing-intermediates",
     icon = "__galdocs-manufacturing__/graphics/group-icons/galdocs-intermediates-group-icon.png",
+    localised_name = {"galdocs-manufacturing.item-group"},
     icon_size = 128
   }
 })
