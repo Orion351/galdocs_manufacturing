@@ -34,8 +34,8 @@ local resource_autoplace = require("resource-autoplace")
 local order_count
 
 -- Game Balance values
-local machined_part_stack_size = 100
-local stock_stack_size = 100
+local machined_part_stack_size = 200
+local stock_stack_size = 200
 local ore_stack_size = 200
 
 -- Challenge variables
@@ -271,7 +271,6 @@ data:extend({
     localised_description = {"galdocs-machining.technology-machined-part-processing-description", {"galdocs-machining.titanium"}, {"galdocs-machining.machined-parts"}},
   },
 })
-
 
 local metal_technology_pairs = {
   -- pure metals
@@ -513,7 +512,7 @@ if advanced then -- machined_part_minisembler_pairs : [machined part | minisembl
     ["fine-gearing"]    = "grinder",
     ["piping"]          = "welder",
     ["fine-piping"]     = "welder",
-    ["wiring"]          = "metal-extruder",
+    ["wiring"]          = "spooler",
     ["shielding"]       = "mill",
     ["shafting"]        = "metal-lathe",
     ["bolts"]           = "threader",
@@ -595,19 +594,19 @@ property_machined_part_pairs["very-high-tensile"]  = property_machined_part_pair
 
 if advanced then -- stocks_precursors : [stock | stock that crafts it] {stock that crafts it, how many it makes}]
   stocks_precurors = {
-    ["angle"]         = {"sheet", 2},
-    ["fine-gear"]     = {"sheet", 2},
-    ["fine-pipe"]     = {"sheet", 2},
-    ["sheet"]         = {"plate", 2},
-    ["pipe"]          = {"plate", 2},
-    ["girder"]        = {"plate", 2},
-    ["gear"]          = {"plate", 2},
-    ["square"]        = {"plate", 2},
-    ["wire"]          = {"square", 2}
+    ["angle"]         = {"sheet", 1},
+    ["fine-gear"]     = {"sheet", 1},
+    ["fine-pipe"]     = {"sheet", 1},
+    ["sheet"]         = {"plate", 1},
+    ["pipe"]          = {"plate", 1},
+    ["girder"]        = {"plate", 1},
+    ["gear"]          = {"plate", 1},
+    ["square"]        = {"plate", 1},
+    ["wire"]          = {"square", 1}
   }
 else
   stocks_precurors = {
-    ["square"]        = {"plate", 2}
+    ["square"]        = {"plate", 1}
   }
 end
 
@@ -998,7 +997,7 @@ for property, parts in pairs(property_machined_part_pairs) do -- Make the [Prope
           { -- recipe
             type = "recipe",
             name = property .. "-" .. part .. "-from-" .. metal .. "-" .. machined_parts_precurors[part],
-            enabled = true,
+            enabled = metal_technology_pairs[metal][2] == "starter" and property == "basic",
             ingredients =
             {
               {metal .. "-" .. machined_parts_precurors[part] .. "-stock", 1}
@@ -1014,6 +1013,8 @@ for property, parts in pairs(property_machined_part_pairs) do -- Make the [Prope
             localised_name = {"galdocs-machining.machined-part-recipe", {"galdocs-machining." .. property}, {"galdocs-machining." .. part}, {"galdocs-machining." .. metal}, {"galdocs-machining." .. machined_parts_precurors[part]}}
           }
         })
+        -- log("your face")
+        if data.raw.recipe[property .. "-" .. part .. "-from-" .. metal .. "-" .. machined_parts_precurors[part]].enabled == false then log("FALLS") end
         if (metal == "copper" or metal == "iron") and (property == "basic" or property == "electrically-conductive") then
           data:extend({
             { -- recipe
@@ -1075,7 +1076,7 @@ data:extend({ -- Make the minisemblers.
     {
       count = 10,
       ingredients = {{"automation-science-pack", 1}},
-      time = 30
+      time = 10
     },
     ignore_tech_cost_multiplier = true,
     order = "a-b-a",
@@ -1083,6 +1084,7 @@ data:extend({ -- Make the minisemblers.
   }
 })
 
+data.raw.technology["automation"].prerequisites = {"galdocs-machining-technology-minisemblers"}
 
 local minisembler_recipe_ordering
 if advanced then
@@ -1323,7 +1325,7 @@ for minisembler, rgba in pairs(minisemblers_rgba_pairs) do -- build current_anim
     { -- recipe
       type = "recipe",
       name = "galdocs-machining-" .. minisembler .."-recipe",
-      enabled = true, -- change when technology is introduced for these
+      enabled = false,
       ingredients = minisemblers_recipe_parameters[minisembler],
       result = "galdocs-machining-" .. minisembler,
       icons = {
@@ -1538,7 +1540,7 @@ for metal, techology_data in pairs(metal_technology_pairs) do
             -- property_machined_part_pairs
           end
         end
-      end
+      end 
     end
   end
 end

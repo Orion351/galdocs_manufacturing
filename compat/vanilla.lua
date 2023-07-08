@@ -300,8 +300,8 @@ if advanced then
     ["express-underground-belt"]         = {{"very-high-tensile-paneling", 80}, {"very-high-tensile-framing", 50}, {"very-high-tensile-bolts", 30}}, -- 160 plate
 
     ["splitter"]                         = {{"basic-paneling", 2}, {"basic-gearing", 2}, {"basic-framing", 1}, {"basic-bolts", 1}}, -- 5 plate
-    ["fast-splitter"]                    = {{"high-tensile-paneling", 4}, {"high-tensile-gearing", 6}, {"high-tensile-framing", 4}, {"basic-bolts", 6}}, -- 20 plate
-    ["express-splitter"]                 = {{"very-high-tensile-paneling", 4}, {"ductile-gearing", 8}, {"very-high-tensile-framing", 4}, {"very-high-tensile-bolts", 6}}, -- 20 plate
+    ["fast-splitter"]                    = {{"high-tensile-paneling", 4}, {"high-tensile-fine-gearing", 6}, {"high-tensile-framing", 4}, {"basic-bolts", 6}}, -- 20 plate
+    ["express-splitter"]                 = {{"very-high-tensile-paneling", 4}, {"ductile-fine-gearing", 8}, {"very-high-tensile-framing", 4}, {"very-high-tensile-bolts", 6}}, -- 20 plate
 
     ["burner-inserter"]                  = {{"basic-framing", 1}, {"basic-fine-gearing", 1}, {"basic-bolts", 1}}, -- 3 plate
     ["inserter"]                         = {{"load-bearing-framing", 1}, {"load-bearing-shafting", 1}, {"basic-fine-gearing", 1}, {"basic-bolts", 1}}, -- 3 plate
@@ -360,8 +360,8 @@ if advanced then
     -- Production
     -- ["repair-pack"]                      = {}, -- FIXME
 
-    ["boiler"]                           = {{"load-bearing-girdering", 1}, {"corrosion-resistant-paneling", 1}, {"corrosion-resistant-fine-piping", 1}, {"basic-rivets", 1}}, -- 4 plate
-    ["steam-engine"]                     = {{"load-bearing-girdering", 2}, {"corrosion-resistant-paneling", 6}, {"corrosion-resistant-fine-piping", 7}, {"basic-gearing", 6}, {"basic-rivets", 5}, {"electrically-conductive-wiring", 6}}, -- 31 plate
+    ["boiler"]                           = {{"basic-girdering", 1}, {"basic-paneling", 1}, {"basic-fine-piping", 1}, {"basic-rivets", 1}}, -- 4 plate
+    ["steam-engine"]                     = {{"basic-girdering", 2}, {"basic-paneling", 6}, {"basic-fine-piping", 7}, {"basic-gearing", 6}, {"basic-rivets", 5}, {"electrically-conductive-wiring", 6}}, -- 31 plate
 
     ["solar-panel"]                      = {{"load-bearing-girdering", 6}, {"electrically-conductive-wiring", 8}, {"high-tensile-rivets", 8}}, -- 10 plate (5 steel)
     ["accumulator"]                      = {{"load-bearing-girdering", 1}, {"electrically-conductive-wiring", 1}, {"corrosion-resistant-rivets", 1}}, -- 2 plate
@@ -372,10 +372,10 @@ if advanced then
     ["heat-exchanger"]                   = {{"load-bearing-girdering", 2}, {"corrosion-resistant-paneling", 6}, {"thermally-conductive-shafting", 40}, {"corrosion-resistant-fine-piping", 30}, {"thermally-stable-shielding", 40}, {"high-tensile-rivets", 10}}, -- 120 plate (10 steel)
     ["steam-turbine"]                    = {{"load-bearing-girdering", 10}, {"corrosion-resistant-paneling", 6}, {"thermally-conductive-shafting", 30}, {"corrosion-resistant-fine-piping", 30}, {"ductile-gearing", 30}, {"thermally-stable-shielding", 10}, {"high-tensile-rivets", 10}, {"electrically-conductive-wiring", 10}}, -- 170 plate
 
-    ["burner-mining-drill"]              = {{"load-bearing-girdering", 4}, {"load-bearing-shafting", 2}, {"electrically-conductive-wiring", 2}, {"basic-rivets", 1}}, -- 9 plate
+    ["burner-mining-drill"]              = {{"basic-girdering", 4}, {"basic-shafting", 2}, {"electrically-conductive-wiring", 2}, {"basic-rivets", 1}}, -- 9 plate
     ["electric-mining-drill"]            = {{"load-bearing-girdering", 6}, {"load-bearing-shafting", 4}, {"corrosion-resistant-fine-piping", 4}, {"ductile-gearing", 3}, {"electrically-conductive-wiring", 3}}, -- 20 plate
 
-    ["offshore-pump"]                    = {{"load-bearing-framing", 1}, {"corrosion-resistant-piping", 1}, {"basic-paneling", 1}, {"electrically-conductive-wiring", 1}, {"basic-bolts", 1}}, -- 3 plate
+    ["offshore-pump"]                    = {{"basic-framing", 1}, {"basic-piping", 1}, {"basic-paneling", 1}, {"electrically-conductive-wiring", 1}, {"basic-bolts", 1}}, -- 3 plate
 
     ["pumpjack"]                         = {{"heavy-load-bearing-girdering", 10}, {"corrosion-resistant-paneling", 4}, {"corrosion-resistant-fine-piping", 12}, {"high-tensile-shafting", 4}, {"electrically-conductive-wiring", 6}, {"high-tensile-rivets", 4}}, -- 35 plate (5 steel)
 
@@ -395,7 +395,7 @@ if advanced then
 
     ["beacon"]                           = {{"heavy-load-bearing-girdering", 5}, {"high-tensile-paneling", 2}, {"electrically-conductive-wiring", 6}, {"high-tensile-rivets", 4}}, -- 15 plate (5 steel)
 
-    ["rocket-silo"]                      = {{"heavy-load-bearing-girdering", 300}, {"very-high-tensile-paneling", 600}, {"radiation-resistant-shielding", 400}, {"ductile-gearing", 1000},  {"electrically-conductive-wiring", 2000}, {"very-high-tensile-rivets", 600}}, -- 1100 plate (1000 steel)
+    ["rocket-silo"]                      = {{"heavy-load-bearing-girdering", 300}, {"very-high-tensile-large-paneling", 600}, {"radiation-resistant-shielding", 400}, {"ductile-gearing", 1000},  {"electrically-conductive-wiring", 2000}, {"very-high-tensile-rivets", 600}}, -- 1100 plate (1000 steel)
     -- ["satellite"]                        = {{"ductile-paneling", 1}, {"radiation-resistant-shielding", 1}, {"high-tensile-gearing", 1}, {"ductile-framing", 1}, {"electrically-conductive-wiring", 1}, {"very-high-tensile-rivets", 1}},
 
     -- Intermediate Products
@@ -548,8 +548,8 @@ else intermediates_to_add_table = { -- {name, ingredients_to_add}, where ingredi
 -- Production
 -- ["repair-pack"]                      = {}, -- FIXME
 
-["boiler"]                           = {{"load-bearing-framing", 1}, {"corrosion-resistant-paneling", 1}, {"corrosion-resistant-piping", 1}, {"basic-bolts", 1}}, -- 4 plate
-["steam-engine"]                     = {{"load-bearing-framing", 2}, {"corrosion-resistant-paneling", 6}, {"corrosion-resistant-piping", 7}, {"basic-gearing", 6}, {"basic-bolts", 5}, {"electrically-conductive-wiring", 6}}, -- 31 plate
+["boiler"]                           = {{"basic-framing", 1}, {"basic-paneling", 1}, {"basic-piping", 1}, {"basic-bolts", 1}}, -- 4 plate
+["steam-engine"]                     = {{"basic-framing", 2}, {"basic-paneling", 6}, {"basic-piping", 7}, {"basic-gearing", 6}, {"basic-bolts", 5}, {"electrically-conductive-wiring", 6}}, -- 31 plate
 
 ["solar-panel"]                      = {{"load-bearing-framing", 6}, {"electrically-conductive-wiring", 8}, {"high-tensile-bolts", 8}}, -- 10 plate (5 steel)
 ["accumulator"]                      = {{"load-bearing-framing", 1}, {"electrically-conductive-wiring", 1}, {"corrosion-resistant-bolts", 1}}, -- 2 plate
@@ -560,10 +560,10 @@ else intermediates_to_add_table = { -- {name, ingredients_to_add}, where ingredi
 ["heat-exchanger"]                   = {{"load-bearing-framing", 2}, {"corrosion-resistant-paneling", 6}, {"thermally-conductive-shafting", 40}, {"corrosion-resistant-piping", 30}, {"thermally-stable-shielding", 40}, {"high-tensile-bolts", 10}}, -- 120 plate (10 steel)
 ["steam-turbine"]                    = {{"load-bearing-framing", 10}, {"corrosion-resistant-paneling", 6}, {"thermally-conductive-shafting", 30}, {"corrosion-resistant-piping", 30}, {"ductile-gearing", 30}, {"thermally-stable-shielding", 10}, {"high-tensile-bolts", 10}, {"electrically-conductive-wiring", 10}}, -- 170 plate
 
-["burner-mining-drill"]              = {{"load-bearing-framing", 4}, {"load-bearing-shafting", 2}, {"electrically-conductive-wiring", 2}, {"basic-bolts", 1}}, -- 9 plate
+["burner-mining-drill"]              = {{"basic-framing", 4}, {"basic-shafting", 2}, {"electrically-conductive-wiring", 2}, {"basic-bolts", 1}}, -- 9 plate
 ["electric-mining-drill"]            = {{"load-bearing-framing", 6}, {"load-bearing-shafting", 4}, {"corrosion-resistant-piping", 4}, {"ductile-gearing", 3}, {"electrically-conductive-wiring", 3}}, -- 20 plate
 
-["offshore-pump"]                    = {{"load-bearing-framing", 1}, {"corrosion-resistant-piping", 1}, {"basic-paneling", 1}, {"electrically-conductive-wiring", 1}, {"basic-bolts", 1}}, -- 3 plate
+["offshore-pump"]                    = {{"basic-framing", 1}, {"basic-piping", 1}, {"basic-paneling", 1}, {"electrically-conductive-wiring", 1}, {"basic-bolts", 1}}, -- 3 plate
 
 ["pumpjack"]                         = {{"heavy-load-bearing-framing", 10}, {"corrosion-resistant-paneling", 4}, {"corrosion-resistant-piping", 12}, {"high-tensile-shafting", 4}, {"electrically-conductive-wiring", 6}, {"high-tensile-bolts", 4}}, -- 35 plate (5 steel)
 
@@ -663,6 +663,15 @@ end
 -- FIXME: In balancing the recipes, I said steel plates = 1 plate in vanilla. This is not true. 1 steel = 5 iron. So, this is overall CHEAPER as a result. Fix?
 
 local intermediates_to_flat_replace = {
+  -- intermediates
+  ["automation-science-pack"]          = true,
+  ["low-density-structure"]            = true,
+  ["empty-barrel"]                     = true,
+  ["electronic-circuit"]               = true,
+  ["advanced-circuit"]                 = true,
+  ["sulfuric-acid"]                    = true,
+
+  -- combat
   ["pistol"]                           = true,
   ["submachine-gun"]                   = true,
   ["shotgun"]                          = true,
@@ -689,7 +698,6 @@ local intermediates_to_flat_replace = {
   ["heavy-armor"]                      = true,
   ["modular-armor"]                    = true,
   ["power-armor"]                      = true
-
 }
 
 -- Append "-machined-part" onto the intermediate names; this keeps it consistent with their creation but also easy to type above
@@ -701,18 +709,22 @@ end
 
 -- Swap ingredients
 local current_ingredients
+local current_recipe
+local current_recipe_normal
 local used_recipe_list = {}
 for name, ingredients in pairs(intermediates_to_add_table) do
 
   -- copy data out of "nomral"
-  if data.raw.recipe[name].normal ~= nil then
-    for property, value in data.raw.recipe[name].normal do
-      table.insert(data.raw.recipe[name], {property, value})
-    end
+  current_recipe = data.raw.recipe[name]
+  if current_recipe.normal ~= nil then
+    current_recipe.enabled = current_recipe.normal.enabled
+    current_recipe.energy_required = current_recipe.normal.energy_required
+    current_recipe.result = current_recipe.normal.result
+    current_recipe.ingredients = current_recipe.normal.ingredients
   end
 
   -- fuss with ingredients
-  current_ingredients = data.raw.recipe[name].ingredients
+  current_ingredients = current_recipe.ingredients
   current_ingredients = remove_ingredients(current_ingredients, intermediates_to_remove)
   current_ingredients = append_ingredients(current_ingredients, intermediates_to_add_table[name])
   used_recipe_list = keep_track_of_used_ingredients(used_recipe_list, intermediates_to_add_table[name])
@@ -723,19 +735,21 @@ for name, ingredients in pairs(intermediates_to_add_table) do
   data.raw.recipe[name].expensive = nil
 end
 
--- flat replace ingredients
+-- flat replace ingredients for vanilla
 local swap_in_ingredients = {}
 for name, _ in pairs(intermediates_to_flat_replace) do
 
   -- copy data out of "nomral"
-  if data.raw.recipe[name].normal ~= nil then
-    for property, value in data.raw.recipe[name].normal do
-      table.insert(data.raw.recipe[name], {property, value})
-    end
+  current_recipe = data.raw.recipe[name]
+  if current_recipe.normal ~= nil then
+    current_recipe.enabled = current_recipe.normal.enabled
+    current_recipe.energy_required = current_recipe.normal.energy_required
+    current_recipe.result = current_recipe.normal.result
+    current_recipe.ingredients = current_recipe.normal.ingredients
   end
 
   -- fuss with ingredients
-  current_ingredients = data.raw.recipe[name].ingredients
+  current_ingredients = current_recipe.ingredients
   swap_in_ingredients = set_up_swappable_ingredients(current_ingredients, intermediates_to_remove)
   current_ingredients = remove_ingredients(current_ingredients, intermediates_to_remove)
   current_ingredients = append_ingredients(current_ingredients, swap_in_ingredients)
@@ -745,6 +759,30 @@ for name, _ in pairs(intermediates_to_flat_replace) do
   data.raw.recipe[name].normal = nil
   data.raw.recipe[name].expensive = nil
 end
+
+-- flat replace ingredients for everything
+for _, recipe in pairs(data.raw.recipe) do
+
+  -- copy data out of "nomral"
+  if recipe.normal ~= nil then
+    recipe.enabled = recipe.normal.enabled
+    recipe.energy_required = recipe.normal.energy_required
+    recipe.result = recipe.normal.result
+    recipe.ingredients = recipe.normal.ingredients
+  end
+
+  -- fuss with ingredients
+  current_ingredients = recipe.ingredients
+  swap_in_ingredients = set_up_swappable_ingredients(current_ingredients, intermediates_to_remove)
+  current_ingredients = remove_ingredients(current_ingredients, intermediates_to_remove)
+  current_ingredients = append_ingredients(current_ingredients, swap_in_ingredients)
+  data.raw.recipe[recipe.name].ingredients = current_ingredients
+
+  -- get rekt normal vs. expensive
+  data.raw.recipe[recipe.name].normal = nil
+  data.raw.recipe[recipe.name].expensive = nil
+end
+
 
 -- Cull Vanilla Intermediates
 for intermediate, _ in pairs(intermediates_to_remove) do
@@ -760,6 +798,116 @@ end
 -- ********************
 
 -- Cull Unused Intermediates
+
+local seen_machined_parts = {}
+local current_ingredients = {}
+local current_name
+for _, recipe in pairs(data.raw.recipe) do
+  current_ingredients = recipe.ingredients
+  -- log("asdf recipe name is " .. recipe.name)
+  -- log("asdf current ingredient length is " .. #current_ingredients)
+  for _, ingredient in pairs(current_ingredients) do
+    -- log("asdf ingredient type is " .. type(ingredient))
+    if type(ingredient) ~= "boolean" then
+      if ingredient.type ~= "fluid" then
+        if ingredient.name ~= nil then
+          current_name = ingredient.name
+        else
+          current_name = ingredient[1]
+        end
+        -- log("asdf ingredient name is " .. current_name)
+        if string.sub(current_name, #current_name - 13, #current_name) == "-machined-part" then
+          seen_machined_parts[current_name] = true
+        end
+      end
+    end
+  end
+end
+--[[
+for item, _ in pairs(seen_machined_parts) do
+  log("asdf We've seen " .. item)
+end
+--]]
+
+local new_effects
+local i, j
+for item_name, item in pairs(data.raw.item) do
+  if string.sub(item_name, #item_name - 13, #item_name) == "-machined-part"  and seen_machined_parts[item_name] == nil then
+    -- log("asdf I'm about to ruin this item's whole career " .. item_name)
+    for recipe_name, recipe in pairs(data.raw.recipe) do
+      i, j = string.find(recipe_name, string.sub(item_name, 0, #item_name - 14), 1, true)
+      if i ~= nil then
+        log("asdf I'm about to ruin this recipe's whole career " .. recipe_name)
+        for technology_name, technology in pairs(data.raw.technology) do
+          -- log("asdf I'm about to ruin this technology's whole career " .. technology_name)
+          new_effects = {}
+          if technology.effects ~= nil then
+            for _, effect in pairs(technology.effects) do
+              if effect.recipe ~= recipe_name then
+                table.insert(new_effects, effect)
+              else
+                log("asdf TARGET AQUIRED: " .. technology_name)
+              end
+            end
+          end
+          data.raw.technology[technology_name].effects = new_effects
+        end
+        data.raw.recipe[recipe_name].enabled = false
+      end
+    end
+  end
+end
+
+
+--[[
+local test_recipe = "stupid-metal-from-stupider-stocks"
+local test_item = "stupid-metal-machined-part"
+log("asdf " .. test_recipe)
+log("asdf " .. test_item)
+log("asdf " .. string.sub(test_item, 1, #test_item - 14))
+local i, j = string.find(test_recipe, string.sub(test_item, 0, #test_item - 14), 1, true)
+log("asdf i: " .. tostring(i) .. " j: " .. tostring(j))
+--]]
+
+-- if string.match(test_recipe, string.sub(test_item, 1, #test_item - 14) .. "..") ~= nil then
+--   log("asdf your did it")
+-- end
+
+-- log("asdf " .. tostring(string.match(test_recipe, string.sub(test_item, 1, #test_item - 14) .. "..")))
+-- local i, j = string.find(test_recipe, string.sub(test_item, 0, #test_item - 14))
+
+--[[
+local pull_item
+local new_effects
+for _, item in pairs(data.raw.item) do
+  pull_item = seen_machined_parts[item.name]
+  if pull_item == nil then
+    log("asdf I'm about to ruin this item's whole career " .. item.name)
+    -- pull the recipe
+    for _, recipe in pairs(data.raw.recipe) do
+      if type(recipe) ~= "boolean" then
+        if string.match(recipe.name, item.name) then
+          data.raw.recipe[recipe.name].enabled = false
+
+          -- pull it from the technology.effects
+          for _, technology in pairs(data.raw.technology) do
+            new_effects = {}
+            if technology.effects ~= nil then
+              for _, effect in pairs(technology.effects) do
+                if effect ~= recipe.name then 
+                  table.insert(new_effects, effect)
+                end
+              end
+            end
+            data.raw.technology[technology.name].effects = new_effects
+          end
+        end
+      end
+    end
+  end
+end
+--]]
+
 --[[
 local new_name = ""
 for _, recipe in pairs(data.raw.recipe) do
