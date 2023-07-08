@@ -1,7 +1,7 @@
 {
-	"name": "galdocs-machining",
-	"version": "0.1.0",
-	"title": "Galdoc's Machining (ALPHA)",
+	"name": "galdocs-manufacturing",
+	"version": "0.1.01",
+	"title": "Galdoc's manufacturing (ALPHA)",
 	"author": "Galdoc",
 	"factorio_version": "1.1",
 	"dependencies": ["base >= 1.1"]

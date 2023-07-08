@@ -39,12 +39,12 @@ local stock_stack_size = 200
 local ore_stack_size = 200
 
 -- Challenge variables
-local advanced = settings.startup["galdocs-machining-advanced-mode"].value
+local advanced = settings.startup["galdocs-manufacturing-advanced-mode"].value
 local specialty_parts = false -- not implimented yet
 local consumable_parts = false -- not implemented yet
 
 -- Settings variables
-local show_property_badges = settings.startup["galdocs-machining-show-badges"].value
+local show_property_badges = settings.startup["galdocs-manufacturing-show-badges"].value
 
 
 
@@ -87,9 +87,9 @@ end
 data:extend({
   { -- galvanized steel stock processing
     type = "technology",
-    name = "galdocs-machining-galvanized-steel-stock-processing",
+    name = "galdocs-manufacturing-galvanized-steel-stock-processing",
     icon_size = 256,
-    icon = "__galdocs-machining__/graphics/technology-icons/galvanized-steel-processing.png",
+    icon = "__galdocs-manufacturing__/graphics/technology-icons/galvanized-steel-processing.png",
     prerequisites = {"steel-processing"},
     unit =
     {
@@ -102,15 +102,15 @@ data:extend({
     },
     effects = {},
     order = "c-a-a",
-    localised_name = {"galdocs-machining.technology-stock-processing-name", {"galdocs-machining.galvanized-steel"}, {"galdocs-machining.stocks"}, {"galdocs-machining.processing"}},
-    localised_description = {"galdocs-machining.technology-stock-processing-description", {"galdocs-machining.galvanized-steel"}, {"galdocs-machining.stocks"}},
+    localised_name = {"galdocs-manufacturing.technology-stock-processing-name", {"galdocs-manufacturing.galvanized-steel"}, {"galdocs-manufacturing.stocks"}, {"galdocs-manufacturing.processing"}},
+    localised_description = {"galdocs-manufacturing.technology-stock-processing-description", {"galdocs-manufacturing.galvanized-steel"}, {"galdocs-manufacturing.stocks"}},
   },
   { -- galvanized steel machined part processing
     type = "technology",
-    name = "galdocs-machining-galvanized-steel-machined-part-processing",
+    name = "galdocs-manufacturing-galvanized-steel-machined-part-processing",
     icon_size = 256,
-    icon = "__galdocs-machining__/graphics/technology-icons/galvanized-steel-machined-part-processing.png",
-    prerequisites = {"galdocs-machining-galvanized-steel-stock-processing"},
+    icon = "__galdocs-manufacturing__/graphics/technology-icons/galvanized-steel-machined-part-processing.png",
+    prerequisites = {"galdocs-manufacturing-galvanized-steel-stock-processing"},
     unit =
     {
       count = 25,
@@ -122,14 +122,14 @@ data:extend({
     },
     effects = {},
     order = "c-a-b",
-    localised_name = {"galdocs-machining.technology-machined-part-processing-name", {"galdocs-machining.galvanized-steel"}, {"galdocs-machining.machined-parts"}, {"galdocs-machining.processing"}},
-    localised_description = {"galdocs-machining.technology-machined-part-processing-description", {"galdocs-machining.galvanized-steel"}, {"galdocs-machining.machined-parts"}},
+    localised_name = {"galdocs-manufacturing.technology-machined-part-processing-name", {"galdocs-manufacturing.galvanized-steel"}, {"galdocs-manufacturing.machined-parts"}, {"galdocs-manufacturing.processing"}},
+    localised_description = {"galdocs-manufacturing.technology-machined-part-processing-description", {"galdocs-manufacturing.galvanized-steel"}, {"galdocs-manufacturing.machined-parts"}},
   },
   { -- lead stock processing
     type = "technology",
-    name = "galdocs-machining-lead-stock-processing",
+    name = "galdocs-manufacturing-lead-stock-processing",
     icon_size = 256,
-    icon = "__galdocs-machining__/graphics/technology-icons/lead-processing.png",
+    icon = "__galdocs-manufacturing__/graphics/technology-icons/lead-processing.png",
     prerequisites = {"chemical-science-pack", "concrete"},
     unit =
     {
@@ -144,15 +144,15 @@ data:extend({
     },
     effects = {},
     order = "e-p-b-c",
-    localised_name = {"galdocs-machining.technology-stock-processing-name", {"galdocs-machining.lead"}, {"galdocs-machining.stocks"}, {"galdocs-machining.processing"}},
-    localised_description = {"galdocs-machining.technology-stock-processing-description", {"galdocs-machining.lead"}, {"galdocs-machining.stocks"}},
+    localised_name = {"galdocs-manufacturing.technology-stock-processing-name", {"galdocs-manufacturing.lead"}, {"galdocs-manufacturing.stocks"}, {"galdocs-manufacturing.processing"}},
+    localised_description = {"galdocs-manufacturing.technology-stock-processing-description", {"galdocs-manufacturing.lead"}, {"galdocs-manufacturing.stocks"}},
   },
   { -- lead machined part processing
     type = "technology",
-    name = "galdocs-machining-lead-machined-part-processing",
+    name = "galdocs-manufacturing-lead-machined-part-processing",
     icon_size = 256,
-    icon = "__galdocs-machining__/graphics/technology-icons/lead-machined-part-processing.png",
-    prerequisites = {"galdocs-machining-lead-stock-processing"},
+    icon = "__galdocs-manufacturing__/graphics/technology-icons/lead-machined-part-processing.png",
+    prerequisites = {"galdocs-manufacturing-lead-stock-processing"},
     unit =
     {
       ingredients =
@@ -166,15 +166,15 @@ data:extend({
     },
     effects = {},
     order = "e-p-b-d",
-    localised_name = {"galdocs-machining.technology-machined-part-processing-name", {"galdocs-machining.lead"}, {"galdocs-machining.machined-parts"}, {"galdocs-machining.processing"}},
-    localised_description = {"galdocs-machining.technology-machined-part-processing-description", {"galdocs-machining.lead"}, {"galdocs-machining.machined-parts"}},
+    localised_name = {"galdocs-manufacturing.technology-machined-part-processing-name", {"galdocs-manufacturing.lead"}, {"galdocs-manufacturing.machined-parts"}, {"galdocs-manufacturing.processing"}},
+    localised_description = {"galdocs-manufacturing.technology-machined-part-processing-description", {"galdocs-manufacturing.lead"}, {"galdocs-manufacturing.machined-parts"}},
   },
   { -- nickel and invar stock processing
     type = "technology",
-    name = "galdocs-machining-nickel-and-invar-stock-processing",
+    name = "galdocs-manufacturing-nickel-and-invar-stock-processing",
     icon_size = 256,
-    icon = "__galdocs-machining__/graphics/technology-icons/nickel-and-invar-processing.png",
-    prerequisites = {"steel-processing", "galdocs-machining-galvanized-steel-machined-part-processing"},
+    icon = "__galdocs-manufacturing__/graphics/technology-icons/nickel-and-invar-processing.png",
+    prerequisites = {"steel-processing", "galdocs-manufacturing-galvanized-steel-machined-part-processing"},
     unit =
     {
       ingredients =
@@ -186,15 +186,15 @@ data:extend({
     },
     effects = {},
     order = "c-a-b",
-    localised_name = {"galdocs-machining.technology-dual-stock-processing-name", {"galdocs-machining.nickel"}, {"galdocs-machining.invar"}, {"galdocs-machining.stocks"}, {"galdocs-machining.processing"}},
-    localised_description = {"galdocs-machining.technology-dual-stock-processing-description", {"galdocs-machining.nickel"}, {"galdocs-machining.invar"}, {"galdocs-machining.stocks"}},
+    localised_name = {"galdocs-manufacturing.technology-dual-stock-processing-name", {"galdocs-manufacturing.nickel"}, {"galdocs-manufacturing.invar"}, {"galdocs-manufacturing.stocks"}, {"galdocs-manufacturing.processing"}},
+    localised_description = {"galdocs-manufacturing.technology-dual-stock-processing-description", {"galdocs-manufacturing.nickel"}, {"galdocs-manufacturing.invar"}, {"galdocs-manufacturing.stocks"}},
   },
   { -- nickel and invar machined part processing
     type = "technology",
-    name = "galdocs-machining-nickel-and-invar-machined-part-processing",
+    name = "galdocs-manufacturing-nickel-and-invar-machined-part-processing",
     icon_size = 256,
-    icon = "__galdocs-machining__/graphics/technology-icons/nickel-and-invar-machined-part-processing.png",
-    prerequisites = {"galdocs-machining-nickel-and-invar-stock-processing"},
+    icon = "__galdocs-manufacturing__/graphics/technology-icons/nickel-and-invar-machined-part-processing.png",
+    prerequisites = {"galdocs-manufacturing-nickel-and-invar-stock-processing"},
     unit =
     {
       ingredients =
@@ -206,14 +206,14 @@ data:extend({
     },
     effects = {},
     order = "c-a-b",
-    localised_name = {"galdocs-machining.technology-dual-machined-part-processing-name", {"galdocs-machining.nickel"}, {"galdocs-machining.invar"}, {"galdocs-machining.machined-parts"}, {"galdocs-machining.processing"}},
-    localised_description = {"galdocs-machining.technology-dual-machined-part-processing-description", {"galdocs-machining.nickel"}, {"galdocs-machining.invar"}, {"galdocs-machining.machined-parts"}},
+    localised_name = {"galdocs-manufacturing.technology-dual-machined-part-processing-name", {"galdocs-manufacturing.nickel"}, {"galdocs-manufacturing.invar"}, {"galdocs-manufacturing.machined-parts"}, {"galdocs-manufacturing.processing"}},
+    localised_description = {"galdocs-manufacturing.technology-dual-machined-part-processing-description", {"galdocs-manufacturing.nickel"}, {"galdocs-manufacturing.invar"}, {"galdocs-manufacturing.machined-parts"}},
   },
   { -- steel machined part processing
     type = "technology",
     name = "steel-machined-part-processing",
     icon_size = 256,
-    icon = "__galdocs-machining__/graphics/technology-icons/steel-machined-part-processing.png",
+    icon = "__galdocs-manufacturing__/graphics/technology-icons/steel-machined-part-processing.png",
     prerequisites = {"steel-processing"},
     effects = {},
     unit =
@@ -223,14 +223,14 @@ data:extend({
       time = 5
     },
     order = "c-b",
-    localised_name = {"galdocs-machining.technology-machined-part-processing-name", {"galdocs-machining.steel"}, {"galdocs-machining.machined-parts"}, {"galdocs-machining.processing"}},
-    localised_description = {"galdocs-machining.technology-machined-part-processing-description", {"galdocs-machining.steel"}, {"galdocs-machining.machined-parts"}},
+    localised_name = {"galdocs-manufacturing.technology-machined-part-processing-name", {"galdocs-manufacturing.steel"}, {"galdocs-manufacturing.machined-parts"}, {"galdocs-manufacturing.processing"}},
+    localised_description = {"galdocs-manufacturing.technology-machined-part-processing-description", {"galdocs-manufacturing.steel"}, {"galdocs-manufacturing.machined-parts"}},
   },
   { -- titanium stock processing
     type = "technology",
-    name = "galdocs-machining-titanium-stock-processing",
+    name = "galdocs-manufacturing-titanium-stock-processing",
     icon_size = 256,
-    icon = "__galdocs-machining__/graphics/technology-icons/titanium-processing.png",
+    icon = "__galdocs-manufacturing__/graphics/technology-icons/titanium-processing.png",
     prerequisites = {"lubricant"},
     unit =
     {
@@ -245,15 +245,15 @@ data:extend({
     },
     effects = {},
     order = "b-b-a",
-    localised_name = {"galdocs-machining.technology-stock-processing-name", {"galdocs-machining.titanium"}, {"galdocs-machining.stocks"}, {"galdocs-machining.processing"}},
-    localised_description = {"galdocs-machining.technology-stock-processing-description", {"galdocs-machining.titanium"}, {"galdocs-machining.stocks"}},
+    localised_name = {"galdocs-manufacturing.technology-stock-processing-name", {"galdocs-manufacturing.titanium"}, {"galdocs-manufacturing.stocks"}, {"galdocs-manufacturing.processing"}},
+    localised_description = {"galdocs-manufacturing.technology-stock-processing-description", {"galdocs-manufacturing.titanium"}, {"galdocs-manufacturing.stocks"}},
   },
   { -- titanium machined part processing
     type = "technology",
-    name = "galdocs-machining-titanium-machined-part-processing",
+    name = "galdocs-manufacturing-titanium-machined-part-processing",
     icon_size = 256,
-    icon = "__galdocs-machining__/graphics/technology-icons/titanium-machined-part-processing.png",
-    prerequisites = {"galdocs-machining-titanium-stock-processing"},
+    icon = "__galdocs-manufacturing__/graphics/technology-icons/titanium-machined-part-processing.png",
+    prerequisites = {"galdocs-manufacturing-titanium-stock-processing"},
     unit =
     {
       count = 25,
@@ -267,8 +267,8 @@ data:extend({
     },
     effects = {},
     order = "b-b-b",
-    localised_name = {"galdocs-machining.technology-machined-part-processing-name", {"galdocs-machining.titanium"}, {"galdocs-machining.machined-parts"}, {"galdocs-machining.processing"}},
-    localised_description = {"galdocs-machining.technology-machined-part-processing-description", {"galdocs-machining.titanium"}, {"galdocs-machining.machined-parts"}},
+    localised_name = {"galdocs-manufacturing.technology-machined-part-processing-name", {"galdocs-manufacturing.titanium"}, {"galdocs-manufacturing.machined-parts"}, {"galdocs-manufacturing.processing"}},
+    localised_description = {"galdocs-manufacturing.technology-machined-part-processing-description", {"galdocs-manufacturing.titanium"}, {"galdocs-manufacturing.machined-parts"}},
   },
 })
 
@@ -276,18 +276,18 @@ local metal_technology_pairs = {
   -- pure metals
   ["iron"]              = {"vanilla", "starter"},
   ["copper"]            = {"vanilla", "starter"},
-  ["lead"]              = {"vanilla", "galdocs-machining-lead-stock-processing", "galdocs-machining-lead-machined-part-processing"},
-  ["titanium"]          = {"vanilla", "galdocs-machining-titanium-stock-processing", "galdocs-machining-titanium-machined-part-processing"},
+  ["lead"]              = {"vanilla", "galdocs-manufacturing-lead-stock-processing", "galdocs-manufacturing-lead-machined-part-processing"},
+  ["titanium"]          = {"vanilla", "galdocs-manufacturing-titanium-stock-processing", "galdocs-manufacturing-titanium-machined-part-processing"},
   ["zinc"]              = {"vanilla", "starter"},
-  ["nickel"]            = {"vanilla", "galdocs-machining-nickel-and-invar-stock-processing", "galdocs-machining-nickel-and-invar-machined-part-processing"},
+  ["nickel"]            = {"vanilla", "galdocs-manufacturing-nickel-and-invar-stock-processing", "galdocs-manufacturing-nickel-and-invar-machined-part-processing"},
 
   -- alloys 
   ["steel"]             = {"vanilla", "steel-processing", "steel-machined-part-processing"},
   ["brass"]             = {"vanilla", "starter"},
-  ["invar"]             = {"vanilla", "galdocs-machining-nickel-and-invar-stock-processing", "galdocs-machining-nickel-and-invar-machined-part-processing"},
+  ["invar"]             = {"vanilla", "galdocs-manufacturing-nickel-and-invar-stock-processing", "galdocs-manufacturing-nickel-and-invar-machined-part-processing"},
 
   -- treatments 
-  ["galvanized-steel"]  = {"vanilla", "galdocs-machining-galvanized-steel-stock-processing", "galdocs-machining-galvanized-steel-machined-part-processing"},
+  ["galvanized-steel"]  = {"vanilla", "galdocs-manufacturing-galvanized-steel-stock-processing", "galdocs-manufacturing-galvanized-steel-machined-part-processing"},
 }
 
 --[[
@@ -665,20 +665,20 @@ for ore, _ in pairs(metals_to_add) do
     {
       type = "item",
       name = ore .. "-ore",
-      icon = "__galdocs-machining__/graphics/icons/intermediates/ore/" .. ore .. "/" .. ore .. "-ore-1.png",
+      icon = "__galdocs-manufacturing__/graphics/icons/intermediates/ore/" .. ore .. "/" .. ore .. "-ore-1.png",
       icon_size = 64,
       icon_mipmaps = 4,
       pictures =
       {
-        { size = 64, filename = "__galdocs-machining__/graphics/icons/intermediates/ore/" .. ore .. "/" .. ore .. "-ore-1.png", scale = 0.25, mipmap_count = 4 },
-        { size = 64, filename = "__galdocs-machining__/graphics/icons/intermediates/ore/" .. ore .. "/" .. ore .. "-ore-2.png", scale = 0.25, mipmap_count = 4 },
-        { size = 64, filename = "__galdocs-machining__/graphics/icons/intermediates/ore/" .. ore .. "/" .. ore .. "-ore-3.png", scale = 0.25, mipmap_count = 4 },
-        { size = 64, filename = "__galdocs-machining__/graphics/icons/intermediates/ore/" .. ore .. "/" .. ore .. "-ore-4.png", scale = 0.25, mipmap_count = 4 }
+        { size = 64, filename = "__galdocs-manufacturing__/graphics/icons/intermediates/ore/" .. ore .. "/" .. ore .. "-ore-1.png", scale = 0.25, mipmap_count = 4 },
+        { size = 64, filename = "__galdocs-manufacturing__/graphics/icons/intermediates/ore/" .. ore .. "/" .. ore .. "-ore-2.png", scale = 0.25, mipmap_count = 4 },
+        { size = 64, filename = "__galdocs-manufacturing__/graphics/icons/intermediates/ore/" .. ore .. "/" .. ore .. "-ore-3.png", scale = 0.25, mipmap_count = 4 },
+        { size = 64, filename = "__galdocs-manufacturing__/graphics/icons/intermediates/ore/" .. ore .. "/" .. ore .. "-ore-4.png", scale = 0.25, mipmap_count = 4 }
       },
       subgroup = "raw-resource",
       order = "f[" .. ore .. "-ore]",
       stack_size = 50,
-      localised_name = {"galdocs-machining.ore-item-name", {"galdocs-machining." .. ore}}
+      localised_name = {"galdocs-manufacturing.ore-item-name", {"galdocs-manufacturing." .. ore}}
     },
   })
 end
@@ -693,21 +693,21 @@ local original_ores = {
 }
 
 for ore, _ in pairs(original_ores) do
-  data.raw.item[ore .. "-ore"].icon = "__galdocs-machining__/graphics/icons/intermediates/ore/" .. ore .. "/" .. ore .. "-ore-1.png"
+  data.raw.item[ore .. "-ore"].icon = "__galdocs-manufacturing__/graphics/icons/intermediates/ore/" .. ore .. "/" .. ore .. "-ore-1.png"
   data.raw.item[ore .. "-ore"].pictures =
     {
-      { size = 64, filename = "__galdocs-machining__/graphics/icons/intermediates/ore/" .. ore .. "/" .. ore .. "-ore-1.png", scale = 0.25, mipmap_count = 4 },
-      { size = 64, filename = "__galdocs-machining__/graphics/icons/intermediates/ore/" .. ore .. "/" .. ore .. "-ore-2.png", scale = 0.25, mipmap_count = 4 },
-      { size = 64, filename = "__galdocs-machining__/graphics/icons/intermediates/ore/" .. ore .. "/" .. ore .. "-ore-3.png", scale = 0.25, mipmap_count = 4 },
-      { size = 64, filename = "__galdocs-machining__/graphics/icons/intermediates/ore/" .. ore .. "/" .. ore .. "-ore-4.png", scale = 0.25, mipmap_count = 4 }
+      { size = 64, filename = "__galdocs-manufacturing__/graphics/icons/intermediates/ore/" .. ore .. "/" .. ore .. "-ore-1.png", scale = 0.25, mipmap_count = 4 },
+      { size = 64, filename = "__galdocs-manufacturing__/graphics/icons/intermediates/ore/" .. ore .. "/" .. ore .. "-ore-2.png", scale = 0.25, mipmap_count = 4 },
+      { size = 64, filename = "__galdocs-manufacturing__/graphics/icons/intermediates/ore/" .. ore .. "/" .. ore .. "-ore-3.png", scale = 0.25, mipmap_count = 4 },
+      { size = 64, filename = "__galdocs-manufacturing__/graphics/icons/intermediates/ore/" .. ore .. "/" .. ore .. "-ore-4.png", scale = 0.25, mipmap_count = 4 }
     }
 end
 
 data:extend({ -- Create item group
   {
     type = "item-group",
-    name = "galdocs-machining-intermediates",
-    icon = "__galdocs-machining__/graphics/group-icons/galdocs-intermediates-group-icon.png",
+    name = "galdocs-manufacturing-intermediates",
+    icon = "__galdocs-manufacturing__/graphics/group-icons/galdocs-intermediates-group-icon.png",
     icon_size = 128
   }
 })
@@ -717,10 +717,10 @@ for metal, _ in pairs(metal_stocks_pairs) do -- Make [Metal] [Stock] Subgroups
   data:extend({
     {
       type = "item-subgroup",
-      name = "galdocs-machining-stocks-" .. metal,
-      group = "galdocs-machining-intermediates",
-      order = "a" .. "galdocs-machining-intermediates-stocks" .. order_count,
-      localised_name = {"galdocs-machining.stocks-subgroup", {"galdocs-machining." .. metal}}
+      name = "galdocs-manufacturing-stocks-" .. metal,
+      group = "galdocs-manufacturing-intermediates",
+      order = "a" .. "galdocs-manufacturing-intermediates-stocks" .. order_count,
+      localised_name = {"galdocs-manufacturing.stocks-subgroup", {"galdocs-manufacturing." .. metal}}
     }
   })
   order_count = order_count + 1
@@ -729,9 +729,9 @@ end
 data:extend({ -- add alloy recipe category
   {
     type = "recipe-category",
-    name = "galdocs-machining-alloys",
-    order = "a" .. "galdocs-machining-alloy" .. order_count,
-    -- localised_name = {"galdocs-machining.recipe-category", {"galdocs-machining." .. metal}}
+    name = "galdocs-manufacturing-alloys",
+    order = "a" .. "galdocs-manufacturing-alloy" .. order_count,
+    -- localised_name = {"galdocs-manufacturing.recipe-category", {"galdocs-manufacturing." .. metal}}
   }
 })
 
@@ -740,10 +740,10 @@ for property, parts in pairs(property_machined_part_pairs) do -- Make [Property]
   data:extend({
     {
       type = "item-subgroup",
-      name = "galdocs-machining-machined-parts-" .. property,
-      group = "galdocs-machining-intermediates",
-      order = "b" .. "galdocs-machining-intermediates-machined-parts" .. order_count,
-      localised_name = {"galdocs-machining.machined-parts-subgroup-property", {"galdocs-machining." .. property}}
+      name = "galdocs-manufacturing-machined-parts-" .. property,
+      group = "galdocs-manufacturing-intermediates",
+      order = "b" .. "galdocs-manufacturing-intermediates-machined-parts" .. order_count,
+      localised_name = {"galdocs-manufacturing.machined-parts-subgroup-property", {"galdocs-manufacturing." .. property}}
     }
   })
   order_count = order_count + 1
@@ -756,7 +756,7 @@ for stock, minisembler in pairs(stock_minisembler_pairs) do -- Make Stock recipe
     data:extend({
       {
         type = "recipe-category",
-        name = "galdocs-machining-" .. minisembler
+        name = "galdocs-manufacturing-" .. minisembler
       }
     })
   end
@@ -768,7 +768,7 @@ for part, minisembler in pairs(machined_part_minisembler_pairs) do -- Make Machi
     data:extend({
       {
         type = "recipe-category",
-        name = "galdocs-machining-" .. minisembler
+        name = "galdocs-manufacturing-" .. minisembler
       }
     })
   end
@@ -777,8 +777,8 @@ end
 data:extend({ -- Make plate smelting category so player can see recipes in inventory
   {
     type = "item-subgroup",
-    group = "galdocs-machining-intermediates",
-    name = "galdocs-machining-plates"
+    group = "galdocs-manufacturing-intermediates",
+    name = "galdocs-manufacturing-plates"
   }
 })
 
@@ -788,47 +788,47 @@ for metal, stocks in pairs(metal_stocks_pairs) do -- Make the [Metal] [Stock] It
   for stock in pairs(stocks) do
     property_list = {""}
     for property in pairs(metal_properties_pairs[metal]) do
-      table.insert(property_list, {"galdocs-machining." .. property})
-      table.insert(property_list, {"galdocs-machining.line-separator"})
+      table.insert(property_list, {"galdocs-manufacturing." .. property})
+      table.insert(property_list, {"galdocs-manufacturing.line-separator"})
     end
     table.remove(property_list, #property_list)
     data:extend({
       { -- item
         type = "item",
         name = metal .. "-" .. stock .. "-stock",
-        icon = "__galdocs-machining__/graphics/icons/intermediates/stocks/" .. metal .. "/" .. metal .. "-" .. stock .. "-stock-0000.png",
+        icon = "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. metal .. "/" .. metal .. "-" .. stock .. "-stock-0000.png",
         icon_size = 64, icon_mipmaps = 4,
         pictures = { -- FIXME: Create and add element 'badges' for stocks
           {
-            filename = "__galdocs-machining__/graphics/icons/intermediates/stocks/" .. metal .. "/" .. metal .. "-" .. stock .. "-stock-0000.png",
+            filename = "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. metal .. "/" .. metal .. "-" .. stock .. "-stock-0000.png",
             width = 64,
             height = 64,
             scale = 0.25
           },
           {
-            filename = "__galdocs-machining__/graphics/icons/intermediates/stocks/" .. metal .. "/" .. metal .. "-" .. stock .. "-stock-0001.png",
+            filename = "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. metal .. "/" .. metal .. "-" .. stock .. "-stock-0001.png",
             width = 64,
             height = 64,
             scale = 0.25
           },
           {
-            filename = "__galdocs-machining__/graphics/icons/intermediates/stocks/" .. metal .. "/" .. metal .. "-" .. stock .. "-stock-0002.png",
+            filename = "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. metal .. "/" .. metal .. "-" .. stock .. "-stock-0002.png",
             width = 64,
             height = 64,
             scale = 0.25
           },
           {
-            filename = "__galdocs-machining__/graphics/icons/intermediates/stocks/" .. metal .. "/" .. metal .. "-" .. stock .. "-stock-0003.png",
+            filename = "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. metal .. "/" .. metal .. "-" .. stock .. "-stock-0003.png",
             width = 64,
             height = 64,
             scale = 0.25
           }
         },
-        subgroup = "galdocs-machining-stocks-" .. metal,
-        order = order_count .. "galdocs-machining-stocks-" .. metal,
+        subgroup = "galdocs-manufacturing-stocks-" .. metal,
+        order = order_count .. "galdocs-manufacturing-stocks-" .. metal,
         stack_size = stock_stack_size,
-        localised_name = {"galdocs-machining.metal-stock-item-name", {"galdocs-machining." .. metal}, {"galdocs-machining." .. stock}},
-        localised_description = {"galdocs-machining.metal-stock-item-description", {"galdocs-machining." .. metal}, {"galdocs-machining." .. stock}, property_list}
+        localised_name = {"galdocs-manufacturing.metal-stock-item-name", {"galdocs-manufacturing." .. metal}, {"galdocs-manufacturing." .. stock}},
+        localised_description = {"galdocs-manufacturing.metal-stock-item-description", {"galdocs-manufacturing." .. metal}, {"galdocs-manufacturing." .. stock}, property_list}
       }
     })
     if (stock ~= "plate") then
@@ -849,7 +849,7 @@ for metal, stocks in pairs(metal_stocks_pairs) do -- Make the [Metal] [Stock] It
             secondary = metal_tinting_pairs[metal][2]
           },
           category = "crafting",
-          localised_name = {"galdocs-machining.metal-stock-item-name", {"galdocs-machining." .. metal}, {"galdocs-machining." .. stock}}
+          localised_name = {"galdocs-manufacturing.metal-stock-item-name", {"galdocs-manufacturing." .. metal}, {"galdocs-manufacturing." .. stock}}
           }
         })
       end
@@ -868,9 +868,9 @@ for metal, stocks in pairs(metal_stocks_pairs) do -- Make the [Metal] [Stock] It
           primary = metal_tinting_pairs[metal][1],
           secondary = metal_tinting_pairs[metal][2]
         },
-        category = "galdocs-machining-" .. stock_minisembler_pairs[stock],
+        category = "galdocs-manufacturing-" .. stock_minisembler_pairs[stock],
         hide_from_player_crafting = true,
-        localised_name = {"galdocs-machining.metal-stock-item-name", {"galdocs-machining." .. metal}, {"galdocs-machining." .. stock}}
+        localised_name = {"galdocs-manufacturing.metal-stock-item-name", {"galdocs-manufacturing." .. metal}, {"galdocs-manufacturing." .. stock}}
       }
     })
     else
@@ -892,8 +892,8 @@ for metal, stocks in pairs(metal_stocks_pairs) do -- Make the [Metal] [Stock] It
             category = "smelting",
             -- order = "galdocs-plate-fam",
             -- hide_from_player_crafting = true,
-            subgroup = "galdocs-machining-plates",
-            localised_name = {"galdocs-machining.metal-stock-item-name", {"galdocs-machining." .. metal}, {"galdocs-machining." .. stock}}
+            subgroup = "galdocs-manufacturing-plates",
+            localised_name = {"galdocs-manufacturing.metal-stock-item-name", {"galdocs-manufacturing." .. metal}, {"galdocs-manufacturing." .. stock}}
           }
         })
       end
@@ -911,10 +911,10 @@ for alloy, ingredients in pairs(alloy_recipe) do -- Add alloy plate recipes
       ingredients = ingredients,
       result = alloy .. "-plate-stock",
       result_count = 1,
-      category = "galdocs-machining-alloys",
-      subgroup = "galdocs-machining-plates"
+      category = "galdocs-manufacturing-alloys",
+      subgroup = "galdocs-manufacturing-plates"
       -- order = "galdocs-plate-fam"
-      -- localised_name = {"galdocs-machining.metal-stock-item-name", {"galdocs-machining." .. metal}, {"galdocs-machining." .. stock}}
+      -- localised_name = {"galdocs-manufacturing.metal-stock-item-name", {"galdocs-manufacturing." .. metal}, {"galdocs-manufacturing." .. stock}}
     }
   })
 end
@@ -928,12 +928,12 @@ for property, parts in pairs(property_machined_part_pairs) do -- Make the [Prope
     if show_property_badges == "all" then
       icons_data_item = {
           {
-            icon = "__galdocs-machining__/graphics/icons/intermediates/machined-parts/" .. property .. "/" .. property .. "-" .. part .. ".png",
+            icon = "__galdocs-manufacturing__/graphics/icons/intermediates/machined-parts/" .. property .. "/" .. property .. "-" .. part .. ".png",
             icon_size = 64,
           },
           {
             scale = 0.4,
-            icon = "__galdocs-machining__/graphics/icons/intermediates/property-icons/" .. property .. ".png",
+            icon = "__galdocs-manufacturing__/graphics/icons/intermediates/property-icons/" .. property .. ".png",
             shift = {-10, -10},
             icon_size = 64
           }
@@ -941,7 +941,7 @@ for property, parts in pairs(property_machined_part_pairs) do -- Make the [Prope
     else
       icons_data_item = {
         {
-          icon = "__galdocs-machining__/graphics/icons/intermediates/machined-parts/" .. property .. "/" .. property .. "-" .. part .. ".png",
+          icon = "__galdocs-manufacturing__/graphics/icons/intermediates/machined-parts/" .. property .. "/" .. property .. "-" .. part .. ".png",
           icon_size = 64,
         }
       }
@@ -951,11 +951,11 @@ for property, parts in pairs(property_machined_part_pairs) do -- Make the [Prope
         type = "item",
         name = property .. "-" .. part .. "-machined-part",
         icons = icons_data_item,
-        subgroup = "galdocs-machining-machined-parts-" .. property,
-        order = order_count .. "galdocs-machining-machined-parts-" .. part,
+        subgroup = "galdocs-manufacturing-machined-parts-" .. property,
+        order = order_count .. "galdocs-manufacturing-machined-parts-" .. part,
         stack_size = machined_part_stack_size,
-        localised_name = {"galdocs-machining.machined-part-item", {"galdocs-machining." .. property}, {"galdocs-machining." .. part}},
-        localised_description = {"galdocs-machining.metal-machined-part-item-description", {"galdocs-machining." .. property}, {"galdocs-machining." .. part}}
+        localised_name = {"galdocs-manufacturing.machined-part-item", {"galdocs-manufacturing." .. property}, {"galdocs-manufacturing." .. part}},
+        localised_description = {"galdocs-manufacturing.metal-machined-part-item-description", {"galdocs-manufacturing." .. property}, {"galdocs-manufacturing." .. part}}
       }
     })
     for metal, metal_properties in pairs(metal_properties_pairs) do
@@ -963,18 +963,18 @@ for property, parts in pairs(property_machined_part_pairs) do -- Make the [Prope
         if show_property_badges == "recipes" or show_property_badges == "all" then
           icons_data_recipe = {
             {
-              icon = "__galdocs-machining__/graphics/icons/intermediates/machined-parts/" .. property .. "/" .. property .. "-" .. part .. ".png",
+              icon = "__galdocs-manufacturing__/graphics/icons/intermediates/machined-parts/" .. property .. "/" .. property .. "-" .. part .. ".png",
               icon_size = 64,
             },
             {
               scale = 0.3,
-              icon = "__galdocs-machining__/graphics/icons/intermediates/stocks/" .. metal .. "/" .. metal .. "-plate-stock-0000.png",
+              icon = "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. metal .. "/" .. metal .. "-plate-stock-0000.png",
               shift = {10, -10},
               icon_size = 64
             },
             {
               scale = 0.4,
-              icon = "__galdocs-machining__/graphics/icons/intermediates/property-icons/" .. property .. ".png",
+              icon = "__galdocs-manufacturing__/graphics/icons/intermediates/property-icons/" .. property .. ".png",
               shift = {-10, 10},
               icon_size = 64
             }
@@ -982,12 +982,12 @@ for property, parts in pairs(property_machined_part_pairs) do -- Make the [Prope
         else
           icons_data_recipe = {
             {
-              icon = "__galdocs-machining__/graphics/icons/intermediates/machined-parts/" .. property .. "/" .. property .. "-" .. part .. ".png",
+              icon = "__galdocs-manufacturing__/graphics/icons/intermediates/machined-parts/" .. property .. "/" .. property .. "-" .. part .. ".png",
               icon_size = 64,
             },
             {
               scale = 0.3,
-              icon = "__galdocs-machining__/graphics/icons/intermediates/stocks/" .. metal .. "/" .. metal .. "-plate-stock-0000.png",
+              icon = "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. metal .. "/" .. metal .. "-plate-stock-0000.png",
               shift = {10, -10},
               icon_size = 64
             }
@@ -1003,14 +1003,14 @@ for property, parts in pairs(property_machined_part_pairs) do -- Make the [Prope
               {metal .. "-" .. machined_parts_precurors[part] .. "-stock", 1}
             },
             result = property .. "-" .. part .. "-machined-part",
-            category = "galdocs-machining-" .. machined_part_minisembler_pairs[part],
+            category = "galdocs-manufacturing-" .. machined_part_minisembler_pairs[part],
             hide_from_player_crafting = true,
             icons = icons_data_recipe,
             crafting_machine_tint = { -- I don't know if anything will use this, but here it is just in case. You're welcome, future me.
               primary = metal_tinting_pairs[metal][1],
               secondary = metal_tinting_pairs[metal][2]
             },
-            localised_name = {"galdocs-machining.machined-part-recipe", {"galdocs-machining." .. property}, {"galdocs-machining." .. part}, {"galdocs-machining." .. metal}, {"galdocs-machining." .. machined_parts_precurors[part]}}
+            localised_name = {"galdocs-manufacturing.machined-part-recipe", {"galdocs-manufacturing." .. property}, {"galdocs-manufacturing." .. part}, {"galdocs-manufacturing." .. metal}, {"galdocs-manufacturing." .. machined_parts_precurors[part]}}
           }
         })
         -- log("your face")
@@ -1032,7 +1032,7 @@ for property, parts in pairs(property_machined_part_pairs) do -- Make the [Prope
                 primary = metal_tinting_pairs[metal][1],
                 secondary = metal_tinting_pairs[metal][2]
               },
-              localised_name = {"galdocs-machining.machined-part-recipe", {"galdocs-machining." .. property}, {"galdocs-machining." .. part}, {"galdocs-machining." .. metal}, {"galdocs-machining." .. machined_parts_precurors[part]}}
+              localised_name = {"galdocs-manufacturing.machined-part-recipe", {"galdocs-manufacturing." .. property}, {"galdocs-manufacturing." .. part}, {"galdocs-manufacturing." .. metal}, {"galdocs-manufacturing." .. machined_parts_precurors[part]}}
             }
           })  
         end
@@ -1052,7 +1052,7 @@ for minisembler, _ in pairs(minisemblers_rgba_pairs) do
     technology_list, #technology_list,
     {
       type = "unlock-recipe",
-      recipe = "galdocs-machining-" .. minisembler .. "-recipe"
+      recipe = "galdocs-manufacturing-" .. minisembler .. "-recipe"
     }
   )
 end
@@ -1060,17 +1060,17 @@ end
 data:extend({ -- Make the minisemblers.
   { -- item subgroup
 	  type = "item-subgroup",
-	  name = "galdocs-machining-minisemblers",
+	  name = "galdocs-manufacturing-minisemblers",
 	  group = "production",
 	  order = "f",
-    localised_name = {"galdocs-machining.minisembler-item-subgroup-name"},
-    localised_description = {"galdocs-machining.minisembler-item-subgroup-description"}
+    localised_name = {"galdocs-manufacturing.minisembler-item-subgroup-name"},
+    localised_description = {"galdocs-manufacturing.minisembler-item-subgroup-description"}
   },
   { -- technology
     type = "technology",
-    name = "galdocs-machining-technology-minisemblers",
+    name = "galdocs-manufacturing-technology-minisemblers",
     icon_size = 256, icon_mipmaps = 4,
-    icon = "__galdocs-machining__/graphics/technology-icons/lathe-technology-icon.png",
+    icon = "__galdocs-manufacturing__/graphics/technology-icons/lathe-technology-icon.png",
     effects = technology_list,
     unit =
     {
@@ -1084,7 +1084,7 @@ data:extend({ -- Make the minisemblers.
   }
 })
 
-data.raw.technology["automation"].prerequisites = {"galdocs-machining-technology-minisemblers"}
+data.raw.technology["automation"].prerequisites = {"galdocs-manufacturing-technology-minisemblers"}
 
 local minisembler_recipe_ordering
 if advanced then
@@ -1200,11 +1200,11 @@ for minisembler, rgba in pairs(minisemblers_rgba_pairs) do -- build current_anim
     layer_set = {}
     for layer_number, layer_name in pairs(animation_layers) do
       if direction_name == "north" then
-        current_normal_filename = "__galdocs-machining__/graphics/entity/minisemblers/" .. minisembler .. "/" .. minisembler .. "-v-" .. layer_name .. ".png"
-        current_hr_filename = "__galdocs-machining__/graphics/entity/minisemblers/" .. minisembler .. "/hr-" .. minisembler .. "-v-" .. layer_name .. ".png"
+        current_normal_filename = "__galdocs-manufacturing__/graphics/entity/minisemblers/" .. minisembler .. "/" .. minisembler .. "-v-" .. layer_name .. ".png"
+        current_hr_filename = "__galdocs-manufacturing__/graphics/entity/minisemblers/" .. minisembler .. "/hr-" .. minisembler .. "-v-" .. layer_name .. ".png"
       else
-        current_normal_filename = "__galdocs-machining__/graphics/entity/minisemblers/" .. minisembler .. "/" .. minisembler .. "-h-" .. layer_name .. ".png"
-        current_hr_filename = "__galdocs-machining__/graphics/entity/minisemblers/" .. minisembler .. "/hr-" .. minisembler .. "-h-" .. layer_name .. ".png"
+        current_normal_filename = "__galdocs-manufacturing__/graphics/entity/minisemblers/" .. minisembler .. "/" .. minisembler .. "-h-" .. layer_name .. ".png"
+        current_hr_filename = "__galdocs-manufacturing__/graphics/entity/minisemblers/" .. minisembler .. "/hr-" .. minisembler .. "-h-" .. layer_name .. ".png"
       end
       layer = {
         filename = current_normal_filename,
@@ -1242,14 +1242,14 @@ for minisembler, rgba in pairs(minisemblers_rgba_pairs) do -- build current_anim
   end
   current_animation = direction_set
 
-  direction_set["north"]["layers"][2]["filename"] = "__galdocs-machining__/graphics/entity/minisemblers/" .. minisembler .. "/" .. minisembler .. "-v-idle.png"
-  direction_set["north"]["layers"][2]["hr_version"]["filename"] = "__galdocs-machining__/graphics/entity/minisemblers/" .. minisembler .. "/hr-" .. minisembler .. "-v-idle.png"
-  direction_set["south"]["layers"][2]["filename"] = "__galdocs-machining__/graphics/entity/minisemblers/" .. minisembler .. "/" .. minisembler .. "-v-idle.png"
-  direction_set["south"]["layers"][2]["hr_version"]["filename"] = "__galdocs-machining__/graphics/entity/minisemblers/" .. minisembler .. "/hr-" .. minisembler .. "-v-idle.png"
-  direction_set["east"]["layers"][2]["filename"] = "__galdocs-machining__/graphics/entity/minisemblers/" .. minisembler .. "/" .. minisembler .. "-h-idle.png"
-  direction_set["east"]["layers"][2]["hr_version"]["filename"] = "__galdocs-machining__/graphics/entity/minisemblers/" .. minisembler .. "/hr-" .. minisembler .. "-h-idle.png"
-  direction_set["west"]["layers"][2]["filename"] = "__galdocs-machining__/graphics/entity/minisemblers/" .. minisembler .. "/" .. minisembler .. "-h-idle.png"
-  direction_set["west"]["layers"][2]["hr_version"]["filename"] = "__galdocs-machining__/graphics/entity/minisemblers/" .. minisembler .. "/hr-" .. minisembler .. "-h-idle.png"
+  direction_set["north"]["layers"][2]["filename"] = "__galdocs-manufacturing__/graphics/entity/minisemblers/" .. minisembler .. "/" .. minisembler .. "-v-idle.png"
+  direction_set["north"]["layers"][2]["hr_version"]["filename"] = "__galdocs-manufacturing__/graphics/entity/minisemblers/" .. minisembler .. "/hr-" .. minisembler .. "-v-idle.png"
+  direction_set["south"]["layers"][2]["filename"] = "__galdocs-manufacturing__/graphics/entity/minisemblers/" .. minisembler .. "/" .. minisembler .. "-v-idle.png"
+  direction_set["south"]["layers"][2]["hr_version"]["filename"] = "__galdocs-manufacturing__/graphics/entity/minisemblers/" .. minisembler .. "/hr-" .. minisembler .. "-v-idle.png"
+  direction_set["east"]["layers"][2]["filename"] = "__galdocs-manufacturing__/graphics/entity/minisemblers/" .. minisembler .. "/" .. minisembler .. "-h-idle.png"
+  direction_set["east"]["layers"][2]["hr_version"]["filename"] = "__galdocs-manufacturing__/graphics/entity/minisemblers/" .. minisembler .. "/hr-" .. minisembler .. "-h-idle.png"
+  direction_set["west"]["layers"][2]["filename"] = "__galdocs-manufacturing__/graphics/entity/minisemblers/" .. minisembler .. "/" .. minisembler .. "-h-idle.png"
+  direction_set["west"]["layers"][2]["hr_version"]["filename"] = "__galdocs-manufacturing__/graphics/entity/minisemblers/" .. minisembler .. "/hr-" .. minisembler .. "-h-idle.png"
   current_idle_animation = direction_set
   
   layer_set = {}
@@ -1257,11 +1257,11 @@ for minisembler, rgba in pairs(minisemblers_rgba_pairs) do -- build current_anim
     direction_set = {apply_recipe_tint = recipe_tint}
     for _, direction_name in pairs(animation_directions) do
       if direction_name == "north" then
-        current_normal_filename = "__galdocs-machining__/graphics/entity/minisemblers/" .. minisembler .. "/" .. minisembler .. "-v-" .. layer_name .. ".png"
-        current_hr_filename = "__galdocs-machining__/graphics/entity/minisemblers/" .. minisembler .. "/hr-" .. minisembler .. "-v-" .. layer_name .. ".png"
+        current_normal_filename = "__galdocs-manufacturing__/graphics/entity/minisemblers/" .. minisembler .. "/" .. minisembler .. "-v-" .. layer_name .. ".png"
+        current_hr_filename = "__galdocs-manufacturing__/graphics/entity/minisemblers/" .. minisembler .. "/hr-" .. minisembler .. "-v-" .. layer_name .. ".png"
       else
-        current_normal_filename = "__galdocs-machining__/graphics/entity/minisemblers/" .. minisembler .. "/" .. minisembler .. "-h-" .. layer_name .. ".png"
-        current_hr_filename = "__galdocs-machining__/graphics/entity/minisemblers/" .. minisembler .. "/hr-" .. minisembler .. "-h-" .. layer_name .. ".png"
+        current_normal_filename = "__galdocs-manufacturing__/graphics/entity/minisemblers/" .. minisembler .. "/" .. minisembler .. "-h-" .. layer_name .. ".png"
+        current_hr_filename = "__galdocs-manufacturing__/graphics/entity/minisemblers/" .. minisembler .. "/hr-" .. minisembler .. "-h-" .. layer_name .. ".png"
       end
       direction = {
         filename = current_normal_filename,
@@ -1300,61 +1300,61 @@ for minisembler, rgba in pairs(minisemblers_rgba_pairs) do -- build current_anim
   data:extend({
     { -- recipe category
       type = "recipe-category",
-      name = "galdocs-machining-" .. minisembler,
-      order = "galdocs-machining",
-      localised_name = {"galdocs-machining.minisembler-recipe-category-name"},
-      localised_description = {"galdocs-machining.minisembler-recipe-category-description"}
+      name = "galdocs-manufacturing-" .. minisembler,
+      order = "galdocs-manufacturing",
+      localised_name = {"galdocs-manufacturing.minisembler-recipe-category-name"},
+      localised_description = {"galdocs-manufacturing.minisembler-recipe-category-description"}
     },
     { -- item
       type = "item",
-      name = "galdocs-machining-" .. minisembler,
+      name = "galdocs-manufacturing-" .. minisembler,
       icons = {
         {
-          icon = "__galdocs-machining__/graphics/icons/minisemblers/".. minisembler .. "-icon.png", -- FIXME make dang nabbit icons future me
+          icon = "__galdocs-manufacturing__/graphics/icons/minisemblers/".. minisembler .. "-icon.png", -- FIXME make dang nabbit icons future me
           icon_size = 64,
           icon_mipmaps = 4,
         },
       },
-      subgroup = "galdocs-machining-minisemblers",
+      subgroup = "galdocs-manufacturing-minisemblers",
       order = "a[galdocs-".. minisembler .. "-" .. order_count .. "]",
-      place_result = "galdocs-machining-" .. minisembler,
+      place_result = "galdocs-manufacturing-" .. minisembler,
       stack_size = 50,
-      localised_name = {"galdocs-machining.minisembler-item-name", {"galdocs-machining." .. minisembler}},
-      localised_description = {"galdocs-machining.minisembler-item-description", {"galdocs-machining." .. minisembler}} -- FIXME : add in a list of things it can machine.
+      localised_name = {"galdocs-manufacturing.minisembler-item-name", {"galdocs-manufacturing." .. minisembler}},
+      localised_description = {"galdocs-manufacturing.minisembler-item-description", {"galdocs-manufacturing." .. minisembler}} -- FIXME : add in a list of things it can machine.
     },
     { -- recipe
       type = "recipe",
-      name = "galdocs-machining-" .. minisembler .."-recipe",
+      name = "galdocs-manufacturing-" .. minisembler .."-recipe",
       enabled = false,
       ingredients = minisemblers_recipe_parameters[minisembler],
-      result = "galdocs-machining-" .. minisembler,
+      result = "galdocs-manufacturing-" .. minisembler,
       icons = {
         {
-          icon = "__galdocs-machining__/graphics/icons/minisemblers/" .. minisembler .. "-icon.png",
+          icon = "__galdocs-manufacturing__/graphics/icons/minisemblers/" .. minisembler .. "-icon.png",
           icon_size = 64,
           icon_mipmaps = 4
         }
       },
-      localised_name = {"galdocs-machining.minisembler-recipe-name", {"galdocs-machining." .. minisembler}},
-      localised_description = {"galdocs-machining.minisembler-recipe-description", {"galdocs-machining." .. minisembler}}
+      localised_name = {"galdocs-manufacturing.minisembler-recipe-name", {"galdocs-manufacturing." .. minisembler}},
+      localised_description = {"galdocs-manufacturing.minisembler-recipe-description", {"galdocs-manufacturing." .. minisembler}}
     },
     { -- entity
       type = "assembling-machine",
-      name = "galdocs-machining-" .. minisembler,
+      name = "galdocs-manufacturing-" .. minisembler,
       --[[
-      icon = "__galdocs-machining__/graphics/icons/lathe-icon.png",
+      icon = "__galdocs-manufacturing__/graphics/icons/lathe-icon.png",
       icon_size = 64,
       icon_mipmaps = 4,
       --]]
       icons = {
         {
-          icon = "__galdocs-machining__/graphics/icons/minisemblers/" .. minisembler .. "-icon.png",
+          icon = "__galdocs-manufacturing__/graphics/icons/minisemblers/" .. minisembler .. "-icon.png",
           icon_size = 64,
           icon_mipmaps = 4
         }
       },
       flags = {"placeable-neutral", "placeable-player", "player-creation"},
-      minable = {mining_time = 0.2, result = "galdocs-machining-" .. minisembler},
+      minable = {mining_time = 0.2, result = "galdocs-manufacturing-" .. minisembler},
       max_health = 300,
       corpse = "pump-remnants", -- FIXME : what
       dying_explosion = "pump-explosion", -- FIXME : what
@@ -1372,7 +1372,7 @@ for minisembler, rgba in pairs(minisemblers_rgba_pairs) do -- build current_anim
       animation = current_animation,
       idle_animation = current_idle_animation,
       working_visualisations = current_working_visualizations,
-      crafting_categories = {"galdocs-machining-" .. minisembler},
+      crafting_categories = {"galdocs-manufacturing-" .. minisembler},
       crafting_speed = 0.5,
       energy_source =
       {
@@ -1397,7 +1397,7 @@ for minisembler, rgba in pairs(minisemblers_rgba_pairs) do -- build current_anim
         fade_in_ticks = 4,
         fade_out_ticks = 20
       },
-      localised_name = {"galdocs-machining.minisembler-entity-name", {"galdocs-machining." .. minisembler}},
+      localised_name = {"galdocs-manufacturing.minisembler-entity-name", {"galdocs-manufacturing." .. minisembler}},
     }
   })
   order_count = order_count + 1
@@ -1422,15 +1422,15 @@ local base_resources_to_replace_without_ore_in_the_stupid_name = {
 }
 
 for resource, _ in pairs(base_resources_to_replace_with_ore_in_the_stupid_name) do
-  data.raw.resource[resource .. "-ore"].stages.sheet.filename = "__galdocs-machining__/graphics/entity/resource/" .. resource .. "/" .. resource .. "-ore.png"
-  data.raw.resource[resource .. "-ore"].stages.sheet.hr_version.filename = "__galdocs-machining__/graphics/entity/resource/" .. resource .. "/hr-" .. resource .. "-ore.png"
-  data.raw.resource[resource .. "-ore"].icon = "__galdocs-machining__/graphics/icons/intermediates/ore/" .. resource .. "/" .. resource .. "-ore-1.png"
+  data.raw.resource[resource .. "-ore"].stages.sheet.filename = "__galdocs-manufacturing__/graphics/entity/resource/" .. resource .. "/" .. resource .. "-ore.png"
+  data.raw.resource[resource .. "-ore"].stages.sheet.hr_version.filename = "__galdocs-manufacturing__/graphics/entity/resource/" .. resource .. "/hr-" .. resource .. "-ore.png"
+  data.raw.resource[resource .. "-ore"].icon = "__galdocs-manufacturing__/graphics/icons/intermediates/ore/" .. resource .. "/" .. resource .. "-ore-1.png"
 end
 
 for resource, _ in pairs(base_resources_to_replace_without_ore_in_the_stupid_name) do
-  data.raw.resource[resource].stages.sheet.filename = "__galdocs-machining__/graphics/entity/resource/" .. resource .. "/" .. resource .. ".png"
-  data.raw.resource[resource].stages.sheet.hr_version.filename = "__galdocs-machining__/graphics/entity/resource/" .. resource .. "/hr-" .. resource .. ".png"
-  -- data.raw.resource[resource].icon = "__galdocs-machining__/graphics/icons/intermediates/ore/" .. resource .. "/" .. resource .. "-1.png"
+  data.raw.resource[resource].stages.sheet.filename = "__galdocs-manufacturing__/graphics/entity/resource/" .. resource .. "/" .. resource .. ".png"
+  data.raw.resource[resource].stages.sheet.hr_version.filename = "__galdocs-manufacturing__/graphics/entity/resource/" .. resource .. "/hr-" .. resource .. ".png"
+  -- data.raw.resource[resource].icon = "__galdocs-manufacturing__/graphics/icons/intermediates/ore/" .. resource .. "/" .. resource .. "-1.png"
 end
 
 local function resource(resource_parameters, autoplace_parameters)
@@ -1439,7 +1439,7 @@ local function resource(resource_parameters, autoplace_parameters)
   {
     type = "resource",
     name = resource_parameters.name .. "-ore",
-    icon = "__galdocs-machining__/graphics/icons/intermediates/ore/" .. resource_parameters.name .. "/" .. resource_parameters.name .. "-ore-1.png",
+    icon = "__galdocs-manufacturing__/graphics/icons/intermediates/ore/" .. resource_parameters.name .. "/" .. resource_parameters.name .. "-ore-1.png",
     icon_size = 64,
     icon_mipmaps = 4,
     flags = {"placeable-neutral"},
@@ -1471,14 +1471,14 @@ local function resource(resource_parameters, autoplace_parameters)
     {
       sheet =
       {
-        filename = "__galdocs-machining__/graphics/entity/resource/" .. resource_parameters.name .. "/" .. resource_parameters.name .. "-ore.png",
+        filename = "__galdocs-manufacturing__/graphics/entity/resource/" .. resource_parameters.name .. "/" .. resource_parameters.name .. "-ore.png",
         priority = "extra-high",
         size = 64,
         frame_count = 8,
         variation_count = 8,
         hr_version =
         {
-          filename = "__galdocs-machining__/graphics/entity/resource/" .. resource_parameters.name .. "/hr-" .. resource_parameters.name .. "-ore.png",
+          filename = "__galdocs-manufacturing__/graphics/entity/resource/" .. resource_parameters.name .. "/hr-" .. resource_parameters.name .. "-ore.png",
           priority = "extra-high",
           size = 128,
           frame_count = 8,

@@ -97,7 +97,7 @@ end
 -- Difficulty Toggles
 -- ******************
 
-local advanced = settings.startup["galdocs-machining-advanced-mode"].value
+local advanced = settings.startup["galdocs-manufacturing-advanced-mode"].value
 
 
 
@@ -837,7 +837,7 @@ for item_name, item in pairs(data.raw.item) do
     for recipe_name, recipe in pairs(data.raw.recipe) do
       i, j = string.find(recipe_name, string.sub(item_name, 0, #item_name - 14), 1, true)
       if i ~= nil then
-        log("asdf I'm about to ruin this recipe's whole career " .. recipe_name)
+        -- log("asdf I'm about to ruin this recipe's whole career " .. recipe_name)
         for technology_name, technology in pairs(data.raw.technology) do
           -- log("asdf I'm about to ruin this technology's whole career " .. technology_name)
           new_effects = {}
@@ -846,7 +846,7 @@ for item_name, item in pairs(data.raw.item) do
               if effect.recipe ~= recipe_name then
                 table.insert(new_effects, effect)
               else
-                log("asdf TARGET AQUIRED: " .. technology_name)
+                -- log("asdf TARGET AQUIRED: " .. technology_name)
               end
             end
           end

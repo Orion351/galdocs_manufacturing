@@ -55,7 +55,7 @@ data:extend({
     collision_box = {{-0.7, -0.7}, {0.7, 0.7}},
     selection_box = {{-0.8, -1}, {0.8, 1}},
     damaged_trigger_effect = hit_effects.rock(),
-    crafting_categories = {"smelting", "galdocs-machining-alloys"},
+    crafting_categories = {"smelting", "galdocs-manufacturing-alloys"},
     result_inventory_size = 1,
     energy_usage = "90kW",
     crafting_speed = 1,
