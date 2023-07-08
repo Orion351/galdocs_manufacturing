@@ -849,6 +849,7 @@ for metal, stocks in pairs(metal_stocks_pairs) do -- Make the [Metal] [Stock] It
             primary = metal_tinting_pairs[metal][1],
             secondary = metal_tinting_pairs[metal][2]
           },
+          energy_required = 0.3,
           category = "crafting",
           localised_name = {"galdocs-manufacturing.metal-stock-item-name", {"galdocs-manufacturing." .. metal}, {"galdocs-manufacturing." .. stock}}
           }
@@ -869,6 +870,7 @@ for metal, stocks in pairs(metal_stocks_pairs) do -- Make the [Metal] [Stock] It
           primary = metal_tinting_pairs[metal][1],
           secondary = metal_tinting_pairs[metal][2]
         },
+        energy_required = 0.3,
         category = "galdocs-manufacturing-" .. stock_minisembler_pairs[stock],
         hide_from_player_crafting = true,
         localised_name = {"galdocs-manufacturing.metal-stock-item-name", {"galdocs-manufacturing." .. metal}, {"galdocs-manufacturing." .. stock}}
@@ -881,6 +883,7 @@ for metal, stocks in pairs(metal_stocks_pairs) do -- Make the [Metal] [Stock] It
             type = "recipe",
             name = metal .. "-" .. stock .. "-stock",
             enabled = metal_technology_pairs[metal][2] == "starter",
+            energy_required = 3.2,
             ingredients =
             {
               {metal .. "-ore", 1}
@@ -912,6 +915,7 @@ for alloy, ingredients in pairs(alloy_recipe) do -- Add alloy plate recipes
       ingredients = ingredients,
       result = alloy .. "-plate-stock",
       result_count = 1,
+      energy_required = 10,
       category = "galdocs-manufacturing-alloys",
       subgroup = "galdocs-manufacturing-plates"
       -- order = "galdocs-plate-fam"
@@ -1011,6 +1015,7 @@ for property, parts in pairs(property_machined_part_pairs) do -- Make the [Prope
               primary = metal_tinting_pairs[metal][1],
               secondary = metal_tinting_pairs[metal][2]
             },
+            energy_required = 0.3,
             localised_name = {"galdocs-manufacturing.machined-part-recipe", {"galdocs-manufacturing." .. property}, {"galdocs-manufacturing." .. part}, {"galdocs-manufacturing." .. metal}, {"galdocs-manufacturing." .. machined_parts_precurors[part]}}
           }
         })
@@ -1033,6 +1038,7 @@ for property, parts in pairs(property_machined_part_pairs) do -- Make the [Prope
                 primary = metal_tinting_pairs[metal][1],
                 secondary = metal_tinting_pairs[metal][2]
               },
+              energy_required = 0.3,
               localised_name = {"galdocs-manufacturing.machined-part-recipe", {"galdocs-manufacturing." .. property}, {"galdocs-manufacturing." .. part}, {"galdocs-manufacturing." .. metal}, {"galdocs-manufacturing." .. machined_parts_precurors[part]}}
             }
           })  
@@ -1336,6 +1342,7 @@ for minisembler, rgba in pairs(minisemblers_rgba_pairs) do -- build current_anim
           icon_mipmaps = 4
         }
       },
+      energy_required = 1,
       localised_name = {"galdocs-manufacturing.minisembler-recipe-name", {"galdocs-manufacturing." .. minisembler}},
       localised_description = {"galdocs-manufacturing.minisembler-recipe-description", {"galdocs-manufacturing." .. minisembler}}
     },
