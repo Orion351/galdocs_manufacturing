@@ -834,7 +834,7 @@ for metal, stocks in pairs(metal_stocks_pairs) do -- Make the [Metal] [Stock] It
       }
     })
     if (stock ~= "plate") then
-      if (metal == "copper" or metal == "iron") then
+      if ((metal == "copper" or metal == "iron") or (metal == "brass" and (stock == "pipe" or stock == "fine-pipe" or stock == "sheet"))) then
         data:extend({
           { -- recipe
           type = "recipe",
