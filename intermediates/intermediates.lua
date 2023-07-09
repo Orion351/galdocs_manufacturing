@@ -438,7 +438,7 @@ if advanced then -- metal_stocks_pairs : [metal | list of stocks that it has]
     -- alloyed metal
     ["steel"]             = map{"plate", "sheet", "square", "angle", "girder", "wire", "gear", "fine-gear", "pipe", "fine-pipe"},
     ["brass"]             = map{"plate", "sheet", "square", "angle", "girder", "wire", "gear", "fine-gear", "pipe", "fine-pipe"},
-    ["invar"]             = map{"plate", "sheet", "square", "angle", "girder",         "gear", "fine-gear", "pipe", "fine-pipe"},
+    ["invar"]             = map{"plate", "sheet", "square", "angle", "girder", "wire", "gear", "fine-gear", "pipe", "fine-pipe"},
 
     -- treated metal
     ["galvanized-steel"]  = map{"plate", "sheet", "square", "angle", "girder", "wire", "gear", "fine-gear", "pipe", "fine-pipe"}
@@ -1006,6 +1006,7 @@ for property, parts in pairs(property_machined_part_pairs) do -- Make the [Prope
             }
           }
         end
+        log("asdf " .. property .. "-" .. part .. "-from-" .. metal .. "-" .. machined_parts_precurors[part])
         data:extend({
           { -- recipe
             type = "recipe",
@@ -1030,7 +1031,8 @@ for property, parts in pairs(property_machined_part_pairs) do -- Make the [Prope
         })
         -- log("your face")
         if data.raw.recipe[property .. "-" .. part .. "-from-" .. metal .. "-" .. machined_parts_precurors[part]].enabled == false then log("FALLS") end
-        if (metal == "copper" or metal == "iron") and (property == "basic" or property == "electrically-conductive") then
+        if ((metal == "copper" or metal == "iron") and ((property == "basic" or property == "electrically-conductive" or (property == "thermally-conductive" and machined_parts_precurors[part] == "wire") or property == "corrosion-resistant")) or (metal == "brass" and property == "corrosion-resistant") and (machined_parts_precurors[part] == "fine-pipe" or machined_parts_precurors[part] == "pipe")) then
+        -- if (metal == "copper" or metal == "iron") and property == "basic" then
           data:extend({
             { -- recipe
               type = "recipe",
@@ -1056,6 +1058,37 @@ for property, parts in pairs(property_machined_part_pairs) do -- Make the [Prope
     end
   end
 end
+
+-- carve outs for starter recipes
+--[[
+  data:extend({
+  {
+    type = "recipe",
+    name = "electrically-conductive-wiring-from-copper-wire-player-crafting"
+  },
+  {
+    type = "recipe",
+    name = "thermally-conductive-wiring-from-copper-wire-player-crafting"
+  },
+  {
+    type = "recipe",
+    name = "corrosion-resistant-piping-from-brass-pipe-player-crafting"
+  },
+  {
+    type = "recipe",
+    name = "corrosion-resistant-fine-piping-from-brass-fine-pipe-player-crafting"
+  }
+})
+--]]
+-- log("asdf")
+-- data.raw.recipe["electrically-conductive-wiring-from-copper-wire-player-crafting"] = data.raw.recipe["electrically-conductive-wiring-from-copper-wire"]
+-- data.raw.recipe["electrically-conductive-wiring-from-copper-wire-player-crafting"].enabled = true
+-- data.raw.recipe["thermally-conductive-wiring-from-copper-wire-player-crafting"] = data.raw.recipe["thermally-conductive-wiring-from-copper-wire"]
+-- data.raw.recipe["thermally-conductive-wiring-from-copper-wire-player-crafting"].enabled = true
+-- data.raw.recipe["corrosion-resistant-piping-from-brass-pipe-player-crafting"] = data.raw.recipe["corrosion-resistant-piping-from-brass-pipe"]
+-- data.raw.recipe["corrosion-resistant-piping-from-brass-pipe-player-crafting"].enabled = true
+-- data.raw.recipe["corrosion-resistant-fine-piping-from-brass-fine-pipe-player-crafting"] = data.raw.recipe["corrosion-resistant-fine-piping-from-brass-fine-pipe"]
+-- data.raw.recipe["corrosion-resistant-fine-piping-from-brass-fine-pipe-player-crafting"].enabled = true
 
 
 
@@ -1177,14 +1210,14 @@ minisemblers_rendering_data = { -- Set up the minisembler rendering data
         ["sparks"]    = {["shift-x"] = 0, ["shift-y"] = 0,   ["width"] = 51, ["height"] = 64, ["scale"] = 1},
         ["workpiece"] = {["shift-x"] = 5, ["shift-y"] = -1,  ["width"] = 51, ["height"] = 64, ["scale"] = 1},
         ["oxidation"] = {["shift-x"] = 5, ["shift-y"] = -1,  ["width"] = 51, ["height"] = 64, ["scale"] = 1},
-        ["shadow"]    = {["shift-x"] = 9, ["shift-y"] = 7.5, ["width"] = 64, ["height"] = 42, ["scale"] = 1}
+        ["shadow"]    = {["shift-x"] = 15, ["shift-y"] = 14, ["width"] = 64, ["height"] = 42, ["scale"] = 1}
       },
       ["west"] = {
         ["base"]      = {["shift-x"] = 0, ["shift-y"] = -5, ["width"] = 64, ["height"] = 52, ["scale"] = 1},
         ["sparks"]    = {["shift-x"] = 0, ["shift-y"] = 0,  ["width"] = 64, ["height"] = 52, ["scale"] = 1},
         ["workpiece"] = {["shift-x"] = 0, ["shift-y"] = -5, ["width"] = 64, ["height"] = 52, ["scale"] = 1},
         ["oxidation"] = {["shift-x"] = 0, ["shift-y"] = -5, ["width"] = 64, ["height"] = 52, ["scale"] = 1},
-        ["shadow"]    = {["shift-x"] = 8, ["shift-y"] = 3,  ["width"] = 64, ["height"] = 20, ["scale"] = 1}
+        ["shadow"]    = {["shift-x"] = 7, ["shift-y"] = 14,  ["width"] = 64, ["height"] = 20, ["scale"] = 1}
       }
     }
   }

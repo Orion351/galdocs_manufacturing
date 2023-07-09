@@ -360,8 +360,8 @@ if advanced then
     -- Production
     -- ["repair-pack"]                      = {}, -- FIXME
 
-    ["boiler"]                           = {{"basic-girdering", 1}, {"basic-paneling", 1}, {"basic-fine-piping", 1}, {"basic-rivets", 1}}, -- 4 plate
-    ["steam-engine"]                     = {{"basic-girdering", 2}, {"basic-paneling", 6}, {"basic-fine-piping", 7}, {"basic-gearing", 6}, {"basic-rivets", 5}, {"electrically-conductive-wiring", 6}}, -- 31 plate
+    ["boiler"]                           = {{"basic-girdering", 1}, {"basic-paneling", 1}, {"corrosion-resistant-fine-piping", 1}, {"basic-rivets", 1}}, -- 4 plate
+    ["steam-engine"]                     = {{"basic-girdering", 2}, {"basic-paneling", 6}, {"corrosion-resistant-fine-piping", 7}, {"basic-gearing", 6}, {"basic-rivets", 5}, {"electrically-conductive-wiring", 6}}, -- 31 plate
 
     ["solar-panel"]                      = {{"load-bearing-girdering", 6}, {"electrically-conductive-wiring", 8}, {"high-tensile-rivets", 8}}, -- 10 plate (5 steel)
     ["accumulator"]                      = {{"load-bearing-girdering", 1}, {"electrically-conductive-wiring", 1}, {"corrosion-resistant-rivets", 1}}, -- 2 plate
@@ -375,7 +375,7 @@ if advanced then
     ["burner-mining-drill"]              = {{"basic-girdering", 4}, {"basic-shafting", 2}, {"thermally-conductive-wiring", 2}, {"basic-rivets", 1}}, -- 9 plate
     ["electric-mining-drill"]            = {{"load-bearing-girdering", 6}, {"load-bearing-shafting", 4}, {"corrosion-resistant-fine-piping", 4}, {"ductile-gearing", 3}, {"electrically-conductive-wiring", 3}}, -- 20 plate
 
-    ["offshore-pump"]                    = {{"basic-framing", 1}, {"basic-piping", 1}, {"basic-paneling", 1}, {"electrically-conductive-wiring", 1}, {"basic-bolts", 1}}, -- 3 plate
+    ["offshore-pump"]                    = {{"basic-framing", 1}, {"corrosion-resistant-piping", 1}, {"basic-paneling", 1}, {"electrically-conductive-wiring", 1}, {"basic-bolts", 1}}, -- 3 plate
 
     ["pumpjack"]                         = {{"heavy-load-bearing-girdering", 10}, {"corrosion-resistant-paneling", 4}, {"corrosion-resistant-fine-piping", 12}, {"high-tensile-shafting", 4}, {"electrically-conductive-wiring", 6}, {"high-tensile-rivets", 4}}, -- 35 plate (5 steel)
 
@@ -548,8 +548,8 @@ else intermediates_to_add_table = { -- {name, ingredients_to_add}, where ingredi
 -- Production
 -- ["repair-pack"]                      = {}, -- FIXME
 
-["boiler"]                           = {{"basic-framing", 1}, {"basic-paneling", 1}, {"basic-piping", 1}, {"basic-bolts", 1}}, -- 4 plate
-["steam-engine"]                     = {{"basic-framing", 2}, {"basic-paneling", 6}, {"basic-piping", 7}, {"basic-gearing", 6}, {"basic-bolts", 5}, {"electrically-conductive-wiring", 6}}, -- 31 plate
+["boiler"]                           = {{"basic-framing", 1}, {"basic-paneling", 1}, {"corrosion-resistant-piping", 1}, {"basic-bolts", 1}}, -- 4 plate
+["steam-engine"]                     = {{"basic-framing", 2}, {"basic-paneling", 6}, {"corrosion-resistant-piping", 7}, {"basic-gearing", 6}, {"basic-bolts", 5}, {"electrically-conductive-wiring", 6}}, -- 31 plate
 
 ["solar-panel"]                      = {{"load-bearing-framing", 6}, {"electrically-conductive-wiring", 8}, {"high-tensile-bolts", 8}}, -- 10 plate (5 steel)
 ["accumulator"]                      = {{"load-bearing-framing", 1}, {"electrically-conductive-wiring", 1}, {"corrosion-resistant-bolts", 1}}, -- 2 plate
@@ -563,7 +563,7 @@ else intermediates_to_add_table = { -- {name, ingredients_to_add}, where ingredi
 ["burner-mining-drill"]              = {{"basic-framing", 4}, {"basic-shafting", 2}, {"thermally-conductive-wiring", 2}, {"basic-bolts", 1}}, -- 9 plate
 ["electric-mining-drill"]            = {{"load-bearing-framing", 6}, {"load-bearing-shafting", 4}, {"corrosion-resistant-piping", 4}, {"ductile-gearing", 3}, {"electrically-conductive-wiring", 3}}, -- 20 plate
 
-["offshore-pump"]                    = {{"basic-framing", 1}, {"basic-piping", 1}, {"basic-paneling", 1}, {"electrically-conductive-wiring", 1}, {"basic-bolts", 1}}, -- 3 plate
+["offshore-pump"]                    = {{"basic-framing", 1}, {"corrosion-resistant-piping", 1}, {"basic-paneling", 1}, {"electrically-conductive-wiring", 1}, {"basic-bolts", 1}}, -- 3 plate
 
 ["pumpjack"]                         = {{"heavy-load-bearing-framing", 10}, {"corrosion-resistant-paneling", 4}, {"corrosion-resistant-piping", 12}, {"high-tensile-shafting", 4}, {"electrically-conductive-wiring", 6}, {"high-tensile-bolts", 4}}, -- 35 plate (5 steel)
 

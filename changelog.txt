@@ -1,4 +1,12 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.1.04
+Date: 07. 09. 2023
+  Changes:
+    - Fixed numerous recipe issues (can handcraft thermally conductive wiring, corrosion resistant piping and fine piping
+    - Fixed steel and stone furnaces to use the new metals and alloys
+    - Fixed some non-hr graphics issues (ore patches, minisembler shadows)
+    - Tuned bootstrap recipes a bit (boiler, steam engine, and offshore pump require corrosion resistant pipe)
+---------------------------------------------------------------------------------------------------
 Version: 0.1.03
 Date: 07. 08. 2023
   Changes:
