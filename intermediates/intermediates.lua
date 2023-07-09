@@ -456,7 +456,7 @@ else
     -- alloys
     ["steel"]             = map{"plate", "square"},
     ["brass"]             = map{"plate", "square"},
-    ["invar"]             = map{"plate"},
+    ["invar"]             = map{"plate", "square"},
 
     -- treatments
     ["galvanized-steel"]  = map{"plate", "square"}
@@ -579,12 +579,12 @@ else
     ["basic"]                   = map{"paneling", "framing", "gearing", "piping",                        "shafting", "bolts", "rivets"},
     ["load-bearing"]            = map{             "framing",                                            "shafting"                   },
     ["electrically-conductive"] = map{                                             "wiring"                                           },
-    ["high-tensile"]            = map{"paneling", "framing", "gearing",                                  "shafting", "bolts", "rivets"},
+    ["high-tensile"]            = map{"paneling", "framing", "gearing",            "wiring",             "shafting", "bolts", "rivets"},
     ["corrosion-resistant"]     = map{"paneling",                       "piping",           "shielding",             "bolts", "rivets"},
     ["lightweight"]             = map{"paneling", "framing",                                             "shafting"                   },
     ["ductile"]                 = map{"paneling", "framing", "gearing",           "wiring", "shielding"                               },
     ["thermally-stable"]        = map{"paneling", "framing", "gearing", "piping", "wiring", "shielding", "shafting", "bolts", "rivets"},
-    ["thermally-conductive"]    = map{                                                                   "shafting"                   },
+    ["thermally-conductive"]    = map{                                            "wiring",              "shafting"                   },
     ["radiation-resistant"]     = map{"paneling",                                           "shielding"                               }
   }
 end
@@ -933,6 +933,7 @@ for alloy, ingredients in pairs(alloy_recipe) do -- Add alloy plate recipes
 end
 
 order_count = 0
+local i = 0
 local icons_data_item = {}
 local icons_data_recipe = {}
 for property, parts in pairs(property_machined_part_pairs) do -- Make the [Property] [Machined Part] Items and Recipes
@@ -1006,7 +1007,7 @@ for property, parts in pairs(property_machined_part_pairs) do -- Make the [Prope
             }
           }
         end
-        log("asdf " .. property .. "-" .. part .. "-from-" .. metal .. "-" .. machined_parts_precurors[part])
+        -- log("asdf " .. property .. "-" .. part .. "-from-" .. metal .. "-" .. machined_parts_precurors[part])
         data:extend({
           { -- recipe
             type = "recipe",
@@ -1030,9 +1031,29 @@ for property, parts in pairs(property_machined_part_pairs) do -- Make the [Prope
           }
         })
         -- log("your face")
-        if data.raw.recipe[property .. "-" .. part .. "-from-" .. metal .. "-" .. machined_parts_precurors[part]].enabled == false then log("FALLS") end
-        if ((metal == "copper" or metal == "iron") and ((property == "basic" or property == "electrically-conductive" or (property == "thermally-conductive" and machined_parts_precurors[part] == "wire") or property == "corrosion-resistant")) or (metal == "brass" and property == "corrosion-resistant") and (machined_parts_precurors[part] == "fine-pipe" or machined_parts_precurors[part] == "pipe")) then
+        -- if data.raw.recipe[property .. "-" .. part .. "-from-" .. metal .. "-" .. machined_parts_precurors[part]].enabled == false then log("FALLS") end
+        i = i + 1
+        log("asdf " .. tostring(i) .. "current recipe: " .. property .. "-" .. part .. "-from-" .. metal .. "-" .. machined_parts_precurors[part] .. "-player-crafting")
+        if (advanced and ( -- carve-outs for player crafting for bootstrap purposes
+                          (property == "basic"                        and metal == "copper"                                                                             ) or
+                          (property == "basic"                        and metal == "iron"                                                                               ) or
+                          (property == "electrically-conductive"      and metal == "copper" and machined_parts_precurors[part] == "wire"      and part == "wiring"      ) or
+                          (property == "thermally-conductive"         and metal == "copper" and machined_parts_precurors[part] == "wire"      and part == "wiring"      ) or
+                          (property == "corrosion-resistant"          and metal == "brass"  and machined_parts_precurors[part] == "fine-pipe" and part == "fine-piping" ) or
+                          (property == "corrosion-resistant"          and metal == "brass"  and machined_parts_precurors[part] == "pipe"      and part == "piping"      )
+                          )
+            ) or
+            (advanced == false and (
+                          (property == "basic"                        and metal == "copper"                                                                     ) or
+                          (property == "basic"                        and metal == "iron"                                                                       ) or
+                          (property == "electrically-conductive"      and metal == "copper" and machined_parts_precurors[part] == "square" and part == "wiring" ) or
+                          (property == "thermally-conductive"         and metal == "copper" and machined_parts_precurors[part] == "square" and part == "wiring" ) or
+                          (property == "corrosion-resistant"          and metal == "brass"  and machined_parts_precurors[part] == "plate"  and part == "piping" )
+                          )
+            )
+            then
         -- if (metal == "copper" or metal == "iron") and property == "basic" then
+          log("asdf " .. i .. "Gettin' did: ".. property .. "-" .. part .. "-from-" .. metal .. "-" .. machined_parts_precurors[part] .. "-player-crafting")
           data:extend({
             { -- recipe
               type = "recipe",

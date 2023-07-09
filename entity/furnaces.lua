@@ -484,15 +484,20 @@ for key, value in pairs(data.raw.furnace) do
 end
 
 --Factorio Complains if it doesnt know about at least 1 furnace
-local dummyFurnace =  {
-  type = "furnace",
-  name = "dummy-furnace",
-  energy_usage = "1kW",
-  crafting_speed=1,
-  crafting_categories={"smelting"},
-  source_inventory_size=1,
-  result_inventory_size=1,
-   energy_source =
+data:extend({
+  {
+    type = "recipe-category",
+    name = "dummy-furnace"
+  },
+  {
+    type = "furnace",
+    name = "dummy-furnace",
+    energy_usage = "1kW",
+    crafting_speed = 1 ,
+    crafting_categories = {"dummy-furnace"},
+    source_inventory_size = 1,
+    result_inventory_size = 1,
+    energy_source =
     {
       type = "burner",
       fuel_category = "chemical",
@@ -517,6 +522,5 @@ local dummyFurnace =  {
         }
       }
     }
-}
-
-data:extend({dummyFurnace})
+  }
+})
