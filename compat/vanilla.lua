@@ -312,9 +312,9 @@ if advanced then
     -- ["stack-filter-inserter"]            = {},
 
     ["small-electric-pole"]              = {{"electrically-conductive-wiring", 1}}, -- 1 plate
-    ["medium-electric-pole"]             = {{"electrically-conductive-wiring", 2}, {"load-bearing-girdering", 2}, {"basic-bolts", 2}}, -- 6 plate (2 steel)
-    ["big-electric-pole"]                = {{"electrically-conductive-wiring", 6}, {"load-bearing-girdering", 6}, {"basic-rivets", 4}}, -- 14 plate (5 steel)
-    ["substation"]                       = {{"electrically-conductive-wiring", 6}, {"load-bearing-girdering", 4}, {"high-tensile-large-paneling", 4}, {"high-tensile-rivets", 6}}, -- 15 plate (10 steel)
+    ["medium-electric-pole"]             = {{"electrically-conductive-wiring", 2}, {"high-tensile-wiring", 2}, {"load-bearing-girdering", 2}, {"basic-bolts", 2}}, -- 6 plate (2 steel)
+    ["big-electric-pole"]                = {{"electrically-conductive-wiring", 6}, {"high-tensile-wiring", 2}, {"load-bearing-girdering", 6}, {"basic-rivets", 4}}, -- 14 plate (5 steel)
+    ["substation"]                       = {{"electrically-conductive-wiring", 6}, {"high-tensile-wiring", 2}, {"load-bearing-girdering", 4}, {"high-tensile-large-paneling", 4}, {"high-tensile-rivets", 6}}, -- 15 plate (10 steel)
 
     ["pipe"]                             = {{"corrosion-resistant-piping", 1}, {"basic-rivets", 1}}, -- 1 plate
     ["pipe-to-ground"]                   = {{"corrosion-resistant-piping", 10}, {"basic-rivets", 5}}, -- 15 plate (5 pipe)
@@ -372,7 +372,7 @@ if advanced then
     ["heat-exchanger"]                   = {{"load-bearing-girdering", 2}, {"corrosion-resistant-paneling", 6}, {"thermally-conductive-shafting", 40}, {"corrosion-resistant-fine-piping", 30}, {"thermally-stable-shielding", 40}, {"high-tensile-rivets", 10}}, -- 120 plate (10 steel)
     ["steam-turbine"]                    = {{"load-bearing-girdering", 10}, {"corrosion-resistant-paneling", 6}, {"thermally-conductive-shafting", 30}, {"corrosion-resistant-fine-piping", 30}, {"ductile-gearing", 30}, {"thermally-stable-shielding", 10}, {"high-tensile-rivets", 10}, {"electrically-conductive-wiring", 10}}, -- 170 plate
 
-    ["burner-mining-drill"]              = {{"basic-girdering", 4}, {"basic-shafting", 2}, {"electrically-conductive-wiring", 2}, {"basic-rivets", 1}}, -- 9 plate
+    ["burner-mining-drill"]              = {{"basic-girdering", 4}, {"basic-shafting", 2}, {"thermally-conductive-wiring", 2}, {"basic-rivets", 1}}, -- 9 plate
     ["electric-mining-drill"]            = {{"load-bearing-girdering", 6}, {"load-bearing-shafting", 4}, {"corrosion-resistant-fine-piping", 4}, {"ductile-gearing", 3}, {"electrically-conductive-wiring", 3}}, -- 20 plate
 
     ["offshore-pump"]                    = {{"basic-framing", 1}, {"basic-piping", 1}, {"basic-paneling", 1}, {"electrically-conductive-wiring", 1}, {"basic-bolts", 1}}, -- 3 plate
@@ -395,7 +395,7 @@ if advanced then
 
     ["beacon"]                           = {{"heavy-load-bearing-girdering", 5}, {"high-tensile-paneling", 2}, {"electrically-conductive-wiring", 6}, {"high-tensile-rivets", 4}}, -- 15 plate (5 steel)
 
-    ["rocket-silo"]                      = {{"heavy-load-bearing-girdering", 300}, {"very-high-tensile-large-paneling", 600}, {"radiation-resistant-shielding", 400}, {"ductile-gearing", 1000},  {"electrically-conductive-wiring", 2000}, {"very-high-tensile-rivets", 600}}, -- 1100 plate (1000 steel)
+    ["rocket-silo"]                      = {{"heavy-load-bearing-girdering", 300}, {"very-high-tensile-large-paneling", 600}, {"radiation-resistant-shielding", 400}, {"ductile-gearing", 1000},  {"electrically-conductive-wiring", 1400}, {"very-high-tensile-rivets", 600}}, -- 1100 plate (1000 steel)
     -- ["satellite"]                        = {{"ductile-paneling", 1}, {"radiation-resistant-shielding", 1}, {"high-tensile-gearing", 1}, {"ductile-framing", 1}, {"electrically-conductive-wiring", 1}, {"very-high-tensile-rivets", 1}},
 
     -- Intermediate Products
@@ -500,9 +500,9 @@ else intermediates_to_add_table = { -- {name, ingredients_to_add}, where ingredi
 -- ["stack-filter-inserter"]            = {},
 
 ["small-electric-pole"]              = {{"electrically-conductive-wiring", 1}}, -- 1 plate
-["medium-electric-pole"]             = {{"electrically-conductive-wiring", 2}, {"load-bearing-framing", 2}, {"basic-bolts", 2}}, -- 6 plate (2 steel)
-["big-electric-pole"]                = {{"electrically-conductive-wiring", 6}, {"load-bearing-framing", 6}, {"basic-bolts", 4}}, -- 14 plate (5 steel)
-["substation"]                       = {{"electrically-conductive-wiring", 6}, {"load-bearing-framing", 4}, {"high-tensile-paneling", 4}, {"high-tensile-bolts", 6}}, -- 15 plate (10 steel)
+["medium-electric-pole"]             = {{"electrically-conductive-wiring", 2}, {"high-tensile-wiring", 2}, {"load-bearing-framing", 2}, {"basic-bolts", 2}}, -- 6 plate (2 steel)
+["big-electric-pole"]                = {{"electrically-conductive-wiring", 6}, {"high-tensile-wiring", 2}, {"load-bearing-framing", 6}, {"basic-bolts", 4}}, -- 14 plate (5 steel)
+["substation"]                       = {{"electrically-conductive-wiring", 6}, {"high-tensile-wiring", 2}, {"load-bearing-framing", 4}, {"high-tensile-paneling", 4}, {"high-tensile-bolts", 6}}, -- 15 plate (10 steel)
 
 ["pipe"]                             = {{"corrosion-resistant-piping", 1}, {"basic-bolts", 1}}, -- 1 plate
 ["pipe-to-ground"]                   = {{"corrosion-resistant-piping", 10}, {"basic-bolts", 5}}, -- 15 plate (5 pipe)
@@ -560,7 +560,7 @@ else intermediates_to_add_table = { -- {name, ingredients_to_add}, where ingredi
 ["heat-exchanger"]                   = {{"load-bearing-framing", 2}, {"corrosion-resistant-paneling", 6}, {"thermally-conductive-shafting", 40}, {"corrosion-resistant-piping", 30}, {"thermally-stable-shielding", 40}, {"high-tensile-bolts", 10}}, -- 120 plate (10 steel)
 ["steam-turbine"]                    = {{"load-bearing-framing", 10}, {"corrosion-resistant-paneling", 6}, {"thermally-conductive-shafting", 30}, {"corrosion-resistant-piping", 30}, {"ductile-gearing", 30}, {"thermally-stable-shielding", 10}, {"high-tensile-bolts", 10}, {"electrically-conductive-wiring", 10}}, -- 170 plate
 
-["burner-mining-drill"]              = {{"basic-framing", 4}, {"basic-shafting", 2}, {"electrically-conductive-wiring", 2}, {"basic-bolts", 1}}, -- 9 plate
+["burner-mining-drill"]              = {{"basic-framing", 4}, {"basic-shafting", 2}, {"thermally-conductive-wiring", 2}, {"basic-bolts", 1}}, -- 9 plate
 ["electric-mining-drill"]            = {{"load-bearing-framing", 6}, {"load-bearing-shafting", 4}, {"corrosion-resistant-piping", 4}, {"ductile-gearing", 3}, {"electrically-conductive-wiring", 3}}, -- 20 plate
 
 ["offshore-pump"]                    = {{"basic-framing", 1}, {"basic-piping", 1}, {"basic-paneling", 1}, {"electrically-conductive-wiring", 1}, {"basic-bolts", 1}}, -- 3 plate
@@ -583,7 +583,7 @@ else intermediates_to_add_table = { -- {name, ingredients_to_add}, where ingredi
 
 ["beacon"]                           = {{"heavy-load-bearing-framing", 5}, {"high-tensile-paneling", 2}, {"electrically-conductive-wiring", 6}, {"high-tensile-bolts", 4}}, -- 15 plate (5 steel)
 
-["rocket-silo"]                      = {{"heavy-load-bearing-framing", 300}, {"very-high-tensile-paneling", 600}, {"radiation-resistant-shielding", 400}, {"ductile-gearing", 1000},  {"electrically-conductive-wiring", 2000}, {"very-high-tensile-bolts", 600}}, -- 1100 plate (1000 steel)
+["rocket-silo"]                      = {{"heavy-load-bearing-framing", 300}, {"very-high-tensile-paneling", 600}, {"radiation-resistant-shielding", 400}, {"ductile-gearing", 1000},  {"electrically-conductive-wiring", 1400}, {"very-high-tensile-bolts", 600}}, -- 1100 plate (1000 steel)
 -- ["satellite"]                        = {{"ductile-paneling", 1}, {"radiation-resistant-shielding", 1}, {"high-tensile-gearing", 1}, {"ductile-framing", 1}, {"electrically-conductive-wiring", 1}, {"very-high-tensile-bolts", 1}},
 
 -- Intermediate Products

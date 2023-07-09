@@ -368,10 +368,10 @@ local metals_to_add = { -- ***ORE***
 }
 
 local alloy_recipe = {
-  ["steel"]            = {{"iron-plate-stock", 5}, {"coal", 1}},
+  ["steel"]            = {{"iron-plate-stock", 5},   {"coal", 1}},
   ["brass"]            = {{"copper-plate-stock", 3}, {"zinc-plate-stock", 1}},
-  ["invar"]            = {{"iron-plate-stock", 3}, {"nickel-plate-stock", 2}},
-  ["galvanized-steel"] = {{"steel-plate-stock", 5}, {"zinc-plate-stock", 1}}
+  ["invar"]            = {{"iron-plate-stock", 3},   {"nickel-plate-stock", 2}},
+  ["galvanized-steel"] = {{"steel-plate-stock", 5},  {"zinc-plate-stock", 1}}
 }
 
 local metal_properties_pairs = { -- [metal | list of properties] 
@@ -564,13 +564,13 @@ if advanced then -- property_machined_part_pairs : [property | list of machined 
     -- single-properties
     ["basic"]                   = map{"paneling", "large-paneling", "framing", "girdering", "gearing", "fine-gearing", "piping", "fine-piping",                        "shafting", "bolts", "rivets"},
     ["load-bearing"]            = map{                              "framing", "girdering",                                                                            "shafting"                   },
-    ["electrically-conductive"] = map{                                                                                                            "wiring"                                          },
-    ["high-tensile"]            = map{"paneling", "large-paneling", "framing", "girdering", "gearing", "fine-gearing",                                                 "shafting", "bolts", "rivets"},
+    ["electrically-conductive"] = map{                                                                                                          "wiring"                                          },
+    ["high-tensile"]            = map{"paneling", "large-paneling", "framing", "girdering", "gearing", "fine-gearing",                          "wiring",              "shafting", "bolts", "rivets"},
     ["corrosion-resistant"]     = map{"paneling", "large-paneling",                                                    "piping", "fine-piping",           "shielding",             "bolts", "rivets"},
     ["lightweight"]             = map{"paneling", "large-paneling", "framing", "girdering",                                                                            "shafting"                   },
     ["ductile"]                 = map{"paneling", "large-paneling", "framing", "girdering", "gearing", "fine-gearing",                          "wiring", "shielding"                               },
     ["thermally-stable"]        = map{"paneling", "large-paneling", "framing", "girdering", "gearing", "fine-gearing", "piping", "fine-piping", "wiring", "shielding", "shafting", "bolts", "rivets"},
-    ["thermally-conductive"]    = map{                                                                                                                                 "shafting"                   },
+    ["thermally-conductive"]    = map{                                                                                                          "wiring",              "shafting"                   },
     ["radiation-resistant"]     = map{"paneling", "large-paneling",                                                                                       "shielding"                               },
 
   }
@@ -872,6 +872,7 @@ for metal, stocks in pairs(metal_stocks_pairs) do -- Make the [Metal] [Stock] It
           secondary = metal_tinting_pairs[metal][2]
         },
         energy_required = 0.3,
+        always_show_made_in = true,
         category = "galdocs-manufacturing-" .. stock_minisembler_pairs[stock],
         hide_from_player_crafting = true,
         localised_name = {"galdocs-manufacturing.metal-stock-item-name", {"galdocs-manufacturing." .. metal}, {"galdocs-manufacturing." .. stock}}
@@ -907,7 +908,13 @@ for metal, stocks in pairs(metal_stocks_pairs) do -- Make the [Metal] [Stock] It
 end
 
 local ingredients_table
+local output_count
 for alloy, ingredients in pairs(alloy_recipe) do -- Add alloy plate recipes
+  output_count = 0
+  for _, ingredient in pairs(ingredients) do
+    output_count = output_count + ingredient[2]
+  end
+  output_count = output_count - 1
   data:extend({
     {
       type = "recipe",
@@ -915,7 +922,7 @@ for alloy, ingredients in pairs(alloy_recipe) do -- Add alloy plate recipes
       enabled = metal_technology_pairs[alloy][2] == "starter",
       ingredients = ingredients,
       result = alloy .. "-plate-stock",
-      result_count = 1,
+      result_count = output_count,
       energy_required = 10,
       category = "galdocs-manufacturing-alloys",
       subgroup = "galdocs-manufacturing-plates"
@@ -1003,7 +1010,7 @@ for property, parts in pairs(property_machined_part_pairs) do -- Make the [Prope
           { -- recipe
             type = "recipe",
             name = property .. "-" .. part .. "-from-" .. metal .. "-" .. machined_parts_precurors[part],
-            enabled = metal_technology_pairs[metal][2] == "starter" and property == "basic",
+            enabled = metal_technology_pairs[metal][2] == "starter", -- and property == "basic",
             ingredients =
             {
               {metal .. "-" .. machined_parts_precurors[part] .. "-stock", 1}
@@ -1016,6 +1023,7 @@ for property, parts in pairs(property_machined_part_pairs) do -- Make the [Prope
               primary = metal_tinting_pairs[metal][1],
               secondary = metal_tinting_pairs[metal][2]
             },
+            always_show_made_in = true,
             energy_required = 0.3,
             localised_name = {"galdocs-manufacturing.machined-part-recipe", {"galdocs-manufacturing." .. property}, {"galdocs-manufacturing." .. part}, {"galdocs-manufacturing." .. metal}, {"galdocs-manufacturing." .. machined_parts_precurors[part]}}
           }
@@ -1088,7 +1096,7 @@ data:extend({ -- Make the minisemblers.
     },
     ignore_tech_cost_multiplier = true,
     order = "a-b-a",
-    localised_name = {""}
+    localised_name = {"galdocs-manufacturing.technology-metal-machining-minisembler"}
   }
 })
 
@@ -1355,6 +1363,7 @@ for minisembler, rgba in pairs(minisemblers_rgba_pairs) do -- build current_anim
       icon_size = 64,
       icon_mipmaps = 4,
       --]]
+      fast_replaceable_group = "galdocs-manufacturing-minisemblers",
       icons = {
         {
           icon = "__galdocs-manufacturing__/graphics/icons/minisemblers/" .. minisembler .. "-icon.png",
