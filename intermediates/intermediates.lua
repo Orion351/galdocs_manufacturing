@@ -25,6 +25,7 @@ minisemblers: "roller", "metal-bandsaw", "bender", "mill", "metal-extruder", "me
 -- Variables
 -- *********
 
+-- Prototype Necessities
 local hit_effects = require ("__base__.prototypes.entity.hit-effects")
 local sounds = require("__base__.prototypes.entity.sounds")
 local explosion_animations = require("__base__.prototypes.entity.explosion-animations")
@@ -292,7 +293,8 @@ local metal_technology_pairs = {
 
 --[[
 local function make_tech(tech_name)
-  
+
+
 end
 
 local function prerequisites_copy(tech_list)
@@ -463,6 +465,8 @@ else
   }
 end
 
+
+
 --[[
 local metal_technology_pairs_2 = {
   -- pure metals
@@ -496,7 +500,7 @@ if advanced then -- stock_minisembler_pairs : [stock | minisembler]
     ["pipe"]      = "roller",
     ["fine-pipe"] = "roller"
   }
-else 
+else
   stock_minisembler_pairs = {
     ["plate"]     = "smelting",
     ["square"]    = "metal-bandsaw"
@@ -519,7 +523,7 @@ if advanced then -- machined_part_minisembler_pairs : [machined part | minisembl
     ["bolts"]           = "threader",
     ["rivets"]          = "metal-extruder"
   }
-else 
+else
   machined_part_minisembler_pairs = {
     ["paneling"]  = "mill",
     ["framing"]   = "bender",
@@ -593,50 +597,50 @@ end
 property_machined_part_pairs["heavy-load-bearing"] = property_machined_part_pairs["load-bearing"]
 property_machined_part_pairs["very-high-tensile"]  = property_machined_part_pairs["high-tensile"]
 
-if advanced then -- stocks_precursors : [stock | stock that crafts it] {stock that crafts it, how many it makes}]
+if advanced then -- stocks_precursors : [stock | stock that crafts it] {stock that crafts it, how many it takes, how many it makes}]
   stocks_precurors = {
-    ["angle"]         = {"sheet", 1},
-    ["fine-gear"]     = {"sheet", 1},
-    ["fine-pipe"]     = {"sheet", 1},
-    ["sheet"]         = {"plate", 1},
-    ["pipe"]          = {"plate", 1},
-    ["girder"]        = {"plate", 1},
-    ["gear"]          = {"plate", 1},
-    ["square"]        = {"plate", 1},
-    ["wire"]          = {"square", 1}
+    ["angle"]         = {"sheet", 1, 2},
+    ["fine-gear"]     = {"sheet", 1, 3},
+    ["fine-pipe"]     = {"sheet", 1, 1},
+    ["sheet"]         = {"plate", 1, 2},
+    ["pipe"]          = {"plate", 1, 1},
+    ["girder"]        = {"plate", 2, 1},
+    ["gear"]          = {"plate", 1, 1},
+    ["square"]        = {"plate", 1, 2},
+    ["wire"]          = {"square", 1, 2}
   }
 else
   stocks_precurors = {
-    ["square"]        = {"plate", 1}
+    ["square"]        = {"plate", 1, 2}
   }
 end
 
-if advanced then -- machined_parts_precurors : [machined part | stock from which it's crafted] THIS IS ALWAYS 1-TO-1
+if advanced then -- machined_parts_precurors : [machined part | stock from which it's crafted] {stock from which it's crafted, how many it takes, how many it makes}]
   machined_parts_precurors = {
-    ["paneling"]        = "sheet",
-    ["large-paneling"]  = "sheet",
-    ["framing"]         = "angle",
-    ["girdering"]       = "girder",
-    ["gearing"]         = "gear",
-    ["fine-gearing"]    = "fine-gear",
-    ["piping"]          = "pipe",
-    ["fine-piping"]     = "fine-pipe",
-    ["wiring"]          = "wire",
-    ["shielding"]       = "plate",
-    ["shafting"]        = "square",
-    ["bolts"]           = "wire",
-    ["rivets"]          = "wire"
+    ["paneling"]        = {"sheet", 1, 1},
+    ["large-paneling"]  = {"sheet", 3, 1},
+    ["framing"]         = {"angle", 1, 1},
+    ["girdering"]       = {"girder", 1, 1},
+    ["gearing"]         = {"gear", 2, 1},
+    ["fine-gearing"]    = {"fine-gear", 1, 1},
+    ["piping"]          = {"pipe", 2, 1},
+    ["fine-piping"]     = {"fine-pipe", 1, 1},
+    ["wiring"]          = {"wire", 1, 1},
+    ["shielding"]       = {"plate", 3, 1},
+    ["shafting"]        = {"square", 1, 1},
+    ["bolts"]           = {"wire", 3, 1},
+    ["rivets"]          = {"wire", 1, 1}
   }
 else
   machined_parts_precurors = {
-    ["paneling"]        = "plate",
-    ["framing"]         = "plate",
-    ["gearing"]         = "plate",
-    ["piping"]          = "plate",
-    ["wiring"]          = "square",
-    ["shielding"]       = "plate",
-    ["shafting"]        = "square",
-    ["bolts"]           = "wire"
+    ["paneling"]        = {"plate", 2, 1},
+    ["framing"]         = {"plate", 2, 1},
+    ["gearing"]         = {"plate", 2, 1},
+    ["piping"]          = {"plate", 2, 1},
+    ["wiring"]          = {"square", 1, 1},
+    ["shielding"]       = {"plate", 3, 1},
+    ["shafting"]        = {"square", 1, 1},
+    ["bolts"]           = {"wire", 2, 1}
   }
 end
 
@@ -759,6 +763,10 @@ for stock, minisembler in pairs(stock_minisembler_pairs) do -- Make Stock recipe
       {
         type = "recipe-category",
         name = "galdocs-manufacturing-" .. minisembler
+      },
+      {
+        type = "recipe-category",
+        name = "galdocs-manufacturing-" .. minisembler .. "-player-crafting"
       }
     })
   end
@@ -771,6 +779,10 @@ for part, minisembler in pairs(machined_part_minisembler_pairs) do -- Make Machi
       {
         type = "recipe-category",
         name = "galdocs-manufacturing-" .. minisembler
+      },
+      {
+        type = "recipe-category",
+        name = "galdocs-manufacturing-" .. minisembler .. "-player-crafting"
       }
     })
   end
@@ -834,50 +846,31 @@ for metal, stocks in pairs(metal_stocks_pairs) do -- Make the [Metal] [Stock] It
       }
     })
     if (stock ~= "plate") then
-      if ((metal == "copper" or metal == "iron") or (metal == "brass" and (stock == "pipe" or stock == "fine-pipe" or stock == "sheet"))) then
-        data:extend({
-          { -- recipe
-          type = "recipe",
-          name = metal .. "-" .. stock .. "-stock-player-crafting",
-          enabled = metal_technology_pairs[metal][2] == "starter",
-          ingredients =
-          {
-            {metal .. "-" .. stocks_precurors[stock][1] .. "-stock", 1}
-          },
-          result = metal .. "-" .. stock .. "-stock",
-          result_count = stocks_precurors[stock][2],
-          crafting_machine_tint = {
-            primary = metal_tinting_pairs[metal][1],
-            secondary = metal_tinting_pairs[metal][2]
-          },
-          energy_required = 0.3,
-          category = "crafting",
-          localised_name = {"galdocs-manufacturing.metal-stock-item-name", {"galdocs-manufacturing." .. metal}, {"galdocs-manufacturing." .. stock}}
-          }
-        })
-      end
-      data:extend({
-        { -- recipe
+      local recipe = { -- recipe
         type = "recipe",
         name = metal .. "-" .. stock .. "-stock",
         enabled = metal_technology_pairs[metal][2] == "starter",
         ingredients =
         {
-          {metal .. "-" .. stocks_precurors[stock][1] .. "-stock", 1}
+          {metal .. "-" .. stocks_precurors[stock][1] .. "-stock", stocks_precurors[stock][2]}
         },
         result = metal .. "-" .. stock .. "-stock",
-        result_count = stocks_precurors[stock][2],
+        result_count = stocks_precurors[stock][3],
         crafting_machine_tint = {
           primary = metal_tinting_pairs[metal][1],
           secondary = metal_tinting_pairs[metal][2]
         },
-        energy_required = 0.3,
         always_show_made_in = true,
-        category = "galdocs-manufacturing-" .. stock_minisembler_pairs[stock],
         hide_from_player_crafting = true,
+        energy_required = 0.3,
+        category = "galdocs-manufacturing-" .. stock_minisembler_pairs[stock],
         localised_name = {"galdocs-manufacturing.metal-stock-item-name", {"galdocs-manufacturing." .. metal}, {"galdocs-manufacturing." .. stock}}
       }
-    })
+      if ((metal == "copper" or metal == "iron") or (metal == "brass" and (stock == "pipe" or stock == "fine-pipe" or stock == "sheet"))) then
+        recipe.category = recipe.category .. "-player-crafting"
+        recipe.hide_from_player_crafting = false
+      end
+      data:extend({recipe})
     else
       if metals_to_add[metal] ~= nil then
         data:extend({
@@ -896,8 +889,6 @@ for metal, stocks in pairs(metal_stocks_pairs) do -- Make the [Metal] [Stock] It
             },
             result = metal .. "-" .. stock .. "-stock",
             category = "smelting",
-            -- order = "galdocs-plate-fam",
-            -- hide_from_player_crafting = true,
             subgroup = "galdocs-manufacturing-plates",
             localised_name = {"galdocs-manufacturing.metal-stock-item-name", {"galdocs-manufacturing." .. metal}, {"galdocs-manufacturing." .. stock}}
           }
@@ -907,14 +898,12 @@ for metal, stocks in pairs(metal_stocks_pairs) do -- Make the [Metal] [Stock] It
   end
 end
 
-local ingredients_table
 local output_count
 for alloy, ingredients in pairs(alloy_recipe) do -- Add alloy plate recipes
   output_count = 0
   for _, ingredient in pairs(ingredients) do
     output_count = output_count + ingredient[2]
   end
-  output_count = output_count - 1
   data:extend({
     {
       type = "recipe",
@@ -923,7 +912,7 @@ for alloy, ingredients in pairs(alloy_recipe) do -- Add alloy plate recipes
       ingredients = ingredients,
       result = alloy .. "-plate-stock",
       result_count = output_count,
-      energy_required = 10,
+      energy_required = output_count * 3.2,
       category = "galdocs-manufacturing-alloys",
       subgroup = "galdocs-manufacturing-plates"
       -- order = "galdocs-plate-fam"
@@ -973,7 +962,7 @@ for property, parts in pairs(property_machined_part_pairs) do -- Make the [Prope
       }
     })
     for metal, metal_properties in pairs(metal_properties_pairs) do
-      if (metal_properties[property] == true and metal_stocks_pairs[metal][machined_parts_precurors[part]] == true) then
+      if (metal_properties[property] == true and metal_stocks_pairs[metal][machined_parts_precurors[part][1]] == true) then
         if show_property_badges == "recipes" or show_property_badges == "all" then
           icons_data_recipe = {
             {
@@ -1007,63 +996,61 @@ for property, parts in pairs(property_machined_part_pairs) do -- Make the [Prope
             }
           }
         end
-        -- log("asdf " .. property .. "-" .. part .. "-from-" .. metal .. "-" .. machined_parts_precurors[part])
-        data:extend({
-          { -- recipe
-            type = "recipe",
-            name = property .. "-" .. part .. "-from-" .. metal .. "-" .. machined_parts_precurors[part],
-            enabled = metal_technology_pairs[metal][2] == "starter", -- and property == "basic",
-            ingredients =
-            {
-              {metal .. "-" .. machined_parts_precurors[part] .. "-stock", 1}
-            },
-            result = property .. "-" .. part .. "-machined-part",
-            category = "galdocs-manufacturing-" .. machined_part_minisembler_pairs[part],
-            hide_from_player_crafting = true,
-            icons = icons_data_recipe,
-            crafting_machine_tint = { -- I don't know if anything will use this, but here it is just in case. You're welcome, future me.
-              primary = metal_tinting_pairs[metal][1],
-              secondary = metal_tinting_pairs[metal][2]
-            },
-            always_show_made_in = true,
-            energy_required = 0.3,
-            localised_name = {"galdocs-manufacturing.machined-part-recipe", {"galdocs-manufacturing." .. property}, {"galdocs-manufacturing." .. part}, {"galdocs-manufacturing." .. metal}, {"galdocs-manufacturing." .. machined_parts_precurors[part]}}
-          }
-        })
-        -- log("your face")
-        -- if data.raw.recipe[property .. "-" .. part .. "-from-" .. metal .. "-" .. machined_parts_precurors[part]].enabled == false then log("FALLS") end
-        i = i + 1
-        log("asdf " .. tostring(i) .. "current recipe: " .. property .. "-" .. part .. "-from-" .. metal .. "-" .. machined_parts_precurors[part] .. "-player-crafting")
+        local recipe = { -- recipe
+          type = "recipe",
+          name = property .. "-" .. part .. "-from-" .. metal .. "-" .. machined_parts_precurors[part][1],
+          enabled = metal_technology_pairs[metal][2] == "starter",
+          ingredients =
+          {
+            {metal .. "-" .. machined_parts_precurors[part][1] .. "-stock", machined_parts_precurors[part][2]}
+          },
+          result = property .. "-" .. part .. "-machined-part",
+          result_count = machined_parts_precurors[part][3],
+          category = "galdocs-manufacturing-" .. machined_part_minisembler_pairs[part],
+          hide_from_player_crafting = true,
+          icons = icons_data_recipe,
+          crafting_machine_tint = { -- I don't know if anything will use this, but here it is just in case. You're welcome, future me.
+            primary = metal_tinting_pairs[metal][1],
+            secondary = metal_tinting_pairs[metal][2]
+          },
+          always_show_made_in = true,
+          energy_required = 0.3,
+          localised_name = {"galdocs-manufacturing.machined-part-recipe", {"galdocs-manufacturing." .. property}, {"galdocs-manufacturing." .. part}, {"galdocs-manufacturing." .. metal}, {"galdocs-manufacturing." .. machined_parts_precurors[part][1]}}
+        }
         if (advanced and ( -- carve-outs for player crafting for bootstrap purposes
                           (property == "basic"                        and metal == "copper"                                                                             ) or
                           (property == "basic"                        and metal == "iron"                                                                               ) or
-                          (property == "electrically-conductive"      and metal == "copper" and machined_parts_precurors[part] == "wire"      and part == "wiring"      ) or
-                          (property == "thermally-conductive"         and metal == "copper" and machined_parts_precurors[part] == "wire"      and part == "wiring"      ) or
-                          (property == "corrosion-resistant"          and metal == "brass"  and machined_parts_precurors[part] == "fine-pipe" and part == "fine-piping" ) or
-                          (property == "corrosion-resistant"          and metal == "brass"  and machined_parts_precurors[part] == "pipe"      and part == "piping"      )
+                          (property == "electrically-conductive"      and metal == "copper" and machined_parts_precurors[part][1] == "wire"      and part == "wiring"      ) or
+                          (property == "thermally-conductive"         and metal == "copper" and machined_parts_precurors[part][1] == "wire"      and part == "wiring"      ) or
+                          (property == "corrosion-resistant"          and metal == "brass"  and machined_parts_precurors[part][1] == "fine-pipe" and part == "fine-piping" ) or
+                          (property == "corrosion-resistant"          and metal == "brass"  and machined_parts_precurors[part][1] == "pipe"      and part == "piping"      )
                           )
             ) or
             (advanced == false and (
                           (property == "basic"                        and metal == "copper"                                                                     ) or
                           (property == "basic"                        and metal == "iron"                                                                       ) or
-                          (property == "electrically-conductive"      and metal == "copper" and machined_parts_precurors[part] == "square" and part == "wiring" ) or
-                          (property == "thermally-conductive"         and metal == "copper" and machined_parts_precurors[part] == "square" and part == "wiring" ) or
-                          (property == "corrosion-resistant"          and metal == "brass"  and machined_parts_precurors[part] == "plate"  and part == "piping" )
+                          (property == "electrically-conductive"      and metal == "copper" and machined_parts_precurors[part][1] == "square" and part == "wiring" ) or
+                          (property == "thermally-conductive"         and metal == "copper" and machined_parts_precurors[part][1] == "square" and part == "wiring" ) or
+                          (property == "corrosion-resistant"          and metal == "brass"  and machined_parts_precurors[part][1] == "plate"  and part == "piping" )
                           )
             )
-            then
-        -- if (metal == "copper" or metal == "iron") and property == "basic" then
-          log("asdf " .. i .. "Gettin' did: ".. property .. "-" .. part .. "-from-" .. metal .. "-" .. machined_parts_precurors[part] .. "-player-crafting")
+        then
+          recipe.category = recipe.category .. "-player-crafting"
+          recipe.hide_from_player_crafting = false
+        end
+        data:extend({recipe})
+          --[[
           data:extend({
             { -- recipe
               type = "recipe",
-              name = property .. "-" .. part .. "-from-" .. metal .. "-" .. machined_parts_precurors[part] .. "-player-crafting",
+              name = property .. "-" .. part .. "-from-" .. metal .. "-" .. machined_parts_precurors[part][1] .. "-player-crafting",
               enabled = true,
               ingredients =
               {
-                {metal .. "-" .. machined_parts_precurors[part] .. "-stock", 1}
+                {metal .. "-" .. machined_parts_precurors[part][1] .. "-stock", metal .. "-" .. machined_parts_precurors[part][2]}
               },
               result = property .. "-" .. part .. "-machined-part",
+              result_count = metal .. "-" .. machined_parts_precurors[part][3],
               category = "crafting",
               icons = icons_data_recipe,
               crafting_machine_tint = { -- I don't know if anything will use this, but here it is just in case. You're welcome, future me.
@@ -1071,14 +1058,15 @@ for property, parts in pairs(property_machined_part_pairs) do -- Make the [Prope
                 secondary = metal_tinting_pairs[metal][2]
               },
               energy_required = 0.3,
-              localised_name = {"galdocs-manufacturing.machined-part-recipe", {"galdocs-manufacturing." .. property}, {"galdocs-manufacturing." .. part}, {"galdocs-manufacturing." .. metal}, {"galdocs-manufacturing." .. machined_parts_precurors[part]}}
+              localised_name = {"galdocs-manufacturing.machined-part-recipe", {"galdocs-manufacturing." .. property}, {"galdocs-manufacturing." .. part}, {"galdocs-manufacturing." .. metal}, {"galdocs-manufacturing." .. machined_parts_precurors[part][1]}}
             }
-          })  
-        end
+          }) 
+          --]]
       end
     end
   end
 end
+
 
 -- carve outs for starter recipes
 --[[
@@ -1101,7 +1089,6 @@ end
   }
 })
 --]]
--- log("asdf")
 -- data.raw.recipe["electrically-conductive-wiring-from-copper-wire-player-crafting"] = data.raw.recipe["electrically-conductive-wiring-from-copper-wire"]
 -- data.raw.recipe["electrically-conductive-wiring-from-copper-wire-player-crafting"].enabled = true
 -- data.raw.recipe["thermally-conductive-wiring-from-copper-wire-player-crafting"] = data.raw.recipe["thermally-conductive-wiring-from-copper-wire"]
@@ -1444,7 +1431,7 @@ for minisembler, rgba in pairs(minisemblers_rgba_pairs) do -- build current_anim
       animation = current_animation,
       idle_animation = current_idle_animation,
       working_visualisations = current_working_visualizations,
-      crafting_categories = {"galdocs-manufacturing-" .. minisembler},
+      crafting_categories = {"galdocs-manufacturing-" .. minisembler, "galdocs-manufacturing-" .. minisembler .. "-player-crafting"},
       crafting_speed = 0.5,
       energy_source =
       {
@@ -1604,11 +1591,11 @@ for metal, techology_data in pairs(metal_technology_pairs) do
     for property, _ in pairs(metal_properties_pairs[metal]) do
       if property_machined_part_pairs[property] ~= nil then
         for part, _ in pairs(property_machined_part_pairs[property]) do
-          if (metal_properties_pairs[metal][property] == true and metal_stocks_pairs[metal][machined_parts_precurors[part]] == true) then
-            table.insert(machined_part_technology_effects, {type = "unlock-recipe", recipe = property .. "-" .. part .. "-from-" .. metal .. "-" .. machined_parts_precurors[part]})
+          if (metal_properties_pairs[metal][property] == true and metal_stocks_pairs[metal][machined_parts_precurors[part][1]] == true) then
+            table.insert(machined_part_technology_effects, {type = "unlock-recipe", recipe = property .. "-" .. part .. "-from-" .. metal .. "-" .. machined_parts_precurors[part][1]})
             -- metal_properties_pairs gives me the properties for each metal
-            -- name = property .. "-" .. part .. "-from-" .. metal .. "-" .. machined_parts_precurors[part]
-            -- machined_parts_precurors[part]
+            -- name = property .. "-" .. part .. "-from-" .. metal .. "-" .. machined_parts_precurors[part][1]
+            -- machined_parts_precurors[part][1]
             -- property_machined_part_pairs
           end
         end

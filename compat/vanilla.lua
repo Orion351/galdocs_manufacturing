@@ -286,26 +286,26 @@ if advanced then
   intermediates_to_add_table = { -- {name, ingredients_to_add}, where ingredients_to_add is {{item-name, amount}, ...}
   -- Logistics
 
-    ["iron-chest"]                       = {{"basic-paneling", 4}, {"basic-framing", 2}, {"basic-bolts", 2}}, -- 8 plate
-    ["steel-chest"]                      = {{"high-tensile-paneling", 4}, {"high-tensile-framing", 2}, {"high-tensile-bolts", 2}}, -- 8 plate (8 steel ... duh)
+    ["iron-chest"]                       = {{"basic-paneling", 4}, {"basic-framing", 2}, {"basic-bolts", 2}}, -- 8 plate {count 8} {total 8}
+    ["steel-chest"]                      = {{"high-tensile-paneling", 4}, {"high-tensile-framing", 2}, {"high-tensile-bolts", 2}}, -- 8 plate (8 steel) {count 8} {total 8}
 
-    ["storage-tank"]                     = {{"corrosion-resistant-large-paneling", 10}, {"high-tensile-girdering", 4}, {"corrosion-resistant-fine-piping", 6}, {"basic-rivets", 5}}, -- 25 plate (5 steel)
+    ["storage-tank"]                     = {{"corrosion-resistant-large-paneling", 10}, {"high-tensile-girdering", 4}, {"corrosion-resistant-fine-piping", 6}, {"basic-rivets", 5}}, -- 25 plate (5 steel) {count 20, 5} {total 25, 2}
 
-    ["transport-belt"]                   = {{"basic-paneling", 1}, {"basic-fine-gearing", 1}, {"basic-bolts", 1}}, -- 3 plate
-    ["fast-transport-belt"]              = {{"high-tensile-framing", 2}, {"ductile-fine-gearing", 5}, {"basic-bolts", 3}}, -- 10 plate
-    ["express-transport-belt"]           = {{"very-high-tensile-framing", 4}, {"ductile-fine-gearing", 10}, {"very-high-tensile-bolts", 6}}, -- 20 plate
+    ["transport-belt"]                   = {{"basic-paneling", 1}, {"basic-fine-gearing", 1}, {"basic-bolts", 1}}, -- 3 plate {count 1, 1} {total 2, 1}
+    ["fast-transport-belt"]              = {{"high-tensile-framing", 2}, {"ductile-fine-gearing", 5}, {"basic-bolts", 3}}, -- 10 plate {count 5, 1} {total 6, 2}
+    ["express-transport-belt"]           = {{"very-high-tensile-framing", 4}, {"ductile-fine-gearing", 10}, {"very-high-tensile-bolts", 6}}, -- 20 plate {count 20, 5} {total 25, 2}
 
-    ["underground-belt"]                 = {{"basic-paneling", 6}, {"basic-framing", 2}, {"basic-bolts", 2}}, -- 10 plate
-    ["fast-underground-belt"]            = {{"high-tensile-paneling", 40}, {"high-tensile-framing", 20}, {"basic-bolts", 20}}, -- 80 plate
-    ["express-underground-belt"]         = {{"very-high-tensile-paneling", 80}, {"very-high-tensile-framing", 50}, {"very-high-tensile-bolts", 30}}, -- 160 plate
+    ["underground-belt"]                 = {{"basic-paneling", 6}, {"basic-framing", 2}, {"basic-bolts", 2}}, -- 10 plate {count 10, 5} {total 15, 2}
+    ["fast-underground-belt"]            = {{"high-tensile-paneling", 40}, {"high-tensile-framing", 20}, {"basic-bolts", 20}}, -- 80 plate {count 40, 2} {total 42, 2}
+    ["express-underground-belt"]         = {{"very-high-tensile-paneling", 80}, {"very-high-tensile-framing", 50}, {"very-high-tensile-bolts", 30}}, -- 160 plate {count 80, 2} {total 82, 2}
 
-    ["splitter"]                         = {{"basic-paneling", 2}, {"basic-gearing", 2}, {"basic-framing", 1}, {"basic-bolts", 1}}, -- 5 plate
-    ["fast-splitter"]                    = {{"high-tensile-paneling", 4}, {"high-tensile-fine-gearing", 6}, {"high-tensile-framing", 4}, {"basic-bolts", 6}}, -- 20 plate
-    ["express-splitter"]                 = {{"very-high-tensile-paneling", 4}, {"ductile-fine-gearing", 8}, {"very-high-tensile-framing", 4}, {"very-high-tensile-bolts", 6}}, -- 20 plate
+    ["splitter"]                         = {{"basic-paneling", 2}, {"basic-gearing", 2}, {"basic-framing", 1}, {"basic-bolts", 1}}, -- 5 plate {count 5, 5, 4} {total 14, 3}
+    ["fast-splitter"]                    = {{"high-tensile-paneling", 4}, {"high-tensile-fine-gearing", 6}, {"high-tensile-framing", 4}, {"basic-bolts", 6}}, -- 20 plate {count 10, 10, 1} {total 21, 3}
+    ["express-splitter"]                 = {{"very-high-tensile-paneling", 4}, {"ductile-fine-gearing", 8}, {"very-high-tensile-framing", 4}, {"very-high-tensile-bolts", 6}}, -- 20 plate {count 10, 10, 1} {total 21, 3}
 
-    ["burner-inserter"]                  = {{"basic-framing", 1}, {"basic-fine-gearing", 1}, {"basic-bolts", 1}}, -- 3 plate
-    ["inserter"]                         = {{"load-bearing-framing", 1}, {"load-bearing-shafting", 1}, {"basic-fine-gearing", 1}, {"basic-bolts", 1}}, -- 3 plate
-    ["long-handed-inserter"]             = {{"heavy-load-bearing-framing", 1}, {"heavy-load-bearing-shafting", 1}, {"ductile-fine-gearing", 1}, {"high-tensile-bolts", 1}}, -- 3 plate
+    ["burner-inserter"]                  = {{"basic-framing", 1}, {"basic-fine-gearing", 1}, {"basic-bolts", 1}}, -- 3 plate {1, 1} {2, 2}
+    ["inserter"]                         = {{"load-bearing-framing", 1}, {"load-bearing-shafting", 1}, {"basic-fine-gearing", 1}, {"basic-bolts", 1}}, -- 3 plate {count 10, 5} {total 15, 2}
+    ["long-handed-inserter"]             = {{"heavy-load-bearing-framing", 1}, {"heavy-load-bearing-shafting", 1}, {"ductile-fine-gearing", 1}, {"high-tensile-bolts", 1}}, -- 3 plate {count 10, 5} {total 15, 2}
     ["fast-inserter"]                    = {{"heavy-load-bearing-framing", 1}, {"ductile-fine-gearing", 1}, {"high-tensile-bolts", 1}}, -- 2 plate
     -- ["filter-inserter"]                  = {},
     ["stack-inserter"]                   = {{"heavy-load-bearing-framing", 4}, {"high-tensile-fine-gearing", 22}, {"very-high-tensile-bolts", 4}}, -- 30 plate
