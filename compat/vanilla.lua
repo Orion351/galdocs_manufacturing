@@ -303,7 +303,7 @@ if advanced then
     ["fast-splitter"]                    = {{"high-tensile-paneling", 4}, {"high-tensile-fine-gearing", 6}, {"high-tensile-framing", 4}, {"basic-bolts", 6}}, -- 20 plate {count 10, 10, 1} {total 21, 3}
     ["express-splitter"]                 = {{"very-high-tensile-paneling", 4}, {"ductile-fine-gearing", 8}, {"very-high-tensile-framing", 4}, {"very-high-tensile-bolts", 6}}, -- 20 plate {count 10, 10, 1} {total 21, 3}
 
-    ["burner-inserter"]                  = {{"basic-framing", 1}, {"basic-fine-gearing", 1}, {"basic-bolts", 1}}, -- 3 plate {1, 1} {2, 2}
+    ["burner-inserter"]                  = {{"basic-framing", 1}, {"basic-fine-gearing", 1}, {"basic-bolts", 1}, {"thermally-conductive-wiring", 1}}, -- 3 plate {1, 1} {2, 2}
     ["inserter"]                         = {{"load-bearing-framing", 1}, {"load-bearing-shafting", 1}, {"basic-fine-gearing", 1}, {"basic-bolts", 1}}, -- 3 plate {count 10, 5} {total 15, 2}
     ["long-handed-inserter"]             = {{"heavy-load-bearing-framing", 1}, {"heavy-load-bearing-shafting", 1}, {"ductile-fine-gearing", 1}, {"high-tensile-bolts", 1}}, -- 3 plate {count 10, 5} {total 15, 2}
     ["fast-inserter"]                    = {{"heavy-load-bearing-framing", 1}, {"ductile-fine-gearing", 1}, {"high-tensile-bolts", 1}}, -- 2 plate
@@ -491,7 +491,7 @@ else intermediates_to_add_table = { -- {name, ingredients_to_add}, where ingredi
 ["fast-splitter"]                    = {{"high-tensile-paneling", 4}, {"high-tensile-gearing", 6}, {"high-tensile-framing", 4}, {"basic-bolts", 6}}, -- 20 plate
 ["express-splitter"]                 = {{"very-high-tensile-paneling", 4}, {"ductile-gearing", 8}, {"very-high-tensile-framing", 4}, {"very-high-tensile-bolts", 6}}, -- 20 plate
 
-["burner-inserter"]                  = {{"basic-framing", 1}, {"basic-gearing", 1}, {"basic-bolts", 1}}, -- 3 plate
+["burner-inserter"]                  = {{"basic-framing", 1}, {"basic-gearing", 1}, {"basic-bolts", 1}, {"thermally-conductive-wiring", 1}}, -- 3 plate
 ["inserter"]                         = {{"load-bearing-framing", 1}, {"load-bearing-shafting", 1}, {"basic-gearing", 1}, {"basic-bolts", 1}}, -- 3 plate
 ["long-handed-inserter"]             = {{"heavy-load-bearing-framing", 1}, {"heavy-load-bearing-shafting", 1}, {"ductile-gearing", 1}, {"high-tensile-bolts", 1}}, -- 3 plate
 ["fast-inserter"]                    = {{"heavy-load-bearing-framing", 1}, {"ductile-gearing", 1}, {"high-tensile-bolts", 1}}, -- 2 plate

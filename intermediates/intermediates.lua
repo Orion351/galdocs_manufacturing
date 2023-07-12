@@ -628,7 +628,7 @@ if advanced then -- machined_parts_precurors : [machined part | stock from which
     ["wiring"]          = {"wire", 1, 1},
     ["shielding"]       = {"plate", 3, 1},
     ["shafting"]        = {"square", 1, 1},
-    ["bolts"]           = {"wire", 3, 1},
+    ["bolts"]           = {"wire", 1, 3},
     ["rivets"]          = {"wire", 1, 1}
   }
 else
