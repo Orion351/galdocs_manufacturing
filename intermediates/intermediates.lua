@@ -487,24 +487,22 @@ local metal_technology_pairs_2 = {
 }
 --]]
 
-if advanced then -- stock_minisembler_pairs : [stock | minisembler]
-  stock_minisembler_pairs = {
-    ["plate"]     = "smelting",
-    ["sheet"]     = "roller",
-    ["square"]    = "metal-bandsaw",
-    ["angle"]     = "bender",
-    ["girder"]    = "bender",
-    ["wire"]      = "metal-extruder",
-    ["gear"]      = "mill",
-    ["fine-gear"] = "mill",
-    ["pipe"]      = "roller",
-    ["fine-pipe"] = "roller"
-  }
-else
-  stock_minisembler_pairs = {
+
+-- stock_minisembler_pairs : [stock | minisembler]
+ stock_minisembler_pairs = {
     ["plate"]     = "smelting",
     ["square"]    = "metal-bandsaw"
   }
+
+if advanced then 
+    stock_minisembler_pairs["sheet"]     = "roller",
+    stock_minisembler_pairs["angle"]     = "bender",
+    stock_minisembler_pairs["girder"]    = "bender",
+    stock_minisembler_pairs["wire"]      = "metal-extruder",
+    stock_minisembler_pairs["gear"]      = "mill",
+    stock_minisembler_pairs["fine-gear"] = "mill",
+    stock_minisembler_pairs["pipe"]      = "roller",
+    stock_minisembler_pairs["fine-pipe"] = "roller"
 end
 
 if advanced then -- machined_part_minisembler_pairs : [machined part | minisembler]
