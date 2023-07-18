@@ -97,7 +97,7 @@ end
 -- Difficulty Toggles
 -- ******************
 
-local advanced = settings.startup["galdocs-manufacturing-advanced-mode"].value
+local advanced = settings.startup["gm-advanced-mode"].value
 
 
 

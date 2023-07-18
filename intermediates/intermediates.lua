@@ -40,12 +40,12 @@ local stock_stack_size = 200
 local ore_stack_size = 200
 
 -- Challenge variables
-local advanced = settings.startup["galdocs-manufacturing-advanced-mode"].value
+local advanced = settings.startup["gm-advanced-mode"].value
 local specialty_parts = false -- not implimented yet
 local consumable_parts = false -- not implemented yet
 
 -- Settings variables
-local show_property_badges = settings.startup["galdocs-manufacturing-show-badges"].value
+local show_property_badges = settings.startup["gm-show-badges"].value
 
 
 
@@ -88,7 +88,7 @@ end
 data:extend({
   { -- galvanized steel stock processing
     type = "technology",
-    name = "galdocs-manufacturing-galvanized-steel-stock-processing",
+    name = "gm-galvanized-steel-stock-processing",
     icon_size = 256,
     icon = "__galdocs-manufacturing__/graphics/technology-icons/galvanized-steel-processing.png",
     prerequisites = {"steel-processing"},
@@ -103,15 +103,15 @@ data:extend({
     },
     effects = {},
     order = "c-a-a",
-    localised_name = {"galdocs-manufacturing.technology-stock-processing-name", {"galdocs-manufacturing.galvanized-steel"}, {"galdocs-manufacturing.stocks"}, {"galdocs-manufacturing.processing"}},
-    localised_description = {"galdocs-manufacturing.technology-stock-processing-description", {"galdocs-manufacturing.galvanized-steel"}, {"galdocs-manufacturing.stocks"}},
+    localised_name = {"gm.technology-stock-processing-name", {"gm.galvanized-steel"}, {"gm.stocks"}, {"gm.processing"}},
+    localised_description = {"gm.technology-stock-processing-description", {"gm.galvanized-steel"}, {"gm.stocks"}},
   },
   { -- galvanized steel machined part processing
     type = "technology",
-    name = "galdocs-manufacturing-galvanized-steel-machined-part-processing",
+    name = "gm-galvanized-steel-machined-part-processing",
     icon_size = 256,
     icon = "__galdocs-manufacturing__/graphics/technology-icons/galvanized-steel-machined-part-processing.png",
-    prerequisites = {"galdocs-manufacturing-galvanized-steel-stock-processing"},
+    prerequisites = {"gm-galvanized-steel-stock-processing"},
     unit =
     {
       count = 25,
@@ -123,12 +123,12 @@ data:extend({
     },
     effects = {},
     order = "c-a-b",
-    localised_name = {"galdocs-manufacturing.technology-machined-part-processing-name", {"galdocs-manufacturing.galvanized-steel"}, {"galdocs-manufacturing.machined-parts"}, {"galdocs-manufacturing.processing"}},
-    localised_description = {"galdocs-manufacturing.technology-machined-part-processing-description", {"galdocs-manufacturing.galvanized-steel"}, {"galdocs-manufacturing.machined-parts"}},
+    localised_name = {"gm.technology-machined-part-processing-name", {"gm.galvanized-steel"}, {"gm.machined-parts"}, {"gm.processing"}},
+    localised_description = {"gm.technology-machined-part-processing-description", {"gm.galvanized-steel"}, {"gm.machined-parts"}},
   },
   { -- lead stock processing
     type = "technology",
-    name = "galdocs-manufacturing-lead-stock-processing",
+    name = "gm-lead-stock-processing",
     icon_size = 256,
     icon = "__galdocs-manufacturing__/graphics/technology-icons/lead-processing.png",
     prerequisites = {"chemical-science-pack", "concrete"},
@@ -145,15 +145,15 @@ data:extend({
     },
     effects = {},
     order = "e-p-b-c",
-    localised_name = {"galdocs-manufacturing.technology-stock-processing-name", {"galdocs-manufacturing.lead"}, {"galdocs-manufacturing.stocks"}, {"galdocs-manufacturing.processing"}},
-    localised_description = {"galdocs-manufacturing.technology-stock-processing-description", {"galdocs-manufacturing.lead"}, {"galdocs-manufacturing.stocks"}},
+    localised_name = {"gm.technology-stock-processing-name", {"gm.lead"}, {"gm.stocks"}, {"gm.processing"}},
+    localised_description = {"gm.technology-stock-processing-description", {"gm.lead"}, {"gm.stocks"}},
   },
   { -- lead machined part processing
     type = "technology",
-    name = "galdocs-manufacturing-lead-machined-part-processing",
+    name = "gm-lead-machined-part-processing",
     icon_size = 256,
     icon = "__galdocs-manufacturing__/graphics/technology-icons/lead-machined-part-processing.png",
-    prerequisites = {"galdocs-manufacturing-lead-stock-processing"},
+    prerequisites = {"gm-lead-stock-processing"},
     unit =
     {
       ingredients =
@@ -167,15 +167,15 @@ data:extend({
     },
     effects = {},
     order = "e-p-b-d",
-    localised_name = {"galdocs-manufacturing.technology-machined-part-processing-name", {"galdocs-manufacturing.lead"}, {"galdocs-manufacturing.machined-parts"}, {"galdocs-manufacturing.processing"}},
-    localised_description = {"galdocs-manufacturing.technology-machined-part-processing-description", {"galdocs-manufacturing.lead"}, {"galdocs-manufacturing.machined-parts"}},
+    localised_name = {"gm.technology-machined-part-processing-name", {"gm.lead"}, {"gm.machined-parts"}, {"gm.processing"}},
+    localised_description = {"gm.technology-machined-part-processing-description", {"gm.lead"}, {"gm.machined-parts"}},
   },
   { -- nickel and invar stock processing
     type = "technology",
-    name = "galdocs-manufacturing-nickel-and-invar-stock-processing",
+    name = "gm-nickel-and-invar-stock-processing",
     icon_size = 256,
     icon = "__galdocs-manufacturing__/graphics/technology-icons/nickel-and-invar-processing.png",
-    prerequisites = {"steel-processing", "galdocs-manufacturing-galvanized-steel-machined-part-processing"},
+    prerequisites = {"steel-processing", "gm-galvanized-steel-machined-part-processing"},
     unit =
     {
       ingredients =
@@ -187,15 +187,15 @@ data:extend({
     },
     effects = {},
     order = "c-a-b",
-    localised_name = {"galdocs-manufacturing.technology-dual-stock-processing-name", {"galdocs-manufacturing.nickel"}, {"galdocs-manufacturing.invar"}, {"galdocs-manufacturing.stocks"}, {"galdocs-manufacturing.processing"}},
-    localised_description = {"galdocs-manufacturing.technology-dual-stock-processing-description", {"galdocs-manufacturing.nickel"}, {"galdocs-manufacturing.invar"}, {"galdocs-manufacturing.stocks"}},
+    localised_name = {"gm.technology-dual-stock-processing-name", {"gm.nickel"}, {"gm.invar"}, {"gm.stocks"}, {"gm.processing"}},
+    localised_description = {"gm.technology-dual-stock-processing-description", {"gm.nickel"}, {"gm.invar"}, {"gm.stocks"}},
   },
   { -- nickel and invar machined part processing
     type = "technology",
-    name = "galdocs-manufacturing-nickel-and-invar-machined-part-processing",
+    name = "gm-nickel-and-invar-machined-part-processing",
     icon_size = 256,
     icon = "__galdocs-manufacturing__/graphics/technology-icons/nickel-and-invar-machined-part-processing.png",
-    prerequisites = {"galdocs-manufacturing-nickel-and-invar-stock-processing"},
+    prerequisites = {"gm-nickel-and-invar-stock-processing"},
     unit =
     {
       ingredients =
@@ -207,8 +207,8 @@ data:extend({
     },
     effects = {},
     order = "c-a-b",
-    localised_name = {"galdocs-manufacturing.technology-dual-machined-part-processing-name", {"galdocs-manufacturing.nickel"}, {"galdocs-manufacturing.invar"}, {"galdocs-manufacturing.machined-parts"}, {"galdocs-manufacturing.processing"}},
-    localised_description = {"galdocs-manufacturing.technology-dual-machined-part-processing-description", {"galdocs-manufacturing.nickel"}, {"galdocs-manufacturing.invar"}, {"galdocs-manufacturing.machined-parts"}},
+    localised_name = {"gm.technology-dual-machined-part-processing-name", {"gm.nickel"}, {"gm.invar"}, {"gm.machined-parts"}, {"gm.processing"}},
+    localised_description = {"gm.technology-dual-machined-part-processing-description", {"gm.nickel"}, {"gm.invar"}, {"gm.machined-parts"}},
   },
   { -- steel machined part processing
     type = "technology",
@@ -224,12 +224,12 @@ data:extend({
       time = 5
     },
     order = "c-b",
-    localised_name = {"galdocs-manufacturing.technology-machined-part-processing-name", {"galdocs-manufacturing.steel"}, {"galdocs-manufacturing.machined-parts"}, {"galdocs-manufacturing.processing"}},
-    localised_description = {"galdocs-manufacturing.technology-machined-part-processing-description", {"galdocs-manufacturing.steel"}, {"galdocs-manufacturing.machined-parts"}},
+    localised_name = {"gm.technology-machined-part-processing-name", {"gm.steel"}, {"gm.machined-parts"}, {"gm.processing"}},
+    localised_description = {"gm.technology-machined-part-processing-description", {"gm.steel"}, {"gm.machined-parts"}},
   },
   { -- titanium stock processing
     type = "technology",
-    name = "galdocs-manufacturing-titanium-stock-processing",
+    name = "gm-titanium-stock-processing",
     icon_size = 256,
     icon = "__galdocs-manufacturing__/graphics/technology-icons/titanium-processing.png",
     prerequisites = {"lubricant"},
@@ -246,15 +246,15 @@ data:extend({
     },
     effects = {},
     order = "b-b-a",
-    localised_name = {"galdocs-manufacturing.technology-stock-processing-name", {"galdocs-manufacturing.titanium"}, {"galdocs-manufacturing.stocks"}, {"galdocs-manufacturing.processing"}},
-    localised_description = {"galdocs-manufacturing.technology-stock-processing-description", {"galdocs-manufacturing.titanium"}, {"galdocs-manufacturing.stocks"}},
+    localised_name = {"gm.technology-stock-processing-name", {"gm.titanium"}, {"gm.stocks"}, {"gm.processing"}},
+    localised_description = {"gm.technology-stock-processing-description", {"gm.titanium"}, {"gm.stocks"}},
   },
   { -- titanium machined part processing
     type = "technology",
-    name = "galdocs-manufacturing-titanium-machined-part-processing",
+    name = "gm-titanium-machined-part-processing",
     icon_size = 256,
     icon = "__galdocs-manufacturing__/graphics/technology-icons/titanium-machined-part-processing.png",
-    prerequisites = {"galdocs-manufacturing-titanium-stock-processing"},
+    prerequisites = {"gm-titanium-stock-processing"},
     unit =
     {
       count = 25,
@@ -268,8 +268,8 @@ data:extend({
     },
     effects = {},
     order = "b-b-b",
-    localised_name = {"galdocs-manufacturing.technology-machined-part-processing-name", {"galdocs-manufacturing.titanium"}, {"galdocs-manufacturing.machined-parts"}, {"galdocs-manufacturing.processing"}},
-    localised_description = {"galdocs-manufacturing.technology-machined-part-processing-description", {"galdocs-manufacturing.titanium"}, {"galdocs-manufacturing.machined-parts"}},
+    localised_name = {"gm.technology-machined-part-processing-name", {"gm.titanium"}, {"gm.machined-parts"}, {"gm.processing"}},
+    localised_description = {"gm.technology-machined-part-processing-description", {"gm.titanium"}, {"gm.machined-parts"}},
   },
 })
 
@@ -277,18 +277,18 @@ local metal_technology_pairs = {
   -- pure metals
   ["iron"]              = {"vanilla", "starter"},
   ["copper"]            = {"vanilla", "starter"},
-  ["lead"]              = {"vanilla", "galdocs-manufacturing-lead-stock-processing", "galdocs-manufacturing-lead-machined-part-processing"},
-  ["titanium"]          = {"vanilla", "galdocs-manufacturing-titanium-stock-processing", "galdocs-manufacturing-titanium-machined-part-processing"},
+  ["lead"]              = {"vanilla", "gm-lead-stock-processing", "gm-lead-machined-part-processing"},
+  ["titanium"]          = {"vanilla", "gm-titanium-stock-processing", "gm-titanium-machined-part-processing"},
   ["zinc"]              = {"vanilla", "starter"},
-  ["nickel"]            = {"vanilla", "galdocs-manufacturing-nickel-and-invar-stock-processing", "galdocs-manufacturing-nickel-and-invar-machined-part-processing"},
+  ["nickel"]            = {"vanilla", "gm-nickel-and-invar-stock-processing", "gm-nickel-and-invar-machined-part-processing"},
 
   -- alloys 
   ["steel"]             = {"vanilla", "steel-processing", "steel-machined-part-processing"},
   ["brass"]             = {"vanilla", "starter"},
-  ["invar"]             = {"vanilla", "galdocs-manufacturing-nickel-and-invar-stock-processing", "galdocs-manufacturing-nickel-and-invar-machined-part-processing"},
+  ["invar"]             = {"vanilla", "gm-nickel-and-invar-stock-processing", "gm-nickel-and-invar-machined-part-processing"},
 
   -- treatments 
-  ["galvanized-steel"]  = {"vanilla", "galdocs-manufacturing-galvanized-steel-stock-processing", "galdocs-manufacturing-galvanized-steel-machined-part-processing"},
+  ["galvanized-steel"]  = {"vanilla", "gm-galvanized-steel-stock-processing", "gm-galvanized-steel-machined-part-processing"},
 }
 
 --[[
@@ -683,7 +683,7 @@ for ore, _ in pairs(metals_to_add) do
       subgroup = "raw-resource",
       order = "f[" .. ore .. "-ore]",
       stack_size = 50,
-      localised_name = {"galdocs-manufacturing.ore-item-name", {"galdocs-manufacturing." .. ore}}
+      localised_name = {"gm.ore-item-name", {"gm." .. ore}}
     },
   })
 end
@@ -711,9 +711,9 @@ end
 data:extend({ -- Create item group
   {
     type = "item-group",
-    name = "galdocs-manufacturing-intermediates",
+    name = "gm-intermediates",
     icon = "__galdocs-manufacturing__/graphics/group-icons/galdocs-intermediates-group-icon.png",
-    localised_name = {"galdocs-manufacturing.item-group"},
+    localised_name = {"gm.item-group"},
     icon_size = 128
   }
 })
@@ -723,10 +723,10 @@ for metal, _ in pairs(metal_stocks_pairs) do -- Make [Metal] [Stock] Subgroups
   data:extend({
     {
       type = "item-subgroup",
-      name = "galdocs-manufacturing-stocks-" .. metal,
-      group = "galdocs-manufacturing-intermediates",
-      order = "a" .. "galdocs-manufacturing-intermediates-stocks" .. order_count,
-      localised_name = {"galdocs-manufacturing.stocks-subgroup", {"galdocs-manufacturing." .. metal}}
+      name = "gm-stocks-" .. metal,
+      group = "gm-intermediates",
+      order = "a" .. "gm-intermediates-stocks" .. order_count,
+      localised_name = {"gm.stocks-subgroup", {"gm." .. metal}}
     }
   })
   order_count = order_count + 1
@@ -735,9 +735,9 @@ end
 data:extend({ -- add alloy recipe category
   {
     type = "recipe-category",
-    name = "galdocs-manufacturing-alloys",
-    order = "a" .. "galdocs-manufacturing-alloy" .. order_count,
-    -- localised_name = {"galdocs-manufacturing.recipe-category", {"galdocs-manufacturing." .. metal}}
+    name = "gm-alloys",
+    order = "a" .. "gm-alloy" .. order_count,
+    -- localised_name = {"gm.recipe-category", {"gm." .. metal}}
   }
 })
 
@@ -746,10 +746,10 @@ for property, parts in pairs(property_machined_part_pairs) do -- Make [Property]
   data:extend({
     {
       type = "item-subgroup",
-      name = "galdocs-manufacturing-machined-parts-" .. property,
-      group = "galdocs-manufacturing-intermediates",
-      order = "b" .. "galdocs-manufacturing-intermediates-machined-parts" .. order_count,
-      localised_name = {"galdocs-manufacturing.machined-parts-subgroup-property", {"galdocs-manufacturing." .. property}}
+      name = "gm-machined-parts-" .. property,
+      group = "gm-intermediates",
+      order = "b" .. "gm-intermediates-machined-parts" .. order_count,
+      localised_name = {"gm.machined-parts-subgroup-property", {"gm." .. property}}
     }
   })
   order_count = order_count + 1
@@ -762,11 +762,11 @@ for stock, minisembler in pairs(stock_minisembler_pairs) do -- Make Stock recipe
     data:extend({
       {
         type = "recipe-category",
-        name = "galdocs-manufacturing-" .. minisembler
+        name = "gm-" .. minisembler
       },
       {
         type = "recipe-category",
-        name = "galdocs-manufacturing-" .. minisembler .. "-player-crafting"
+        name = "gm-" .. minisembler .. "-player-crafting"
       }
     })
   end
@@ -778,11 +778,11 @@ for part, minisembler in pairs(machined_part_minisembler_pairs) do -- Make Machi
     data:extend({
       {
         type = "recipe-category",
-        name = "galdocs-manufacturing-" .. minisembler
+        name = "gm-" .. minisembler
       },
       {
         type = "recipe-category",
-        name = "galdocs-manufacturing-" .. minisembler .. "-player-crafting"
+        name = "gm-" .. minisembler .. "-player-crafting"
       }
     })
   end
@@ -791,8 +791,8 @@ end
 data:extend({ -- Make plate smelting category so player can see recipes in inventory
   {
     type = "item-subgroup",
-    group = "galdocs-manufacturing-intermediates",
-    name = "galdocs-manufacturing-plates"
+    group = "gm-intermediates",
+    name = "gm-plates"
   }
 })
 
@@ -802,8 +802,8 @@ for metal, stocks in pairs(metal_stocks_pairs) do -- Make the [Metal] [Stock] It
   for stock in pairs(stocks) do
     property_list = {""}
     for property in pairs(metal_properties_pairs[metal]) do
-      table.insert(property_list, {"galdocs-manufacturing." .. property})
-      table.insert(property_list, {"galdocs-manufacturing.line-separator"})
+      table.insert(property_list, {"gm." .. property})
+      table.insert(property_list, {"gm.line-separator"})
     end
     table.remove(property_list, #property_list)
     data:extend({
@@ -838,11 +838,11 @@ for metal, stocks in pairs(metal_stocks_pairs) do -- Make the [Metal] [Stock] It
             scale = 0.25
           }
         },
-        subgroup = "galdocs-manufacturing-stocks-" .. metal,
-        order = order_count .. "galdocs-manufacturing-stocks-" .. metal,
+        subgroup = "gm-stocks-" .. metal,
+        order = order_count .. "gm-stocks-" .. metal,
         stack_size = stock_stack_size,
-        localised_name = {"galdocs-manufacturing.metal-stock-item-name", {"galdocs-manufacturing." .. metal}, {"galdocs-manufacturing." .. stock}},
-        localised_description = {"galdocs-manufacturing.metal-stock-item-description", {"galdocs-manufacturing." .. metal}, {"galdocs-manufacturing." .. stock}, property_list}
+        localised_name = {"gm.metal-stock-item-name", {"gm." .. metal}, {"gm." .. stock}},
+        localised_description = {"gm.metal-stock-item-description", {"gm." .. metal}, {"gm." .. stock}, property_list}
       }
     })
     if (stock ~= "plate") then
@@ -863,8 +863,8 @@ for metal, stocks in pairs(metal_stocks_pairs) do -- Make the [Metal] [Stock] It
         always_show_made_in = true,
         hide_from_player_crafting = true,
         energy_required = 0.3,
-        category = "galdocs-manufacturing-" .. stock_minisembler_pairs[stock],
-        localised_name = {"galdocs-manufacturing.metal-stock-item-name", {"galdocs-manufacturing." .. metal}, {"galdocs-manufacturing." .. stock}}
+        category = "gm-" .. stock_minisembler_pairs[stock],
+        localised_name = {"gm.metal-stock-item-name", {"gm." .. metal}, {"gm." .. stock}}
       }
       if ((metal == "copper" or metal == "iron") or (metal == "brass" and (stock == "pipe" or stock == "fine-pipe" or stock == "sheet"))) then
         recipe.category = recipe.category .. "-player-crafting"
@@ -889,8 +889,8 @@ for metal, stocks in pairs(metal_stocks_pairs) do -- Make the [Metal] [Stock] It
             },
             result = metal .. "-" .. stock .. "-stock",
             category = "smelting",
-            subgroup = "galdocs-manufacturing-plates",
-            localised_name = {"galdocs-manufacturing.metal-stock-item-name", {"galdocs-manufacturing." .. metal}, {"galdocs-manufacturing." .. stock}}
+            subgroup = "gm-plates",
+            localised_name = {"gm.metal-stock-item-name", {"gm." .. metal}, {"gm." .. stock}}
           }
         })
       end
@@ -913,10 +913,10 @@ for alloy, ingredients in pairs(alloy_recipe) do -- Add alloy plate recipes
       result = alloy .. "-plate-stock",
       result_count = output_count,
       energy_required = output_count * 3.2,
-      category = "galdocs-manufacturing-alloys",
-      subgroup = "galdocs-manufacturing-plates"
+      category = "gm-alloys",
+      subgroup = "gm-plates"
       -- order = "galdocs-plate-fam"
-      -- localised_name = {"galdocs-manufacturing.metal-stock-item-name", {"galdocs-manufacturing." .. metal}, {"galdocs-manufacturing." .. stock}}
+      -- localised_name = {"gm.metal-stock-item-name", {"gm." .. metal}, {"gm." .. stock}}
     }
   })
 end
@@ -954,11 +954,11 @@ for property, parts in pairs(property_machined_part_pairs) do -- Make the [Prope
         type = "item",
         name = property .. "-" .. part .. "-machined-part",
         icons = icons_data_item,
-        subgroup = "galdocs-manufacturing-machined-parts-" .. property,
-        order = order_count .. "galdocs-manufacturing-machined-parts-" .. part,
+        subgroup = "gm-machined-parts-" .. property,
+        order = order_count .. "gm-machined-parts-" .. part,
         stack_size = machined_part_stack_size,
-        localised_name = {"galdocs-manufacturing.machined-part-item", {"galdocs-manufacturing." .. property}, {"galdocs-manufacturing." .. part}},
-        localised_description = {"galdocs-manufacturing.metal-machined-part-item-description", {"galdocs-manufacturing." .. property}, {"galdocs-manufacturing." .. part}}
+        localised_name = {"gm.machined-part-item", {"gm." .. property}, {"gm." .. part}},
+        localised_description = {"gm.metal-machined-part-item-description", {"gm." .. property}, {"gm." .. part}}
       }
     })
     for metal, metal_properties in pairs(metal_properties_pairs) do
@@ -1006,7 +1006,7 @@ for property, parts in pairs(property_machined_part_pairs) do -- Make the [Prope
           },
           result = property .. "-" .. part .. "-machined-part",
           result_count = machined_parts_precurors[part][3],
-          category = "galdocs-manufacturing-" .. machined_part_minisembler_pairs[part],
+          category = "gm-" .. machined_part_minisembler_pairs[part],
           hide_from_player_crafting = true,
           icons = icons_data_recipe,
           crafting_machine_tint = { -- I don't know if anything will use this, but here it is just in case. You're welcome, future me.
@@ -1015,7 +1015,7 @@ for property, parts in pairs(property_machined_part_pairs) do -- Make the [Prope
           },
           always_show_made_in = true,
           energy_required = 0.3,
-          localised_name = {"galdocs-manufacturing.machined-part-recipe", {"galdocs-manufacturing." .. property}, {"galdocs-manufacturing." .. part}, {"galdocs-manufacturing." .. metal}, {"galdocs-manufacturing." .. machined_parts_precurors[part][1]}}
+          localised_name = {"gm.machined-part-recipe", {"gm." .. property}, {"gm." .. part}, {"gm." .. metal}, {"gm." .. machined_parts_precurors[part][1]}}
         }
         if (advanced and ( -- carve-outs for player crafting for bootstrap purposes
                           (property == "basic"                        and metal == "copper"                                                                             ) or
@@ -1058,7 +1058,7 @@ for property, parts in pairs(property_machined_part_pairs) do -- Make the [Prope
                 secondary = metal_tinting_pairs[metal][2]
               },
               energy_required = 0.3,
-              localised_name = {"galdocs-manufacturing.machined-part-recipe", {"galdocs-manufacturing." .. property}, {"galdocs-manufacturing." .. part}, {"galdocs-manufacturing." .. metal}, {"galdocs-manufacturing." .. machined_parts_precurors[part][1]}}
+              localised_name = {"gm.machined-part-recipe", {"gm." .. property}, {"gm." .. part}, {"gm." .. metal}, {"gm." .. machined_parts_precurors[part][1]}}
             }
           }) 
           --]]
@@ -1109,7 +1109,7 @@ for minisembler, _ in pairs(minisemblers_rgba_pairs) do
     technology_list, #technology_list,
     {
       type = "unlock-recipe",
-      recipe = "galdocs-manufacturing-" .. minisembler .. "-recipe"
+      recipe = "gm-" .. minisembler .. "-recipe"
     }
   )
 end
@@ -1117,15 +1117,15 @@ end
 data:extend({ -- Make the minisemblers.
   { -- item subgroup
 	  type = "item-subgroup",
-	  name = "galdocs-manufacturing-minisemblers",
+	  name = "gm-minisemblers",
 	  group = "production",
 	  order = "f",
-    localised_name = {"galdocs-manufacturing.minisembler-item-subgroup-name"},
-    localised_description = {"galdocs-manufacturing.minisembler-item-subgroup-description"}
+    localised_name = {"gm.minisembler-item-subgroup-name"},
+    localised_description = {"gm.minisembler-item-subgroup-description"}
   },
   { -- technology
     type = "technology",
-    name = "galdocs-manufacturing-technology-minisemblers",
+    name = "gm-technology-minisemblers",
     icon_size = 256, icon_mipmaps = 4,
     icon = "__galdocs-manufacturing__/graphics/technology-icons/lathe-technology-icon.png",
     effects = technology_list,
@@ -1137,11 +1137,11 @@ data:extend({ -- Make the minisemblers.
     },
     ignore_tech_cost_multiplier = true,
     order = "a-b-a",
-    localised_name = {"galdocs-manufacturing.technology-metal-machining-minisembler"}
+    localised_name = {"gm.technology-metal-machining-minisembler"}
   }
 })
 
-data.raw.technology["automation"].prerequisites = {"galdocs-manufacturing-technology-minisemblers"}
+data.raw.technology["automation"].prerequisites = {"gm-technology-minisemblers"}
 
 local minisembler_recipe_ordering
 if advanced then
@@ -1357,14 +1357,14 @@ for minisembler, rgba in pairs(minisemblers_rgba_pairs) do -- build current_anim
   data:extend({
     { -- recipe category
       type = "recipe-category",
-      name = "galdocs-manufacturing-" .. minisembler,
-      order = "galdocs-manufacturing",
-      localised_name = {"galdocs-manufacturing.minisembler-recipe-category-name"},
-      localised_description = {"galdocs-manufacturing.minisembler-recipe-category-description"}
+      name = "gm-" .. minisembler,
+      order = "gm",
+      localised_name = {"gm.minisembler-recipe-category-name"},
+      localised_description = {"gm.minisembler-recipe-category-description"}
     },
     { -- item
       type = "item",
-      name = "galdocs-manufacturing-" .. minisembler,
+      name = "gm-" .. minisembler,
       icons = {
         {
           icon = "__galdocs-manufacturing__/graphics/icons/minisemblers/".. minisembler .. "-icon.png", -- FIXME make dang nabbit icons future me
@@ -1372,19 +1372,19 @@ for minisembler, rgba in pairs(minisemblers_rgba_pairs) do -- build current_anim
           icon_mipmaps = 4,
         },
       },
-      subgroup = "galdocs-manufacturing-minisemblers",
+      subgroup = "gm-minisemblers",
       order = "a[galdocs-".. minisembler .. "-" .. order_count .. "]",
-      place_result = "galdocs-manufacturing-" .. minisembler,
+      place_result = "gm-" .. minisembler,
       stack_size = 50,
-      localised_name = {"galdocs-manufacturing.minisembler-item-name", {"galdocs-manufacturing." .. minisembler}},
-      localised_description = {"galdocs-manufacturing.minisembler-item-description", {"galdocs-manufacturing." .. minisembler}} -- FIXME : add in a list of things it can machine.
+      localised_name = {"gm.minisembler-item-name", {"gm." .. minisembler}},
+      localised_description = {"gm.minisembler-item-description", {"gm." .. minisembler}} -- FIXME : add in a list of things it can machine.
     },
     { -- recipe
       type = "recipe",
-      name = "galdocs-manufacturing-" .. minisembler .."-recipe",
+      name = "gm-" .. minisembler .."-recipe",
       enabled = false,
       ingredients = minisemblers_recipe_parameters[minisembler],
-      result = "galdocs-manufacturing-" .. minisembler,
+      result = "gm-" .. minisembler,
       icons = {
         {
           icon = "__galdocs-manufacturing__/graphics/icons/minisemblers/" .. minisembler .. "-icon.png",
@@ -1393,18 +1393,18 @@ for minisembler, rgba in pairs(minisemblers_rgba_pairs) do -- build current_anim
         }
       },
       energy_required = 1,
-      localised_name = {"galdocs-manufacturing.minisembler-recipe-name", {"galdocs-manufacturing." .. minisembler}},
-      localised_description = {"galdocs-manufacturing.minisembler-recipe-description", {"galdocs-manufacturing." .. minisembler}}
+      localised_name = {"gm.minisembler-recipe-name", {"gm." .. minisembler}},
+      localised_description = {"gm.minisembler-recipe-description", {"gm." .. minisembler}}
     },
     { -- entity
       type = "assembling-machine",
-      name = "galdocs-manufacturing-" .. minisembler,
+      name = "gm-" .. minisembler,
       --[[
       icon = "__galdocs-manufacturing__/graphics/icons/lathe-icon.png",
       icon_size = 64,
       icon_mipmaps = 4,
       --]]
-      fast_replaceable_group = "galdocs-manufacturing-minisemblers",
+      fast_replaceable_group = "gm-minisemblers",
       icons = {
         {
           icon = "__galdocs-manufacturing__/graphics/icons/minisemblers/" .. minisembler .. "-icon.png",
@@ -1413,7 +1413,7 @@ for minisembler, rgba in pairs(minisemblers_rgba_pairs) do -- build current_anim
         }
       },
       flags = {"placeable-neutral", "placeable-player", "player-creation"},
-      minable = {mining_time = 0.2, result = "galdocs-manufacturing-" .. minisembler},
+      minable = {mining_time = 0.2, result = "gm-" .. minisembler},
       max_health = 300,
       corpse = "pump-remnants", -- FIXME : what
       dying_explosion = "pump-explosion", -- FIXME : what
@@ -1431,7 +1431,7 @@ for minisembler, rgba in pairs(minisemblers_rgba_pairs) do -- build current_anim
       animation = current_animation,
       idle_animation = current_idle_animation,
       working_visualisations = current_working_visualizations,
-      crafting_categories = {"galdocs-manufacturing-" .. minisembler, "galdocs-manufacturing-" .. minisembler .. "-player-crafting"},
+      crafting_categories = {"gm-" .. minisembler, "gm-" .. minisembler .. "-player-crafting"},
       crafting_speed = 0.5,
       energy_source =
       {
@@ -1456,7 +1456,7 @@ for minisembler, rgba in pairs(minisemblers_rgba_pairs) do -- build current_anim
         fade_in_ticks = 4,
         fade_out_ticks = 20
       },
-      localised_name = {"galdocs-manufacturing.minisembler-entity-name", {"galdocs-manufacturing." .. minisembler}},
+      localised_name = {"gm.minisembler-entity-name", {"gm." .. minisembler}},
     }
   })
   order_count = order_count + 1

@@ -56,7 +56,7 @@ data:extend({
     collision_box = {{-0.7, -0.7}, {0.7, 0.7}},
     selection_box = {{-0.8, -1}, {0.8, 1}},
     damaged_trigger_effect = hit_effects.rock(),
-    crafting_categories = {"smelting", "galdocs-manufacturing-alloys"},
+    crafting_categories = {"smelting", "gm-alloys"},
     result_inventory_size = 1,
     energy_usage = "90kW",
     crafting_speed = 1,
@@ -476,7 +476,7 @@ for key, value in pairs(data.raw.furnace) do
   if table_contains(value.crafting_categories, "smelting") then
       local furnace = table.deepcopy(value)
       furnace.type = "assembling-machine"
-      table.insert(furnace.crafting_categories, "galdocs-manufacturing-alloys")
+      table.insert(furnace.crafting_categories, "gm-alloys")
 
       data.raw.furnace[key] = nil
       data:extend({furnace})

@@ -1,5 +1,5 @@
 -- FIXME - make a constants file for goodness sake
-local advanced = settings.startup["galdocs-manufacturing-advanced-mode"].value
+local advanced = settings.startup["gm-advanced-mode"].value
 local minisemblers
 
 if advanced then -- minisemblers: [minisembler | {rgba values}]
@@ -30,6 +30,6 @@ end
 for _, character in pairs(data.raw.character) do
   character.crafting_categories = character.crafting_categories or {}
   for minisembler, _ in pairs(minisemblers) do
-    table.insert(character.crafting_categories, "galdocs-manufacturing-" .. minisembler .. "-player-crafting")
+    table.insert(character.crafting_categories, "gm-" .. minisembler .. "-player-crafting")
   end
 end
