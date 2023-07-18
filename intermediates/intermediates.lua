@@ -84,6 +84,28 @@ local function hex_to_rgba(hex)
     }
 end
 
+local minisembler_recipe_ordering
+if advanced then
+  minisembler_recipe_ordering = {"paneling", "framing", "fine-gearing", "wiring", "shafting", "bolts"}
+else
+  minisembler_recipe_ordering = {"paneling", "framing", "gearing", "wiring", "shafting", "bolts"}
+end
+local function map_minisembler_recipes(t)
+  local returnTable = {}
+  local counter = 1
+  for _, part in pairs(minisembler_recipe_ordering) do
+    if t[counter] > 0 then
+      if part == "wiring" then
+        table.insert(returnTable, #returnTable, {"electrically-conductive-" .. part .. "-machined-part", t[counter]})
+      else 
+        table.insert(returnTable, #returnTable, {"basic-" .. part .. "-machined-part", t[counter]})
+      end
+    end
+    counter = counter + 1
+  end
+  return returnTable
+end
+
 -- Make the technologies for the stocks
 data:extend({
   { -- galvanized steel stock processing
@@ -291,62 +313,13 @@ local metal_technology_pairs = {
   ["galvanized-steel"]  = {"vanilla", "gm-galvanized-steel-stock-processing", "gm-galvanized-steel-machined-part-processing"},
 }
 
---[[
-local function make_tech(tech_name)
-
-
-end
-
-local function prerequisites_copy(tech_list)
-  local prerequisites_list = {}
-  for _, tech_name in pairs(tech_list) do
-    local prerequisites = data.raw.technology[tech_name].prerequisites
-    if prerequisites ~= nil then 
-      for _, prerequisite in pairs(prerequisites) do
-        prerequisites_list[#prerequisites_list + 1] = prerequisite
-      end
-    end
-  end
-  return prerequisites_list
-end
-
-local function postrequisites_copy(tech_list)
-  local postrequisites_list = {}
-  for tech_name, tech in pairs(data.raw.technology) do
-    local prerequisites = tech.prerequisites
-    if prerequisites ~= nil then
-      for _, prerequisite in pairs(prerequisites) do
-        if tech_list[prerequisite] ~= nil then
-          postrequisites_list[#postrequisites_list + 1] = tech_name
-        end
-      end
-    end
-  end
-  return postrequisites_list
-end
-
-local function copy_postrequisites(technology, tech_list)
-  local postrequisites_list = {}
-  for tech_name, tech in pairs(data.raw.technology) do
-    local prerequisites = tech.prerequisites
-    if prerequisites ~= nil then
-      for _, prerequisite in pairs(prerequisites) do
-        if tech_list[prerequisite] ~= nil then
-          technology.prerequisites[#technology.prerequisites+1] = tech_name
-        end
-      end
-    end
-  end
-  return postrequisites_list
-end
---]]
-
 
 
 -- ***********
 -- Game Tables
 -- ***********
 
+--[[
 -- Game Tables Declared ... and here and not above because REASONS
 local metal_stocks_pairs
 local stock_minisembler_pairs
@@ -357,7 +330,6 @@ local machined_parts_precurors
 local minisemblers_rgba_pairs
 local minisemblers_recipe_parameters
 local minisemblers_rendering_data
--- local minisemblers_entity_parameters
 
 -- Declare all of the things needed to make the intermediates and minisemblers. All of these tables need to agree, manually, but they're all in one spot.
 local metals_to_add = { -- ***ORE***
@@ -464,28 +436,6 @@ else
     ["galvanized-steel"]  = map{"plate", "square", "wire"}
   }
 end
-
-
-
---[[
-local metal_technology_pairs_2 = {
-  -- pure metals
-  ["iron"]              = {},
-  ["copper"]            = {},
-  ["lead"]              = {tech = make_tech("lead-processing"), prerequisites = prerequisites_copy{"uranium-processing"}, postrequisites = postrequisites_copy{"uranium-processing"}, corequisites = {}},
-  ["titanium"]          = {prerequisites = {}, postrequisites = {}, corequisites = {}},
-  ["zinc"]              = {},
-  ["nickel"]            = {prerequisites = {}, postrequisites = {}, corequisites = {}},
-
-  -- alloys 
-  ["steel"]             = {prerequisites = {}, postrequisites = {}, corequisites = {}},
-  ["brass"]             = {},
-  ["invar"]             = {prerequisites = {}, postrequisites = {}, corequisites = {}},
-
-  -- treatments 
-  ["galvanized-steel"]  = {prerequisites = {}, postrequisites = {}, corequisites = {}},
-}
---]]
 
 if advanced then -- stock_minisembler_pairs : [stock | minisembler]
   stock_minisembler_pairs = {
@@ -644,6 +594,94 @@ else
   }
 end
 
+-- Redo the art for the current ores
+local base_resources_to_replace_with_ore_in_the_stupid_name = {
+  ["copper"] = true,
+  ["iron"] = true,
+  -- ["uranium"] = true,
+}
+
+local base_resources_to_replace_without_ore_in_the_stupid_name = {
+  ["coal"] = true,
+  ["stone"] = true,
+}
+
+-- Replace original ores
+local original_ores = {
+  ["copper"] = true,
+  ["iron"] = true,
+  -- ["uranium-ore"] = true,
+  -- ["coal"] = true,
+  -- ["stone"] = true
+}
+
+if advanced then -- Store data to differentiate the different minisemblers
+  minisemblers_recipe_parameters = {
+    ["welder"]          = map_minisembler_recipes{1, 2, 1, 2, 0, 1},
+    ["drill-press"]     = map_minisembler_recipes{1, 1, 2, 1, 0, 1},
+    ["grinder"]         = map_minisembler_recipes{1, 2, 1, 1, 1, 1},
+    ["metal-bandsaw"]   = map_minisembler_recipes{1, 1, 1, 1, 0, 2},
+    ["metal-extruder"]  = map_minisembler_recipes{1, 1, 1, 3, 0, 1},
+    ["mill"]            = map_minisembler_recipes{1, 2, 2, 1, 1, 1},
+    ["metal-lathe"]     = map_minisembler_recipes{1, 1, 1, 1, 1, 1},
+    ["threader"]        = map_minisembler_recipes{1, 1, 2, 1, 0, 1},
+    ["spooler"]         = map_minisembler_recipes{1, 1, 2, 2, 1, 1},
+    ["roller"]          = map_minisembler_recipes{1, 3, 1, 1, 2, 1},
+    ["bender"]          = map_minisembler_recipes{1, 3, 1, 1, 0, 1}
+  }
+else
+  minisemblers_recipe_parameters = {
+    ["welder"]          = map_minisembler_recipes{1, 2, 1, 2, 0, 1},
+    ["metal-bandsaw"]   = map_minisembler_recipes{1, 1, 1, 1, 0, 2},
+    ["metal-extruder"]  = map_minisembler_recipes{1, 1, 1, 3, 0, 1},
+    ["mill"]            = map_minisembler_recipes{1, 2, 2, 1, 1, 1},
+    ["metal-lathe"]     = map_minisembler_recipes{1, 1, 1, 1, 1, 1},
+    ["roller"]          = map_minisembler_recipes{1, 3, 1, 1, 2, 1},
+    ["bender"]          = map_minisembler_recipes{1, 3, 1, 1, 0, 1}
+  }
+end
+
+minisemblers_rendering_data = { -- Set up the minisembler rendering data
+  -- metal-lathe
+  ["metal-lathe"] = {
+    ["frame-count"] = 24,
+    ["line-length"] = 5,
+    ["hr"] = {
+      ["north"] = {
+        ["base"]      = {["shift-x"] = 10, ["shift-y"] = -1, ["width"] = 102, ["height"] = 128, ["scale"] = .5},
+        ["sparks"]    = {["shift-x"] = 9,  ["shift-y"] = 0,  ["width"] = 102, ["height"] = 128, ["scale"] = .5},
+        ["workpiece"] = {["shift-x"] = 10, ["shift-y"] = -1, ["width"] = 102, ["height"] = 128, ["scale"] = .5},
+        ["oxidation"] = {["shift-x"] = 10, ["shift-y"] = -1, ["width"] = 102, ["height"] = 128, ["scale"] = .5},
+        ["shadow"]    = {["shift-x"] = 18, ["shift-y"] = 15, ["width"] = 128, ["height"] = 84,  ["scale"] = .5}
+      },
+      ["west"] = {
+        ["base"]      = {["shift-x"] = 0,  ["shift-y"] = -10, ["width"] = 128, ["height"] = 104, ["scale"] = .5},
+        ["sparks"]    = {["shift-x"] = 0,  ["shift-y"] = -9,   ["width"] = 128, ["height"] = 104, ["scale"] = .5},
+        ["workpiece"] = {["shift-x"] = 0,  ["shift-y"] = -10, ["width"] = 128, ["height"] = 104, ["scale"] = .5},
+        ["oxidation"] = {["shift-x"] = 0,  ["shift-y"] = -10, ["width"] = 128, ["height"] = 104, ["scale"] = .5},
+        ["shadow"]    = {["shift-x"] = 16, ["shift-y"] = 6,   ["width"] = 128, ["height"] = 40,  ["scale"] = .75}
+      }
+    },
+    ["normal"] = {
+      ["north"] = {
+        ["base"]      = {["shift-x"] = 5, ["shift-y"] = -1,  ["width"] = 51, ["height"] = 64, ["scale"] = 1},
+        ["sparks"]    = {["shift-x"] = 0, ["shift-y"] = 0,   ["width"] = 51, ["height"] = 64, ["scale"] = 1},
+        ["workpiece"] = {["shift-x"] = 5, ["shift-y"] = -1,  ["width"] = 51, ["height"] = 64, ["scale"] = 1},
+        ["oxidation"] = {["shift-x"] = 5, ["shift-y"] = -1,  ["width"] = 51, ["height"] = 64, ["scale"] = 1},
+        ["shadow"]    = {["shift-x"] = 15, ["shift-y"] = 14, ["width"] = 64, ["height"] = 42, ["scale"] = 1}
+      },
+      ["west"] = {
+        ["base"]      = {["shift-x"] = 0, ["shift-y"] = -5, ["width"] = 64, ["height"] = 52, ["scale"] = 1},
+        ["sparks"]    = {["shift-x"] = 0, ["shift-y"] = 0,  ["width"] = 64, ["height"] = 52, ["scale"] = 1},
+        ["workpiece"] = {["shift-x"] = 0, ["shift-y"] = -5, ["width"] = 64, ["height"] = 52, ["scale"] = 1},
+        ["oxidation"] = {["shift-x"] = 0, ["shift-y"] = -5, ["width"] = 64, ["height"] = 52, ["scale"] = 1},
+        ["shadow"]    = {["shift-x"] = 7, ["shift-y"] = 14, ["width"] = 64, ["height"] = 20, ["scale"] = 1}
+      }
+    }
+  }
+}
+
+--]]
 
 
 -- ****************
@@ -688,14 +726,7 @@ for ore, _ in pairs(metals_to_add) do
   })
 end
 
--- Replace original ores
-local original_ores = {
-  ["copper"] = true,
-  ["iron"] = true,
-  -- ["uranium-ore"] = true,
-  -- ["coal"] = true,
-  -- ["stone"] = true
-}
+
 
 for ore, _ in pairs(original_ores) do
   data.raw.item[ore .. "-ore"].icon = "__galdocs-manufacturing__/graphics/icons/intermediates/ore/" .. ore .. "/" .. ore .. "-ore-1.png"
@@ -737,7 +768,6 @@ data:extend({ -- add alloy recipe category
     type = "recipe-category",
     name = "gm-alloys",
     order = "a" .. "gm-alloy" .. order_count,
-    -- localised_name = {"gm.recipe-category", {"gm." .. metal}}
   }
 })
 
@@ -915,8 +945,6 @@ for alloy, ingredients in pairs(alloy_recipe) do -- Add alloy plate recipes
       energy_required = output_count * 3.2,
       category = "gm-alloys",
       subgroup = "gm-plates"
-      -- order = "galdocs-plate-fam"
-      -- localised_name = {"gm.metal-stock-item-name", {"gm." .. metal}, {"gm." .. stock}}
     }
   })
 end
@@ -1018,8 +1046,8 @@ for property, parts in pairs(property_machined_part_pairs) do -- Make the [Prope
           localised_name = {"gm.machined-part-recipe", {"gm." .. property}, {"gm." .. part}, {"gm." .. metal}, {"gm." .. machined_parts_precurors[part][1]}}
         }
         if (advanced and ( -- carve-outs for player crafting for bootstrap purposes
-                          (property == "basic"                        and metal == "copper"                                                                             ) or
-                          (property == "basic"                        and metal == "iron"                                                                               ) or
+                          (property == "basic"                        and metal == "copper"                                                                                ) or
+                          (property == "basic"                        and metal == "iron"                                                                                  ) or
                           (property == "electrically-conductive"      and metal == "copper" and machined_parts_precurors[part][1] == "wire"      and part == "wiring"      ) or
                           (property == "thermally-conductive"         and metal == "copper" and machined_parts_precurors[part][1] == "wire"      and part == "wiring"      ) or
                           (property == "corrosion-resistant"          and metal == "brass"  and machined_parts_precurors[part][1] == "fine-pipe" and part == "fine-piping" ) or
@@ -1027,8 +1055,8 @@ for property, parts in pairs(property_machined_part_pairs) do -- Make the [Prope
                           )
             ) or
             (advanced == false and (
-                          (property == "basic"                        and metal == "copper"                                                                     ) or
-                          (property == "basic"                        and metal == "iron"                                                                       ) or
+                          (property == "basic"                        and metal == "copper"                                                                        ) or
+                          (property == "basic"                        and metal == "iron"                                                                          ) or
                           (property == "electrically-conductive"      and metal == "copper" and machined_parts_precurors[part][1] == "square" and part == "wiring" ) or
                           (property == "thermally-conductive"         and metal == "copper" and machined_parts_precurors[part][1] == "square" and part == "wiring" ) or
                           (property == "corrosion-resistant"          and metal == "brass"  and machined_parts_precurors[part][1] == "plate"  and part == "piping" )
@@ -1039,64 +1067,10 @@ for property, parts in pairs(property_machined_part_pairs) do -- Make the [Prope
           recipe.hide_from_player_crafting = false
         end
         data:extend({recipe})
-          --[[
-          data:extend({
-            { -- recipe
-              type = "recipe",
-              name = property .. "-" .. part .. "-from-" .. metal .. "-" .. machined_parts_precurors[part][1] .. "-player-crafting",
-              enabled = true,
-              ingredients =
-              {
-                {metal .. "-" .. machined_parts_precurors[part][1] .. "-stock", metal .. "-" .. machined_parts_precurors[part][2]}
-              },
-              result = property .. "-" .. part .. "-machined-part",
-              result_count = metal .. "-" .. machined_parts_precurors[part][3],
-              category = "crafting",
-              icons = icons_data_recipe,
-              crafting_machine_tint = { -- I don't know if anything will use this, but here it is just in case. You're welcome, future me.
-                primary = metal_tinting_pairs[metal][1],
-                secondary = metal_tinting_pairs[metal][2]
-              },
-              energy_required = 0.3,
-              localised_name = {"gm.machined-part-recipe", {"gm." .. property}, {"gm." .. part}, {"gm." .. metal}, {"gm." .. machined_parts_precurors[part][1]}}
-            }
-          }) 
-          --]]
       end
     end
   end
 end
-
-
--- carve outs for starter recipes
---[[
-  data:extend({
-  {
-    type = "recipe",
-    name = "electrically-conductive-wiring-from-copper-wire-player-crafting"
-  },
-  {
-    type = "recipe",
-    name = "thermally-conductive-wiring-from-copper-wire-player-crafting"
-  },
-  {
-    type = "recipe",
-    name = "corrosion-resistant-piping-from-brass-pipe-player-crafting"
-  },
-  {
-    type = "recipe",
-    name = "corrosion-resistant-fine-piping-from-brass-fine-pipe-player-crafting"
-  }
-})
---]]
--- data.raw.recipe["electrically-conductive-wiring-from-copper-wire-player-crafting"] = data.raw.recipe["electrically-conductive-wiring-from-copper-wire"]
--- data.raw.recipe["electrically-conductive-wiring-from-copper-wire-player-crafting"].enabled = true
--- data.raw.recipe["thermally-conductive-wiring-from-copper-wire-player-crafting"] = data.raw.recipe["thermally-conductive-wiring-from-copper-wire"]
--- data.raw.recipe["thermally-conductive-wiring-from-copper-wire-player-crafting"].enabled = true
--- data.raw.recipe["corrosion-resistant-piping-from-brass-pipe-player-crafting"] = data.raw.recipe["corrosion-resistant-piping-from-brass-pipe"]
--- data.raw.recipe["corrosion-resistant-piping-from-brass-pipe-player-crafting"].enabled = true
--- data.raw.recipe["corrosion-resistant-fine-piping-from-brass-fine-pipe-player-crafting"] = data.raw.recipe["corrosion-resistant-fine-piping-from-brass-fine-pipe"]
--- data.raw.recipe["corrosion-resistant-fine-piping-from-brass-fine-pipe-player-crafting"].enabled = true
 
 
 
@@ -1142,94 +1116,6 @@ data:extend({ -- Make the minisemblers.
 })
 
 data.raw.technology["automation"].prerequisites = {"gm-technology-minisemblers"}
-
-local minisembler_recipe_ordering
-if advanced then
-  minisembler_recipe_ordering = {"paneling", "framing", "fine-gearing", "wiring", "shafting", "bolts"}
-else
-  minisembler_recipe_ordering = {"paneling", "framing", "gearing", "wiring", "shafting", "bolts"}
-end
-local function map_minisembler_recipes(t)
-  local returnTable = {}
-  local counter = 1
-  for _, part in pairs(minisembler_recipe_ordering) do
-    if t[counter] > 0 then
-      if part == "wiring" then
-        table.insert(returnTable, #returnTable, {"electrically-conductive-" .. part .. "-machined-part", t[counter]})
-      else 
-        table.insert(returnTable, #returnTable, {"basic-" .. part .. "-machined-part", t[counter]})
-      end
-    end
-    counter = counter + 1
-  end
-  return returnTable
-end
-
-if advanced then -- Store data to differentiate the different minisemblers
-  minisemblers_recipe_parameters = {
-    ["welder"]          = map_minisembler_recipes{1, 2, 1, 2, 0, 1},
-    ["drill-press"]     = map_minisembler_recipes{1, 1, 2, 1, 0, 1},
-    ["grinder"]         = map_minisembler_recipes{1, 2, 1, 1, 1, 1},
-    ["metal-bandsaw"]   = map_minisembler_recipes{1, 1, 1, 1, 0, 2},
-    ["metal-extruder"]  = map_minisembler_recipes{1, 1, 1, 3, 0, 1},
-    ["mill"]            = map_minisembler_recipes{1, 2, 2, 1, 1, 1},
-    ["metal-lathe"]     = map_minisembler_recipes{1, 1, 1, 1, 1, 1},
-    ["threader"]        = map_minisembler_recipes{1, 1, 2, 1, 0, 1},
-    ["spooler"]         = map_minisembler_recipes{1, 1, 2, 2, 1, 1},
-    ["roller"]          = map_minisembler_recipes{1, 3, 1, 1, 2, 1},
-    ["bender"]          = map_minisembler_recipes{1, 3, 1, 1, 0, 1}
-  }
-else
-  minisemblers_recipe_parameters = {
-    ["welder"]          = map_minisembler_recipes{1, 2, 1, 2, 0, 1},
-    ["metal-bandsaw"]   = map_minisembler_recipes{1, 1, 1, 1, 0, 2},
-    ["metal-extruder"]  = map_minisembler_recipes{1, 1, 1, 3, 0, 1},
-    ["mill"]            = map_minisembler_recipes{1, 2, 2, 1, 1, 1},
-    ["metal-lathe"]     = map_minisembler_recipes{1, 1, 1, 1, 1, 1},
-    ["roller"]          = map_minisembler_recipes{1, 3, 1, 1, 2, 1},
-    ["bender"]          = map_minisembler_recipes{1, 3, 1, 1, 0, 1}
-  }
-end
-
-minisemblers_rendering_data = { -- Set up the minisembler rendering data
-  -- metal-lathe
-  ["metal-lathe"] = {
-    ["frame-count"] = 24,
-    ["line-length"] = 5,
-    ["hr"] = {
-      ["north"] = {
-        ["base"]      = {["shift-x"] = 10, ["shift-y"] = -1, ["width"] = 102, ["height"] = 128, ["scale"] = .5},
-        ["sparks"]    = {["shift-x"] = 9,  ["shift-y"] = 0,  ["width"] = 102, ["height"] = 128, ["scale"] = .5},
-        ["workpiece"] = {["shift-x"] = 10, ["shift-y"] = -1, ["width"] = 102, ["height"] = 128, ["scale"] = .5},
-        ["oxidation"] = {["shift-x"] = 10, ["shift-y"] = -1, ["width"] = 102, ["height"] = 128, ["scale"] = .5},
-        ["shadow"]    = {["shift-x"] = 18, ["shift-y"] = 15, ["width"] = 128, ["height"] = 84,  ["scale"] = .5}
-      },
-      ["west"] = {
-        ["base"]      = {["shift-x"] = 0,  ["shift-y"] = -10, ["width"] = 128, ["height"] = 104, ["scale"] = .5},
-        ["sparks"]    = {["shift-x"] = 0,  ["shift-y"] = -9,   ["width"] = 128, ["height"] = 104, ["scale"] = .5},
-        ["workpiece"] = {["shift-x"] = 0,  ["shift-y"] = -10, ["width"] = 128, ["height"] = 104, ["scale"] = .5},
-        ["oxidation"] = {["shift-x"] = 0,  ["shift-y"] = -10, ["width"] = 128, ["height"] = 104, ["scale"] = .5},
-        ["shadow"]    = {["shift-x"] = 16, ["shift-y"] = 6,   ["width"] = 128, ["height"] = 40,  ["scale"] = .75}
-      }
-    },
-    ["normal"] = {
-      ["north"] = {
-        ["base"]      = {["shift-x"] = 5, ["shift-y"] = -1,  ["width"] = 51, ["height"] = 64, ["scale"] = 1},
-        ["sparks"]    = {["shift-x"] = 0, ["shift-y"] = 0,   ["width"] = 51, ["height"] = 64, ["scale"] = 1},
-        ["workpiece"] = {["shift-x"] = 5, ["shift-y"] = -1,  ["width"] = 51, ["height"] = 64, ["scale"] = 1},
-        ["oxidation"] = {["shift-x"] = 5, ["shift-y"] = -1,  ["width"] = 51, ["height"] = 64, ["scale"] = 1},
-        ["shadow"]    = {["shift-x"] = 15, ["shift-y"] = 14, ["width"] = 64, ["height"] = 42, ["scale"] = 1}
-      },
-      ["west"] = {
-        ["base"]      = {["shift-x"] = 0, ["shift-y"] = -5, ["width"] = 64, ["height"] = 52, ["scale"] = 1},
-        ["sparks"]    = {["shift-x"] = 0, ["shift-y"] = 0,  ["width"] = 64, ["height"] = 52, ["scale"] = 1},
-        ["workpiece"] = {["shift-x"] = 0, ["shift-y"] = -5, ["width"] = 64, ["height"] = 52, ["scale"] = 1},
-        ["oxidation"] = {["shift-x"] = 0, ["shift-y"] = -5, ["width"] = 64, ["height"] = 52, ["scale"] = 1},
-        ["shadow"]    = {["shift-x"] = 7, ["shift-y"] = 14,  ["width"] = 64, ["height"] = 20, ["scale"] = 1}
-      }
-    }
-  }
-}
 
 for minisembler, _ in pairs(minisemblers_recipe_parameters) do
   if minisemblers_rendering_data[minisembler] == nil then
@@ -1399,11 +1285,6 @@ for minisembler, rgba in pairs(minisemblers_rgba_pairs) do -- build current_anim
     { -- entity
       type = "assembling-machine",
       name = "gm-" .. minisembler,
-      --[[
-      icon = "__galdocs-manufacturing__/graphics/icons/lathe-icon.png",
-      icon_size = 64,
-      icon_mipmaps = 4,
-      --]]
       fast_replaceable_group = "gm-minisemblers",
       icons = {
         {
@@ -1468,17 +1349,7 @@ end
 -- Ores
 -- ****
 
--- Redo the art for the current ores
-local base_resources_to_replace_with_ore_in_the_stupid_name = {
-  ["copper"] = true,
-  ["iron"] = true,
-  -- ["uranium"] = true,
-}
 
-local base_resources_to_replace_without_ore_in_the_stupid_name = {
-  ["coal"] = true,
-  ["stone"] = true,
-}
 
 for resource, _ in pairs(base_resources_to_replace_with_ore_in_the_stupid_name) do
   data.raw.resource[resource .. "-ore"].stages.sheet.filename = "__galdocs-manufacturing__/graphics/entity/resource/" .. resource .. "/" .. resource .. "-ore.png"
@@ -1593,13 +1464,9 @@ for metal, techology_data in pairs(metal_technology_pairs) do
         for part, _ in pairs(property_machined_part_pairs[property]) do
           if (metal_properties_pairs[metal][property] == true and metal_stocks_pairs[metal][machined_parts_precurors[part][1]] == true) then
             table.insert(machined_part_technology_effects, {type = "unlock-recipe", recipe = property .. "-" .. part .. "-from-" .. metal .. "-" .. machined_parts_precurors[part][1]})
-            -- metal_properties_pairs gives me the properties for each metal
-            -- name = property .. "-" .. part .. "-from-" .. metal .. "-" .. machined_parts_precurors[part][1]
-            -- machined_parts_precurors[part][1]
-            -- property_machined_part_pairs
           end
         end
-      end 
+      end
     end
   end
 end
