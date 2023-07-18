@@ -281,57 +281,60 @@ local recipes_to_redo = { -- list of item-names
 
 -- Make intermediates_to_add_table (looks like {name, ingredients_to_add})
 
-local intermediates_to_add_table
+local pull_table = require("gm-mw-van")
+local intermediates_to_add_table = pull_table(advanced)
+
+--[[
 if advanced then
-  intermediates_to_add_table = { -- {name, ingredients_to_add}, where ingredients_to_add is {{item-name, amount}, ...}
+  intermediates_to_add_table = { -- {name, ingredients_to_add}, where ingredients_to_add is {{item-name, amount}, ...} -- (Amount in plates vs. Vanilla Amount in Plates, Amount of items vs. Vanila Amount of Items)
   -- Logistics
 
-    ["iron-chest"]                       = {{"basic-paneling", 4}, {"basic-framing", 2}, {"basic-bolts", 2}}, -- 8 plate {count 8} {total 8}
-    ["steel-chest"]                      = {{"high-tensile-paneling", 4}, {"high-tensile-framing", 2}, {"high-tensile-bolts", 2}}, -- 8 plate (8 steel) {count 8} {total 8}
+    ["iron-chest"]                       = {{"basic-paneling", 4}, {"basic-framing", 2}, {"basic-bolts", 2}}, -- (3 vs 8; 7 vs 8)
+    ["steel-chest"]                      = {{"high-tensile-paneling", 6}, {"high-tensile-framing", 8}, {"high-tensile-bolts", 2}}, -- (5.3 vs 40; 7 vs 8)
 
-    ["storage-tank"]                     = {{"corrosion-resistant-large-paneling", 10}, {"high-tensile-girdering", 4}, {"corrosion-resistant-fine-piping", 6}, {"basic-rivets", 5}}, -- 25 plate (5 steel) {count 20, 5} {total 25, 2}
+    ["storage-tank"]                     = {{"corrosion-resistant-large-paneling", 10}, {"high-tensile-girdering", 4}, {"corrosion-resistant-piping", 6}, {"basic-rivets", 5}}, -- (37.5 vs 45; 25 vs 25)
 
-    ["transport-belt"]                   = {{"basic-paneling", 1}, {"basic-fine-gearing", 1}, {"basic-bolts", 1}}, -- 3 plate {count 1, 1} {total 2, 1}
-    ["fast-transport-belt"]              = {{"high-tensile-framing", 2}, {"ductile-fine-gearing", 5}, {"basic-bolts", 3}}, -- 10 plate {count 5, 1} {total 6, 2}
-    ["express-transport-belt"]           = {{"very-high-tensile-framing", 4}, {"ductile-fine-gearing", 10}, {"very-high-tensile-bolts", 6}}, -- 20 plate {count 20, 5} {total 25, 2}
+    ["transport-belt"]                   = {{"basic-paneling", 1}, {"basic-fine-gearing", 1}, {"basic-bolts", 1}}, -- (1 vs 3; 3 vs 2)
+    ["fast-transport-belt"]              = {{"high-tensile-framing", 2}, {"ductile-fine-gearing", 5}, {"basic-bolts", 3}}, -- (2 vs 10; 10 vs 5)
+    ["express-transport-belt"]           = {{"very-high-tensile-framing", 4}, {"ductile-fine-gearing", 10}, {"very-high-tensile-bolts", 6}}, -- (3 vs 20; 20 vs 10)
 
-    ["underground-belt"]                 = {{"basic-paneling", 6}, {"basic-framing", 2}, {"basic-bolts", 2}}, -- 10 plate {count 10, 5} {total 15, 2}
-    ["fast-underground-belt"]            = {{"high-tensile-paneling", 40}, {"high-tensile-framing", 20}, {"basic-bolts", 20}}, -- 80 plate {count 40, 2} {total 42, 2}
-    ["express-underground-belt"]         = {{"very-high-tensile-paneling", 80}, {"very-high-tensile-framing", 50}, {"very-high-tensile-bolts", 30}}, -- 160 plate {count 80, 2} {total 82, 2}
+    ["underground-belt"]                 = {{"basic-paneling", 6}, {"basic-framing", 2}, {"basic-bolts", 2}}, -- (1.33 vs 10; 10 vs 10)
+    ["fast-underground-belt"]            = {{"high-tensile-paneling", 40}, {"high-tensile-framing", 20}, {"basic-bolts", 20}}, -- (28 vs 80; 80 vs 40)
+    ["express-underground-belt"]         = {{"very-high-tensile-paneling", 80}, {"very-high-tensile-framing", 50}, {"very-high-tensile-bolts", 30}}, -- (55.5 vs 160;  160 vs 80)
 
-    ["splitter"]                         = {{"basic-paneling", 2}, {"basic-gearing", 2}, {"basic-framing", 1}, {"basic-bolts", 1}}, -- 5 plate {count 5, 5, 4} {total 14, 3}
-    ["fast-splitter"]                    = {{"high-tensile-paneling", 4}, {"high-tensile-fine-gearing", 6}, {"high-tensile-framing", 4}, {"basic-bolts", 6}}, -- 20 plate {count 10, 10, 1} {total 21, 3}
-    ["express-splitter"]                 = {{"very-high-tensile-paneling", 4}, {"ductile-fine-gearing", 8}, {"very-high-tensile-framing", 4}, {"very-high-tensile-bolts", 6}}, -- 20 plate {count 10, 10, 1} {total 21, 3}
+    ["splitter"]                         = {{"basic-paneling", 2}, {"basic-gearing", 2}, {"basic-framing", 1}, {"basic-bolts", 1}}, -- (1.75 vs 5;  6 vs 5)
+    ["fast-splitter"]                    = {{"high-tensile-paneling", 4}, {"high-tensile-fine-gearing", 6}, {"high-tensile-framing", 4}, {"basic-bolts", 6}}, -- ( vs 20;  vs 10)
+    ["express-splitter"]                 = {{"very-high-tensile-paneling", 4}, {"ductile-fine-gearing", 8}, {"very-high-tensile-framing", 4}, {"very-high-tensile-bolts", 6}}, -- ( vs 20;  vs 10)
 
-    ["burner-inserter"]                  = {{"basic-framing", 1}, {"basic-fine-gearing", 1}, {"basic-bolts", 1}, {"thermally-conductive-wiring", 1}}, -- 3 plate {1, 1} {2, 2}
-    ["inserter"]                         = {{"load-bearing-framing", 1}, {"load-bearing-shafting", 1}, {"basic-fine-gearing", 1}, {"basic-bolts", 1}}, -- 3 plate {count 10, 5} {total 15, 2}
-    ["long-handed-inserter"]             = {{"heavy-load-bearing-framing", 1}, {"heavy-load-bearing-shafting", 1}, {"ductile-fine-gearing", 1}, {"high-tensile-bolts", 1}}, -- 3 plate {count 10, 5} {total 15, 2}
-    ["fast-inserter"]                    = {{"heavy-load-bearing-framing", 1}, {"ductile-fine-gearing", 1}, {"high-tensile-bolts", 1}}, -- 2 plate
+    ["burner-inserter"]                  = {{"basic-framing", 1}, {"basic-fine-gearing", 1}, {"basic-bolts", 1}, {"thermally-conductive-wiring", 1}}, -- ( vs 3;  vs 2)
+    ["inserter"]                         = {{"load-bearing-framing", 1}, {"load-bearing-shafting", 1}, {"basic-fine-gearing", 1}, {"basic-bolts", 1}}, -- ( vs 3;  vs 2)
+    ["long-handed-inserter"]             = {{"heavy-load-bearing-framing", 1}, {"heavy-load-bearing-shafting", 1}, {"ductile-fine-gearing", 1}, {"high-tensile-bolts", 1}}, -- ( vs 3;  vs 2)
+    ["fast-inserter"]                    = {{"heavy-load-bearing-framing", 1}, {"ductile-fine-gearing", 1}, {"high-tensile-bolts", 1}}, -- ( vs 2;  vs 2)
     -- ["filter-inserter"]                  = {},
-    ["stack-inserter"]                   = {{"heavy-load-bearing-framing", 4}, {"high-tensile-fine-gearing", 22}, {"very-high-tensile-bolts", 4}}, -- 30 plate
+    ["stack-inserter"]                   = {{"heavy-load-bearing-framing", 4}, {"high-tensile-fine-gearing", 22}, {"very-high-tensile-bolts", 4}}, -- ( vs 30;  vs 15)
     -- ["stack-filter-inserter"]            = {},
 
-    ["small-electric-pole"]              = {{"electrically-conductive-wiring", 1}}, -- 1 plate
-    ["medium-electric-pole"]             = {{"electrically-conductive-wiring", 2}, {"high-tensile-wiring", 2}, {"load-bearing-girdering", 2}, {"basic-bolts", 2}}, -- 6 plate (2 steel)
-    ["big-electric-pole"]                = {{"electrically-conductive-wiring", 6}, {"high-tensile-wiring", 2}, {"load-bearing-girdering", 6}, {"basic-rivets", 4}}, -- 14 plate (5 steel)
-    ["substation"]                       = {{"electrically-conductive-wiring", 6}, {"high-tensile-wiring", 2}, {"load-bearing-girdering", 4}, {"high-tensile-large-paneling", 4}, {"high-tensile-rivets", 6}}, -- 15 plate (10 steel)
+    ["small-electric-pole"]              = {{"electrically-conductive-wiring", 1}}, -- ( vs 1;  vs 2)
+    ["medium-electric-pole"]             = {{"electrically-conductive-wiring", 2}, {"high-tensile-wiring", 2}, {"load-bearing-girdering", 2}, {"basic-bolts", 2}}, -- ( vs 14;  vs 8)
+    ["big-electric-pole"]                = {{"electrically-conductive-wiring", 6}, {"high-tensile-wiring", 2}, {"load-bearing-girdering", 6}, {"basic-rivets", 4}}, -- ( vs 38;  vs 18)
+    ["substation"]                       = {{"electrically-conductive-wiring", 6}, {"high-tensile-wiring", 2}, {"load-bearing-girdering", 4}, {"high-tensile-large-paneling", 4}, {"high-tensile-rivets", 6}}, -- ( vs 55;  vs 15)
 
-    ["pipe"]                             = {{"corrosion-resistant-piping", 1}, {"basic-rivets", 1}}, -- 1 plate
-    ["pipe-to-ground"]                   = {{"corrosion-resistant-piping", 10}, {"basic-rivets", 5}}, -- 15 plate (5 pipe)
-    ["pump"]                             = {{"corrosion-resistant-fine-piping", 1}, {"load-bearing-framing", 1}, {"basic-rivets", 1}}, -- 2 plate (1 steel, 1 pipe)
+    ["pipe"]                             = {{"corrosion-resistant-piping", 1}, {"basic-rivets", 1}}, -- ( vs 1;  vs 1)
+    ["pipe-to-ground"]                   = {{"corrosion-resistant-piping", 10}, {"basic-rivets", 5}}, -- ( vs 15;  vs 15)
+    ["pump"]                             = {{"corrosion-resistant-fine-piping", 1}, {"load-bearing-framing", 1}, {"basic-rivets", 1}}, -- ( vs 6;  vs 2)
 
-    ["rail"]                             = {{"high-tensile-girdering", 1}, {"basic-rivets", 1}}, -- 1.5 plate (1 steel)
-    ["train-stop"]                       = {{"high-tensile-girdering", 4}, {"high-tensile-large-paneling", 2}, {"electrically-conductive-wiring", 4}, {"high-tensile-rivets", 2}}, -- 12 plate (3 steel)
-    ["rail-signal"]                      = {{"basic-paneling", 1}, {"basic-framing", 2}, {"basic-bolts", 2}}, -- 5 plate
-    ["rail-chain-signal"]                = {{"basic-paneling", 1}, {"basic-framing", 2}, {"basic-bolts", 2}}, -- 5 plate
+    ["rail"]                             = {{"high-tensile-girdering", 1}, {"basic-rivets", 1}}, -- ( vs 5.5;  vs 2)
+    ["train-stop"]                       = {{"high-tensile-girdering", 4}, {"high-tensile-large-paneling", 2}, {"electrically-conductive-wiring", 4}, {"high-tensile-rivets", 2}}, -- ( vs 24;  vs 15)
+    ["rail-signal"]                      = {{"basic-paneling", 1}, {"basic-framing", 2}, {"basic-bolts", 2}}, -- ( vs 5;  vs 5)
+    ["rail-chain-signal"]                = {{"basic-paneling", 1}, {"basic-framing", 2}, {"basic-bolts", 2}}, -- ( vs 5;  vs 5)
 
-    ["locomotive"]                       = {{"load-bearing-girdering", 10}, {"high-tensile-large-paneling", 8}, {"high-tensile-gearing", 12}, {"high-tensile-shafting", 12}, {"high-tensile-rivets", 20}}, -- 30 plate (30 steel)
-    ["cargo-wagon"]                      = {{"load-bearing-girdering", 10}, {"high-tensile-large-paneling", 8}, {"high-tensile-shafting", 8}, {"high-tensile-rivets", 20}}, -- 60 plate (20 steel)
-    ["fluid-wagon"]                      = {{"load-bearing-girdering", 10}, {"corrosion-resistant-large-paneling", 8}, {"high-tensile-shafting", 8}, {"corrosion-resistant-fine-piping", 20}, {"high-tensile-rivets", 20}}, -- 44 plate (16 steel)
-    ["artillery-wagon"]                  = {{"load-bearing-girdering", 20}, {"very-high-tensile-large-paneling", 16}, {"high-tensile-shafting", 8}, {"high-tensile-rivets", 20}, {"electrically-conductive-wiring", 16}}, -- 76 plate (40 steel)
+    ["locomotive"]                       = {{"load-bearing-girdering", 10}, {"high-tensile-large-paneling", 8}, {"high-tensile-gearing", 12}, {"high-tensile-shafting", 12}, {"high-tensile-rivets", 20}}, -- ( vs 150;  vs 30)
+    ["cargo-wagon"]                      = {{"load-bearing-girdering", 10}, {"high-tensile-large-paneling", 8}, {"high-tensile-shafting", 8}, {"high-tensile-rivets", 20}}, -- ( vs 140;  vs 50)
+    ["fluid-wagon"]                      = {{"load-bearing-girdering", 10}, {"corrosion-resistant-large-paneling", 8}, {"high-tensile-shafting", 8}, {"corrosion-resistant-fine-piping", 20}, {"high-tensile-rivets", 20}}, -- ( vs 108;  vs 34)
+    ["artillery-wagon"]                  = {{"load-bearing-girdering", 20}, {"very-high-tensile-large-paneling", 16}, {"high-tensile-shafting", 8}, {"high-tensile-rivets", 20}, {"electrically-conductive-wiring", 16}}, -- ( vs 236;  vs 66)
 
-    ["car"]                              = {{"load-bearing-framing", 6}, {"high-tensile-paneling", 4}, {"ductile-gearing", 4}, {"high-tensile-shafting", 5}, {"high-tensile-bolts", 6}}, -- 25 plate (5 steel)
-    ["tank"]                             = {{"heavy-load-bearing-framing", 10}, {"very-high-tensile-paneling", 40}, {"very-high-tensile-gearing", 10}, {"thermally-stable-shielding", 5}, {"very-high-tensile-bolts", 15}}, -- 80 plate (50 steel)
+    ["car"]                              = {{"load-bearing-framing", 6}, {"high-tensile-paneling", 4}, {"ductile-gearing", 4}, {"high-tensile-shafting", 5}, {"high-tensile-bolts", 6}}, -- ( vs 45;  vs 25)
+    ["tank"]                             = {{"heavy-load-bearing-framing", 10}, {"very-high-tensile-paneling", 40}, {"very-high-tensile-gearing", 10}, {"thermally-stable-shielding", 5}, {"very-high-tensile-bolts", 15}}, -- ( vs 280;  vs 65)
     -- ["spidertron"]                       = {{"heavy-load-bearing-framing", 1}, {"very-high-tensile-paneling", 1}, {"very-high-tensile-gearing", 1}, {"thermally-stable-shielding", 1}, {"very-high-tensile-bolts", 1}},
     -- ["spidertron-remote"]                = {}, -- FIXME
 
@@ -344,91 +347,92 @@ if advanced then
     -- ["logistic-chest-buffer"]            = {},
     -- ["logistic-chest-requester"]         = {},
 
-    ["roboport"]                         = {{"load-bearing-girdering", 30}, {"high-tensile-large-paneling", 15}, {"ductile-gearing", 28}, {"electrically-conductive-wiring", 42}, {"high-tensile-rivets", 20}}, -- 135 plate (45 steel)
+    ["roboport"]                         = {{"load-bearing-girdering", 30}, {"high-tensile-large-paneling", 15}, {"ductile-gearing", 28}, {"electrically-conductive-wiring", 42}, {"high-tensile-rivets", 20}}, -- ( vs 315;  vs 90)
 
-    ["small-lamp"]                       = {{"basic-paneling", 1}, {"electrically-conductive-wiring", 2}}, -- 3 plate
+    ["small-lamp"]                       = {{"basic-paneling", 1}, {"electrically-conductive-wiring", 2}}, -- ( vs 2.5;  vs 4)
 
-    ["red-wire"]                         = {{"electrically-conductive-wiring", 1}},
-    ["green-wire"]                       = {{"electrically-conductive-wiring", 1}},
+    ["red-wire"]                         = {{"electrically-conductive-wiring", 1}}, -- ( vs .5;  vs 1)
+    ["green-wire"]                       = {{"electrically-conductive-wiring", 1}}, -- ( vs .5;  vs 1)
 
-    ["arithmetic-combinator"]            = {{"basic-paneling", 1}, {"basic-bolts", 1}, {"electrically-conductive-wiring", 1}}, -- 3 plate
-    ["decider-combinator"]               = {{"basic-paneling", 1}, {"basic-bolts", 1}, {"electrically-conductive-wiring", 1}}, -- 3 plate
-    ["constant-combinator"]              = {{"basic-paneling", 1}, {"basic-bolts", 1}, {"electrically-conductive-wiring", 1}}, -- 3 plate
-    ["power-switch"]                     = {{"basic-paneling", 2}, {"basic-rivets", 2}, {"electrically-conductive-wiring", 4}}, -- 8 plate
-    ["programmable-speaker"]             = {{"basic-paneling", 1}, {"basic-rivets", 2}, {"basic-framing", 2}, {"electrically-conductive-wiring", 3}}, -- 8 plate
+    ["arithmetic-combinator"]            = {{"basic-paneling", 1}, {"basic-bolts", 1}, {"electrically-conductive-wiring", 1}}, -- ( vs 2.5;  vs 5)
+    ["decider-combinator"]               = {{"basic-paneling", 1}, {"basic-bolts", 1}, {"electrically-conductive-wiring", 1}}, -- ( vs 2.5;  vs 5)
+    ["constant-combinator"]              = {{"basic-paneling", 1}, {"basic-bolts", 1}, {"electrically-conductive-wiring", 1}}, -- ( vs 2.5;  vs 5)
+    ["power-switch"]                     = {{"basic-paneling", 2}, {"basic-rivets", 2}, {"electrically-conductive-wiring", 4}}, -- ( vs 7.5;  vs 10)
+    ["programmable-speaker"]             = {{"basic-paneling", 1}, {"basic-rivets", 2}, {"basic-framing", 2}, {"electrically-conductive-wiring", 3}}, -- ( vs 7.5;  vs 12)
 
     -- Production
     -- ["repair-pack"]                      = {}, -- FIXME
 
-    ["boiler"]                           = {{"basic-girdering", 1}, {"basic-paneling", 1}, {"corrosion-resistant-fine-piping", 1}, {"basic-rivets", 1}}, -- 4 plate
-    ["steam-engine"]                     = {{"basic-girdering", 2}, {"basic-paneling", 6}, {"corrosion-resistant-fine-piping", 7}, {"basic-gearing", 6}, {"basic-rivets", 5}, {"electrically-conductive-wiring", 6}}, -- 31 plate
+    ["boiler"]                           = {{"basic-girdering", 1}, {"basic-paneling", 1}, {"corrosion-resistant-fine-piping", 1}, {"basic-rivets", 1}}, -- ( vs 4;  vs 4)
+    ["steam-engine"]                     = {{"basic-girdering", 2}, {"basic-paneling", 6}, {"corrosion-resistant-fine-piping", 7}, {"basic-gearing", 6}, {"basic-rivets", 5}, {"electrically-conductive-wiring", 6}}, -- ( vs 31;  vs 23)
 
-    ["solar-panel"]                      = {{"load-bearing-girdering", 6}, {"electrically-conductive-wiring", 8}, {"high-tensile-rivets", 8}}, -- 10 plate (5 steel)
-    ["accumulator"]                      = {{"load-bearing-girdering", 1}, {"electrically-conductive-wiring", 1}, {"corrosion-resistant-rivets", 1}}, -- 2 plate
+    ["solar-panel"]                      = {{"load-bearing-girdering", 6}, {"electrically-conductive-wiring", 8}, {"high-tensile-rivets", 8}}, -- ( vs 30;  vs 10)
+    ["accumulator"]                      = {{"load-bearing-girdering", 1}, {"electrically-conductive-wiring", 1}, {"corrosion-resistant-rivets", 1}}, -- ( vs 2;  vs 2)
 
-    ["nuclear-reactor"]                  = {{"heavy-load-bearing-girdering", 200}, {"radiation-resistant-shielding", 300}, {"thermally-stable-shielding", 100}, {"electrically-conductive-wiring", 200}, {"thermally-conductive-shafting", 300}, {"very-high-tensile-rivets", 200}, {"corrosion-resistant-piping", 200}}, -- 1000 plate (500 steel)
-    ["heat-pipe"]                        = {{"thermally-conductive-shafting", 15}, {"thermally-stable-shielding", 20}, {"thermally-stable-rivets", 4}}, -- 30 plate (10 steel)
+    ["nuclear-reactor"]                  = {{"heavy-load-bearing-girdering", 200}, {"radiation-resistant-shielding", 300}, {"thermally-stable-shielding", 100}, {"electrically-conductive-wiring", 200}, {"thermally-conductive-shafting", 300}, {"very-high-tensile-rivets", 200}, {"corrosion-resistant-piping", 200}}, -- ( vs 3000;  vs 1000)
+    ["heat-pipe"]                        = {{"thermally-conductive-shafting", 15}, {"thermally-stable-shielding", 20}, {"thermally-stable-rivets", 4}}, -- ( vs 70;  vs 30)
 
-    ["heat-exchanger"]                   = {{"load-bearing-girdering", 2}, {"corrosion-resistant-paneling", 6}, {"thermally-conductive-shafting", 40}, {"corrosion-resistant-fine-piping", 30}, {"thermally-stable-shielding", 40}, {"high-tensile-rivets", 10}}, -- 120 plate (10 steel)
-    ["steam-turbine"]                    = {{"load-bearing-girdering", 10}, {"corrosion-resistant-paneling", 6}, {"thermally-conductive-shafting", 30}, {"corrosion-resistant-fine-piping", 30}, {"ductile-gearing", 30}, {"thermally-stable-shielding", 10}, {"high-tensile-rivets", 10}, {"electrically-conductive-wiring", 10}}, -- 170 plate
+    ["heat-exchanger"]                   = {{"load-bearing-girdering", 2}, {"corrosion-resistant-paneling", 6}, {"thermally-conductive-shafting", 40}, {"corrosion-resistant-fine-piping", 30}, {"thermally-stable-shielding", 40}, {"high-tensile-rivets", 10}}, -- ( vs 160;  vs 120)
+    ["steam-turbine"]                    = {{"load-bearing-girdering", 10}, {"corrosion-resistant-paneling", 6}, {"thermally-conductive-shafting", 30}, {"corrosion-resistant-fine-piping", 30}, {"ductile-gearing", 30}, {"thermally-stable-shielding", 10}, {"high-tensile-rivets", 10}, {"electrically-conductive-wiring", 10}}, -- ( vs 170;  vs 120)
 
-    ["burner-mining-drill"]              = {{"basic-girdering", 4}, {"basic-shafting", 2}, {"thermally-conductive-wiring", 2}, {"basic-rivets", 1}}, -- 9 plate
-    ["electric-mining-drill"]            = {{"load-bearing-girdering", 6}, {"load-bearing-shafting", 4}, {"corrosion-resistant-fine-piping", 4}, {"ductile-gearing", 3}, {"electrically-conductive-wiring", 3}}, -- 20 plate
+    ["burner-mining-drill"]              = {{"basic-girdering", 4}, {"basic-shafting", 2}, {"thermally-conductive-wiring", 2}, {"basic-rivets", 1}}, -- ( vs 9;  vs 6)
+    ["electric-mining-drill"]            = {{"load-bearing-girdering", 6}, {"load-bearing-shafting", 4}, {"corrosion-resistant-fine-piping", 4}, {"ductile-gearing", 3}, {"electrically-conductive-wiring", 3}}, -- ( vs 20;  vs 15)
 
-    ["offshore-pump"]                    = {{"basic-framing", 1}, {"corrosion-resistant-piping", 1}, {"basic-paneling", 1}, {"electrically-conductive-wiring", 1}, {"basic-bolts", 1}}, -- 3 plate
+    ["offshore-pump"]                    = {{"basic-framing", 1}, {"corrosion-resistant-piping", 1}, {"basic-paneling", 1}, {"electrically-conductive-wiring", 1}, {"basic-bolts", 1}}, -- ( vs 3;  vs 2)
 
-    ["pumpjack"]                         = {{"heavy-load-bearing-girdering", 10}, {"corrosion-resistant-paneling", 4}, {"corrosion-resistant-fine-piping", 12}, {"high-tensile-shafting", 4}, {"electrically-conductive-wiring", 6}, {"high-tensile-rivets", 4}}, -- 35 plate (5 steel)
+    ["pumpjack"]                         = {{"heavy-load-bearing-girdering", 10}, {"corrosion-resistant-paneling", 4}, {"corrosion-resistant-fine-piping", 12}, {"high-tensile-shafting", 4}, {"electrically-conductive-wiring", 6}, {"high-tensile-rivets", 4}}, -- ( vs 55;  vs 25)
 
-    ["steel-furnace"]                    = {{"heavy-load-bearing-girdering", 4}, {"thermally-stable-shielding", 4}, {"high-tensile-rivets", 4}}, -- 6 plate (6 steel)
-    ["electric-furnace"]                 = {{"heavy-load-bearing-girdering", 4}, {"electrically-conductive-wiring", 8}, {"high-tensile-rivets", 4}, {"thermally-stable-shielding", 6}}, -- 10 plate (10 steel)
+    ["steel-furnace"]                    = {{"heavy-load-bearing-girdering", 4}, {"thermally-stable-shielding", 4}, {"high-tensile-rivets", 4}}, -- ( vs 30;  vs 6)
+    ["electric-furnace"]                 = {{"heavy-load-bearing-girdering", 4}, {"electrically-conductive-wiring", 8}, {"high-tensile-rivets", 4}, {"thermally-stable-shielding", 6}}, -- ( vs 50;  vs 10)
 
-    ["assembling-machine-1"]             = {{"load-bearing-girdering", 2}, {"basic-gearing", 6}, {"load-bearing-shafting", 2}, {"basic-paneling", 4}, {"electrically-conductive-wiring", 3}, {"basic-rivets", 4}}, -- 19 plate
-    ["assembling-machine-2"]             = {{"heavy-load-bearing-girdering", 2}, {"corrosion-resistant-fine-piping", 3}, {"ductile-gearing", 3}, {"high-tensile-paneling", 2}, {"heavy-load-bearing-shafting", 2}, {"electrically-conductive-wiring", 2}, {"high-tensile-rivets", 4}}, -- 12 plate (2 steel)
-    ["assembling-machine-3"]             = {{"heavy-load-bearing-girdering", 2}, {"corrosion-resistant-fine-piping", 3}, {"ductile-gearing", 10}, {"very-high-tensile-paneling", 2}, {"heavy-load-bearing-shafting", 2}, {"electrically-conductive-wiring", 3}, {"very-high-tensile-rivets", 2}, {"thermally-stable-shielding", 4}}, -- 0 plate, get rekt
+    ["assembling-machine-1"]             = {{"load-bearing-girdering", 2}, {"basic-gearing", 6}, {"load-bearing-shafting", 2}, {"basic-paneling", 4}, {"electrically-conductive-wiring", 3}, {"basic-rivets", 4}}, -- ( vs 19;  vs 14)
+    ["assembling-machine-2"]             = {{"heavy-load-bearing-girdering", 2}, {"corrosion-resistant-fine-piping", 3}, {"ductile-gearing", 3}, {"high-tensile-paneling", 2}, {"heavy-load-bearing-shafting", 2}, {"electrically-conductive-wiring", 2}, {"high-tensile-rivets", 4}}, -- ( vs 20;  vs 7)
+    ["assembling-machine-3"]             = {{"heavy-load-bearing-girdering", 2}, {"corrosion-resistant-fine-piping", 3}, {"ductile-gearing", 10}, {"very-high-tensile-paneling", 2}, {"heavy-load-bearing-shafting", 2}, {"electrically-conductive-wiring", 3}, {"very-high-tensile-rivets", 2}, {"thermally-stable-shielding", 4}}, -- ( vs 0;  vs 0)
 
-    ["oil-refinery"]                     = {{"heavy-load-bearing-girdering", 12}, {"corrosion-resistant-fine-piping", 20}, {"corrosion-resistant-paneling", 9}, {"electrically-conductive-wiring", 4}, {"high-tensile-rivets", 8}, {"thermally-stable-shafting", 2}}, -- 45 plate (15 steel)
-    ["chemical-plant"]                   = {{"heavy-load-bearing-girdering", 4}, {"corrosion-resistant-fine-piping", 8}, {"corrosion-resistant-paneling", 4}, {"electrically-conductive-wiring", 4}, {"high-tensile-rivets", 3}, {"thermally-stable-shafting", 2}}, -- 20 plate (5 steel)
+    ["oil-refinery"]                     = {{"heavy-load-bearing-girdering", 12}, {"corrosion-resistant-fine-piping", 20}, {"corrosion-resistant-paneling", 9}, {"electrically-conductive-wiring", 4}, {"high-tensile-rivets", 8}, {"thermally-stable-shafting", 2}}, -- ( vs 105;  vs 35)
+    ["chemical-plant"]                   = {{"heavy-load-bearing-girdering", 4}, {"corrosion-resistant-fine-piping", 8}, {"corrosion-resistant-paneling", 4}, {"electrically-conductive-wiring", 4}, {"high-tensile-rivets", 3}, {"thermally-stable-shafting", 2}}, -- ( vs 40;  vs 15)
 
-    ["centrifuge"]                       = {{"heavy-load-bearing-girdering", 20}, {"high-tensile-paneling", 40}, {"radiation-resistant-shielding", 60}, {"very-high-tensile-gearing", 40}, {"ductile-gearing", 40}, {"heavy-load-bearing-shafting", 20}, {"high-tensile-rivets", 30}}, -- 250 plate (50 steel)
+    ["centrifuge"]                       = {{"heavy-load-bearing-girdering", 20}, {"high-tensile-paneling", 40}, {"radiation-resistant-shielding", 60}, {"very-high-tensile-gearing", 40}, {"ductile-gearing", 40}, {"heavy-load-bearing-shafting", 20}, {"high-tensile-rivets", 30}}, -- ( vs ;  vs )
 
-    ["lab"]                              = {{"basic-girdering", 6}, {"basic-paneling", 4}, {"basic-gearing", 2}, {"electrically-conductive-wiring", 6}, {"basic-rivets", 2}}, -- 20 plate 
+    ["lab"]                              = {{"basic-girdering", 6}, {"basic-paneling", 4}, {"basic-gearing", 2}, {"electrically-conductive-wiring", 6}, {"basic-rivets", 2}}, -- ( vs 20;  vs 10)
 
-    ["beacon"]                           = {{"heavy-load-bearing-girdering", 5}, {"high-tensile-paneling", 2}, {"electrically-conductive-wiring", 6}, {"high-tensile-rivets", 4}}, -- 15 plate (5 steel)
+    ["beacon"]                           = {{"heavy-load-bearing-girdering", 5}, {"high-tensile-paneling", 2}, {"electrically-conductive-wiring", 6}, {"high-tensile-rivets", 4}}, -- ( vs 55;  vs 20)
 
-    ["rocket-silo"]                      = {{"heavy-load-bearing-girdering", 300}, {"very-high-tensile-large-paneling", 600}, {"radiation-resistant-shielding", 400}, {"ductile-gearing", 1000},  {"electrically-conductive-wiring", 1400}, {"very-high-tensile-rivets", 600}}, -- 1100 plate (1000 steel)
+    ["rocket-silo"]                      = {{"heavy-load-bearing-girdering", 300}, {"very-high-tensile-large-paneling", 600}, {"radiation-resistant-shielding", 400}, {"ductile-gearing", 1000},  {"electrically-conductive-wiring", 1400}, {"very-high-tensile-rivets", 600}}, -- ( vs 5100;  vs 1100)
     -- ["satellite"]                        = {{"ductile-paneling", 1}, {"radiation-resistant-shielding", 1}, {"high-tensile-gearing", 1}, {"ductile-framing", 1}, {"electrically-conductive-wiring", 1}, {"very-high-tensile-rivets", 1}},
 
     -- Intermediate Products
-    ["battery"]                          = {{"electrically-conductive-wiring", 1}, {"corrosion-resistant-paneling", 1}}, -- 2 plate (do I want bolts?)
-    ["engine-unit"]                      = {{"ductile-gearing", 3}, {"basic-paneling", 2}, {"corrosion-resistant-fine-piping", 2}, {"basic-bolts", 2}}, -- 5 plate (1 steel) ACCOUNTED
+    ["battery"]                          = {{"electrically-conductive-wiring", 1}, {"corrosion-resistant-paneling", 1}}, -- ( vs ;  vs )
+    ["engine-unit"]                      = {{"ductile-gearing", 3}, {"basic-paneling", 2}, {"corrosion-resistant-fine-piping", 2}, {"basic-bolts", 2}}, -- ( vs ;  vs )
     -- ["electric-engine-unit"]             = {{"ductile-gearing", 1}, {"basic-paneling", 1}, {"electrically-conductive-wiring", 1}, {"high-tensile-bolts", 1}},
-    ["flying-robot-frame"]               = {{"lightweight-paneling", 1}, {"lightweight-framing", 1}, {"electrically-conductive-wiring", 2}, {"high-tensile-bolts", 1}}, -- 1 plate (1 steel) ACCOUNTED
+    ["flying-robot-frame"]               = {{"lightweight-paneling", 1}, {"lightweight-framing", 1}, {"electrically-conductive-wiring", 2}, {"high-tensile-bolts", 1}}, -- ( vs ;  vs )
     -- ["rocket-control-unit"]              = {{"lightweight-paneling", 1}, {"electrically-conductive-wiring", 1}, {"high-tensile-bolts", 1}},
     -- ["low-density-structure"]            = {{"", 1}, {"", 1}, {"", 1}, {"", 1}, {"", 1}, {"", 1}}, -- FIXME
-    ["uranium-fuel-cell"]                = {{"radiation-resistant-paneling", 8}, {"high-tensile-bolts", 2}}, -- 10 plate
+    ["uranium-fuel-cell"]                = {{"radiation-resistant-paneling", 8}, {"high-tensile-bolts", 2}}, -- ( vs ;  vs )
 
     -- Combat FIXME: do this thing
-    ["land-mine"]                        = {{"ductile-paneling", 1}, {"electrically-conductive-wiring", 1}, {"high-tensile-bolts", 3}}, -- 1 plate (1 steel) ACCOUNTED
+    ["land-mine"]                        = {{"ductile-paneling", 1}, {"electrically-conductive-wiring", 1}, {"high-tensile-bolts", 3}}, -- ( vs 5;  vs 1)
 
-    ["gate"]                             = {{"high-tensile-paneling", 4}, {"corrosion-resistant-shielding", 2}, {"electrically-conductive-wiring", 2}, {"high-tensile-bolts", 2}}, -- 2 plate (2 steel) ACCOUNTED
+    ["gate"]                             = {{"high-tensile-paneling", 4}, {"corrosion-resistant-shielding", 2}, {"electrically-conductive-wiring", 2}, {"high-tensile-bolts", 2}}, -- ( vs 10;  vs 2)
 
-    ["gun-turret"]                       = {{"load-bearing-girdering", 1}, {"high-tensile-gearing", 1}, {"ductile-large-paneling", 1}, {"electrically-conductive-wiring", 1}, {"high-tensile-rivets", 1}},
-    ["laser-turret"]                     = {{"load-bearing-girdering", 1}, {"high-tensile-gearing", 1}, {"ductile-large-paneling", 1}, {"electrically-conductive-wiring", 1}, {"high-tensile-rivets", 1}},
-    ["flamethrower-turret"]              = {{"heavy-load-bearing-girdering", 1}, {"high-tensile-gearing", 1}, {"ductile-large-paneling", 1}, {"electrically-conductive-wiring", 1}, {"high-tensile-rivets", 1}, {"thermally-stable-shielding", 1}},
-    ["artillery-turret"]                 = {{"heavy-load-bearing-girdering", 1}, {"very-high-tensile-gearing", 1}, {"ductile-large-paneling", 1}, {"electrically-conductive-wiring", 1}, {"very-high-tensile-rivets", 1}},
-    ["radar"]                            = {{"load-bearing-girdering", 1}, {"basic-gearing", 1}, {"basic-large-paneling", 1}, {"electrically-conductive-wiring", 1}, {"basic-rivets", 1}},
+    ["gun-turret"]                       = {{"load-bearing-girdering", 1}, {"high-tensile-gearing", 1}, {"ductile-large-paneling", 1}, {"electrically-conductive-wiring", 1}, {"high-tensile-rivets", 1}}, -- ( vs 50;  vs 40)
+    ["laser-turret"]                     = {{"load-bearing-girdering", 1}, {"high-tensile-gearing", 1}, {"ductile-large-paneling", 1}, {"electrically-conductive-wiring", 1}, {"high-tensile-rivets", 1}}, -- ( vs 100;  vs 20)
+    ["flamethrower-turret"]              = {{"heavy-load-bearing-girdering", 1}, {"high-tensile-gearing", 1}, {"ductile-large-paneling", 1}, {"electrically-conductive-wiring", 1}, {"high-tensile-rivets", 1}, {"thermally-stable-shielding", 1}}, -- ( vs 190;  vs 55)
+    ["artillery-turret"]                 = {{"heavy-load-bearing-girdering", 1}, {"very-high-tensile-gearing", 1}, {"ductile-large-paneling", 1}, {"electrically-conductive-wiring", 1}, {"very-high-tensile-rivets", 1}}, -- ( vs 380;  vs 100)
+    ["radar"]                            = {{"load-bearing-girdering", 1}, {"basic-gearing", 1}, {"basic-large-paneling", 1}, {"electrically-conductive-wiring", 1}, {"basic-rivets", 1}}, -- ( vs 20;  vs 15)
     
-    ["solar-panel-equipment"]            = {{"high-tensile-framing", 4}, {"lightweight-framing", 4}, {"high-tensile-bolts", 4}}, -- 5 plate (5 steel)
-    ["battery-equipment"]                = {{"high-tensile-framing", 8}, {"lightweight-framing", 4}, {"high-tensile-bolts", 8}}, -- 10 plate (10 steel)
+    ["solar-panel-equipment"]            = {{"high-tensile-framing", 4}, {"lightweight-framing", 4}, {"high-tensile-bolts", 4}}, -- ( vs 25;  vs 5)
+    -- ["fusion-reactor-equipment"]         = {},
+    ["battery-equipment"]                = {{"high-tensile-framing", 8}, {"lightweight-framing", 4}, {"high-tensile-bolts", 8}}, -- ( vs 50;  vs 10)
     -- ["battery-mk2-equipment"]            = {},
-    ["belt-immunity-equipment"]          = {{"high-tensile-framing", 8}, {"lightweight-framing", 4}, {"basic-fine-piping", 2}, {"high-tensile-bolts", 8}}, -- 10 plate (10 steel)
-    ["exoskeleton-equipment"]            = {{"high-tensile-framing", 8}, {"lightweight-framing", 15}, {"high-tensile-bolts", 10}}, -- 20 plate (20 steel)
-    ["personal-roboport-equipment"]      = {{"ductile-fine-gearing", 30}, {"high-tensile-fine-gearing", 30}, {"lightweight-framing", 15}, {"high-tensile-bolts", 8}}, -- 100 plate (20 steel)
+    ["belt-immunity-equipment"]          = {{"high-tensile-framing", 8}, {"lightweight-framing", 4}, {"basic-fine-piping", 2}, {"high-tensile-bolts", 8}}, -- ( vs 50;  vs 10)
+    ["exoskeleton-equipment"]            = {{"high-tensile-framing", 8}, {"lightweight-framing", 15}, {"high-tensile-bolts", 10}}, -- ( vs 100;  vs 20)
+    ["personal-roboport-equipment"]      = {{"ductile-fine-gearing", 30}, {"high-tensile-fine-gearing", 30}, {"lightweight-framing", 15}, {"high-tensile-bolts", 8}}, -- ( vs 180;  vs 60)
     -- ["personal-roboport-mk2-equipment"]  = {},
-    ["night-vision-equipment"]           = {{"lightweight-framing", 10}, {"high-tensile-bolts", 10}}, -- 10 plate (10 steel)
-    ["energy-shield-equipment"]          = {{"lightweight-framing", 10}, {"thermally-stable-paneling", 5}, {"radiation-resistant-shielding", 2}, {"high-tensile-bolts", 10}}, -- 20 plate (20 steel)
+    ["night-vision-equipment"]           = {{"lightweight-framing", 10}, {"high-tensile-bolts", 10}}, -- ( vs 50;  vs 10)
+    ["energy-shield-equipment"]          = {{"lightweight-framing", 10}, {"thermally-stable-paneling", 5}, {"radiation-resistant-shielding", 2}, {"high-tensile-bolts", 10}}, -- ( vs 50;  vs 10)
     -- ["energy-shield-mk2-equipment"]      = {},
-    ["discharge-defense-equipment"]      = {{"high-tensile-framing", 8}, {"lightweight-framing", 15}, {"electrically-conductive-wiring", 10}, {"high-tensile-bolts", 10}}, -- 20 plate (20 steel)
+    ["discharge-defense-equipment"]      = {{"high-tensile-framing", 8}, {"lightweight-framing", 15}, {"electrically-conductive-wiring", 10}, {"high-tensile-bolts", 10}}, -- ( vs 100;  vs 20)
     -- ["discharge-defense-remote"]         = {},
 
     --[[
@@ -469,7 +473,7 @@ if advanced then
     -- ["power-armor-mk2"]                  = {},
 
     -- ["artillery-targeting-remote"]       = {} -- FIXME
-    --]]
+    
   }
 else intermediates_to_add_table = { -- {name, ingredients_to_add}, where ingredients_to_add is {{item-name, amount}, ...}
 -- Logistics
@@ -657,10 +661,12 @@ else intermediates_to_add_table = { -- {name, ingredients_to_add}, where ingredi
 -- ["power-armor-mk2"]                  = {},
 
 -- ["artillery-targeting-remote"]       = {} -- FIXME
---]]
+
 }
 end
 -- FIXME: In balancing the recipes, I said steel plates = 1 plate in vanilla. This is not true. 1 steel = 5 iron. So, this is overall CHEAPER as a result. Fix?
+--]]
+
 
 local intermediates_to_flat_replace = {
   -- intermediates
@@ -733,6 +739,24 @@ for name, ingredients in pairs(intermediates_to_add_table) do
   -- get rekt normal vs. expensive
   data.raw.recipe[name].normal = nil
   data.raw.recipe[name].expensive = nil
+  local flattened = {
+    "paneling", "large-paneling", "framing", "girdering", "fine-gearing", "gearing", "fine-piping", "piping", "shafting", "wiring", "shielding", "bolts", "rivets"
+  }
+  local new_list = ""
+  for _, mp_type in pairs(flattened) do
+    local got_hit = false
+    for __, ingredient_pair in pairs(intermediates_to_add_table[name]) do
+      local i, j = string.find(ingredient_pair[1], mp_type, 1, true)
+      if i ~= nil and not got_hit then
+        got_hit = true
+        new_list = new_list .. "," .. ingredient_pair[2] .. "," .. string.sub(ingredient_pair[1], 0, #ingredient_pair[1] - 14)
+      end
+    end
+    if not got_hit then
+      new_list = new_list .. ",,"
+    end
+  end
+  log(name .. new_list)
 end
 
 -- flat replace ingredients for vanilla

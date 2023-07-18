@@ -18,7 +18,6 @@ if advanced then -- minisemblers: [minisembler | {rgba values}]
   }
 else
     minisemblers = {
-    ["welder"]          = true,
     ["metal-bandsaw"]   = true,
     ["metal-extruder"]  = true,
     ["mill"]            = true,

@@ -448,20 +448,20 @@ if advanced then -- metal_stocks_pairs : [metal | list of stocks that it has]
 else
   metal_stocks_pairs = {
     -- pure metals
-    ["iron"]              = map{"plate", "square"},
-    ["copper"]            = map{"plate", "square"},
-    ["lead"]              = map{"plate",         },
-    ["titanium"]          = map{"plate", "square"},
-    ["zinc"]              = map{"plate"          },
-    ["nickel"]            = map{"plate"},
+    ["iron"]              = map{"plate", "square", "wire"},
+    ["copper"]            = map{"plate", "square", "wire"},
+    ["lead"]              = map{"plate",                 },
+    ["titanium"]          = map{"plate", "square", "wire"},
+    ["zinc"]              = map{"plate"                  },
+    ["nickel"]            = map{"plate", "square", "wire"},
 
     -- alloys
-    ["steel"]             = map{"plate", "square"},
-    ["brass"]             = map{"plate", "square"},
-    ["invar"]             = map{"plate", "square"},
+    ["steel"]             = map{"plate", "square", "wire"},
+    ["brass"]             = map{"plate", "square", "wire"},
+    ["invar"]             = map{"plate", "square", "wire"},
 
     -- treatments
-    ["galvanized-steel"]  = map{"plate", "square"}
+    ["galvanized-steel"]  = map{"plate", "square", "wire"}
   }
 end
 
@@ -503,7 +503,8 @@ if advanced then -- stock_minisembler_pairs : [stock | minisembler]
 else
   stock_minisembler_pairs = {
     ["plate"]     = "smelting",
-    ["square"]    = "metal-bandsaw"
+    ["square"]    = "metal-bandsaw",
+    ["wire"]      = "metal-extruder"
   }
 end
 
@@ -532,8 +533,7 @@ else
     ["wiring"]    = "metal-extruder",
     ["shielding"] = "mill",
     ["shafting"]  = "metal-lathe",
-    ["bolts"]     = "metal-extruder",
-    ["rivets"]    = "metal-extruder"
+    ["bolts"]     = "metal-extruder"
   }
 end
 
@@ -553,7 +553,6 @@ if advanced then -- minisemblers_rgba_pairs: [minisembler | {rgba values}]
   }
 else
     minisemblers_rgba_pairs = {
-    ["welder"]          = {r = 1.0, g = 1.0, b = 1.0, a = 1.0},
     ["metal-bandsaw"]   = {r = 1.0, g = 1.0, b = 0.6, a = 1.0},
     ["metal-extruder"]  = {r = 0.6, g = 0.6, b = 1.0, a = 1.0},
     ["mill"]            = {r = 1.0, g = 0.6, b = 0.6, a = 1.0},
@@ -569,7 +568,7 @@ if advanced then -- property_machined_part_pairs : [property | list of machined 
     ["basic"]                   = map{"paneling", "large-paneling", "framing", "girdering", "gearing", "fine-gearing", "piping", "fine-piping",                        "shafting", "bolts", "rivets"},
     ["load-bearing"]            = map{                              "framing", "girdering",                                                                            "shafting"                   },
     ["electrically-conductive"] = map{                                                                                                          "wiring"                                          },
-    ["high-tensile"]            = map{"paneling", "large-paneling", "framing", "girdering", "gearing", "fine-gearing",                          "wiring",              "shafting", "bolts", "rivets"},
+    ["high-tensile"]            = map{"paneling", "large-paneling", "framing", "girdering", "gearing", "fine-gearing",                          "wiring", "shielding", "shafting", "bolts", "rivets"},
     ["corrosion-resistant"]     = map{"paneling", "large-paneling",                                                    "piping", "fine-piping",           "shielding",             "bolts", "rivets"},
     ["lightweight"]             = map{"paneling", "large-paneling", "framing", "girdering",                                                                            "shafting"                   },
     ["ductile"]                 = map{"paneling", "large-paneling", "framing", "girdering", "gearing", "fine-gearing",                          "wiring", "shielding"                               },
@@ -580,16 +579,16 @@ if advanced then -- property_machined_part_pairs : [property | list of machined 
   }
 else
   property_machined_part_pairs = {
-    ["basic"]                   = map{"paneling", "framing", "gearing", "piping",                        "shafting", "bolts", "rivets"},
-    ["load-bearing"]            = map{             "framing",                                            "shafting"                   },
-    ["electrically-conductive"] = map{                                             "wiring"                                           },
-    ["high-tensile"]            = map{"paneling", "framing", "gearing",            "wiring",             "shafting", "bolts", "rivets"},
-    ["corrosion-resistant"]     = map{"paneling",                       "piping",           "shielding",             "bolts", "rivets"},
-    ["lightweight"]             = map{"paneling", "framing",                                             "shafting"                   },
-    ["ductile"]                 = map{"paneling", "framing", "gearing",           "wiring", "shielding"                               },
-    ["thermally-stable"]        = map{"paneling", "framing", "gearing", "piping", "wiring", "shielding", "shafting", "bolts", "rivets"},
-    ["thermally-conductive"]    = map{                                            "wiring",              "shafting"                   },
-    ["radiation-resistant"]     = map{"paneling",                                           "shielding"                               }
+    ["basic"]                   = map{"paneling", "framing", "gearing", "piping",                        "shafting", "bolts"},
+    ["load-bearing"]            = map{            "framing",                                             "shafting"         },
+    ["electrically-conductive"] = map{                                            "wiring"                                  },
+    ["high-tensile"]            = map{"paneling", "framing", "gearing",           "wiring", "shielding", "shafting", "bolts"},
+    ["corrosion-resistant"]     = map{"paneling",                       "piping",           "shielding",             "bolts"},
+    ["lightweight"]             = map{"paneling", "framing",                                             "shafting"         },
+    ["ductile"]                 = map{"paneling", "framing", "gearing",           "wiring", "shielding"                     },
+    ["thermally-stable"]        = map{"paneling", "framing", "gearing", "piping", "wiring", "shielding", "shafting", "bolts"},
+    ["thermally-conductive"]    = map{                                            "wiring",              "shafting"         },
+    ["radiation-resistant"]     = map{"paneling",                                           "shielding"                     }
   }
 end
 
@@ -599,48 +598,49 @@ property_machined_part_pairs["very-high-tensile"]  = property_machined_part_pair
 
 if advanced then -- stocks_precursors : [stock | stock that crafts it] {stock that crafts it, how many it takes, how many it makes}]
   stocks_precurors = {
-    ["angle"]         = {"sheet", 1, 2},
-    ["fine-gear"]     = {"sheet", 1, 3},
-    ["fine-pipe"]     = {"sheet", 1, 1},
+    ["angle"]         = {"sheet", 1, 1},
+    ["fine-gear"]     = {"sheet", 2, 1},
+    ["fine-pipe"]     = {"sheet", 3, 1},
     ["sheet"]         = {"plate", 1, 2},
     ["pipe"]          = {"plate", 1, 1},
-    ["girder"]        = {"plate", 2, 1},
-    ["gear"]          = {"plate", 1, 1},
+    ["girder"]        = {"plate", 4, 1},
+    ["gear"]          = {"plate", 2, 1},
     ["square"]        = {"plate", 1, 2},
     ["wire"]          = {"square", 1, 2}
   }
 else
   stocks_precurors = {
-    ["square"]        = {"plate", 1, 2}
+    ["square"]        = {"plate", 1, 2},
+    ["wire"]          = {"square", 1, 2}
   }
 end
 
 if advanced then -- machined_parts_precurors : [machined part | stock from which it's crafted] {stock from which it's crafted, how many it takes, how many it makes}]
   machined_parts_precurors = {
-    ["paneling"]        = {"sheet", 1, 1},
-    ["large-paneling"]  = {"sheet", 3, 1},
-    ["framing"]         = {"angle", 1, 1},
+    ["paneling"]        = {"sheet", 3, 1},
+    ["large-paneling"]  = {"sheet", 5, 1},
+    ["framing"]         = {"angle", 2, 1},
     ["girdering"]       = {"girder", 1, 1},
-    ["gearing"]         = {"gear", 2, 1},
-    ["fine-gearing"]    = {"fine-gear", 1, 1},
+    ["gearing"]         = {"gear", 3, 1},
+    ["fine-gearing"]    = {"fine-gear", 2, 1},
     ["piping"]          = {"pipe", 2, 1},
     ["fine-piping"]     = {"fine-pipe", 1, 1},
     ["wiring"]          = {"wire", 1, 1},
-    ["shielding"]       = {"plate", 3, 1},
+    ["shielding"]       = {"plate", 6, 1},
     ["shafting"]        = {"square", 1, 1},
-    ["bolts"]           = {"wire", 1, 3},
-    ["rivets"]          = {"wire", 1, 1}
+    ["bolts"]           = {"wire", 3, 1},
+    ["rivets"]          = {"wire", 4, 1}
   }
 else
   machined_parts_precurors = {
-    ["paneling"]        = {"plate", 2, 1},
+    ["paneling"]        = {"plate", 3, 1},
     ["framing"]         = {"plate", 2, 1},
-    ["gearing"]         = {"plate", 2, 1},
+    ["gearing"]         = {"plate", 3, 1},
     ["piping"]          = {"plate", 2, 1},
     ["wiring"]          = {"square", 1, 1},
-    ["shielding"]       = {"plate", 3, 1},
+    ["shielding"]       = {"plate", 6, 1},
     ["shafting"]        = {"square", 1, 1},
-    ["bolts"]           = {"wire", 2, 1}
+    ["bolts"]           = {"wire", 4, 1}
   }
 end
 
@@ -1159,8 +1159,8 @@ local function map_minisembler_recipes(t)
       else 
         table.insert(returnTable, #returnTable, {"basic-" .. part .. "-machined-part", t[counter]})
       end
-      counter = counter + 1
     end
+    counter = counter + 1
   end
   return returnTable
 end

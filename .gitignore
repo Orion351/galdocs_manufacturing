@@ -1,0 +1,5 @@
+# Ignore a directory
+dev/**
+
+# Ignore all python code
+*.py
