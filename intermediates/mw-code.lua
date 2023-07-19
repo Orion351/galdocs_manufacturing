@@ -524,6 +524,17 @@ end
 -- Minisemblers
 -- ============
 
+local technology_list = {}
+for minisembler, _ in pairs(minisemblers_rgba_pairs) do -- put minisemblers in the appropriate tech unlock
+  table.insert(
+    technology_list, #technology_list,
+    {
+      type = "unlock-recipe",
+      recipe = "gm-" .. minisembler .. "-recipe"
+    }
+  )
+end
+
 data:extend({ -- Make the minisemblers.
   { -- item subgroup
 	  type = "item-subgroup",
@@ -967,17 +978,6 @@ data:extend({ -- Make the technologies for the stocks
     localised_description = {"gm.technology-machined-part-processing-description", {"gm.titanium"}, {"gm.machined-parts"}},
   },
 })
-
-local technology_list = {}
-for minisembler, _ in pairs(minisemblers_rgba_pairs) do -- put minisemblers in the appropriate tech unlock
-  table.insert(
-    technology_list, #technology_list,
-    {
-      type = "unlock-recipe",
-      recipe = "gm-" .. minisembler .. "-recipe"
-    }
-  )
-end
 
 data.raw.technology["automation"].prerequisites = {"gm-technology-minisemblers"} -- FIXME: Put this in Data-Updates.lua
 

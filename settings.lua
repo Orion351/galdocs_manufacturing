@@ -13,3 +13,17 @@ data:extend({
     default_value = true
   }
 })
+
+-- Settings to add:
+-- Metalworking Byproducts
+-- Bits
+-- Recycling
+-- Internal/Structure/Electronics kits
+-- Detelescoping
+-- Specialty Parts
+-- Specific vs. General Machined Parts
+-- Primitive
+-- Stone/Wood/Glass
+-- Agriculture/Plastic/Electonics/Motors
+-- Ore Processing
+-- Science Overhaul - Prototyping

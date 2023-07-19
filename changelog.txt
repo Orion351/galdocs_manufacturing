@@ -1,17 +1,17 @@
 ---------------------------------------------------------------------------------------------------
 Version: 0.1.08
-Date: 07. 09. 2023
+Date: 07. 18. 2023
   Changes:
     - First major balance overhaul. Changed stock/machined part ratios, tuned plate/item amounts, added some requirements.
     - Fixed issues with Simple mode
 ---------------------------------------------------------------------------------------------------
 Version: 0.1.07
-Date: 07. 09. 2023
+Date: 07. 11. 2023
   Changes:
     - Assemblers no longer have minisembler recipes
 ---------------------------------------------------------------------------------------------------
 Version: 0.1.06
-Date: 07. 09. 2023
+Date: 07. 10. 2023
   Changes:
     - Fixed a crash with Simple mode
     - Fixed tooltips for plates
