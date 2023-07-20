@@ -294,7 +294,7 @@ for metal, stocks in pairs(metal_stocks_pairs) do -- Make the [Metal] [Stock] It
         type = "item",
         name = metal .. "-" .. stock .. "-stock",
         icon = "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. metal .. "/" .. metal .. "-" .. stock .. "-stock-0000.png",
-        icon_size = 64, icon_mipmaps = 4,
+        icon_size = 64, icon_mipmaps = 1,
         pictures = { -- FIXME: Create and add element 'badges' for stocks
           {
             filename = "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. metal .. "/" .. metal .. "-" .. stock .. "-stock-0000.png",

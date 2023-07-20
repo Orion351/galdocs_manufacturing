@@ -492,11 +492,14 @@ data:extend({
   {
     type = "furnace",
     name = "dummy-furnace",
+    icon = "__base__/graphics/icons/stone-furnace.png",
+    icon_size = 64, icon_mipmaps = 4,
     energy_usage = "1kW",
     crafting_speed = 1 ,
     crafting_categories = {"dummy-furnace"},
     source_inventory_size = 1,
     result_inventory_size = 1,
+
     energy_source =
     {
       type = "burner",

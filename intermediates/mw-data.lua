@@ -86,6 +86,8 @@ local base_resources_to_replace_without_ore_in_the_stupid_name = {
   ["stone"] = true,
 }
 
+
+
 -- Metals
 -- ======
 

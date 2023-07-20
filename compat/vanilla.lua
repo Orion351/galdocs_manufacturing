@@ -2,13 +2,20 @@
 -- Ethos
 -- *****
 
--- Passes to 're-recipe' items for Vanila and Compatibility mods:
--- --------------------------------------------------------------
--- - Wood pass
--- - Metalworking pass
--- - Stoneworking and Glassworking pass
--- - Electronics and Plastics pass
--- - Other 'material categories' as needed
+-- Order re-recipe-ing should happen in.
+-- "All Passes" = Metalworking (MW), Stone/Glass/Woodworking (SGW), Agriculture/Electronics/Plastics/Motors (AEP), Primitive (P)
+-- 1) In Data, do All Passes for Vanila.
+-- 2) In Data-Updates, do All Passes for "overhaul-active-compatibility" mods (ONLY DO ONE) (SE, K2, SEK2, EI, Bobs, Angels, Bobs/Angels, Seablock?)
+-- 3) In Data-Updates, do All Passes for "supplemental-active-compatibility" mods (do as many as makes sense?)
+-- 4) In Data-Final-Fixes, do flat-replace pass for anything left over
+-- 5) In Data-Final-Fixes, cull unused intermediates
+-- 6) Do some sort of expensive mode mayhem. Moo hoo ha ha.
+
+-- ******************
+-- Difficulty Toggles
+-- ******************
+
+local advanced = settings.startup["gm-advanced-mode"].value
 
 
 
@@ -85,22 +92,79 @@ local function keep_track_of_used_ingredients(current_list, list_to_check)
   return current_list
 end
 
--- We want: A function that will re-recipe a table of recipes in a Pass.
+
+
 -- Arguments:
 --   Table: intermediates to remove and replace, formed like: { ["item-to-remove"] = "item-that-replaces-it", ... }
---   String: pull_table (a .lua file that splits advanced and simple modes, formatted with the "csv to lua.py" file.)
---   String: Name of '-finished-part' suffix; use "none" if none. If used, will cull at the end.
---   String: Name of '-stock' suffix; use "none" if none. If used, will cull at the end.
---   Table: List of finished parts (without sufficies) for writing to log() a .csv of the changed recipes for debugging purposes. Leave empty {} to not log.
---   Boolean: Whether to flat-replace all other recipes or not.
---   Boolean: Cull unused '-finished-part's from technology and recipes
---   Boolean: Cull unused '-stock's from '-finished-part' recipes
+--   String: pull_table (a .lua file that splits advanced and simple modes, formatted with the "csv to lua.py" file).
+--   String: Name of '-finished-part' suffix; use "none" if none.
+--   String: Name of '-stock' suffix; use "none" if none.
+--   Table: List of finished parts (without sufficies) for writing to log() a .csv of the changed recipes for debugging purposes. Send an empty table {} to not log.
+local function re_recipe(intermediates_to_replace, pull_table_name, finished_part_name, stock_name, machined_part_list_to_log)
+  -- Make intermediates_to_add_table. Looks lke 
+  -- {
+  --   ["item-name-1"] = {{"ingredient-1-name", ingredient-1-amount}, {"ingredient-2-name", ingredient-2-amount} ... {"ingredient-n-name", ingredient-n-amount} }, 
+  --   ["item-name-2"] = {{"ingredient-1-name", ingredient-1-amount}, {"ingredient-2-name", ingredient-2-amount} ... {"ingredient-n-name", ingredient-n-amount} }, 
+  --   ...
+  --   ["item-name-m"] = {{"ingredient-1-name", ingredient-1-amount}, {"ingredient-2-name", ingredient-2-amount} ... {"ingredient-n-name", ingredient-n-amount} }, 
+  -- }
+  local pull_table = require(pull_table_name)
+  local intermediates_to_add_table = pull_table(advanced) -- FIXME : Rename this
 
--- ******************
--- Difficulty Toggles
--- ******************
+  -- Append "-machined-part" onto the intermediate names; this keeps it consistent with their creation but also easy to type above
+  for name, ingredients_to_add in pairs(intermediates_to_add_table) do
+    for _, ingredient_pair in pairs(ingredients_to_add) do
+      ingredient_pair[1] = ingredient_pair[1] .. finished_part_name
+    end
+  end
 
-local advanced = settings.startup["gm-advanced-mode"].value
+  -- Swap ingredients
+  local current_ingredients
+  local current_recipe
+  local used_recipe_list = {}
+  local finished_part_list = machined_part_list_to_log
+  for name, ingredients in pairs(intermediates_to_add_table) do
+
+    -- copy data out of "nomral"
+    current_recipe = data.raw.recipe[name]
+    if current_recipe.normal ~= nil then
+      current_recipe.enabled = current_recipe.normal.enabled
+      current_recipe.energy_required = current_recipe.normal.energy_required
+      current_recipe.result = current_recipe.normal.result
+      current_recipe.ingredients = current_recipe.normal.ingredients
+    end
+
+    -- fuss with ingredients
+    current_ingredients = current_recipe.ingredients
+    current_ingredients = remove_ingredients(current_ingredients, intermediates_to_replace)
+    current_ingredients = append_ingredients(current_ingredients, intermediates_to_add_table[name])
+    used_recipe_list = keep_track_of_used_ingredients(used_recipe_list, intermediates_to_add_table[name])
+    data.raw.recipe[name].ingredients = current_ingredients
+
+    -- get rekt normal vs. expensive
+    data.raw.recipe[name].normal = nil
+    data.raw.recipe[name].expensive = nil
+
+    -- Dump .csv file to log.
+    if #finished_part_list > 0 then
+      local new_list = ""
+      for _, mp_type in pairs(finished_part_list) do
+        local got_hit = false
+        for __, ingredient_pair in pairs(intermediates_to_add_table[name]) do
+          local i, j = string.find(ingredient_pair[1], mp_type, 1, true)
+          if i ~= nil and not got_hit then
+            got_hit = true
+            new_list = new_list .. "," .. ingredient_pair[2] .. "," .. string.sub(ingredient_pair[1], 0, #ingredient_pair[1] - 14)
+          end
+        end
+        if not got_hit then
+          new_list = new_list .. ",,"
+        end
+      end
+      log(name .. new_list)
+    end
+  end
+end
 
 
 
@@ -134,71 +198,21 @@ else
   }
 end
 
--- Make intermediates_to_add_table. Looks lke 
--- {
---   ["item-name-1"] = {{"ingredient-1-name", ingredient-1-amount}, {"ingredient-2-name", ingredient-2-amount} ... {"ingredient-n-name", ingredient-n-amount} }, 
---   ["item-name-2"] = {{"ingredient-1-name", ingredient-1-amount}, {"ingredient-2-name", ingredient-2-amount} ... {"ingredient-n-name", ingredient-n-amount} }, 
---   ...
---   ["item-name-m"] = {{"ingredient-1-name", ingredient-1-amount}, {"ingredient-2-name", ingredient-2-amount} ... {"ingredient-n-name", ingredient-n-amount} }, 
--- }
-local pull_table = require("gm-mw-van")
-local intermediates_to_add_table = pull_table(advanced)
+-- For logging a csv, make the log argument: {"paneling", "large-paneling", "framing", "girdering", "fine-gearing", "gearing", "fine-piping", "piping", "shafting", "wiring", "shielding", "bolts", "rivets"}
+re_recipe(mw_van_intermediates_to_replace, "gm-mw-van", "-machined-part", "-stock", {})
 
--- Append "-machined-part" onto the intermediate names; this keeps it consistent with their creation but also easy to type above
-for name, ingredients_to_add in pairs(intermediates_to_add_table) do
-  for _, ingredient_pair in pairs(ingredients_to_add) do
-    ingredient_pair[1] = ingredient_pair[1] .. "-machined-part"
-  end
+-- Cull Vanilla Metalworking Intermediates, EXCEPT the pipe
+for intermediate, _ in pairs(mw_van_intermediates_to_replace) do
+  if intermediate ~= "pipe" then data.raw.recipe[intermediate].hidden = true end
 end
 
--- Swap ingredients
+
+
+-- ***************************************
+-- Flat replace ingredients for everything
+-- ***************************************
+
 local current_ingredients
-local current_recipe
-local used_recipe_list = {}
-local machined_part_list = {"paneling", "large-paneling", "framing", "girdering", "fine-gearing", "gearing", "fine-piping", "piping", "shafting", "wiring", "shielding", "bolts", "rivets"}
-for name, ingredients in pairs(intermediates_to_add_table) do
-
-  -- copy data out of "nomral"
-  current_recipe = data.raw.recipe[name]
-  if current_recipe.normal ~= nil then
-    current_recipe.enabled = current_recipe.normal.enabled
-    current_recipe.energy_required = current_recipe.normal.energy_required
-    current_recipe.result = current_recipe.normal.result
-    current_recipe.ingredients = current_recipe.normal.ingredients
-  end
-
-  -- fuss with ingredients
-  current_ingredients = current_recipe.ingredients
-  current_ingredients = remove_ingredients(current_ingredients, mw_van_intermediates_to_replace)
-  current_ingredients = append_ingredients(current_ingredients, intermediates_to_add_table[name])
-  used_recipe_list = keep_track_of_used_ingredients(used_recipe_list, intermediates_to_add_table[name])
-  data.raw.recipe[name].ingredients = current_ingredients
-
-  -- get rekt normal vs. expensive
-  data.raw.recipe[name].normal = nil
-  data.raw.recipe[name].expensive = nil
-
-  -- Dump .csv file to log.
-  if #machined_part_list > 0 then
-    local new_list = ""
-    for _, mp_type in pairs(machined_part_list) do
-      local got_hit = false
-      for __, ingredient_pair in pairs(intermediates_to_add_table[name]) do
-        local i, j = string.find(ingredient_pair[1], mp_type, 1, true)
-        if i ~= nil and not got_hit then
-          got_hit = true
-          new_list = new_list .. "," .. ingredient_pair[2] .. "," .. string.sub(ingredient_pair[1], 0, #ingredient_pair[1] - 14)
-        end
-      end
-      if not got_hit then
-        new_list = new_list .. ",,"
-      end
-    end
-    log(name .. new_list)
-  end
-end
-
--- flat replace ingredients for everything
 local swap_in_ingredients = {}
 for _, recipe in pairs(data.raw.recipe) do
 
@@ -220,11 +234,6 @@ for _, recipe in pairs(data.raw.recipe) do
   -- get rekt normal vs. expensive
   data.raw.recipe[recipe.name].normal = nil
   data.raw.recipe[recipe.name].expensive = nil
-end
-
--- Cull Vanilla Metalworking Intermediates
-for intermediate, _ in pairs(mw_van_intermediates_to_replace) do
-  if intermediate ~= "pipe" then data.raw.recipe[intermediate].hidden = true end
 end
 
 

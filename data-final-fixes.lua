@@ -1,33 +1,7 @@
--- FIXME - make a constants file for goodness sake
-local advanced = settings.startup["gm-advanced-mode"].value
-local minisemblers
+local mw_data = require("intermediates.mw-data")
+local minisemblers = mw_data.minisemblers_rgba_pairs
 
-if advanced then -- minisemblers: [minisembler | {rgba values}]
-  minisemblers = {
-    ["welder"]          = true,
-    ["drill-press"]     = true,
-    ["grinder"]         = true,
-    ["metal-bandsaw"]   = true,
-    ["metal-extruder"]  = true,
-    ["mill"]            = true,
-    ["metal-lathe"]     = true,
-    ["threader"]        = true,
-    ["spooler"]         = true,
-    ["roller"]          = true,
-    ["bender"]          = true
-  }
-else
-    minisemblers = {
-    ["metal-bandsaw"]   = true,
-    ["metal-extruder"]  = true,
-    ["mill"]            = true,
-    ["metal-lathe"]     = true,
-    ["roller"]          = true,
-    ["bender"]          = true
-  }
-end
-
-for _, character in pairs(data.raw.character) do
+for _, character in pairs(data.raw.character) do -- Gives all characters the ability to craft appropriate stocks and machined parts from MW.
   character.crafting_categories = character.crafting_categories or {}
   for minisembler, _ in pairs(minisemblers) do
     table.insert(character.crafting_categories, "gm-" .. minisembler .. "-player-crafting")
