@@ -16,6 +16,9 @@ local machined_part_stack_size = 200
 local stock_stack_size = 200
 local ore_stack_size = 200
 
+-- Enums variables
+require("enums")
+
 -- Challenge variables
 local advanced = settings.startup["gm-advanced-mode"].value
 local specialty_parts = false -- not implimented yet
@@ -497,7 +500,7 @@ for metal, stocks in pairs(metal_stocks_pairs) do -- Make the [Metal] [Stock] It
         localised_description = {"gm.metal-stock-item-description", {"gm." .. metal}, {"gm." .. stock}, made_in, property_list, produces_list_pieces[1], produces_list_pieces[2], produces_list_pieces[3], produces_list_pieces[4], produces_list_pieces[5], produces_list_pieces[6]}
       }
     })
-    if (stock ~= "plate") then
+    if (stock ~= Stock.PLATE) then
       local recipe = { -- recipe
         type = "recipe",
         name = metal .. "-" .. stock .. "-stock",
@@ -518,7 +521,7 @@ for metal, stocks in pairs(metal_stocks_pairs) do -- Make the [Metal] [Stock] It
         category = "gm-" .. stock_minisembler_pairs[stock],
         localised_name = {"gm.metal-stock-item-name", {"gm." .. metal}, {"gm." .. stock}}
       }
-      if ((metal == "copper" or metal == "iron") or (metal == "brass" and (stock == "pipe" or stock == "fine-pipe" or stock == "sheet"))) then
+      if ((metal == Resources.COPPER or metal == Resources.IRON) or (metal == Resources.BRASS and (stock == Stock.PIPE or stock == Stock.FINE-PIPE or stock == Stock.SHEET))) then
         recipe.category = recipe.category .. "-player-crafting"
         recipe.hide_from_player_crafting = false
       end
@@ -784,20 +787,20 @@ for property, parts in pairs(property_machined_part_pairs) do -- Make the [Prope
           localised_name = {"gm.machined-part-recipe", {"gm." .. property}, {"gm." .. part}, {"gm." .. metal}, {"gm." .. machined_parts_precurors[part][1]}}
         }
         if (advanced and ( -- carve-outs for player crafting for bootstrap purposes
-                          (property == "basic"                        and metal == "copper"                                                                                ) or
-                          (property == "basic"                        and metal == "iron"                                                                                  ) or
-                          (property == "electrically-conductive"      and metal == "copper" and machined_parts_precurors[part][1] == "wire"      and part == "wiring"      ) or
-                          (property == "thermally-conductive"         and metal == "copper" and machined_parts_precurors[part][1] == "wire"      and part == "wiring"      ) or
-                          (property == "corrosion-resistant"          and metal == "brass"  and machined_parts_precurors[part][1] == "fine-pipe" and part == "fine-piping" ) or
-                          (property == "corrosion-resistant"          and metal == "brass"  and machined_parts_precurors[part][1] == "pipe"      and part == "piping"      )
+                          (property == Machined_Part_Property.BASIC                        and metal == Resources.COPPER                                                                                                ) or
+                          (property == Machined_Part_Property.BASIC                        and metal == Resources.IRON                                                                                                  ) or
+                          (property == Machined_Part_Property.ELECTRICALLY_CONDUCTIVE      and metal == Resources.COPPER and machined_parts_precurors[part][1] == Stock.WIRE      and part == Machined_Part.WIRING      ) or
+                          (property == Machined_Part_Property.THERMALLY_CONDUCTIVE         and metal == Resources.COPPER and machined_parts_precurors[part][1] == Stock.WIRE      and part == Machined_Part.WIRING      ) or
+                          (property == Machined_Part_Property.CORROSION_RESISTANT          and metal == Resources.BRASS  and machined_parts_precurors[part][1] == Stock.FINE-PIPE and part == Machined_Part.FINE-PIPING ) or
+                          (property == Machined_Part_Property.CORROSION_RESISTANT          and metal == Resources.BRASS  and machined_parts_precurors[part][1] == Stock.PIPE      and part == Machined_Part.PIPING      )
                           )
             ) or
             (advanced == false and (
-                          (property == "basic"                        and metal == "copper"                                                                        ) or
-                          (property == "basic"                        and metal == "iron"                                                                          ) or
-                          (property == "electrically-conductive"      and metal == "copper" and machined_parts_precurors[part][1] == "square" and part == "wiring" ) or
-                          (property == "thermally-conductive"         and metal == "copper" and machined_parts_precurors[part][1] == "square" and part == "wiring" ) or
-                          (property == "corrosion-resistant"          and metal == "brass"  and machined_parts_precurors[part][1] == "plate"  and part == "piping" )
+                          (property == Machined_Part_Property.BASIC                        and metal == Resources.COPPER                                                                                        ) or
+                          (property == Machined_Part_Property.BASIC                        and metal == Resources.IRON                                                                                          ) or
+                          (property == Machined_Part_Property.ELECTRICALLY_CONDUCTIVE      and metal == Resources.COPPER and machined_parts_precurors[part][1] == Stock.SQUARE and part == Machined_Part.WIRING ) or
+                          (property == Machined_Part_Property.THERMALLY_CONDUCTIVE         and metal == Resources.COPPER and machined_parts_precurors[part][1] == Stock.SQUARE and part == Machined_Part.WIRING ) or
+                          (property == Machined_Part_Property.CORROSION_RESISTANT          and metal == Resources.BRASS  and machined_parts_precurors[part][1] == Stock.PLATE  and part == Machined_Part.PIPING )
                           )
             )
         then
@@ -837,7 +840,7 @@ data:extend({ -- Make the minisemblers item group and technology
 
 for minisembler, _ in pairs(minisemblers_recipe_parameters) do -- From the table minisemblers_recipe_parameters, default unset entries to the lathe by default
   if minisemblers_rendering_data[minisembler] == nil then
-    minisemblers_rendering_data[minisembler] = minisemblers_rendering_data["metal-lathe"]
+    minisemblers_rendering_data[minisembler] = minisemblers_rendering_data[Minisembler.METAL_LATHE]
   end
 end
 
