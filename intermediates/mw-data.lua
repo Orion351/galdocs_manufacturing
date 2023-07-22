@@ -1,4 +1,9 @@
-require("enums")
+local enums = require("enums")
+local Resources = enums.Resources
+local Stock = enums.Stock
+local Machined_Part = enums.Machined_Part
+local Machined_Part_Property = enums.Machined_Part_Property
+local Minisembler = enums.Minisembler
 
 -- ********
 -- Settings
