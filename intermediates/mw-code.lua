@@ -17,7 +17,12 @@ local stock_stack_size = 200
 local ore_stack_size = 200
 
 -- Enums variables
-require("enums")
+local enums = require("enums")
+local Resources = enums.Resources
+local Stock = enums.Stock
+local Machined_Part = enums.Machined_Part
+local Machined_Part_Property = enums.Machined_Part_Property
+local Minisembler = enums.Minisembler
 
 -- Challenge variables
 local advanced = settings.startup["gm-advanced-mode"].value
@@ -479,7 +484,7 @@ for metal, stocks in pairs(metal_stocks_pairs) do -- Make the [Metal] [Stock] It
         category = "gm-" .. stock_minisembler_pairs[stock],
         localised_name = {"gm.metal-stock-item-name", {"gm." .. metal}, {"gm." .. stock}}
       }
-      if ((metal == Resources.COPPER or metal == Resources.IRON) or (metal == Resources.BRASS and (stock == Stock.PIPE or stock == Stock.FINE-PIPE or stock == Stock.SHEET))) then
+      if ((metal == Resources.COPPER or metal == Resources.IRON) or (metal == Resources.BRASS and (stock == Stock.PIPE or stock == Stock.FINE_PIPE or stock == Stock.SHEET))) then
         recipe.category = recipe.category .. "-player-crafting"
         recipe.hide_from_player_crafting = false
       end
@@ -686,7 +691,7 @@ for property, parts in pairs(property_machined_part_pairs) do -- Make the [Prope
                           (property == Machined_Part_Property.BASIC                        and metal == Resources.IRON                                                                                                  ) or
                           (property == Machined_Part_Property.ELECTRICALLY_CONDUCTIVE      and metal == Resources.COPPER and machined_parts_precurors[part][1] == Stock.WIRE      and part == Machined_Part.WIRING      ) or
                           (property == Machined_Part_Property.THERMALLY_CONDUCTIVE         and metal == Resources.COPPER and machined_parts_precurors[part][1] == Stock.WIRE      and part == Machined_Part.WIRING      ) or
-                          (property == Machined_Part_Property.CORROSION_RESISTANT          and metal == Resources.BRASS  and machined_parts_precurors[part][1] == Stock.FINE-PIPE and part == Machined_Part.FINE-PIPING ) or
+                          (property == Machined_Part_Property.CORROSION_RESISTANT          and metal == Resources.BRASS  and machined_parts_precurors[part][1] == Stock.FINE_PIPE and part == Machined_Part.FINE_PIPING ) or
                           (property == Machined_Part_Property.CORROSION_RESISTANT          and metal == Resources.BRASS  and machined_parts_precurors[part][1] == Stock.PIPE      and part == Machined_Part.PIPING      )
                           )
             ) or
