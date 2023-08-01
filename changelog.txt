@@ -1,4 +1,16 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.1.09
+Date: 07. 18. 2023
+  Changes:
+    - Refactored most of the code
+    - Bandsaw art in the game (initial)
+    - Nickel, Lead and Titanium no longer spawn in starter area
+    - Fixed Railworld preset
+    - Tuned minisemblers: less electricity use / pollution, allowed beacons / modules (no productivity), added "Basic Bolts" to recipe, added placement sound (experimental)
+    - Overhauled tooltips for Stocks and Machined Parts for player sanity
+    - Added (experimental) Ore Sparkle for Copper
+    - Fixed compatability issues with Factory Planner and Bottleneck Lite
+---------------------------------------------------------------------------------------------------
 Version: 0.1.08
 Date: 07. 18. 2023
   Changes:
