@@ -1,6 +1,6 @@
 ---------------------------------------------------------------------------------------------------
 Version: 0.1.09
-Date: 07. 18. 2023
+Date: 2023-08-01
   Changes:
     - Refactored most of the code
     - Bandsaw art in the game (initial)
