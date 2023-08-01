@@ -201,9 +201,9 @@ end
 -- For logging a csv, make the log argument: {"paneling", "large-paneling", "framing", "girdering", "fine-gearing", "gearing", "fine-piping", "piping", "shafting", "wiring", "shielding", "bolts", "rivets"}
 re_recipe(mw_van_intermediates_to_replace, "gm-mw-van", "-machined-part", "-stock", {})
 
--- Cull Vanilla Metalworking Intermediates, EXCEPT the pipe
+-- Cull Vanilla Metalworking Intermediates, EXCEPT the pipe and copper cable
 for intermediate, _ in pairs(mw_van_intermediates_to_replace) do
-  if intermediate ~= "pipe" then data.raw.recipe[intermediate].hidden = true end
+  if intermediate ~= "pipe" or intermediate ~= "copper-cable" then data.raw.recipe[intermediate].hidden = true end
 end
 
 
@@ -288,3 +288,32 @@ for item_name, item in pairs(data.raw.item) do
     end
   end
 end
+
+-- Put the "copper-cable" item back in so that people can connect up the wires of power poles manually again.
+-- This is kept separate for code clarity. It takes a bit longer. Meh.
+for _, recipe in pairs(data.raw.recipe) do
+  if recipe.ingredients ~= nil then
+    for _, ingredient in pairs(recipe.ingredients) do
+      if ingredient.name ~= nil then
+        if ingredient.name == "electrically-conductive-wiring-machined-part" then ingredient.name = "copper-cable" end
+      else
+        if ingredient[1] == "electrically-conductive-wiring-machined-part" then ingredient[1] = "copper-cable" end
+      end
+    end
+  end
+  if recipe.result ~= nil then
+    if recipe.result == "electrically-conductive-wiring-machined-part" then recipe.result = "copper-cable" end
+  end
+  if recipe.results ~= nil and recipe.results ~= {} then
+    for _, result in pairs(recipe.results) do
+      if result.name == "electrically-conductive-wiring-machined-part" then result.name = "copper-cable" end
+    end
+  end
+end
+
+-- Make the 'copper-cable' essentially look like 'electrically-conductive-wiring-machined-part'
+local wire = data.raw.item["electrically-conductive-wiring-machined-part"]
+wire.name = "copper-cable"
+wire.wire_count = 1
+data:extend{wire}
+data.raw.item["electrically-conductive-wiring-machined-part"] = nil

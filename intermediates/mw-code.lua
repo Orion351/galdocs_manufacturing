@@ -33,8 +33,10 @@ local show_property_badges = settings.startup["gm-show-badges"].value
 local mw_data = require("intermediates.mw-data")
 local original_ores = mw_data.original_ores
 local metals_to_add = mw_data.metals_to_add
+local metals_to_use = mw_data.metals_to_use
 local base_resources_to_replace_with_ore_in_the_stupid_name = mw_data.base_resources_to_replace_with_ore_in_the_stupid_name
 local base_resources_to_replace_without_ore_in_the_stupid_name = mw_data.base_resources_to_replace_without_ore_in_the_stupid_name
+local ores_to_include_starting_area = mw_data.ores_to_include_starting_area
 local metal_technology_pairs = mw_data.metal_technology_pairs
 local alloy_recipe = mw_data.alloy_recipe
 local metal_properties_pairs = mw_data.metal_properties_pairs
@@ -177,6 +179,10 @@ local function resource(resource_parameters, autoplace_parameters) -- Put ores i
 end
 
 for ore, _ in pairs(metals_to_add) do -- Build autoplace settings
+  local current_starting_rq_factor = 0
+  if ores_to_include_starting_area[ore] then
+    current_starting_rq_factor = 1.5
+  end
   data:extend({
     { -- autoplace-control = new game mapgen menu item to toggle ore generation options (frequency,size,richness,etc.)
         type = "autoplace-control",
@@ -198,12 +204,58 @@ for ore, _ in pairs(metals_to_add) do -- Build autoplace settings
       { -- autoplace_parameters
         base_density = 8,
         regular_rq_factor_multiplier = 1.10,
-        starting_rq_factor_multiplier = 1.5,
+        starting_rq_factor_multiplier = current_starting_rq_factor,
+        has_starting_area_placement = ores_to_include_starting_area[ore],
         candidate_spot_count = 22
       }
     )
   })
+  if true then
+    data.raw["map-gen-presets"]["default"]["rail-world"].basic_settings.autoplace_controls[ore .. "-ore"] =
+    {
+      frequency = 0.33333333333,
+      size = 3
+    }
+  end
 end
+
+
+
+-- Experiment
+
+data.raw.resource["copper-ore"].stages_effect = {
+  sheet =
+  {
+    filename = "__galdocs-manufacturing__/graphics/entity/resource/copper/copper-shine-glow.png",
+    priority = "extra-high",
+    width = 64,
+    height = 64,
+    frame_count = 8,
+    variation_count = 8,
+    blend_mode = "additive-soft",
+    flags = {"light"},
+    hr_version =
+    {
+      filename = "__galdocs-manufacturing__/graphics/entity/resource/copper/hr-copper-shine-glow.png",
+      priority = "extra-high",
+      width = 128,
+      height = 128,
+      frame_count = 8,
+      variation_count = 8,
+      scale = 0.5,
+      blend_mode = "additive-soft",
+      flags = {"light"}
+    }
+  }
+}
+
+data.raw.resource["copper-ore"].effect_animation_period = 1
+data.raw.resource["copper-ore"].effect_animation_period_deviation = .2
+data.raw.resource["copper-ore"].effect_darkness_multiplier = 0
+data.raw.resource["copper-ore"].min_effect_alpha = 0
+data.raw.resource["copper-ore"].max_effect_alpha = 1
+
+
 
 -- Metals
 -- ======
@@ -245,6 +297,22 @@ for alloy, ingredients in pairs(alloy_recipe) do -- Add alloy plate recipes
   })
 end
 
+-- Properties
+-- ==========
+
+for property, _ in pairs(property_machined_part_pairs) do  -- Make sprites for property icons for locale and other uses
+  data:extend({
+    {
+      type = "sprite",
+      name = property .. "-sprite",
+      filename = "__galdocs-manufacturing__/graphics/icons/intermediates/property-icons/" .. property .. ".png",
+      width = 64,
+      height = 64,
+      scale = 1.5
+    }
+  })
+end
+
 -- Stocks
 -- ======
 
@@ -281,14 +349,66 @@ end
 
 order_count = 0
 local property_list
+local produces_list
 for metal, stocks in pairs(metal_stocks_pairs) do -- Make the [Metal] [Stock] Items and Recipes
-  for stock in pairs(stocks) do
+  for stock, _ in pairs(stocks) do
+    
+    -- For the tooltip, populate property_list with the properties of the metal. 
     property_list = {""}
     for property in pairs(metal_properties_pairs[metal]) do
+      table.insert(property_list, " - [img=" .. property ..  "-sprite]  ")
       table.insert(property_list, {"gm." .. property})
       table.insert(property_list, {"gm.line-separator"})
     end
     table.remove(property_list, #property_list)
+
+    -- For the tooltip, populate takers with the minisemblers that can use this stock, and with the stocks and machined parts that will result, respectively.
+    produces_list = {}
+    for product, precursor in pairs(stocks_precurors) do
+      if stock == precursor[1] and metal_stocks_pairs[metal][product] then
+        table.insert(produces_list, " - [item=" .. metal .. "-" .. product .. "-stock]  ")
+        table.insert(produces_list, {"gm.metal-stock-item-name", {"gm." .. metal}, {"gm." .. product}})
+        table.insert(produces_list, " in a  ")
+        table.insert(produces_list, "[item=gm-" .. stock_minisembler_pairs[product] .. "]  ")
+        table.insert(produces_list, {"gm." .. stock_minisembler_pairs[product]})
+        table.insert(produces_list, {"gm.line-separator"})
+      end
+    end
+    for product, precursor in pairs(machined_parts_precurors) do
+      if stock == precursor[1] then
+        table.insert(produces_list, " - [item=basic-" .. product .. "-machined-part]  ")
+        table.insert(produces_list, {"gm." .. product})
+        table.insert(produces_list, " in a  ")
+        table.insert(produces_list, "[item=gm-" .. machined_part_minisembler_pairs[product] .. "]  ")
+        table.insert(produces_list, {"gm." .. machined_part_minisembler_pairs[product]})
+        table.insert(produces_list, {"gm.line-separator"})
+      end
+    end
+
+    local produces_list_pieces = {}
+    local subtable_size = 18
+    local num_subtables = math.ceil(#produces_list / subtable_size)
+    local seen_final_element = false
+    for i = 1, num_subtables do
+      local subtable = {""}
+      for j = 1, subtable_size do
+        local element = produces_list[(i-1)*subtable_size + j]
+        if element then
+          table.insert(subtable, element)
+        else
+          if not seen_final_element then
+            table.remove(subtable, #subtable)
+            seen_final_element = true
+          end
+        end
+      end
+      table.insert(produces_list_pieces, subtable)
+    end
+
+    for i = 1, 6 do
+      if produces_list_pieces[i] == nil then produces_list_pieces[i] = {""} end
+    end
+
     data:extend({
       { -- item
         type = "item",
@@ -325,7 +445,7 @@ for metal, stocks in pairs(metal_stocks_pairs) do -- Make the [Metal] [Stock] It
         order = order_count .. "gm-stocks-" .. metal,
         stack_size = stock_stack_size,
         localised_name = {"gm.metal-stock-item-name", {"gm." .. metal}, {"gm." .. stock}},
-        localised_description = {"gm.metal-stock-item-description", {"gm." .. metal}, {"gm." .. stock}, property_list}
+        localised_description = {"gm.metal-stock-item-description", {"gm." .. metal}, {"gm." .. stock}, property_list, produces_list_pieces[1], produces_list_pieces[2], produces_list_pieces[3], produces_list_pieces[4], produces_list_pieces[5], produces_list_pieces[6]}
       }
     })
     if (stock ~= "plate") then
@@ -355,7 +475,7 @@ for metal, stocks in pairs(metal_stocks_pairs) do -- Make the [Metal] [Stock] It
       end
       data:extend({recipe})
     else
-      if metals_to_add[metal] ~= nil then
+      if metals_to_use[metal] ~= nil then
         data:extend({
           { -- recipe
             type = "recipe",
@@ -428,7 +548,7 @@ for property, parts in pairs(property_machined_part_pairs) do -- Make the [Prope
       }
     }
     if show_property_badges == "all" then
-      table.insert(icons_data_item, 2, 
+      table.insert(icons_data_item, 2,
       {
         scale = 0.4,
         icon = "__galdocs-manufacturing__/graphics/icons/intermediates/property-icons/" .. property .. ".png",
@@ -437,6 +557,45 @@ for property, parts in pairs(property_machined_part_pairs) do -- Make the [Prope
       }
     )
     end
+
+    -- For the tooltip, populate metal_list with the metals that can make this type of Machined Part.
+
+    local metal_list = {}
+    metal_list = {""}
+    for metal, properties in pairs(metal_properties_pairs) do
+      if properties[property] then
+        if metal_stocks_pairs[metal][machined_parts_precurors[part][1]] then
+          table.insert(metal_list, " - [item=" .. metal .. "-" .. machined_parts_precurors[part][1] ..  "-stock]  ")
+          table.insert(metal_list, {"gm.metal-stock-item-name", {"gm." .. metal}, {"gm." .. machined_parts_precurors[part][1]}})
+          table.insert(metal_list, {"gm.line-separator"})
+        end
+      end
+    end
+
+    local metal_list_pieces = {}
+    local subtable_size = 18
+    local num_subtables = math.ceil(#metal_list / subtable_size)
+    local seen_final_element = false
+    for i = 1, num_subtables do
+      local subtable = {""}
+      for j = 1, subtable_size do
+        local element = metal_list[(i-1)*subtable_size + j]
+        if element then
+          table.insert(subtable, element)
+        else
+          if not seen_final_element then
+            table.remove(subtable, #subtable)
+            seen_final_element = true
+          end
+        end
+      end
+      table.insert(metal_list_pieces, subtable)
+    end
+
+    for i = 1, 6 do
+      if metal_list_pieces[i] == nil then metal_list_pieces[i] = {""} end
+    end
+
     data:extend({
       { -- item
         type = "item",
@@ -446,7 +605,7 @@ for property, parts in pairs(property_machined_part_pairs) do -- Make the [Prope
         order = order_count .. "gm-machined-parts-" .. part,
         stack_size = machined_part_stack_size,
         localised_name = {"gm.machined-part-item", {"gm." .. property}, {"gm." .. part}},
-        localised_description = {"gm.metal-machined-part-item-description", {"gm." .. property}, {"gm." .. part}}
+        localised_description = {"gm.metal-machined-part-item-description", {"gm." .. property}, {"gm." .. part}, metal_list_pieces[1], metal_list_pieces[2], metal_list_pieces[3], metal_list_pieces[4], metal_list_pieces[5], metal_list_pieces[6]}
       }
     })
     for metal, metal_properties in pairs(metal_properties_pairs) do
@@ -535,7 +694,7 @@ for minisembler, _ in pairs(minisemblers_rgba_pairs) do -- put minisemblers in t
   )
 end
 
-data:extend({ -- Make the minisemblers.
+data:extend({ -- Make the minisemblers item group and technology
   { -- item subgroup
 	  type = "item-subgroup",
 	  name = "gm-minisemblers",
@@ -582,9 +741,9 @@ local current_normal_filename
 local current_hr_filename
 local current_idle_animation
 
-for minisembler, rgba in pairs(minisemblers_rgba_pairs) do -- build current_animation, FIXME: Name the minisembler looping table more gooder
+for minisembler, rgba in pairs(minisemblers_rgba_pairs) do -- make the minisembler entities overall
   direction_set = {}
-  for _, direction_name in pairs(animation_directions) do
+  for _, direction_name in pairs(animation_directions) do -- build current_animation, FIXME: Name the minisembler looping table more gooder
     layer_set = {}
     for layer_number, layer_name in pairs(animation_layers) do
       if direction_name == "north" then
@@ -685,7 +844,7 @@ for minisembler, rgba in pairs(minisemblers_rgba_pairs) do -- build current_anim
   end
   current_working_visualizations = layer_set
 
-  data:extend({
+  data:extend({ -- make the minisembler recipe categories, items, recipes and entities
     { -- recipe category
       type = "recipe-category",
       name = "gm-" .. minisembler,
@@ -753,7 +912,8 @@ for minisembler, rgba in pairs(minisemblers_rgba_pairs) do -- build current_anim
       collision_box = {{-0.29, -0.9}, {0.29, 0.9}},
       selection_box = {{-0.5, -1}, {0.5, 1}},
       damaged_trigger_effect = hit_effects.entity(),
-      alert_icon_shift = util.by_pixel(-3, -12),
+      alert_icon_shift = util.by_pixel(0, -12),
+      entity_info_icon_shift = util.by_pixel(0, -8),
       animation = current_animation,
       idle_animation = current_idle_animation,
       working_visualisations = current_working_visualizations,
@@ -763,9 +923,9 @@ for minisembler, rgba in pairs(minisemblers_rgba_pairs) do -- build current_anim
       {
         type = "electric",
         usage_priority = "secondary-input",
-        emissions_per_minute = 1
+        emissions_per_minute = .6
       },
-      energy_usage = "75kW",
+      energy_usage = "30kW",
       open_sound = sounds.machine_open,
       close_sound = sounds.machine_close,
       vehicle_impact_sound = sounds.generic_impact,
@@ -774,15 +934,27 @@ for minisembler, rgba in pairs(minisemblers_rgba_pairs) do -- build current_anim
         sound =
         {
           {
-            filename = "__base__/sound/assembling-machine-t1-1.ogg", -- FIXME SOUND THIS THING
+            filename = "__base__/sound/assembling-machine-t1-1.ogg",
             volume = 0.5
           }
         },
         audible_distance_modifier = 0.5,
         fade_in_ticks = 4,
         fade_out_ticks = 20
+      },  
+      build_sound = 
+      {
+        {
+          filename = "__galdocs-manufacturing__/sound/entity/minisembler-placed.ogg",
+          volume = 0.5
+        }
       },
       localised_name = {"gm.minisembler-entity-name", {"gm." .. minisembler}},
+      module_specification = 
+      {
+        module_slots = 1,
+      },
+      allowed_effects = {"speed", "consumption", "pollution"}
     }
   })
   order_count = order_count + 1
@@ -999,6 +1171,3 @@ for metal, techology_data in pairs(metal_technology_pairs) do
     end
   end
 end
-
-
-

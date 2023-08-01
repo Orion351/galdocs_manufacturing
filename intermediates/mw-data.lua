@@ -86,12 +86,26 @@ local base_resources_to_replace_without_ore_in_the_stupid_name = {
   ["stone"] = true,
 }
 
+local ores_to_include_starting_area = {
+  ["zinc"]     = true,
+  ["lead"]     = false,
+  ["titanium"] = false,
+  ["nickel"]   = false,
+  ["copper"]   = true,
+  ["iron"]     = true
+}
 
+local metals_to_add = { -- ***ORE***
+  ["lead"]     = true,
+  ["titanium"] = true,
+  ["zinc"]     = true,
+  ["nickel"]   = true,
+}
 
 -- Metals
 -- ======
 
-local metals_to_add = { -- ***ORE***
+local metals_to_use = { -- ***ORE***
   ["lead"]     = true,
   ["titanium"] = true,
   ["zinc"]     = true,
@@ -184,7 +198,7 @@ local minisemblers_rendering_data = { -- Set up the minisembler rendering data
       },
       ["west"] = {
         ["base"]      = {["shift-x"] = 0,  ["shift-y"] = -10, ["width"] = 128, ["height"] = 104, ["scale"] = .5},
-        ["sparks"]    = {["shift-x"] = 0,  ["shift-y"] = -9,   ["width"] = 128, ["height"] = 104, ["scale"] = .5},
+        ["sparks"]    = {["shift-x"] = 0,  ["shift-y"] = -9,  ["width"] = 128, ["height"] = 104, ["scale"] = .5},
         ["workpiece"] = {["shift-x"] = 0,  ["shift-y"] = -10, ["width"] = 128, ["height"] = 104, ["scale"] = .5},
         ["oxidation"] = {["shift-x"] = 0,  ["shift-y"] = -10, ["width"] = 128, ["height"] = 104, ["scale"] = .5},
         ["shadow"]    = {["shift-x"] = 16, ["shift-y"] = 6,   ["width"] = 128, ["height"] = 40,  ["scale"] = .75}
@@ -199,11 +213,49 @@ local minisemblers_rendering_data = { -- Set up the minisembler rendering data
         ["shadow"]    = {["shift-x"] = 15, ["shift-y"] = 14, ["width"] = 64, ["height"] = 42, ["scale"] = 1}
       },
       ["west"] = {
-        ["base"]      = {["shift-x"] = 0, ["shift-y"] = -5, ["width"] = 64, ["height"] = 52, ["scale"] = 1},
-        ["sparks"]    = {["shift-x"] = 0, ["shift-y"] = 0,  ["width"] = 64, ["height"] = 52, ["scale"] = 1},
-        ["workpiece"] = {["shift-x"] = 0, ["shift-y"] = -5, ["width"] = 64, ["height"] = 52, ["scale"] = 1},
-        ["oxidation"] = {["shift-x"] = 0, ["shift-y"] = -5, ["width"] = 64, ["height"] = 52, ["scale"] = 1},
+        ["base"]      = {["shift-x"] = 0, ["shift-y"] = -5,  ["width"] = 64, ["height"] = 52, ["scale"] = 1},
+        ["sparks"]    = {["shift-x"] = 0, ["shift-y"] = 0,   ["width"] = 64, ["height"] = 52, ["scale"] = 1},
+        ["workpiece"] = {["shift-x"] = 0, ["shift-y"] = -5,  ["width"] = 64, ["height"] = 52, ["scale"] = 1},
+        ["oxidation"] = {["shift-x"] = 0, ["shift-y"] = -5,  ["width"] = 64, ["height"] = 52, ["scale"] = 1},
         ["shadow"]    = {["shift-x"] = 7, ["shift-y"] = 14,  ["width"] = 64, ["height"] = 20, ["scale"] = 1}
+      }
+    }
+  },
+
+  -- metal-bandsaw
+  ["metal-bandsaw"] = {
+    ["frame-count"] = 24,
+    ["line-length"] = 5,
+    ["hr"] = {
+      ["north"] = {
+        ["base"]      = {["shift-x"] = -1,  ["shift-y"] = 0,   ["width"] = 84,  ["height"] = 128, ["scale"] = .5},
+        ["sparks"]    = {["shift-x"] = 0,   ["shift-y"] = 7,   ["width"] = 84,  ["height"] = 128, ["scale"] = .5},
+        ["workpiece"] = {["shift-x"] = 0,   ["shift-y"] = -1,  ["width"] = 72,  ["height"] = 78,  ["scale"] = .5},
+        ["oxidation"] = {["shift-x"] = 0,   ["shift-y"] = -1,  ["width"] = 72,  ["height"] = 78,  ["scale"] = .5},
+        ["shadow"]    = {["shift-x"] = 16,  ["shift-y"] = 15,  ["width"] = 160, ["height"] = 88,  ["scale"] = .5}
+      },
+      ["west"] = {
+        ["base"]      = {["shift-x"] = 0,   ["shift-y"] = -13, ["width"] = 128, ["height"] = 128, ["scale"] = .5},
+        ["sparks"]    = {["shift-x"] = -13, ["shift-y"] = -3,  ["width"] = 128, ["height"] = 128, ["scale"] = .5},
+        ["workpiece"] = {["shift-x"] = 0,   ["shift-y"] = -13, ["width"] = 128, ["height"] = 128, ["scale"] = .5},
+        ["oxidation"] = {["shift-x"] = 0,   ["shift-y"] = -13, ["width"] = 128, ["height"] = 128, ["scale"] = .5},
+        ["shadow"]    = {["shift-x"] = 16,  ["shift-y"] = 3,   ["width"] = 184, ["height"] = 78,  ["scale"] = .5}
+      }
+    },
+    ["normal"] = {
+      ["north"] = {
+        ["base"]      = {["shift-x"] = 0,   ["shift-y"] = 0,   ["width"] = 64,  ["height"] = 64,  ["scale"] = 1},
+        ["sparks"]    = {["shift-x"] = 0,   ["shift-y"] = 0,   ["width"] = 64,  ["height"] = 64,  ["scale"] = 1},
+        ["workpiece"] = {["shift-x"] = 0,   ["shift-y"] = 0,   ["width"] = 64,  ["height"] = 64,  ["scale"] = 1},
+        ["oxidation"] = {["shift-x"] = 0,   ["shift-y"] = 0,   ["width"] = 64,  ["height"] = 64,  ["scale"] = 1},
+        ["shadow"]    = {["shift-x"] = 0,   ["shift-y"] = 0,   ["width"] = 92,  ["height"] = 39,  ["scale"] = 1}
+      },
+      ["west"] = {
+        ["base"]      = {["shift-x"] = 0,   ["shift-y"] = 0,   ["width"] = 42,  ["height"] = 64,  ["scale"] = 1},
+        ["sparks"]    = {["shift-x"] = 0,   ["shift-y"] = 0,   ["width"] = 42,  ["height"] = 64,  ["scale"] = 1},
+        ["workpiece"] = {["shift-x"] = 0,   ["shift-y"] = 0,   ["width"] = 36,  ["height"] = 39,  ["scale"] = 1},
+        ["oxidation"] = {["shift-x"] = 0,   ["shift-y"] = 0,   ["width"] = 36,  ["height"] = 39,  ["scale"] = 1},
+        ["shadow"]    = {["shift-x"] = 0,   ["shift-y"] = 0,   ["width"] = 80,  ["height"] = 44,  ["scale"] = 1}
       }
     }
   }
@@ -364,7 +416,7 @@ local property_machined_part_pairs
 if advanced then -- property_machined_part_pairs : [property | list of machined parts that are able to have that property]
   property_machined_part_pairs = {
     -- single-properties
-    ["basic"]                   = map{"paneling", "large-paneling", "framing", "girdering", "gearing", "fine-gearing", "piping", "fine-piping",                        "shafting", "bolts", "rivets"},
+    ["basic"]                   = map{"paneling", "large-paneling", "framing", "girdering", "gearing", "fine-gearing", "piping", "fine-piping", "wiring", "shielding", "shafting", "bolts", "rivets"},
     ["load-bearing"]            = map{                              "framing", "girdering",                                                                            "shafting"                   },
     ["electrically-conductive"] = map{                                                                                                          "wiring"                                          },
     ["high-tensile"]            = map{"paneling", "large-paneling", "framing", "girdering", "gearing", "fine-gearing",                          "wiring", "shielding", "shafting", "bolts", "rivets"},
@@ -378,7 +430,7 @@ if advanced then -- property_machined_part_pairs : [property | list of machined 
   }
 else
   property_machined_part_pairs = {
-    ["basic"]                   = map{"paneling", "framing", "gearing", "piping",                        "shafting", "bolts"},
+    ["basic"]                   = map{"paneling", "framing", "gearing", "piping", "wiring", "shielding", "shafting", "bolts"},
     ["load-bearing"]            = map{            "framing",                                             "shafting"         },
     ["electrically-conductive"] = map{                                            "wiring"                                  },
     ["high-tensile"]            = map{"paneling", "framing", "gearing",           "wiring", "shielding", "shafting", "bolts"},
@@ -438,8 +490,8 @@ else
     ["framing"]         = {"plate", 2, 1},
     ["gearing"]         = {"plate", 3, 1},
     ["piping"]          = {"plate", 2, 1},
-    ["wiring"]          = {"square", 1, 1},
     ["shielding"]       = {"plate", 6, 1},
+    ["wiring"]          = {"square", 1, 1},
     ["shafting"]        = {"square", 1, 1},
     ["bolts"]           = {"wire", 4, 1}
   }
@@ -454,8 +506,10 @@ end
 return {
   ["original_ores"] = original_ores,
   ["metals_to_add"] = metals_to_add,
+  ["metals_to_use"] = metals_to_use,
   ["base_resources_to_replace_with_ore_in_the_stupid_name"] = base_resources_to_replace_with_ore_in_the_stupid_name,
   ["base_resources_to_replace_without_ore_in_the_stupid_name"] = base_resources_to_replace_without_ore_in_the_stupid_name,
+  ["ores_to_include_starting_area"] = ores_to_include_starting_area,
   ["metal_technology_pairs"] = metal_technology_pairs,
   ["alloy_recipe"] = alloy_recipe,
   ["metal_properties_pairs"] = metal_properties_pairs,

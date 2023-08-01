@@ -499,7 +499,8 @@ data:extend({
     crafting_categories = {"dummy-furnace"},
     source_inventory_size = 1,
     result_inventory_size = 1,
-
+    collision_box = {{-0.7, -0.7}, {0.7, 0.7}},
+    selection_box = {{-0.8, -1}, {0.8, 1}},
     energy_source =
     {
       type = "burner",
