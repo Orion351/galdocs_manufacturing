@@ -408,7 +408,7 @@ else
     ["wiring"]    = "metal-extruder",
     ["shielding"] = "mill",
     ["shafting"]  = "metal-lathe",
-    ["bolts"]     = "metal-extruder"
+    ["bolts"]     = "metal-lathe"
   }
 end
 

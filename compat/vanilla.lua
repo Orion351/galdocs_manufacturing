@@ -200,13 +200,14 @@ end
 
 -- For logging a csv, make the log argument: {"paneling", "large-paneling", "framing", "girdering", "fine-gearing", "gearing", "fine-piping", "piping", "shafting", "wiring", "shielding", "bolts", "rivets"}
 re_recipe(mw_van_intermediates_to_replace, "gm-mw-van", "-machined-part", "-stock", {})
+log("asdf " .. tostring(data.raw.recipe["pipe"].hidden))
 
--- Cull Vanilla Metalworking Intermediates, EXCEPT the pipe and copper cable
+-- Cull Vanilla Metalworking Intermediates, EXCEPT the pipe
 for intermediate, _ in pairs(mw_van_intermediates_to_replace) do
-  if intermediate ~= "pipe" or intermediate ~= "copper-cable" then data.raw.recipe[intermediate].hidden = true end
+  if intermediate ~= "pipe" then data.raw.recipe[intermediate].hidden = true end
 end
 
-
+log("asdf " .. tostring(data.raw.recipe["pipe"].hidden))
 
 -- ***************************************
 -- Flat replace ingredients for everything
