@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.1.10
+Date: 2023-08-01
+  Changes:
+    - Fixed pipe issue
+    - Minor change to Simple mode minismelber requirement
+    - Made "Electrically Conductive Wiring" able to connect to power poles like Copper Wire used to
+---------------------------------------------------------------------------------------------------
 Version: 0.1.09
 Date: 2023-08-01
   Changes:
