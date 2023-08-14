@@ -1,10 +1,17 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.1.11
+Date: 2023-08-14
+  Changes:
+    - Fixed issue with non-hr shadow file in bandsaw causing a crash
+    - The vertically oriented lathe shadows no longer shimmy up during crafting
+    - Electric furnaces can now take productivity modules (this was a bug)
+---------------------------------------------------------------------------------------------------
 Version: 0.1.10
 Date: 2023-08-01
   Changes:
     - Fixed pipe issue
     - Minor change to Simple mode minismelber requirement
-    - Made "Electrically Conductive Wiring" able to connect to power poles like Copper Wire used to
+    - Made "Electrically Conductive Wiring" able to connect to power poles like Copper Wire used to 
 ---------------------------------------------------------------------------------------------------
 Version: 0.1.09
 Date: 2023-08-01

@@ -277,11 +277,14 @@ data:extend({ -- Make plate smelting category so player can see recipes in inven
 })
 
 local output_count
+local productivity_whitelist = {} -- Start the whitelist for productivity modules
 for alloy, ingredients in pairs(alloy_recipe) do -- Add alloy plate recipes
+  
   output_count = 0
   for _, ingredient in pairs(ingredients) do
     output_count = output_count + ingredient[2]
   end
+
   data:extend({
     {
       type = "recipe",
@@ -295,6 +298,9 @@ for alloy, ingredients in pairs(alloy_recipe) do -- Add alloy plate recipes
       subgroup = "gm-plates"
     }
   })
+
+  -- Because this is a plate recipe, add it to the productivity whitelist. For now, however, do not include it, as this would lead to Weirdness.
+  -- table.insert(productivity_whitelist, #productivity_whitelist, alloy .. "-plate-stock")
 end
 
 -- Properties
@@ -350,6 +356,7 @@ end
 order_count = 0
 local property_list
 local produces_list
+
 for metal, stocks in pairs(metal_stocks_pairs) do -- Make the [Metal] [Stock] Items and Recipes
   for stock, _ in pairs(stocks) do
     
@@ -475,6 +482,10 @@ for metal, stocks in pairs(metal_stocks_pairs) do -- Make the [Metal] [Stock] It
       end
       data:extend({recipe})
     else
+      -- Because this is a plate recipe, add it to the productivity whitelist
+      table.insert(productivity_whitelist, #productivity_whitelist, metal .. "-" .. stock .. "-stock")
+
+      -- Make the special-case plate recipes that take ores instead of stocks.
       if metals_to_use[metal] ~= nil then
         data:extend({
           { -- recipe
@@ -500,6 +511,18 @@ for metal, stocks in pairs(metal_stocks_pairs) do -- Make the [Metal] [Stock] It
     end
   end
 end
+
+-- Check each module to see if 'productivity' is in its 'effect' list; if so, then add the plate-stock recipes to it. 
+for _, value in pairs(data.raw.module) do
+  if value.effect["productivity"] then
+      local prod_mod = table.deepcopy(value)
+      for _, recipe_name in pairs(productivity_whitelist) do
+        table.insert(prod_mod.limitation, #prod_mod.limitation, recipe_name)
+      end
+      data:extend({prod_mod})
+  end
+end
+
 
 -- Machined Parts
 -- ==============
@@ -741,7 +764,7 @@ local current_normal_filename
 local current_hr_filename
 local current_idle_animation
 
-for minisembler, rgba in pairs(minisemblers_rgba_pairs) do -- make the minisembler entities overall
+for minisembler, _ in pairs(minisemblers_rgba_pairs) do -- make the minisembler entities overall
   direction_set = {}
   for _, direction_name in pairs(animation_directions) do -- build current_animation, FIXME: Name the minisembler looping table more gooder
     layer_set = {}
