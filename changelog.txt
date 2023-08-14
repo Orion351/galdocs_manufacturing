@@ -5,6 +5,7 @@ Date: 2023-08-14
     - Fixed issue with non-hr shadow file in bandsaw causing a crash
     - The vertically oriented lathe shadows no longer shimmy up during crafting
     - Electric furnaces can now take productivity modules (this was a bug)
+    - Added SFX for placing minisemblers.
 ---------------------------------------------------------------------------------------------------
 Version: 0.1.10
 Date: 2023-08-01
