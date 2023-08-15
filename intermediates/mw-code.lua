@@ -516,8 +516,10 @@ end
 for _, value in pairs(data.raw.module) do
   if value.effect["productivity"] then
       local prod_mod = table.deepcopy(value)
-      for _, recipe_name in pairs(productivity_whitelist) do
-        table.insert(prod_mod.limitation, #prod_mod.limitation, recipe_name)
+      if prod_mod.limitation then
+        for _, recipe_name in pairs(productivity_whitelist) do
+          table.insert(prod_mod.limitation, #prod_mod.limitation, recipe_name)
+        end
       end
       data:extend({prod_mod})
   end
