@@ -235,7 +235,7 @@ local minisemblers_rendering_data = { -- Set up the minisembler rendering data
   },
 
   -- metal-bandsaw
-  ["metal-bandsaw"] = {
+  [Minisembler.METAL_BANDSAW] = {
     ["frame-count"] = 24,
     ["line-length"] = 5,
     ["hr"] = {
@@ -273,7 +273,7 @@ local minisemblers_rendering_data = { -- Set up the minisembler rendering data
   },
 
   -- welder
-  ["welder"] = {
+  [Minisembler.WELDER] = {
     ["frame-count"] = 24,
     ["line-length"] = 5,
     ["hr"] = {
