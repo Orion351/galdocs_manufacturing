@@ -101,7 +101,7 @@ end
 --   String: Name of '-stock' suffix; use "none" if none.
 --   Table: List of finished parts (without sufficies) for writing to log() a .csv of the changed recipes for debugging purposes. Send an empty table {} to not log.
 local function re_recipe(intermediates_to_replace, pull_table_name, finished_part_name, stock_name, machined_part_list_to_log)
-  -- Make intermediates_to_add_table. Looks lke 
+  -- Make intermediates_to_add_table. Looks like 
   -- {
   --   ["item-name-1"] = {{"ingredient-1-name", ingredient-1-amount}, {"ingredient-2-name", ingredient-2-amount} ... {"ingredient-n-name", ingredient-n-amount} }, 
   --   ["item-name-2"] = {{"ingredient-1-name", ingredient-1-amount}, {"ingredient-2-name", ingredient-2-amount} ... {"ingredient-n-name", ingredient-n-amount} }, 

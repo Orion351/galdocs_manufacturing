@@ -114,11 +114,16 @@ local metals_to_use = { -- ***ORE***
   ["iron"]     = true
 }
 
-local alloy_recipe = {
+local alloy_plate_recipe = {
   ["steel"]            = {{"iron-plate-stock", 5},   {"coal", 1}},
   ["brass"]            = {{"copper-plate-stock", 3}, {"zinc-plate-stock", 1}},
   ["invar"]            = {{"iron-plate-stock", 3},   {"nickel-plate-stock", 2}},
   ["galvanized-steel"] = {{"steel-plate-stock", 5},  {"zinc-plate-stock", 1}}
+}
+
+local alloy_ore_recipe = {
+  ["brass"]            = {{"copper-ore", 3}, {"zinc-ore", 1}},
+  ["invar"]            = {{"iron-ore", 3},   {"nickel-ore", 2}},
 }
 
 -- Stocks
@@ -550,7 +555,8 @@ return {
   ["base_resources_to_replace_without_ore_in_the_stupid_name"] = base_resources_to_replace_without_ore_in_the_stupid_name,
   ["ores_to_include_starting_area"] = ores_to_include_starting_area,
   ["metal_technology_pairs"] = metal_technology_pairs,
-  ["alloy_recipe"] = alloy_recipe,
+  ["alloy_plate_recipe"] = alloy_plate_recipe,
+  ["alloy_ore_recipe"] = alloy_ore_recipe,
   ["metal_properties_pairs"] = metal_properties_pairs,
   ["metal_tinting_pairs"] = metal_tinting_pairs,
   ["metal_stocks_pairs"] = metal_stocks_pairs,

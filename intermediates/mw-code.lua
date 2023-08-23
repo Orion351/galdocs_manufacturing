@@ -23,6 +23,7 @@ local consumable_parts = false -- not implemented yet
 
 -- Settings variables
 local show_property_badges = settings.startup["gm-show-badges"].value
+local show_non_hand_craftables = not settings.startup["gm-show-non-hand-craftable"].value -- I'm flipping the value because it's 'hide_from_player_crafting' rather than 'show'.
 
 
 
@@ -38,7 +39,8 @@ local base_resources_to_replace_with_ore_in_the_stupid_name = mw_data.base_resou
 local base_resources_to_replace_without_ore_in_the_stupid_name = mw_data.base_resources_to_replace_without_ore_in_the_stupid_name
 local ores_to_include_starting_area = mw_data.ores_to_include_starting_area
 local metal_technology_pairs = mw_data.metal_technology_pairs
-local alloy_recipe = mw_data.alloy_recipe
+local alloy_plate_recipe = mw_data.alloy_plate_recipe
+local alloy_ore_recipe = mw_data.alloy_ore_recipe
 local metal_properties_pairs = mw_data.metal_properties_pairs
 local metal_tinting_pairs = mw_data.metal_tinting_pairs
 local metal_stocks_pairs = mw_data.metal_stocks_pairs
@@ -276,9 +278,35 @@ data:extend({ -- Make plate smelting category so player can see recipes in inven
   }
 })
 
-local output_count
 local productivity_whitelist = {} -- Start the whitelist for productivity modules
-for alloy, ingredients in pairs(alloy_recipe) do -- Add alloy plate recipes
+
+local output_count
+--[[
+for alloy, ingredients in pairs(alloy_ore_recipe) do -- Add alloy ore-to-plate recipes
+  output_count = 0
+  for _, ingredient in pairs(ingredients) do
+    output_count = output_count + ingredient[2]
+  end
+
+  data:extend({
+    {
+      type = "recipe",
+      name = alloy .. "-from-ore",
+      enabled = metal_technology_pairs[alloy][2] == "starter",
+      ingredients = ingredients,
+      result = alloy .. "-plate-stock",
+      result_count = output_count,
+      energy_required = output_count * 3.2,
+      category = "gm-alloys",
+      subgroup = "gm-plates"
+    }
+  })
+
+  -- Because this is a plate recipe, add it to the productivity whitelist. For now, however, do not include it, as this would lead to Weirdness.
+  -- table.insert(productivity_whitelist, #productivity_whitelist, alloy .. "-from-ore")
+end
+
+for alloy, ingredients in pairs(alloy_plate_recipe) do -- Add alloy plate-to-plate recipes
   
   output_count = 0
   for _, ingredient in pairs(ingredients) do
@@ -288,7 +316,7 @@ for alloy, ingredients in pairs(alloy_recipe) do -- Add alloy plate recipes
   data:extend({
     {
       type = "recipe",
-      name = alloy .. "-plate-stock",
+      name = alloy .. "-from-plate-stock",
       enabled = metal_technology_pairs[alloy][2] == "starter",
       ingredients = ingredients,
       result = alloy .. "-plate-stock",
@@ -302,6 +330,8 @@ for alloy, ingredients in pairs(alloy_recipe) do -- Add alloy plate recipes
   -- Because this is a plate recipe, add it to the productivity whitelist. For now, however, do not include it, as this would lead to Weirdness.
   -- table.insert(productivity_whitelist, #productivity_whitelist, alloy .. "-plate-stock")
 end
+--]]
+
 
 -- Properties
 -- ==========
@@ -356,6 +386,7 @@ end
 order_count = 0
 local property_list
 local produces_list
+local made_in
 
 for metal, stocks in pairs(metal_stocks_pairs) do -- Make the [Metal] [Stock] Items and Recipes
   for stock, _ in pairs(stocks) do
@@ -368,7 +399,6 @@ for metal, stocks in pairs(metal_stocks_pairs) do -- Make the [Metal] [Stock] It
       table.insert(property_list, {"gm.line-separator"})
     end
     table.remove(property_list, #property_list)
-
     -- For the tooltip, populate takers with the minisemblers that can use this stock, and with the stocks and machined parts that will result, respectively.
     produces_list = {}
     for product, precursor in pairs(stocks_precurors) do
@@ -390,6 +420,18 @@ for metal, stocks in pairs(metal_stocks_pairs) do -- Make the [Metal] [Stock] It
         table.insert(produces_list, {"gm." .. machined_part_minisembler_pairs[product]})
         table.insert(produces_list, {"gm.line-separator"})
       end
+    end
+
+    made_in = {""}
+    if stock ~= "plate" then 
+      table.insert(made_in, " - [item=gm-" .. stock_minisembler_pairs[stock] .. "]  ")
+      table.insert(made_in, {"gm." .. stock_minisembler_pairs[stock]})
+      table.insert(made_in, {"gm.line-separator"})
+    end
+    if stock == "plate" then 
+      table.insert(made_in, " - [item=stone-furnace]  ")
+      table.insert(made_in, {"gm.smelting-type"})
+      table.insert(made_in, {"gm.line-separator"})
     end
 
     local produces_list_pieces = {}
@@ -452,7 +494,7 @@ for metal, stocks in pairs(metal_stocks_pairs) do -- Make the [Metal] [Stock] It
         order = order_count .. "gm-stocks-" .. metal,
         stack_size = stock_stack_size,
         localised_name = {"gm.metal-stock-item-name", {"gm." .. metal}, {"gm." .. stock}},
-        localised_description = {"gm.metal-stock-item-description", {"gm." .. metal}, {"gm." .. stock}, property_list, produces_list_pieces[1], produces_list_pieces[2], produces_list_pieces[3], produces_list_pieces[4], produces_list_pieces[5], produces_list_pieces[6]}
+        localised_description = {"gm.metal-stock-item-description", {"gm." .. metal}, {"gm." .. stock}, made_in, property_list, produces_list_pieces[1], produces_list_pieces[2], produces_list_pieces[3], produces_list_pieces[4], produces_list_pieces[5], produces_list_pieces[6]}
       }
     })
     if (stock ~= "plate") then
@@ -471,7 +513,7 @@ for metal, stocks in pairs(metal_stocks_pairs) do -- Make the [Metal] [Stock] It
           secondary = metal_tinting_pairs[metal][2]
         },
         always_show_made_in = true,
-        hide_from_player_crafting = true,
+        hide_from_player_crafting = show_non_hand_craftables,
         energy_required = 0.3,
         category = "gm-" .. stock_minisembler_pairs[stock],
         localised_name = {"gm.metal-stock-item-name", {"gm." .. metal}, {"gm." .. stock}}
@@ -481,12 +523,68 @@ for metal, stocks in pairs(metal_stocks_pairs) do -- Make the [Metal] [Stock] It
         recipe.hide_from_player_crafting = false
       end
       data:extend({recipe})
-    else
-      -- Because this is a plate recipe, add it to the productivity whitelist
-      table.insert(productivity_whitelist, #productivity_whitelist, metal .. "-" .. stock .. "-stock")
+    else -- FIXME: Refactor this to use the methodology above.
+      if alloy_plate_recipe[metal] ~= nil then -- Make the special-case alloy-from-plate recipes
+        -- Because this is a plate recipe, add it to the productivity whitelist -- except, it's an alloys, so ... don't. For now.
+        -- table.insert(productivity_whitelist, #productivity_whitelist, metal .. "-" .. stock .. "-stock")
 
-      -- Make the special-case plate recipes that take ores instead of stocks.
-      if metals_to_use[metal] ~= nil then
+        output_count = 0
+        for _, ingredient in pairs(alloy_plate_recipe[metal]) do
+          output_count = output_count + ingredient[2]
+        end
+
+        data:extend({
+          { -- recipe
+            type = "recipe",
+            name = metal .. "-" .. stock .. "-stock-from-plate",
+            enabled = metal_technology_pairs[metal][2] == "starter",
+            energy_required = 3.2 * output_count,
+            ingredients = alloy_plate_recipe[metal],
+            crafting_machine_tint = {
+              primary = metal_tinting_pairs[metal][1],
+              secondary = metal_tinting_pairs[metal][2]
+            },
+            result = metal .. "-" .. stock .. "-stock",
+            category = "smelting",
+            subgroup = "gm-plates",
+            localised_name = {"gm.metal-stock-item-name", {"gm." .. metal}, {"gm." .. stock}},
+            hide_from_player_crafting = false
+          }
+        })
+      end
+      
+      if alloy_ore_recipe[metal] ~= nil then -- Make the special-case alloy-from-plate recipes
+        -- Because this is a plate recipe, add it to the productivity whitelist -- except, it's an alloys, so ... don't. For now.
+        -- table.insert(productivity_whitelist, #productivity_whitelist, metal .. "-" .. stock .. "-stock")
+
+        output_count = 0
+        for _, ingredient in pairs(alloy_ore_recipe[metal]) do
+          output_count = output_count + ingredient[2]
+        end
+
+        data:extend({
+          { -- recipe
+            type = "recipe",
+            name = metal .. "-" .. stock .. "-stock-from-ore",
+            enabled = metal_technology_pairs[metal][2] == "starter",
+            energy_required = 3.2 * output_count,
+            ingredients = alloy_ore_recipe[metal],
+            crafting_machine_tint = {
+              primary = metal_tinting_pairs[metal][1],
+              secondary = metal_tinting_pairs[metal][2]
+            },
+            result = metal .. "-" .. stock .. "-stock",
+            category = "smelting",
+            subgroup = "gm-plates",
+            localised_name = {"gm.metal-stock-item-name", {"gm." .. metal}, {"gm." .. stock}},
+            hide_from_player_crafting = false
+          }
+        })
+      end   
+      
+      if metals_to_use[metal] ~= nil then -- Make the special-case elemental plate recipes that take ores instead of stocks.
+        -- Because this is a plate recipe, add it to the productivity whitelist
+        table.insert(productivity_whitelist, #productivity_whitelist, metal .. "-" .. stock .. "-stock")
         data:extend({
           { -- recipe
             type = "recipe",
@@ -504,7 +602,8 @@ for metal, stocks in pairs(metal_stocks_pairs) do -- Make the [Metal] [Stock] It
             result = metal .. "-" .. stock .. "-stock",
             category = "smelting",
             subgroup = "gm-plates",
-            localised_name = {"gm.metal-stock-item-name", {"gm." .. metal}, {"gm." .. stock}}
+            localised_name = {"gm.metal-stock-item-name", {"gm." .. metal}, {"gm." .. stock}},
+            hide_from_player_crafting = false
           }
         })
       end
@@ -513,18 +612,17 @@ for metal, stocks in pairs(metal_stocks_pairs) do -- Make the [Metal] [Stock] It
 end
 
 -- Check each module to see if 'productivity' is in its 'effect' list; if so, then add the plate-stock recipes to it. 
-for _, value in pairs(data.raw.module) do
-  if value.effect["productivity"] then
-      local prod_mod = table.deepcopy(value)
-      if prod_mod.limitation then
+for _, module in pairs(data.raw.module) do
+  if module.effect["productivity"] then
+      local module_with_productivity = table.deepcopy(module)
+      if module_with_productivity.limitation then
         for _, recipe_name in pairs(productivity_whitelist) do
-          table.insert(prod_mod.limitation, #prod_mod.limitation, recipe_name)
+          table.insert(module_with_productivity.limitation, #module_with_productivity.limitation, recipe_name)
         end
       end
-      data:extend({prod_mod})
+      data:extend({module_with_productivity})
   end
 end
-
 
 -- Machined Parts
 -- ==============
@@ -621,6 +719,11 @@ for property, parts in pairs(property_machined_part_pairs) do -- Make the [Prope
       if metal_list_pieces[i] == nil then metal_list_pieces[i] = {""} end
     end
 
+    made_in = {""}
+    table.insert(made_in, " - [item=gm-" .. machined_part_minisembler_pairs[part] .. "]  ")
+    table.insert(made_in, {"gm." .. machined_part_minisembler_pairs[part]})
+    table.insert(made_in, {"gm.line-separator"})
+
     data:extend({
       { -- item
         type = "item",
@@ -630,7 +733,7 @@ for property, parts in pairs(property_machined_part_pairs) do -- Make the [Prope
         order = order_count .. "gm-machined-parts-" .. part,
         stack_size = machined_part_stack_size,
         localised_name = {"gm.machined-part-item", {"gm." .. property}, {"gm." .. part}},
-        localised_description = {"gm.metal-machined-part-item-description", {"gm." .. property}, {"gm." .. part}, metal_list_pieces[1], metal_list_pieces[2], metal_list_pieces[3], metal_list_pieces[4], metal_list_pieces[5], metal_list_pieces[6]}
+        localised_description = {"gm.metal-machined-part-item-description", {"gm." .. property}, {"gm." .. part}, made_in, metal_list_pieces[1], metal_list_pieces[2], metal_list_pieces[3], metal_list_pieces[4], metal_list_pieces[5], metal_list_pieces[6]}
       }
     })
     for metal, metal_properties in pairs(metal_properties_pairs) do
@@ -668,7 +771,7 @@ for property, parts in pairs(property_machined_part_pairs) do -- Make the [Prope
           result = property .. "-" .. part .. "-machined-part",
           result_count = machined_parts_precurors[part][3],
           category = "gm-" .. machined_part_minisembler_pairs[part],
-          hide_from_player_crafting = true,
+          hide_from_player_crafting = show_non_hand_craftables,
           icons = icons_data_recipe,
           crafting_machine_tint = { -- I don't know if anything will use this, but here it is just in case. You're welcome, future me.
             primary = metal_tinting_pairs[metal][1],
@@ -727,22 +830,6 @@ data:extend({ -- Make the minisemblers item group and technology
 	  order = "f",
     localised_name = {"gm.minisembler-item-subgroup-name"},
     localised_description = {"gm.minisembler-item-subgroup-description"}
-  },
-  { -- technology
-    type = "technology",
-    name = "gm-technology-minisemblers",
-    icon_size = 256, icon_mipmaps = 4,
-    icon = "__galdocs-manufacturing__/graphics/technology-icons/lathe-technology-icon.png",
-    effects = technology_list,
-    unit =
-    {
-      count = 10,
-      ingredients = {{"automation-science-pack", 1}},
-      time = 10
-    },
-    ignore_tech_cost_multiplier = true,
-    order = "a-b-a",
-    localised_name = {"gm.technology-metal-machining-minisembler"}
   }
 })
 
@@ -765,6 +852,8 @@ local direction_set
 local current_normal_filename
 local current_hr_filename
 local current_idle_animation
+local item_localized_description_stock_to_stock
+local item_localized_description_stock_to_machined_part
 
 for minisembler, _ in pairs(minisemblers_rgba_pairs) do -- make the minisembler entities overall
   direction_set = {}
@@ -869,6 +958,57 @@ for minisembler, _ in pairs(minisemblers_rgba_pairs) do -- make the minisembler 
   end
   current_working_visualizations = layer_set
 
+  item_localized_description_stock_to_stock = {""}
+  for stock, minisembler_check in pairs(stock_minisembler_pairs) do
+    if minisembler == minisembler_check then
+      -- " - [item=source_stock]  into [item=product_stock]\n"
+      table.insert(item_localized_description_stock_to_stock, " - [item=iron-".. stocks_precurors[stock][1] .. "-stock]  ")
+      table.insert(item_localized_description_stock_to_stock, {"gm." .. stocks_precurors[stock][1]})
+      table.insert(item_localized_description_stock_to_stock, " Stock into  [item=iron-" .. stock .. "-stock]  ")
+      table.insert(item_localized_description_stock_to_stock, {"gm." .. stock})
+      table.insert(item_localized_description_stock_to_stock, " Stock\n")
+    end
+  end
+
+  --[[
+  local item_localized_description_stock_to_stock_pieces = {}
+  local subtable_size = 18
+  local num_subtables = math.ceil(#item_localized_description_stock_to_stock / subtable_size)
+  local seen_final_element = false
+  for i = 1, num_subtables do
+    local subtable = {""}
+    for j = 1, subtable_size do
+      local element = item_localized_description_stock_to_stock[(i-1)*subtable_size + j]
+      if element then
+        table.insert(subtable, element)
+      else
+        if not seen_final_element then
+          table.remove(subtable, #subtable)
+          seen_final_element = true
+        end
+      end
+    end
+    table.insert(item_localized_description_stock_to_stock_pieces, subtable)
+  end
+
+  for i = 1, 6 do
+    if item_localized_description_stock_to_stock_pieces[i] == nil then item_localized_description_stock_to_stock_pieces[i] = {""} end
+  end
+  --]]
+
+  item_localized_description_stock_to_machined_part = {""}
+  for part, minisembler_check in pairs(machined_part_minisembler_pairs) do
+    if minisembler == minisembler_check then
+      -- " - [item=source_stock]  into [item=product_stock]\n"
+      -- table.insert(item_localized_description_stock_to_machined_part, " - [item=iron-".. machined_parts_precurors[part][1] .. "-stock]  into  [item=basic-" .. part .. "-machined-part]\n")
+      table.insert(item_localized_description_stock_to_machined_part, " - [item=iron-".. machined_parts_precurors[part][1] .. "-stock]  ")
+      table.insert(item_localized_description_stock_to_machined_part, {"gm." .. machined_parts_precurors[part][1]})
+      table.insert(item_localized_description_stock_to_machined_part, " Stock into  [item=basic-" .. part .. "-machined-part]  ")
+      table.insert(item_localized_description_stock_to_machined_part, {"gm." .. part})
+      table.insert(item_localized_description_stock_to_machined_part, {"gm.line-separator"})
+    end
+  end
+
   data:extend({ -- make the minisembler recipe categories, items, recipes and entities
     { -- recipe category
       type = "recipe-category",
@@ -892,7 +1032,7 @@ for minisembler, _ in pairs(minisemblers_rgba_pairs) do -- make the minisembler 
       place_result = "gm-" .. minisembler,
       stack_size = 50,
       localised_name = {"gm.minisembler-item-name", {"gm." .. minisembler}},
-      localised_description = {"gm.minisembler-item-description", {"gm." .. minisembler}} -- FIXME : add in a list of things it can machine.
+      localised_description = {"gm.minisembler-item-description", {"gm." .. minisembler}, item_localized_description_stock_to_stock, item_localized_description_stock_to_machined_part} -- FIXME : add in a list of things it can machine.
     },
     { -- recipe
       type = "recipe",
@@ -984,6 +1124,8 @@ for minisembler, _ in pairs(minisemblers_rgba_pairs) do -- make the minisembler 
   })
   order_count = order_count + 1
 end
+
+
 
 -- Technology
 -- ==========
@@ -1176,6 +1318,25 @@ data:extend({ -- Make the technologies for the stocks
   },
 })
 
+data:extend({ -- electric metal machining minisembler technology
+  {
+    type = "technology",
+    name = "gm-technology-minisemblers",
+    icon_size = 256, icon_mipmaps = 4,
+    icon = "__galdocs-manufacturing__/graphics/technology-icons/lathe-technology-icon.png",
+    effects = technology_list,
+    unit =
+    {
+      count = 10,
+      ingredients = {{"automation-science-pack", 1}},
+      time = 10
+    },
+    ignore_tech_cost_multiplier = true,
+    order = "a-b-a",
+    localised_name = {"gm.technology-metal-machining-minisembler"}
+  }
+})
+
 data.raw.technology["automation"].prerequisites = {"gm-technology-minisemblers"} -- FIXME: Put this in Data-Updates.lua
 
 for metal, techology_data in pairs(metal_technology_pairs) do
@@ -1183,7 +1344,12 @@ for metal, techology_data in pairs(metal_technology_pairs) do
     local stock_technology_effects = data.raw.technology[techology_data[2]].effects
     local machined_part_technology_effects = data.raw.technology[techology_data[3]].effects
     for stock, _ in pairs(metal_stocks_pairs[metal]) do
-      table.insert(stock_technology_effects, {type = "unlock-recipe", recipe = metal .. "-" .. stock .. "-stock"})
+      if stock ~= "plate" then
+        table.insert(stock_technology_effects, {type = "unlock-recipe", recipe = metal .. "-" .. stock .. "-stock"})
+      else
+        if alloy_plate_recipe[metal] ~= nil then table.insert(stock_technology_effects, {type = "unlock-recipe", recipe = metal .. "-" .. stock .. "-stock-from-plate"}) end
+        if alloy_ore_recipe[metal] ~= nil then table.insert(stock_technology_effects, {type = "unlock-recipe", recipe = metal .. "-" .. stock .. "-stock-from-ore"}) end
+      end
     end
     for property, _ in pairs(metal_properties_pairs[metal]) do
       if property_machined_part_pairs[property] ~= nil then
@@ -1196,3 +1362,32 @@ for metal, techology_data in pairs(metal_technology_pairs) do
     end
   end
 end
+
+data:extend({
+  { -- Early Inserter Stack Size Bonus
+    type = "technology",
+    name = "gm-early-inserter-capacity-bonus",
+    icons = util.technology_icon_constant_stack_size("__base__/graphics/technology/inserter-capacity.png"),
+
+    icon_size = 256, icon_mipmaps = 4,
+
+    prerequisites = {"gm-technology-minisemblers"},
+    unit =
+    {
+      count = 40,
+      ingredients =
+      {
+        {"automation-science-pack", 1},
+      },
+      time = 10
+    },
+    effects = {
+      {
+        type = "inserter-stack-size-bonus",
+        modifier = 1
+      },
+    },
+    order = "c-a-a",
+    localised_name = {"gm.technology-early-inserter-capacity-bonus"},
+  }
+})

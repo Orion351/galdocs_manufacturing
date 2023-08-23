@@ -11,6 +11,12 @@ data:extend({
     name = "gm-advanced-mode",
     setting_type = "startup",
     default_value = true
+  },
+  { -- Display non-hand-craftable recipes in player crafting menu
+    type = "bool-setting",
+    name = "gm-show-non-hand-craftable",
+    setting_type = "startup",
+    default_value = false
   }
 })
 
