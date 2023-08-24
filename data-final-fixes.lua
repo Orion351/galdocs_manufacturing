@@ -6,4 +6,5 @@ for _, character in pairs(data.raw.character) do -- Gives all characters the abi
   for minisembler, _ in pairs(minisemblers) do
     table.insert(character.crafting_categories, "gm-" .. minisembler .. "-player-crafting")
   end
+  -- FIXME: come up with a bonus inventory slot size thing because WHAT HAVE I DONE
 end

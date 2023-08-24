@@ -1,9 +1,15 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.1.14
+Date: 2023-08-24
+  Changes:
+    - Fixed bug that kept nickel and titanium stocks from unlocking with the recipe
+    - Fixed bug with alloy recipe output count item count
+---------------------------------------------------------------------------------------------------
 Version: 0.1.13
-Date: 2023-08-14
+Date: 2023-08-22
   Changes:
     - Updated tooltips for Stocks, Machined Parts and Minisemblers to be more informative
-    - Added ore-to-plate recipes
+    - Added ore-to-alloy recipes
     - Added toggle to turn on non-craftable recipes
     - Added early-game +1 inserter capacity (non-stack inserters only)
 ---------------------------------------------------------------------------------------------------

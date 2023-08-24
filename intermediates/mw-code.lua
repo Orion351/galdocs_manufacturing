@@ -545,6 +545,7 @@ for metal, stocks in pairs(metal_stocks_pairs) do -- Make the [Metal] [Stock] It
               secondary = metal_tinting_pairs[metal][2]
             },
             result = metal .. "-" .. stock .. "-stock",
+            result_count = output_count,
             category = "smelting",
             subgroup = "gm-plates",
             localised_name = {"gm.metal-stock-item-name", {"gm." .. metal}, {"gm." .. stock}},
@@ -574,6 +575,7 @@ for metal, stocks in pairs(metal_stocks_pairs) do -- Make the [Metal] [Stock] It
               secondary = metal_tinting_pairs[metal][2]
             },
             result = metal .. "-" .. stock .. "-stock",
+            result_count = output_count,
             category = "smelting",
             subgroup = "gm-plates",
             localised_name = {"gm.metal-stock-item-name", {"gm." .. metal}, {"gm." .. stock}},
@@ -1346,9 +1348,11 @@ for metal, techology_data in pairs(metal_technology_pairs) do
     for stock, _ in pairs(metal_stocks_pairs[metal]) do
       if stock ~= "plate" then
         table.insert(stock_technology_effects, {type = "unlock-recipe", recipe = metal .. "-" .. stock .. "-stock"})
-      else
+      end
+      if stock == "plate" then
         if alloy_plate_recipe[metal] ~= nil then table.insert(stock_technology_effects, {type = "unlock-recipe", recipe = metal .. "-" .. stock .. "-stock-from-plate"}) end
         if alloy_ore_recipe[metal] ~= nil then table.insert(stock_technology_effects, {type = "unlock-recipe", recipe = metal .. "-" .. stock .. "-stock-from-ore"}) end
+        if alloy_plate_recipe[metal] == nil and alloy_ore_recipe[metal] == nil then table.insert(stock_technology_effects, {type = "unlock-recipe", recipe = metal .. "-" .. stock .. "-stock"}) end
       end
     end
     for property, _ in pairs(metal_properties_pairs[metal]) do
