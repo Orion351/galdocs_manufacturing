@@ -129,8 +129,8 @@ local alloy_plate_recipe = {
 }
 
 local alloy_ore_recipe = {
-  ["brass"]            = {{"copper-ore", 3}, {"zinc-ore", 1}},
-  ["invar"]            = {{"iron-ore", 3},   {"nickel-ore", 2}},
+  [Resources.BRASS]            = {{"copper-ore", 3}, {"zinc-ore", 1}},
+  [Resources.INVAR]            = {{"iron-ore", 3},   {"nickel-ore", 2}},
 }
 
 -- Stocks
