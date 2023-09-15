@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.1.15
+Date: 
+  Changes:
+    - Added multi-property machined parts
+    - Fixed extra line at the end of minisembler detailed tooltips
+    - Added 'detailed' tooltips toggle in settings
+---------------------------------------------------------------------------------------------------
 Version: 0.1.14
 Date: 2023-08-24
   Changes:

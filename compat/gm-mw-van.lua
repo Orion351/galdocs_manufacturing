@@ -75,7 +75,7 @@ return function(advanced)
 
       ["assembling-machine-1"]        = {{"basic-large-paneling", 2}, {"load-bearing-girdering", 1}, {"basic-gearing", 1}, {"load-bearing-shafting", 1}, {"electrically-conductive-wiring", 3}, {"basic-rivets", 2}, },
       ["assembling-machine-2"]        = {{"high-tensile-large-paneling", 2}, {"heavy-load-bearing-girdering", 1}, {"ductile-gearing", 2}, {"corrosion-resistant-fine-piping", 2}, {"heavy-load-bearing-shafting", 1}, {"electrically-conductive-wiring", 3}, {"high-tensile-rivets", 2}, },
-      ["assembling-machine-3"]        = {{"very-high-tensile-large-paneling", 1}, {"heavy-load-bearing-girdering", 1}, {"ductile-gearing", 4}, {"corrosion-resistant-fine-piping", 2}, {"heavy-load-bearing-shafting", 1}, {"electrically-conductive-wiring", 3}, {"thermally-stable-shielding", 4}, {"very-high-tensile-rivets", 2}, },
+      ["assembling-machine-3"]        = {{"very-high-tensile-large-paneling", 1}, {"corrosion-resistant-and-heavy-load-bearing-girdering", 1}, {"ductile-gearing", 4}, {"corrosion-resistant-fine-piping", 2}, {"heavy-load-bearing-shafting", 1}, {"electrically-conductive-wiring", 3}, {"thermally-stable-shielding", 4}, {"very-high-tensile-rivets", 2}, },
 
       ["oil-refinery"]                = {{"corrosion-resistant-large-paneling", 3}, {"heavy-load-bearing-girdering", 8}, {"corrosion-resistant-fine-piping", 20}, {"thermally-stable-shafting", 2}, {"electrically-conductive-wiring", 4}, {"high-tensile-rivets", 8}, },
       ["chemical-plant"]              = {{"corrosion-resistant-large-paneling", 2}, {"heavy-load-bearing-girdering", 4}, {"corrosion-resistant-fine-piping", 8}, {"thermally-stable-shafting", 2}, {"electrically-conductive-wiring", 4}, {"high-tensile-rivets", 3}, },

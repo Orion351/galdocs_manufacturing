@@ -17,6 +17,18 @@ data:extend({
     name = "gm-show-non-hand-craftable",
     setting_type = "startup",
     default_value = false
+  },
+  { -- Display detailed tooltips
+  type = "bool-setting",
+  name = "gm-show-detailed-tooltips",
+  setting_type = "startup",
+  default_value = true
+  },
+  { -- Ore sPaRkLe
+  type = "bool-setting",
+  name = "gm-ore-sPaRkLe",
+  setting_type = "startup",
+  default_value = true
   }
 })
 

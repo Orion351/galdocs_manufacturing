@@ -148,7 +148,8 @@ if advanced then -- minisemblers_rgba_pairs: [minisembler | {rgba values}]  FIXM
     ["threader"]        = {r = 0.2, g = 1.0, b = 1.0, a = 1.0},
     ["spooler"]         = {r = 1.0, g = 0.2, b = 1.0, a = 1.0},
     ["roller"]          = {r = 1.0, g = 1.0, b = 0.2, a = 1.0},
-    ["bender"]          = {r = 0.2, g = 0.2, b = 1.0, a = 1.0}
+    ["bender"]          = {r = 0.2, g = 0.2, b = 1.0, a = 1.0},
+    -- ["electroplater"]   = {r = 0.2, g = 0.8, b = 0.8, a = 1.0}
   }
 else
     minisemblers_rgba_pairs = {
@@ -157,7 +158,8 @@ else
     ["mill"]            = {r = 1.0, g = 0.6, b = 0.6, a = 1.0},
     ["metal-lathe"]     = {r = 0.6, g = 1.0, b = 0.6, a = 1.0},
     ["roller"]          = {r = 1.0, g = 1.0, b = 0.2, a = 1.0},
-    ["bender"]          = {r = 0.2, g = 0.2, b = 1.0, a = 1.0}
+    ["bender"]          = {r = 0.2, g = 0.2, b = 1.0, a = 1.0},
+    -- ["electroplater"]   = {r = 0.2, g = 0.8, b = 0.8, a = 1.0}
   }
 end
 
@@ -174,7 +176,7 @@ if advanced then -- Store data to differentiate the different minisemblers
     ["threader"]        = map_minisembler_recipes{1, 1, 2, 1, 0, 1},
     ["spooler"]         = map_minisembler_recipes{1, 1, 2, 2, 1, 1},
     ["roller"]          = map_minisembler_recipes{1, 3, 1, 1, 2, 1},
-    ["bender"]          = map_minisembler_recipes{1, 3, 1, 1, 0, 1}
+    ["bender"]          = map_minisembler_recipes{1, 3, 1, 1, 0, 1},
   }
 else
   minisemblers_recipe_parameters = {
@@ -347,6 +349,12 @@ local metal_properties_pairs = { -- [metal | list of properties]
   ["galvanized-steel"] = map{"basic", "corrosion-resistant", "high-tensile", "load-bearing", "heavy-load-bearing"},
 }
 
+local multi_property_pairs = {
+  -- {"corrosion-resistant", "high-tensile"},       -- Galvanized Steel
+  {"corrosion-resistant", "heavy-load-bearing"},    -- "corrosion-resistant-and-heavy-load-bearing"
+  -- {"lightweight", "high-tensile"}                -- Titanium
+}
+
 local metal_tinting_pairs = { -- [metal | {primary RGBA, secondary RGBA}]
   -- elemental metal
   ["iron"]             = {gamma_correct_rgb{r = 0.32,  g = 0.32,  b = 0.32,  a = 1.0}, gamma_correct_rgb{r = 0.206, g = 0.077, b = 0.057, a = 1.0}},
@@ -452,7 +460,7 @@ else
     ["wiring"]    = "metal-extruder",
     ["shielding"] = "mill",
     ["shafting"]  = "metal-lathe",
-    ["bolts"]     = "metal-lathe"
+    ["bolts"]     = "metal-lathe",
   }
 end
 
@@ -462,7 +470,7 @@ if advanced then -- property_machined_part_pairs : [property | list of machined 
     -- single-properties
     ["basic"]                   = map{"paneling", "large-paneling", "framing", "girdering", "gearing", "fine-gearing", "piping", "fine-piping", "wiring", "shielding", "shafting", "bolts", "rivets"},
     ["load-bearing"]            = map{                              "framing", "girdering",                                                                            "shafting"                   },
-    ["electrically-conductive"] = map{                                                                                                          "wiring"                                          },
+    ["electrically-conductive"] = map{                                                                                                          "wiring"                                            },
     ["high-tensile"]            = map{"paneling", "large-paneling", "framing", "girdering", "gearing", "fine-gearing",                          "wiring", "shielding", "shafting", "bolts", "rivets"},
     ["corrosion-resistant"]     = map{"paneling", "large-paneling",                                                    "piping", "fine-piping",           "shielding",             "bolts", "rivets"},
     ["lightweight"]             = map{"paneling", "large-paneling", "framing", "girdering",                                                                            "shafting"                   },
@@ -470,7 +478,6 @@ if advanced then -- property_machined_part_pairs : [property | list of machined 
     ["thermally-stable"]        = map{"paneling", "large-paneling", "framing", "girdering", "gearing", "fine-gearing", "piping", "fine-piping", "wiring", "shielding", "shafting", "bolts", "rivets"},
     ["thermally-conductive"]    = map{                                                                                                          "wiring",              "shafting"                   },
     ["radiation-resistant"]     = map{"paneling", "large-paneling",                                                                                       "shielding"                               },
-
   }
 else
   property_machined_part_pairs = {
@@ -558,6 +565,7 @@ return {
   ["alloy_plate_recipe"] = alloy_plate_recipe,
   ["alloy_ore_recipe"] = alloy_ore_recipe,
   ["metal_properties_pairs"] = metal_properties_pairs,
+  ["multi_property_pairs"] = multi_property_pairs,
   ["metal_tinting_pairs"] = metal_tinting_pairs,
   ["metal_stocks_pairs"] = metal_stocks_pairs,
   ["stock_minisembler_pairs"] = stock_minisembler_pairs,
