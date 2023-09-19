@@ -1,7 +1,5 @@
---[[
-
-local mw_data = require("intermediates.mw-data-2")
-local minisemblers = mw_data.minisemblers_rgba_pairs
+local MW_Data = require("intermediates.mw-data")
+local minisemblers = MW_Data.minisembler_data
 
 for _, character in pairs(data.raw.character) do -- Gives all characters the ability to craft appropriate stocks and machined parts from MW.
   character.crafting_categories = character.crafting_categories or {}
@@ -10,4 +8,3 @@ for _, character in pairs(data.raw.character) do -- Gives all characters the abi
   end
   -- FIXME: come up with a bonus inventory slot size thing because WHAT HAVE I DONE
 end
---]]

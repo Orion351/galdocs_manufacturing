@@ -1,3 +1,3 @@
-require("intermediates.mw-code-2")
--- require("compat.vanilla")
+require("intermediates.mw-code")
+require("compat.vanilla")
 require("entity.furnaces")
