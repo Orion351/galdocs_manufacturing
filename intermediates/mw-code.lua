@@ -50,7 +50,16 @@ function table.contains(table, value)
   return false
 end
 
-
+function table.concat_values(table, joiner)
+  local new_string = ""
+  for index, v in pairs(table) do
+    new_string = new_string .. v
+    if index ~= #table then
+      new_string = new_string .. joiner
+    end
+  end
+  return new_string
+end
 
 -- **********
 -- Prototypes
@@ -334,11 +343,11 @@ end
 
 order_count = 0
 for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the [Metal] [Stock] Items and Recipes
-  for _, stock in pairs(stocks) do
+  for stock, _ in pairs(stocks) do
     
     -- For the tooltip, populate property_list with the properties of the metal. 
     local property_list = {""}
-    for _, property in pairs(MW_Data.metal_properties_pairs[metal]) do
+    for property, _ in pairs(MW_Data.metal_properties_pairs[metal]) do
       table.insert(property_list, " - [img=" .. property ..  "-sprite]  ")
       table.insert(property_list, {"gm." .. property})
       table.insert(property_list, {"gm.line-separator"})
@@ -626,7 +635,7 @@ for property, parts in pairs(MW_Data.property_machined_part_pairs) do -- Make [P
   order_count = order_count + 1
 end
 
-for _, minisembler in pairs(MW_Data.minisemblers_recipe_parameters) do -- Make Machined Part recipe categories    FIXME : this needs a better loopable
+for minisembler, _ in pairs(MW_Data.minisemblers_recipe_parameters) do -- Make Machined Part recipe categories    FIXME : this needs a better loopable
   data:extend({
     {
       type = "recipe-category",
@@ -641,7 +650,7 @@ end
 
 order_count = 0
 for property, parts in pairs(MW_Data.property_machined_part_pairs) do -- Make the [Property] [Machined Part] Items and Recipes
-  for _, part in pairs(parts) do
+  for part, _ in pairs(parts) do
     -- Work out how to fan out the machined parts
     
     -- Make item icon
@@ -665,9 +674,9 @@ for property, parts in pairs(MW_Data.property_machined_part_pairs) do -- Make th
     -- For the tooltip, populate metal_list with the metals that can make this type of Machined Part.
     local metal_list = {""}
     for metal, properties in pairs(MW_Data.metal_properties_pairs) do
-      if table.contains(properties, property) then
+      if properties[property] then
         local precursor = MW_Data.machined_parts_recipe_data[part].precursor
-        if table.contains(MW_Data.metal_stocks_pairs[metal], precursor) then
+        if MW_Data.metal_stocks_pairs[metal][precursor] then
           table.insert(metal_list, " - [item=" .. metal .. "-" .. precursor ..  "-stock]  ")
           table.insert(metal_list, {"gm.metal-stock-item-name", {"gm." .. metal}, {"gm." .. precursor}})
           table.insert(metal_list, {"gm.line-separator"})
@@ -731,7 +740,7 @@ for property, parts in pairs(MW_Data.property_machined_part_pairs) do -- Make th
 
     for metal, metal_properties in pairs(MW_Data.metal_properties_pairs) do
       local precursor = MW_Data.machined_parts_recipe_data[part].precursor
-      if table.contains(metal_properties, property) and table.contains(MW_Data.metal_stocks_pairs[metal], precursor) then
+      if metal_properties[property] and MW_Data.metal_stocks_pairs[metal][precursor] then
         
         -- Make recipe icon
         local icons_data_recipe = {
@@ -809,7 +818,7 @@ end
 local multi_property_with_key_pairs = {}
 local multi_property_metal_pairs = {}
 for _, multi_properties in pairs(MW_Data.multi_property_pairs) do -- Pair metals with multi-property sets
-  local property_key = table.concat(multi_properties, "-and-")
+  local property_key = table.concat_values(multi_properties, "-and-")
   
   multi_property_with_key_pairs[property_key] = multi_properties
   multi_property_metal_pairs[property_key] = {}
@@ -817,7 +826,7 @@ for _, multi_properties in pairs(MW_Data.multi_property_pairs) do -- Pair metals
   for metal, properties in pairs(MW_Data.metal_properties_pairs) do
     local metal_works = true
     for _, multi_property in pairs(multi_properties) do
-      if not table.contains(properties, multi_property) then
+      if not properties[multi_property] then
         metal_works = false
         break
       end
@@ -848,14 +857,14 @@ for property_key, multi_properties in pairs(multi_property_with_key_pairs) do --
     -- 
     local combined_parts_list = {}
     for _, multi_property in pairs(multi_properties) do
-      for _, part in pairs(MW_Data.property_machined_part_pairs[multi_property]) do
+      for part, _ in pairs(MW_Data.property_machined_part_pairs[multi_property]) do
         combined_parts_list[part] = true
       end
     end
 
     for _, metal in pairs(multi_property_metal_pairs[property_key]) do
       for part, _ in pairs(combined_parts_list) do
-        if table.contains(MW_Data.metal_stocks_pairs[metal], MW_Data.machined_parts_recipe_data[part].precursor) then -- work out how to fan out the machined parts
+        if MW_Data.metal_stocks_pairs[metal][MW_Data.machined_parts_recipe_data[part].precursor] then -- work out how to fan out the machined parts
 
           -- For the tooltip, populate metal_list with the metals that can make this type of Machined Part.
           local metal_list = {""}
@@ -1591,7 +1600,7 @@ for metal, metal_data in pairs(MW_Data.metal_data) do -- Add Stocks and Machined
     local stock_technology_effects = data.raw.technology[metal_data.tech_stock].effects
 
     -- Insert each stock recipe into the relevant tech
-    for _, stock in pairs(MW_Data.metal_stocks_pairs[metal]) do
+    for stock, _ in pairs(MW_Data.metal_stocks_pairs[metal]) do
       if stock ~= "plate" then
         table.insert(stock_technology_effects, {type = "unlock-recipe", recipe = metal .. "-" .. stock .. "-stock"})
       end
@@ -1608,10 +1617,10 @@ for metal, metal_data in pairs(MW_Data.metal_data) do -- Add Stocks and Machined
     local machined_part_technology_effects = data.raw.technology[metal_data.tech_machined_part].effects
 
     -- Insert each single property Machined Parts recipe into the relevant tech
-    for _, property in pairs(MW_Data.metal_properties_pairs[metal]) do
-      if MW_Data.property_machined_part_pairs[property] ~= nil then
-        for _, part in pairs(MW_Data.property_machined_part_pairs[property]) do
-          if table.contains(MW_Data.metal_properties_pairs[metal], property) and table.contains(MW_Data.metal_stocks_pairs[metal], MW_Data.machined_parts_recipe_data[part].precursor) then
+    for property, _ in pairs(MW_Data.metal_properties_pairs[metal]) do
+      if MW_Data.property_machined_part_pairs[property] then
+        for part, _ in pairs(MW_Data.property_machined_part_pairs[property]) do
+          if MW_Data.metal_stocks_pairs[metal][MW_Data.machined_parts_recipe_data[part].precursor] then
             table.insert(machined_part_technology_effects, {type = "unlock-recipe", recipe = property .. "-" .. part .. "-from-" .. metal .. "-" .. MW_Data.machined_parts_recipe_data[part].precursor})
           end
         end
@@ -1631,14 +1640,14 @@ for metal, metal_data in pairs(MW_Data.metal_data) do -- Add Stocks and Machined
       if metal_found then -- FIXME this is parallel code; make this into a function smoosh_table
         local combined_parts_list = {}
         for _, multi_property in pairs(multi_properties) do
-          for _, part in pairs(MW_Data.property_machined_part_pairs[multi_property]) do
+          for part, _ in pairs(MW_Data.property_machined_part_pairs[multi_property]) do
             combined_parts_list[part] = true
           end
         end
 
         -- Insert each multi property Machined Parts recipe into the relevant tech
         for part, _ in pairs(combined_parts_list) do
-          if table.contains(MW_Data.metal_stocks_pairs[metal], MW_Data.machined_parts_recipe_data[part].precursor) then
+          if MW_Data.metal_stocks_pairs[metal][MW_Data.machined_parts_recipe_data[part].precursor] then
             table.insert(machined_part_technology_effects, {type = "unlock-recipe", recipe = property_key .. "-" .. part .. "-from-" .. metal .. "-" .. MW_Data.machined_parts_recipe_data[part].precursor})
           end
         end
