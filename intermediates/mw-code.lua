@@ -1067,7 +1067,6 @@ local current_hr_filename
 local current_idle_animation
 local item_localized_description_stock_to_stock
 local item_localized_description_stock_to_machined_part
-
 for minisembler, _ in pairs(minisemblers_rgba_pairs) do -- make the minisembler entities overall
   direction_set = {}
   for _, direction_name in pairs(animation_directions) do -- build current_animation, FIXME: Name the minisembler looping table more gooder
