@@ -1,5 +1,5 @@
 local MW_Data = require("intermediates.mw-data")
-local minisemblers = MW_Data.minisembler_data
+local minisemblers = MW_Data.minisemblers_recipe_parameters
 
 for _, character in pairs(data.raw.character) do -- Gives all characters the ability to craft appropriate stocks and machined parts from MW.
   character.crafting_categories = character.crafting_categories or {}

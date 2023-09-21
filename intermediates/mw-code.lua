@@ -383,12 +383,12 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the [Metal] [S
 
     -- For the tooltip, show what machine prduces this stock
     local made_in = {""}
-    if stock ~= "plate" then 
+    if stock ~= MW_Data.MW_Stock.PLATE then 
       table.insert(made_in, " - [item=gm-" .. MW_Data.stocks_recipe_data[stock].made_in .. "]  ")
       table.insert(made_in, {"gm." .. MW_Data.stocks_recipe_data[stock].made_in})
       table.insert(made_in, {"gm.line-separator"})
     end
-    if stock == "plate" then 
+    if stock == MW_Data.MW_Stock.PLATE then 
       table.insert(made_in, " - [item=stone-furnace]  ")
       table.insert(made_in, {"gm.smelting-type"})
       table.insert(made_in, {"gm.line-separator"})
@@ -474,7 +474,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the [Metal] [S
       -- Work out the special cases that get to be in player crafting
       local recipe_category = ""
       local recipe_hide_from_player_crafting = true
-      if ((metal == "copper" or metal == "iron") or (metal == "brass" and (stock == "pipe" or stock == "fine-pipe" or stock == "sheet"))) then
+      if ((metal == MW_Data.Metal.COPPER or metal == MW_Data.Metal.IRON) or (metal == MW_Data.Metal.BRASS and (stock == MW_Data.Stock.PIPE or stock == MW_Data.Stock.FINE_PIPE or stock == MW_Data.Stock.SHEET))) then
         recipe_category = "gm-" .. MW_Data.stocks_recipe_data[stock].made_in .. "-player-crafting"
         recipe_hide_from_player_crafting = false
       else 
@@ -789,20 +789,20 @@ for property, parts in pairs(MW_Data.property_machined_part_pairs) do -- Make th
           localised_name = {"gm.metal-machined-part-recipe", {"gm." .. property}, {"gm." .. part}, {"gm." .. metal}, {"gm." .. precursor}}
         }
         if (advanced and ( -- carve-outs for player crafting for bootstrap purposes
-                          (property == "basic"                        and metal == "copper"                                                        ) or
-                          (property == "basic"                        and metal == "iron"                                                          ) or
-                          (property == "electrically-conductive"      and metal == "copper" and precursor == "wire"      and part == "wiring"      ) or
-                          (property == "thermally-conductive"         and metal == "copper" and precursor == "wire"      and part == "wiring"      ) or
-                          (property == "corrosion-resistant"          and metal == "brass"  and precursor == "fine-pipe" and part == "fine-piping" ) or
-                          (property == "corrosion-resistant"          and metal == "brass"  and precursor == "pipe"      and part == "piping"      )
+                          (property == MW_Data.MW_Property.BASIC                    and metal == MW_Data.MW_Metal.COPPER                                                                                           ) or
+                          (property == MW_Data.MW_Property.BASIC                    and metal == MW_Data.MW_Metal.IRON                                                                                             ) or
+                          (property == MW_Data.MW_Property.ELECTRICALLY_CONDUCTIVE  and metal == MW_Data.MW_Metal.COPPER and precursor == MW_Data.MW_Stock.WIRE      and part == MW_Data.MW_Machined_Part.WIRING      ) or
+                          (property == MW_Data.MW_Property.THERMALLY_CONDUCTIVE     and metal == MW_Data.MW_Metal.COPPER and precursor == MW_Data.MW_Stock.WIRE      and part == MW_Data.MW_Machined_Part.WIRING      ) or
+                          (property == MW_Data.MW_Property.CORROSION_RESISTANT      and metal == MW_Data.MW_Metal.BRASS  and precursor == MW_Data.MW_Stock.FINE_PIPE and part == MW_Data.MW_Machined_Part.FINE_PIPING ) or
+                          (property == MW_Data.MW_Property.CORROSION_RESISTANT      and metal == MW_Data.MW_Metal.BRASS  and precursor == MW_Data.MW_Stock.PIPE      and part == MW_Data.MW_Machined_Part.PIPING      )
                           )
             ) or
             (advanced == false and (
-                          (property == "basic"                        and metal == "copper"                                                ) or
-                          (property == "basic"                        and metal == "iron"                                                  ) or
-                          (property == "electrically-conductive"      and metal == "copper" and precursor == "square" and part == "wiring" ) or
-                          (property == "thermally-conductive"         and metal == "copper" and precursor == "square" and part == "wiring" ) or
-                          (property == "corrosion-resistant"          and metal == "brass"  and precursor == "plate"  and part == "piping" )
+                          (property == MW_Data.MW_Property.BASIC                   and metal == MW_Data.MW_Metal.COPPER                                                                                   ) or
+                          (property == MW_Data.MW_Property.BASIC                   and metal == MW_Data.MW_Metal.IRON                                                                                     ) or
+                          (property == MW_Data.MW_Property.ELECTRICALLY_CONDUCTIVE and metal == MW_Data.MW_Metal.COPPER and precursor == MW_Data.MW_Stock.SQUARE and part == MW_Data.MW_Machined_Part.WIRING ) or
+                          (property == MW_Data.MW_Property.THERMALLY_CONDUCTIVE    and metal == MW_Data.MW_Metal.COPPER and precursor == MW_Data.MW_Stock.SQUARE and part == MW_Data.MW_Machined_Part.WIRING ) or
+                          (property == MW_Data.MW_Property.CORROSION_RESISTANT     and metal == MW_Data.MW_Metal.BRASS  and precursor == MW_Data.MW_Stock.PLATE  and part == MW_Data.MW_Machined_Part.PIPING )
                           )
             )
         then
@@ -1045,7 +1045,7 @@ data:extend({ -- Make the minisemblers item group and technology
   }
 })
 
-for _, minisembler in pairs(MW_Data.MW_Minisembler) do -- From the table minisemblers_recipe_parameters, default unset entries to the lathe by default
+for minisembler, _ in pairs(MW_Data.minisemblers_recipe_parameters) do -- From the table minisemblers_recipe_parameters, default unset entries to the lathe by default
   if MW_Data.minisemblers_rendering_data[MW_Data.MW_Minisembler_Tier.ELECTRIC][minisembler] == nil then
     MW_Data.minisemblers_rendering_data[MW_Data.MW_Minisembler_Tier.ELECTRIC][minisembler] = MW_Data.minisemblers_rendering_data[MW_Data.MW_Minisembler_Tier.ELECTRIC]["metal-lathe"]
   end
@@ -1601,10 +1601,10 @@ for metal, metal_data in pairs(MW_Data.metal_data) do -- Add Stocks and Machined
 
     -- Insert each stock recipe into the relevant tech
     for stock, _ in pairs(MW_Data.metal_stocks_pairs[metal]) do
-      if stock ~= "plate" then
+      if stock ~= MW_Data.MW_Stock.PLATE then
         table.insert(stock_technology_effects, {type = "unlock-recipe", recipe = metal .. "-" .. stock .. "-stock"})
       end
-      if stock == "plate" then
+      if stock == MW_Data.MW_Stock.PLATE then
         if metal_data.alloy_plate_recipe then table.insert(stock_technology_effects, {type = "unlock-recipe", recipe = metal .. "-" .. stock .. "-stock-from-plate"}) end
         if metal_data.alloy_ore_recipe then table.insert(stock_technology_effects, {type = "unlock-recipe", recipe = metal .. "-" .. stock .. "-stock-from-ore"}) end
         if metal_data.alloy_plate_recipe == nil and metal_data.alloy_ore_recipe == nil then table.insert(stock_technology_effects, {type = "unlock-recipe", recipe = metal .. "-" .. stock .. "-stock"}) end
