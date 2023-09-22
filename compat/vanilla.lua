@@ -262,6 +262,7 @@ for _, recipe in pairs(data.raw.recipe) do
   end
 end
 
+
 -- Eliminate all unused Machined Parts (as per the list above) from technologies and recipes
 local new_effects
 local i, j
@@ -286,6 +287,8 @@ for item_name, item in pairs(data.raw.item) do
     end
   end
 end
+
+
 
 -- Put the "copper-cable" item back in so that people can connect up the wires of power poles manually again.
 -- This is kept separate for code clarity. It takes a bit longer. Meh.

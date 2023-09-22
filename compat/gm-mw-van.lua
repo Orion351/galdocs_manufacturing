@@ -27,8 +27,8 @@ return function(advanced)
 
       ["pipe"]                        = {{"corrosion-resistant-piping", 1}, {"basic-rivets", 1}, },
       ["pipe-to-ground"]              = {{"corrosion-resistant-piping", 10}, {"basic-rivets", 1}, },
-      ["pump"]                        = {{"load-bearing-framing", 1}, {"corrosion-resistant-fine-piping", 1}, {"basic-rivets", 1}, },
-      ["storage-tank"]                = {{"corrosion-resistant-large-paneling", 6}, {"high-tensile-girdering", 2}, {"corrosion-resistant-piping", 5}, {"basic-rivets", 5}, },
+      ["pump"]                        = {{"corrosion-resistant-and-load-bearing-framing", 1}, {"corrosion-resistant-fine-piping", 1}, {"basic-rivets", 1}, },
+      ["storage-tank"]                = {{"corrosion-resistant-and-high-tensile-large-paneling", 6}, {"high-tensile-girdering", 2}, {"corrosion-resistant-piping", 5}, {"basic-rivets", 5}, },
 
       ["rail"]                        = {{"high-tensile-girdering", 1}, {"basic-rivets", 1}, },
       ["train-stop"]                  = {{"high-tensile-large-paneling", 2}, {"high-tensile-girdering", 3}, {"electrically-conductive-wiring", 2}, {"high-tensile-rivets", 4}, },
@@ -37,7 +37,7 @@ return function(advanced)
 
       ["locomotive"]                  = {{"high-tensile-large-paneling", 10}, {"load-bearing-girdering", 16}, {"high-tensile-gearing", 6}, {"high-tensile-shafting", 8}, {"high-tensile-rivets", 20}, },
       ["cargo-wagon"]                 = {{"high-tensile-large-paneling", 10}, {"load-bearing-girdering", 14}, {"high-tensile-shafting", 8}, {"high-tensile-rivets", 16}, },
-      ["fluid-wagon"]                 = {{"corrosion-resistant-large-paneling", 10}, {"load-bearing-girdering", 10}, {"corrosion-resistant-piping", 10}, {"high-tensile-shafting", 8}, {"high-tensile-rivets", 16}, },
+      ["fluid-wagon"]                 = {{"corrosion-resistant-and-load-bearing-large-paneling", 10}, {"load-bearing-girdering", 10}, {"corrosion-resistant-piping", 10}, {"high-tensile-shafting", 8}, {"high-tensile-rivets", 16}, },
       ["artillery-wagon"]             = {{"very-high-tensile-large-paneling", 10}, {"load-bearing-girdering", 18}, {"high-tensile-shafting", 8}, {"electrically-conductive-wiring", 8}, {"high-tensile-shielding", 18}, {"high-tensile-rivets", 20}, },
 
       ["car"]                         = {{"high-tensile-paneling", 4}, {"load-bearing-framing", 6}, {"ductile-gearing", 4}, {"high-tensile-shafting", 5}, {"high-tensile-bolts", 6}, },
@@ -60,15 +60,15 @@ return function(advanced)
       ["solar-panel"]                 = {{"load-bearing-girdering", 4}, {"electrically-conductive-wiring", 4}, {"high-tensile-rivets", 8}, },
       ["accumulator"]                 = {{"load-bearing-girdering", 1}, {"electrically-conductive-wiring", 8}, {"corrosion-resistant-rivets", 1}, },
 
-      ["nuclear-reactor"]             = {{"very-high-tensile-large-paneling", 40}, {"heavy-load-bearing-girdering", 60}, {"corrosion-resistant-piping", 50}, {"thermally-conductive-shafting", 45}, {"electrically-conductive-wiring", 200}, {"radiation-resistant-shielding", 300}, {"thermally-stable-shielding", 100}, {"very-high-tensile-rivets", 100}, },
+      ["nuclear-reactor"]             = {{"very-high-tensile-large-paneling", 40}, {"corrosion-resistant-and-heavy-load-bearing-girdering", 60}, {"corrosion-resistant-piping", 50}, {"thermally-conductive-shafting", 45}, {"electrically-conductive-wiring", 200}, {"radiation-resistant-shielding", 300}, {"thermally-stable-shielding", 100}, {"very-high-tensile-rivets", 100}, },
       ["heat-pipe"]                   = {{"thermally-conductive-shafting", 15}, {"thermally-stable-shielding", 20}, {"thermally-stable-rivets", 4}, },
-      ["heat-exchanger"]              = {{"corrosion-resistant-large-paneling", 3}, {"load-bearing-girdering", 2}, {"corrosion-resistant-fine-piping", 20}, {"thermally-conductive-shafting", 40}, {"thermally-stable-shielding", 40}, {"high-tensile-rivets", 10}, },
-      ["steam-turbine"]               = {{"corrosion-resistant-large-paneling", 6}, {"load-bearing-girdering", 10}, {"ductile-gearing", 30}, {"corrosion-resistant-fine-piping", 30}, {"thermally-conductive-shafting", 30}, {"electrically-conductive-wiring", 10}, {"thermally-stable-shielding", 10}, {"high-tensile-rivets", 10}, },
+      ["heat-exchanger"]              = {{"corrosion-resistant-and-load-bearing-large-paneling", 3}, {"load-bearing-girdering", 2}, {"corrosion-resistant-fine-piping", 20}, {"thermally-conductive-shafting", 40}, {"thermally-stable-shielding", 40}, {"high-tensile-rivets", 10}, },
+      ["steam-turbine"]               = {{"corrosion-resistant-and-load-bearing-large-paneling", 6}, {"load-bearing-girdering", 10}, {"ductile-gearing", 30}, {"corrosion-resistant-fine-piping", 30}, {"thermally-conductive-shafting", 30}, {"electrically-conductive-wiring", 10}, {"thermally-stable-shielding", 10}, {"high-tensile-rivets", 10}, },
 
       ["burner-mining-drill"]         = {{"basic-girdering", 1}, {"basic-shafting", 2}, {"thermally-conductive-wiring", 2}, {"basic-rivets", 1}, },
       ["electric-mining-drill"]       = {{"load-bearing-girdering", 1}, {"ductile-gearing", 1}, {"corrosion-resistant-fine-piping", 2}, {"load-bearing-shafting", 2}, {"electrically-conductive-wiring", 3}, {"basic-rivets", 1}, },
       ["offshore-pump"]               = {{"basic-paneling", 1}, {"basic-framing", 1}, {"corrosion-resistant-piping", 1}, {"electrically-conductive-wiring", 1}, {"basic-bolts", 1}, },
-      ["pumpjack"]                    = {{"corrosion-resistant-large-paneling", 2}, {"heavy-load-bearing-girdering", 3}, {"corrosion-resistant-fine-piping", 12}, {"high-tensile-shafting", 4}, {"electrically-conductive-wiring", 6}, {"high-tensile-rivets", 4}, },
+      ["pumpjack"]                    = {{"corrosion-resistant-and-heavy-load-bearing-large-paneling", 2}, {"heavy-load-bearing-girdering", 3}, {"corrosion-resistant-fine-piping", 12}, {"high-tensile-shafting", 4}, {"electrically-conductive-wiring", 6}, {"high-tensile-rivets", 4}, },
 
       ["steel-furnace"]               = {{"heavy-load-bearing-girdering", 2}, {"thermally-stable-shielding", 2}, {"high-tensile-rivets", 2}, },
       ["electric-furnace"]            = {{"heavy-load-bearing-girdering", 3}, {"electrically-conductive-wiring", 8}, {"thermally-stable-shielding", 3}, {"high-tensile-rivets", 2}, },
@@ -77,8 +77,8 @@ return function(advanced)
       ["assembling-machine-2"]        = {{"high-tensile-large-paneling", 2}, {"heavy-load-bearing-girdering", 1}, {"ductile-gearing", 2}, {"corrosion-resistant-fine-piping", 2}, {"heavy-load-bearing-shafting", 1}, {"electrically-conductive-wiring", 3}, {"high-tensile-rivets", 2}, },
       ["assembling-machine-3"]        = {{"very-high-tensile-large-paneling", 1}, {"corrosion-resistant-and-heavy-load-bearing-girdering", 1}, {"ductile-gearing", 4}, {"corrosion-resistant-fine-piping", 2}, {"heavy-load-bearing-shafting", 1}, {"electrically-conductive-wiring", 3}, {"thermally-stable-shielding", 4}, {"very-high-tensile-rivets", 2}, },
 
-      ["oil-refinery"]                = {{"corrosion-resistant-large-paneling", 3}, {"heavy-load-bearing-girdering", 8}, {"corrosion-resistant-fine-piping", 20}, {"thermally-stable-shafting", 2}, {"electrically-conductive-wiring", 4}, {"high-tensile-rivets", 8}, },
-      ["chemical-plant"]              = {{"corrosion-resistant-large-paneling", 2}, {"heavy-load-bearing-girdering", 4}, {"corrosion-resistant-fine-piping", 8}, {"thermally-stable-shafting", 2}, {"electrically-conductive-wiring", 4}, {"high-tensile-rivets", 3}, },
+      ["oil-refinery"]                = {{"corrosion-resistant-and-heavy-load-bearing-large-paneling", 3}, {"heavy-load-bearing-girdering", 8}, {"corrosion-resistant-fine-piping", 20}, {"thermally-stable-shafting", 2}, {"electrically-conductive-wiring", 4}, {"high-tensile-rivets", 8}, },
+      ["chemical-plant"]              = {{"corrosion-resistant-and-heavy-load-bearing-large-paneling", 2}, {"heavy-load-bearing-girdering", 4}, {"corrosion-resistant-fine-piping", 8}, {"thermally-stable-shafting", 2}, {"electrically-conductive-wiring", 4}, {"high-tensile-rivets", 3}, },
 
       ["centrifuge"]                  = {{"high-tensile-large-paneling", 4}, {"heavy-load-bearing-girdering", 8}, {"very-high-tensile-gearing", 10}, {"ductile-gearing", 10}, {"heavy-load-bearing-shafting", 20}, {"radiation-resistant-shielding", 40}, {"high-tensile-rivets", 30}, },
 
@@ -138,8 +138,8 @@ return function(advanced)
 
       ["pipe"]                        = {{"corrosion-resistant-piping", 1}, {"basic-bolts", 1}, },
       ["pipe-to-ground"]              = {{"corrosion-resistant-piping", 10}, {"basic-bolts", 1}, },
-      ["pump"]                        = {{"load-bearing-framing", 1}, {"corrosion-resistant-piping", 1}, {"basic-bolts", 1}, },
-      ["storage-tank"]                = {{"corrosion-resistant-paneling", 6}, {"high-tensile-framing", 2}, {"corrosion-resistant-piping", 5}, {"basic-bolts", 5}, },
+      ["pump"]                        = {{"corrosion-resistant-and-load-bearing-framing", 1}, {"corrosion-resistant-piping", 1}, {"basic-bolts", 1}, },
+      ["storage-tank"]                = {{"corrosion-resistant-and-high-tensile-paneling", 6}, {"high-tensile-framing", 2}, {"corrosion-resistant-piping", 5}, {"basic-bolts", 5}, },
 
       ["rail"]                        = {{"high-tensile-framing", 1}, {"basic-bolts", 1}, },
       ["train-stop"]                  = {{"high-tensile-paneling", 3}, {"high-tensile-framing", 4}, {"electrically-conductive-wiring", 2}, {"high-tensile-bolts", 4}, },
@@ -148,7 +148,7 @@ return function(advanced)
 
       ["locomotive"]                  = {{"high-tensile-paneling", 16}, {"load-bearing-framing", 20}, {"high-tensile-gearing", 6}, {"high-tensile-shafting", 8}, {"high-tensile-bolts", 20}, },
       ["cargo-wagon"]                 = {{"high-tensile-paneling", 16}, {"load-bearing-framing", 18}, {"high-tensile-shafting", 8}, {"high-tensile-bolts", 16}, },
-      ["fluid-wagon"]                 = {{"corrosion-resistant-paneling", 16}, {"load-bearing-framing", 18}, {"corrosion-resistant-piping", 10}, {"high-tensile-shafting", 8}, {"high-tensile-bolts", 16}, },
+      ["fluid-wagon"]                 = {{"corrosion-resistant-and-load-bearing-paneling", 16}, {"load-bearing-framing", 18}, {"corrosion-resistant-piping", 10}, {"high-tensile-shafting", 8}, {"high-tensile-bolts", 16}, },
       ["artillery-wagon"]             = {{"very-high-tensile-paneling", 16}, {"load-bearing-framing", 18}, {"high-tensile-shafting", 8}, {"electrically-conductive-wiring", 8}, {"high-tensile-shielding", 18}, {"high-tensile-bolts", 20}, },
 
       ["car"]                         = {{"high-tensile-paneling", 4}, {"load-bearing-framing", 6}, {"ductile-gearing", 4}, {"high-tensile-shafting", 5}, {"high-tensile-bolts", 6}, },
@@ -171,25 +171,25 @@ return function(advanced)
       ["solar-panel"]                 = {{"load-bearing-framing", 8}, {"electrically-conductive-wiring", 4}, {"high-tensile-bolts", 8}, },
       ["accumulator"]                 = {{"load-bearing-framing", 1}, {"electrically-conductive-wiring", 8}, {"corrosion-resistant-bolts", 1}, },
 
-      ["nuclear-reactor"]             = {{"very-high-tensile-paneling", 50}, {"heavy-load-bearing-framing", 65}, {"corrosion-resistant-piping", 55}, {"thermally-conductive-shafting", 55}, {"electrically-conductive-wiring", 200}, {"radiation-resistant-shielding", 300}, {"thermally-stable-shielding", 100}, {"very-high-tensile-bolts", 120}, },
+      ["nuclear-reactor"]             = {{"very-high-tensile-paneling", 50}, {"corrosion-resistant-and-heavy-load-bearing-framing", 65}, {"corrosion-resistant-piping", 55}, {"thermally-conductive-shafting", 55}, {"electrically-conductive-wiring", 200}, {"radiation-resistant-shielding", 300}, {"thermally-stable-shielding", 100}, {"very-high-tensile-bolts", 120}, },
       ["heat-pipe"]                   = {{"thermally-conductive-shafting", 7}, {"thermally-stable-shielding", 11}, {"thermally-stable-bolts", 2}, },
-      ["heat-exchanger"]              = {{"corrosion-resistant-paneling", 3}, {"load-bearing-framing", 2}, {"corrosion-resistant-piping", 8}, {"thermally-conductive-shafting", 28}, {"thermally-stable-shielding", 18}, {"high-tensile-bolts", 8}, },
-      ["steam-turbine"]               = {{"corrosion-resistant-paneling", 4}, {"load-bearing-framing", 7}, {"ductile-gearing", 18}, {"corrosion-resistant-piping", 18}, {"thermally-conductive-shafting", 18}, {"electrically-conductive-wiring", 8}, {"thermally-stable-shielding", 6}, {"high-tensile-bolts", 8}, },
+      ["heat-exchanger"]              = {{"corrosion-resistant-and-load-bearing-paneling", 3}, {"load-bearing-framing", 2}, {"corrosion-resistant-piping", 8}, {"thermally-conductive-shafting", 28}, {"thermally-stable-shielding", 18}, {"high-tensile-bolts", 8}, },
+      ["steam-turbine"]               = {{"corrosion-resistant-and-load-bearing-paneling", 4}, {"load-bearing-framing", 7}, {"ductile-gearing", 18}, {"corrosion-resistant-piping", 18}, {"thermally-conductive-shafting", 18}, {"electrically-conductive-wiring", 8}, {"thermally-stable-shielding", 6}, {"high-tensile-bolts", 8}, },
 
       ["burner-mining-drill"]         = {{"basic-framing", 1}, {"basic-shafting", 2}, {"thermally-conductive-wiring", 2}, {"basic-bolts", 1}, },
       ["electric-mining-drill"]       = {{"load-bearing-framing", 1}, {"ductile-gearing", 1}, {"corrosion-resistant-piping", 2}, {"load-bearing-shafting", 2}, {"electrically-conductive-wiring", 3}, {"basic-bolts", 1}, },
       ["offshore-pump"]               = {{"basic-paneling", 1}, {"basic-framing", 1}, {"corrosion-resistant-piping", 1}, {"electrically-conductive-wiring", 1}, {"basic-bolts", 1}, },
-      ["pumpjack"]                    = {{"corrosion-resistant-paneling", 3}, {"heavy-load-bearing-framing", 4}, {"corrosion-resistant-piping", 12}, {"high-tensile-shafting", 4}, {"electrically-conductive-wiring", 6}, {"high-tensile-bolts", 4}, },
+      ["pumpjack"]                    = {{"corrosion-resistant-and-heavy-load-bearing-paneling", 3}, {"heavy-load-bearing-framing", 4}, {"corrosion-resistant-piping", 12}, {"high-tensile-shafting", 4}, {"electrically-conductive-wiring", 6}, {"high-tensile-bolts", 4}, },
 
       ["steel-furnace"]               = {{"heavy-load-bearing-framing", 3}, {"thermally-stable-shielding", 3}, {"high-tensile-bolts", 2}, },
       ["electric-furnace"]            = {{"heavy-load-bearing-framing", 6}, {"electrically-conductive-wiring", 10}, {"thermally-stable-shielding", 5}, {"high-tensile-bolts", 2}, },
 
       ["assembling-machine-1"]        = {{"basic-paneling", 2}, {"load-bearing-framing", 1}, {"basic-gearing", 1}, {"load-bearing-shafting", 1}, {"electrically-conductive-wiring", 3}, {"basic-bolts", 2}, },
       ["assembling-machine-2"]        = {{"high-tensile-paneling", 2}, {"heavy-load-bearing-framing", 1}, {"ductile-gearing", 2}, {"corrosion-resistant-piping", 2}, {"heavy-load-bearing-shafting", 1}, {"electrically-conductive-wiring", 3}, {"high-tensile-bolts", 2}, },
-      ["assembling-machine-3"]        = {{"very-high-tensile-paneling", 1}, {"heavy-load-bearing-framing", 1}, {"ductile-gearing", 4}, {"corrosion-resistant-piping", 2}, {"heavy-load-bearing-shafting", 1}, {"electrically-conductive-wiring", 3}, {"thermally-stable-shielding", 4}, {"very-high-tensile-bolts", 2}, },
+      ["assembling-machine-3"]        = {{"very-high-tensile-paneling", 1}, {"corrosion-resistant-and-heavy-load-bearing-framing", 1}, {"ductile-gearing", 4}, {"corrosion-resistant-piping", 2}, {"heavy-load-bearing-shafting", 1}, {"electrically-conductive-wiring", 3}, {"thermally-stable-shielding", 4}, {"very-high-tensile-bolts", 2}, },
 
-      ["oil-refinery"]                = {{"corrosion-resistant-paneling", 4}, {"heavy-load-bearing-framing", 12}, {"corrosion-resistant-piping", 26}, {"thermally-stable-shafting", 4}, {"electrically-conductive-wiring", 6}, {"high-tensile-bolts", 8}, },
-      ["chemical-plant"]              = {{"corrosion-resistant-paneling", 2}, {"heavy-load-bearing-framing", 4}, {"corrosion-resistant-piping", 8}, {"thermally-stable-shafting", 4}, {"electrically-conductive-wiring", 6}, {"high-tensile-bolts", 3}, },
+      ["oil-refinery"]                = {{"corrosion-resistant-and-heavy-load-bearing-paneling", 4}, {"heavy-load-bearing-framing", 12}, {"corrosion-resistant-piping", 26}, {"thermally-stable-shafting", 4}, {"electrically-conductive-wiring", 6}, {"high-tensile-bolts", 8}, },
+      ["chemical-plant"]              = {{"corrosion-resistant-and-heavy-load-bearing-paneling", 2}, {"heavy-load-bearing-framing", 4}, {"corrosion-resistant-piping", 8}, {"thermally-stable-shafting", 4}, {"electrically-conductive-wiring", 6}, {"high-tensile-bolts", 3}, },
 
       ["centrifuge"]                  = {{"high-tensile-paneling", 8}, {"heavy-load-bearing-framing", 10}, {"very-high-tensile-gearing", 14}, {"ductile-gearing", 14}, {"heavy-load-bearing-shafting", 24}, {"radiation-resistant-shielding", 45}, {"high-tensile-bolts", 30}, },
 

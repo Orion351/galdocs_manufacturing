@@ -104,8 +104,8 @@ return {
 		BENDER         = "bender",
 
 		-- Treating
+		ELECTROPLATER  = "electroplater",
 		-- METAL_ASSAYER  = "metal-assayer",
-		-- ELECTROPLATER  = "electroplater",
 	},
 
 	MW_Minisembler_Tier = {
