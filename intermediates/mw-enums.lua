@@ -54,7 +54,8 @@ return {
 		GEAR            = "gear",
 		FINE_GEAR       = "fine-gear",
 		PIPE            = "pipe",
-		FINE_PIPE       = "fine-pipe"
+		FINE_PIPE       = "fine-pipe",
+		PLATING_BILLET	= "plating-billet"
 	},
 
 	MW_Machined_Part = {
@@ -75,19 +76,23 @@ return {
 
 	MW_Property = {
 		BASIC                   = "basic",
-		LOAD_BEARING            = "load-bearing",
-		ELECTRICALLY_CONDUCTIVE = "electrically-conductive",
-		HIGH_TENSILE            = "high-tensile",
-		CORROSION_RESISTANT     = "corrosion-resistant",
+		ELECTRICALLY_CONDUCTIVE = "electrically-conductive",		
 		LIGHTWEIGHT             = "lightweight",
 		DUCTILE                 = "ductile",
 		THERMALLY_STABLE        = "thermally-stable",
 		THERMALLY_CONDUCTIVE    = "thermally-conductive",
 		RADIATION_RESISTANT     = "radiation-resistant",
+		LOAD_BEARING            = "load-bearing",
+	
+		HIGH_TENSILE            = "high-tensile",
 		VERY_HIGH_TENSILE       = "very-high-tensile",
+	
+		CORROSION_RESISTANT     = "corrosion-resistant",
 		HEAVY_LOAD_BEARING      = "heavy-load-bearing",
 		-- HIGH_MELTING_POINT      = "high-melting-point"
 	},
+
+
 
 	MW_Minisembler = {
 		-- Machining

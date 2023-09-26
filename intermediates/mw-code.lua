@@ -459,6 +459,10 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
         if produces_list_pieces[i] == nil then produces_list_pieces[i] = {""} end
       end
       
+      if #produces_list_pieces[1] == 1 and metal == "zinc" then
+        table.insert(produces_list_pieces[1], " - None")
+      end
+
       -- Entirely disable the tootips according to the user's settings
       local localized_description_item = {}
       if show_detailed_tooltips then
@@ -661,7 +665,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the treated [M
         table.remove(property_list, #property_list)
               -- For the tooltip, populate takers with the minisemblers that can use this stock, and with the stocks and machined parts that will result, respectively.
         local produces_list = {}
-        
+      
         -- Add in the machined-parts to the list
         for product_machined_part, precursor_recipe_data in pairs(MW_Data.machined_parts_recipe_data) do
           if stock == precursor_recipe_data.precursor then
@@ -772,7 +776,8 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the treated [M
             enabled = MW_Data.metal_data[metal].tech_stock == "starter", 
             ingredients = {
               {name = MW_Data.metal_data[metal].core_metal .. "-" .. stock .. "-stock",      amount = 1},
-              {name = MW_Data.metal_data[metal].plate_metal .. "-" .. "plate" .. "-stock", amount = MW_Data.metal_data[metal].plating_ratio_multiplier * MW_Data.stocks_recipe_data[stock].plating_billet_count}
+              {name = MW_Data.metal_data[metal].plate_metal .. "-" .. "plating-billet" .. "-stock", amount = MW_Data.metal_data[metal].plating_ratio_multiplier * MW_Data.stocks_recipe_data[stock].plating_billet_count},
+              {name = MW_Data.metal_data[metal].plating_fluid, type = "fluid", amount = MW_Data.stocks_recipe_data[stock].plating_fluid_count}
             },
             result = metal .. "-" .. stock .. "-stock",
             result_count = 1,
@@ -1432,6 +1437,14 @@ for _, tier in pairs(MW_Data.MW_Minisembler_Tier) do -- make the minisembler ent
       end
     end
     -- FIXME : Must pair 'stage' with recipes and assign them appropriately here.
+    
+    -- Geometry data
+    -- Set default geometry data
+    local collision_box = {{-0.29, -0.9}, {0.29, 0.9}}
+    local selection_box = {{-0.5, -1}, {0.5, 1}}
+    if MW_Data.minisembler_data[minisembler].shape_data[tier] then
+      
+    end
 
     data:extend({ -- make the minisembler recipe categories, items, recipes and entities
       { -- recipe category
@@ -1477,9 +1490,9 @@ for _, tier in pairs(MW_Data.MW_Minisembler_Tier) do -- make the minisembler ent
         localised_description = {"gm.minisembler-recipe-description", {"gm." .. minisembler}}
       },
       { -- entity
+        -- Basic Data
         type = "assembling-machine",
         name = "gm-" .. minisembler,
-        fast_replaceable_group = "gm-minisemblers",
         icons = {
           {
             icon = "__galdocs-manufacturing__/graphics/icons/minisemblers/" .. minisembler .. "-icon.png",
@@ -1487,8 +1500,13 @@ for _, tier in pairs(MW_Data.MW_Minisembler_Tier) do -- make the minisembler ent
             icon_mipmaps = 4
           }
         },
+
+        -- Logistic Data
+        fast_replaceable_group = "gm-minisemblers",
         flags = {"placeable-neutral", "placeable-player", "player-creation"},
         minable = {mining_time = 0.2, result = "gm-" .. minisembler},
+        
+        -- Combat data
         max_health = 300,
         corpse = "pump-remnants", -- FIXME : what
         dying_explosion = "pump-explosion", -- FIXME : what
@@ -1499,14 +1517,35 @@ for _, tier in pairs(MW_Data.MW_Minisembler_Tier) do -- make the minisembler ent
             percent = 70
           }
         },
-        collision_box = {{-0.29, -0.9}, {0.29, 0.9}},
+        
+        -- Geometry data
+        -- collision_box = {{-0.29, -0.9}, {0.29, 0.9}},
+        collision_box = {{-0.4, -0.9}, {0.4, 0.9}},
         selection_box = {{-0.5, -1}, {0.5, 1}},
+        fluid_boxes = {
+            {
+              production_type = "input",
+              pipe_covers = pipecoverspictures(),
+              base_area = 10,
+              height = 1,
+              base_level = 0,
+              pipe_connections = {
+                {type="input-output", position = {-0.9, 0.5}},
+                {type="input-output", position = {0.9, 0.5}}
+              }
+            },
+          },
+
         damaged_trigger_effect = hit_effects.entity(),
         alert_icon_shift = util.by_pixel(0, -12),
         entity_info_icon_shift = util.by_pixel(0, -8),
+        
+        -- Graphical layers
         animation = current_animation,
         idle_animation = current_idle_animation,
         working_visualisations = current_working_visualizations,
+        
+        -- Crafting data
         crafting_categories = crafting_categories,
         crafting_speed = 0.5,
         energy_source =
@@ -1516,6 +1555,8 @@ for _, tier in pairs(MW_Data.MW_Minisembler_Tier) do -- make the minisembler ent
           emissions_per_minute = .6
         },
         energy_usage = "30kW",
+
+        -- Audio Data
         open_sound = sounds.machine_open,
         close_sound = sounds.machine_close,
         vehicle_impact_sound = sounds.generic_impact,
@@ -1539,7 +1580,11 @@ for _, tier in pairs(MW_Data.MW_Minisembler_Tier) do -- make the minisembler ent
             volume = 0.5
           }
         },
+        
+        -- Localization Data
         localised_name = {"gm.minisembler-entity-name", {"gm." .. minisembler}},
+        
+        -- Module Data
         module_specification = 
         {
           module_slots = 1,
@@ -1857,3 +1902,24 @@ for metal, metal_data in pairs(MW_Data.metal_data) do -- Add Stocks and Machined
 
   end
 end
+
+--[[
+-- are you serious right now
+data:extend({
+  {
+    type = "item",
+    name = "blank-page",
+    icons = {
+      {
+        icon = "__galdocs-manufacturing__/graphics/blank-page.png",
+        icon_size = 64,
+      },
+    },
+    subgroup = "gm-minisemblers",
+    order = "asdf",
+    stack_size = 50,
+    localised_name = {"gm.blank-page"},
+    localised_description = {"gm.blank-page-desc"}
+  }
+})
+--]]

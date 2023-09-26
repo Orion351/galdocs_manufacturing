@@ -55,8 +55,9 @@ local function map_minisembler_recipes(t)
 end
 
 function table.merge(table1, table2)
-  -- local deep_table1 = util.table.deepcopy(table1)
-  -- local deep_table2 = util.table.deepcopy(table2)
+  if table1 == nil and table2 == nil then return nil end
+  if table1 == nil then return table2 end
+  if table2 == nil then return table1 end
   local new_table = table1
   for k, v in pairs(table2) do
     new_table[k] = v
@@ -64,7 +65,24 @@ function table.merge(table1, table2)
   return new_table
 end
 
+function table.merge_subtables(table1, table2)
+  local new_table = {}
+  for k, _ in pairs(table1) do
+    new_table[k] = table.merge(table1[k], table2[k])
+  end
+  return new_table
+end
 
+--[[
+local blarg = table.merge_subtables(
+  {["iron"] = {smartness = "dumb", dumbness = "stoopud"}, 
+  ["copper"] = {smartness = "Jeff", dumbness = "YAY"}},
+  {["iron"] = {clumsiness = "cow"}, 
+  ["copper"] = {clumsiness = "yes"}}
+)
+
+log("asdf : " .. serpent.dump(blarg))
+--]]
 
 -- *********************************************************
 -- Super big container of data because what are life choices
@@ -112,7 +130,7 @@ end
 -- Data
 -- ****
 
-MW_Data.ore_data = {
+MW_Data.ore_data = { -- Initialize basic ore data
   [MW_Resource.COAL]     = {original = true,  ore_in_name = false, add_to_starting_area = false, to_add = false, new_icon_art = false, new_patch_art = true },
   [MW_Resource.STONE]    = {original = true,  ore_in_name = false, add_to_starting_area = false, to_add = false, new_icon_art = false, new_patch_art = true },
   [MW_Resource.URANIUM]  = {original = true,  ore_in_name = true,  add_to_starting_area = false, to_add = false, new_icon_art = false, new_patch_art = false},
@@ -123,6 +141,9 @@ MW_Data.ore_data = {
   [MW_Resource.ZINC]     = {original = false, ore_in_name = true,  add_to_starting_area = true,  to_add = true,  new_icon_art = false, new_patch_art = false},
   [MW_Resource.NICKEL]   = {original = false, ore_in_name = true,  add_to_starting_area = false, to_add = true,  new_icon_art = false, new_patch_art = false}
 }
+
+-- Metal Data
+-- **********
 
 MW_Data.metal_data = { -- Staple on visualization tints for metal and oxidation
   [MW_Metal.IRON]             = {tint_metal = gamma_correct_rgb{r = 0.32,  g = 0.32,  b = 0.32,  a = 1.0}, tint_oxidation = gamma_correct_rgb{r = 0.206, g = 0.077, b = 0.057, a = 1.0}},
@@ -137,56 +158,63 @@ MW_Data.metal_data = { -- Staple on visualization tints for metal and oxidation
   [MW_Metal.GALVANIZED_STEEL] = {tint_metal = gamma_correct_rgb{r = 0.095, g = 0.104, b = 0.148, a = 1.0}, tint_oxidation = gamma_correct_rgb{r = 0.095, g = 0.104, b = 0.148, a = 1.0}},
 }
 
--- Staple on the map tints
-table.merge(MW_Data.metal_data[MW_Metal.IRON],             {tint_map = gamma_correct_rgb{r = 0.206, g = 0.077, b = 0.057, a = 1.0}})
-table.merge(MW_Data.metal_data[MW_Metal.COPPER],           {tint_map = gamma_correct_rgb{r = 0.144, g = 0.177, b = 0.133, a = 1.0}})
-table.merge(MW_Data.metal_data[MW_Metal.LEAD],             {tint_map = gamma_correct_rgb{r = 0.847, g = 0.748, b = 0.144, a = 1.0}})
-table.merge(MW_Data.metal_data[MW_Metal.TITANIUM],         {tint_map = gamma_correct_rgb{r = 1.0,   g = 1.0,   b = 1.0,   a = 1.0}})
-table.merge(MW_Data.metal_data[MW_Metal.ZINC],             {tint_map = gamma_correct_rgb{r = 0.205, g = 0.076, b = 0.3,   a = 1.0}})
-table.merge(MW_Data.metal_data[MW_Metal.NICKEL],           {tint_map = gamma_correct_rgb{r = 0.388, g = 0.463, b = 0.314, a = 1.0}})
-table.merge(MW_Data.metal_data[MW_Metal.STEEL],            {tint_map = gamma_correct_rgb{r = 0.186, g = 0.048, b = 0.026, a = 1.0}})
-table.merge(MW_Data.metal_data[MW_Metal.BRASS],            {tint_map = gamma_correct_rgb{r = 0.069, g = 0.131, b = 0.018, a = 1.0}})
-table.merge(MW_Data.metal_data[MW_Metal.INVAR],            {tint_map = gamma_correct_rgb{r = 0.427, g = 0.333, b = 0.220, a = 1.0}})
-table.merge(MW_Data.metal_data[MW_Metal.GALVANIZED_STEEL], {tint_map = gamma_correct_rgb{r = 0.095, g = 0.104, b = 0.148, a = 1.0}})
+MW_Data.metal_data = table.merge_subtables(MW_Data.metal_data, { -- Staple on the map tints
+  [MW_Metal.IRON]             = {tint_map = gamma_correct_rgb{r = 0.206, g = 0.077, b = 0.057, a = 1.0}},
+  [MW_Metal.COPPER]           = {tint_map = gamma_correct_rgb{r = 0.144, g = 0.177, b = 0.133, a = 1.0}},
+  [MW_Metal.LEAD]             = {tint_map = gamma_correct_rgb{r = 0.847, g = 0.748, b = 0.144, a = 1.0}},
+  [MW_Metal.TITANIUM]         = {tint_map = gamma_correct_rgb{r = 1.0,   g = 1.0,   b = 1.0,   a = 1.0}},
+  [MW_Metal.ZINC]             = {tint_map = gamma_correct_rgb{r = 0.205, g = 0.076, b = 0.3,   a = 1.0}},
+  [MW_Metal.NICKEL]           = {tint_map = gamma_correct_rgb{r = 0.388, g = 0.463, b = 0.314, a = 1.0}},
+  [MW_Metal.STEEL]            = {tint_map = gamma_correct_rgb{r = 0.186, g = 0.048, b = 0.026, a = 1.0}},
+  [MW_Metal.BRASS]            = {tint_map = gamma_correct_rgb{r = 0.069, g = 0.131, b = 0.018, a = 1.0}},
+  [MW_Metal.INVAR]            = {tint_map = gamma_correct_rgb{r = 0.427, g = 0.333, b = 0.220, a = 1.0}},
+  [MW_Metal.GALVANIZED_STEEL] = {tint_map = gamma_correct_rgb{r = 0.095, g = 0.104, b = 0.148, a = 1.0}},
+})
 
--- Staple on the metal types
-table.merge(MW_Data.metal_data[MW_Metal.IRON],             {type = MW_Metal_Type.ELEMENT                                              })
-table.merge(MW_Data.metal_data[MW_Metal.COPPER],           {type = MW_Metal_Type.ELEMENT                                              })
-table.merge(MW_Data.metal_data[MW_Metal.LEAD],             {type = MW_Metal_Type.ELEMENT                                              })
-table.merge(MW_Data.metal_data[MW_Metal.TITANIUM],         {type = MW_Metal_Type.ELEMENT                                              })
-table.merge(MW_Data.metal_data[MW_Metal.ZINC],             {type = MW_Metal_Type.ELEMENT                                              })
-table.merge(MW_Data.metal_data[MW_Metal.NICKEL],           {type = MW_Metal_Type.ELEMENT                                              })
-table.merge(MW_Data.metal_data[MW_Metal.STEEL],            {type = MW_Metal_Type.ALLOY                                                })
-table.merge(MW_Data.metal_data[MW_Metal.BRASS],            {type = MW_Metal_Type.ALLOY                                                })
-table.merge(MW_Data.metal_data[MW_Metal.INVAR],            {type = MW_Metal_Type.ALLOY                                                })
-table.merge(MW_Data.metal_data[MW_Metal.GALVANIZED_STEEL], {type = MW_Metal_Type.TREATMENT, treatment_type = MW_Treatment_Type.PLATING})
+MW_Data.metal_data = table.merge_subtables(MW_Data.metal_data, { -- Staple on the metal types
+  [MW_Metal.IRON]             = {type = MW_Metal_Type.ELEMENT                                              },
+  [MW_Metal.COPPER]           = {type = MW_Metal_Type.ELEMENT                                              },
+  [MW_Metal.LEAD]             = {type = MW_Metal_Type.ELEMENT                                              },
+  [MW_Metal.TITANIUM]         = {type = MW_Metal_Type.ELEMENT                                              },
+  [MW_Metal.ZINC]             = {type = MW_Metal_Type.ELEMENT                                              },
+  [MW_Metal.NICKEL]           = {type = MW_Metal_Type.ELEMENT                                              },
+  [MW_Metal.STEEL]            = {type = MW_Metal_Type.ALLOY                                                },
+  [MW_Metal.BRASS]            = {type = MW_Metal_Type.ALLOY                                                },
+  [MW_Metal.INVAR]            = {type = MW_Metal_Type.ALLOY                                                },
+  [MW_Metal.GALVANIZED_STEEL] = {type = MW_Metal_Type.TREATMENT, treatment_type = MW_Treatment_Type.PLATING},
+})
 
--- Staple on the tech name data
-table.merge(MW_Data.metal_data[MW_Metal.IRON],             {tech_stock = "starter",                              tech_machined_part = "starter"                                     })
-table.merge(MW_Data.metal_data[MW_Metal.COPPER],           {tech_stock = "starter",                              tech_machined_part = "starter"                                     })
-table.merge(MW_Data.metal_data[MW_Metal.LEAD],             {tech_stock = "gm-lead-stock-processing",             tech_machined_part = "gm-lead-machined-part-processing"            })
-table.merge(MW_Data.metal_data[MW_Metal.TITANIUM],         {tech_stock = "gm-titanium-stock-processing",         tech_machined_part = "gm-titanium-machined-part-processing"        })
-table.merge(MW_Data.metal_data[MW_Metal.ZINC],             {tech_stock = "starter",                              tech_machined_part = "starter"                                     })
-table.merge(MW_Data.metal_data[MW_Metal.NICKEL],           {tech_stock = "gm-nickel-and-invar-stock-processing", tech_machined_part = "gm-nickel-and-invar-machined-part-processing"})
-table.merge(MW_Data.metal_data[MW_Metal.STEEL],            {tech_stock = "steel-processing",                     tech_machined_part = "steel-machined-part-processing"              })
-table.merge(MW_Data.metal_data[MW_Metal.BRASS],            {tech_stock = "starter",                              tech_machined_part = "starter"                                     })
-table.merge(MW_Data.metal_data[MW_Metal.INVAR],            {tech_stock = "gm-nickel-and-invar-stock-processing", tech_machined_part = "gm-nickel-and-invar-machined-part-processing"})
-table.merge(MW_Data.metal_data[MW_Metal.GALVANIZED_STEEL], {tech_stock = "gm-galvanized-steel-stock-processing", tech_machined_part = "gm-galvanized-steel-machined-part-processing"})
+MW_Data.metal_data = table.merge_subtables(MW_Data.metal_data, { -- Staple on the tech name data
+  [MW_Metal.IRON]             = {tech_stock = "starter",                              tech_machined_part = "starter"                                     },
+  [MW_Metal.COPPER]           = {tech_stock = "starter",                              tech_machined_part = "starter"                                     },
+  [MW_Metal.LEAD]             = {tech_stock = "gm-lead-stock-processing",             tech_machined_part = "gm-lead-machined-part-processing"            },
+  [MW_Metal.TITANIUM]         = {tech_stock = "gm-titanium-stock-processing",         tech_machined_part = "gm-titanium-machined-part-processing"        },
+  [MW_Metal.ZINC]             = {tech_stock = "starter",                              tech_machined_part = "starter"                                     },
+  [MW_Metal.NICKEL]           = {tech_stock = "gm-nickel-and-invar-stock-processing", tech_machined_part = "gm-nickel-and-invar-machined-part-processing"},
+  [MW_Metal.STEEL]            = {tech_stock = "steel-processing",                     tech_machined_part = "steel-machined-part-processing"              },
+  [MW_Metal.BRASS]            = {tech_stock = "starter",                              tech_machined_part = "starter"                                     },
+  [MW_Metal.INVAR]            = {tech_stock = "gm-nickel-and-invar-stock-processing", tech_machined_part = "gm-nickel-and-invar-machined-part-processing"},
+  [MW_Metal.GALVANIZED_STEEL] = {tech_stock = "gm-galvanized-steel-stock-processing", tech_machined_part = "gm-galvanized-steel-machined-part-processing"},
+})
 
--- Staple on the Alloy Plate
-table.merge(MW_Data.metal_data[MW_Metal.STEEL],            {alloy_plate_recipe = {{name = MW_Metal.IRON,   amount = 5},   {name = MW_Resource.COAL, amount = 1}}})
-table.merge(MW_Data.metal_data[MW_Metal.BRASS],            {alloy_plate_recipe = {{name = MW_Metal.COPPER, amount = 3},   {name = MW_Metal.ZINC,    amount = 1}}})
-table.merge(MW_Data.metal_data[MW_Metal.INVAR],            {alloy_plate_recipe = {{name = MW_Metal.IRON,   amount = 3},   {name = MW_Metal.NICKEL,  amount = 2}}})
--- table.merge(MW_Data.metal_data[MW_Metal.GALVANIZED_STEEL], {alloy_plate_recipe = {{name = MW_Metal.STEEL,  amount = 5},   {name = MW_Metal.ZINC,    amount = 1}}})
+MW_Data.metal_data = table.merge_subtables(MW_Data.metal_data, { -- Staple on the Alloy Plate
+  [MW_Metal.STEEL] = {alloy_plate_recipe = {{name = MW_Metal.IRON,   amount = 5},   {name = MW_Resource.COAL, amount = 1}}},
+  [MW_Metal.BRASS] = {alloy_plate_recipe = {{name = MW_Metal.COPPER, amount = 3},   {name = MW_Metal.ZINC,    amount = 1}}},
+  [MW_Metal.INVAR] = {alloy_plate_recipe = {{name = MW_Metal.IRON,   amount = 3},   {name = MW_Metal.NICKEL,  amount = 2}}},
+})
 
--- Staple on the Alloy Ore recipes
-table.merge(MW_Data.metal_data[MW_Metal.BRASS], {alloy_ore_recipe = {{name = MW_Resource.COPPER, amount = 3}, {name = MW_Resource.ZINC,   amount = 1}}})
-table.merge(MW_Data.metal_data[MW_Metal.INVAR], {alloy_ore_recipe = {{name = MW_Resource.IRON,   amount = 3}, {name = MW_Resource.NICKEL, amount = 2}}})
+MW_Data.metal_data = table.merge_subtables(MW_Data.metal_data, { -- Staple on the Alloy Ore recipes
+  [MW_Metal.BRASS] = {alloy_ore_recipe = {{name = MW_Resource.COPPER, amount = 3}, {name = MW_Resource.ZINC,   amount = 1}}},
+  [MW_Metal.INVAR] = {alloy_ore_recipe = {{name = MW_Resource.IRON,   amount = 3}, {name = MW_Resource.NICKEL, amount = 2}}},
+})
 
--- Staple on the Treated Metals data (I need to retype this because why do people let me near computers)
-table.merge(MW_Data.metal_data[MW_Metal.GALVANIZED_STEEL], {plating_ratio_multiplier = 1, core_metal = MW_Metal.STEEL, plate_metal = MW_Metal.ZINC})
+MW_Data.metal_data = table.merge_subtables(MW_Data.metal_data, { -- Staple on the Treated Metals data
+  [MW_Metal.GALVANIZED_STEEL] = {plating_ratio_multiplier = 1, core_metal = MW_Metal.STEEL, plate_metal = MW_Metal.ZINC, plating_fluid = "water"},
+})
 
-MW_Data.minisembler_data = {
+-- Minisembler Data
+-- ****************
+MW_Data.minisembler_data = { -- Initialize the Minisembler data
 	[MW_Minisembler.WELDER]         = {rgba = {r = 1.0, g = 1.0, b = 1.0, a = 1.0}, tiers = {MW_Minisembler_Tier.ELECTRIC}, stage = MW_Minisembler_Stage.MACHINING},
 	[MW_Minisembler.DRILL_PRESS]    = {rgba = {r = 0.6, g = 1.0, b = 1.0, a = 1.0}, tiers = {MW_Minisembler_Tier.ELECTRIC}, stage = MW_Minisembler_Stage.MACHINING},
 	[MW_Minisembler.GRINDER]        = {rgba = {r = 1.0, g = 0.6, b = 1.0, a = 1.0}, tiers = {MW_Minisembler_Tier.ELECTRIC}, stage = MW_Minisembler_Stage.MACHINING},
@@ -200,6 +228,25 @@ MW_Data.minisembler_data = {
 	[MW_Minisembler.BENDER]         = {rgba = {r = 0.2, g = 0.2, b = 1.0, a = 1.0}, tiers = {MW_Minisembler_Tier.ELECTRIC}, stage = MW_Minisembler_Stage.MACHINING},
   -- [MW_Minisembler.METAL_ASSAYER]  = {rgba = {r = 0.2, g = 0.2, b = 1.0, a = 1.0}, tiers = {MW_Minisembler_Tier.ELECTRIC}, stage = {MW_Minisembler_Stage.MACHINING},
 	[MW_Minisembler.ELECTROPLATER]  = {rgba = {r = 0.2, g = 0.2, b = 1.0, a = 1.0}, tiers = {MW_Minisembler_Tier.ELECTRIC}, stage = MW_Minisembler_Stage.TREATING, treatment_type = MW_Treatment_Type.PLATING},
+}
+
+MW_Data.minisembler_data = table.merge_subtables(MW_Data.minisembler_data, {
+  [MW_Minisembler.WELDER]         = {shape_data = {[MW_Minisembler_Tier.ELECTRIC] = {sentity_shape = "2x1", uses_fluid = "no" }}},
+  [MW_Minisembler.DRILL_PRESS]    = {shape_data = {[MW_Minisembler_Tier.ELECTRIC] = {sentity_shape = "2x1", uses_fluid = "no" }}},
+  [MW_Minisembler.GRINDER]        = {shape_data = {[MW_Minisembler_Tier.ELECTRIC] = {sentity_shape = "2x1", uses_fluid = "no" }}},
+  [MW_Minisembler.METAL_BANDSAW]  = {shape_data = {[MW_Minisembler_Tier.ELECTRIC] = {sentity_shape = "2x1", uses_fluid = "no" }}},
+  [MW_Minisembler.METAL_EXTRUDER] = {shape_data = {[MW_Minisembler_Tier.ELECTRIC] = {sentity_shape = "2x1", uses_fluid = "no" }}},
+  [MW_Minisembler.MILL]           = {shape_data = {[MW_Minisembler_Tier.ELECTRIC] = {sentity_shape = "2x1", uses_fluid = "no" }}},
+  [MW_Minisembler.METAL_LATHE]    = {shape_data = {[MW_Minisembler_Tier.ELECTRIC] = {sentity_shape = "2x1", uses_fluid = "no" }}},
+  [MW_Minisembler.THREADER]       = {shape_data = {[MW_Minisembler_Tier.ELECTRIC] = {sentity_shape = "2x1", uses_fluid = "no" }}},
+  [MW_Minisembler.SPOOLER]        = {shape_data = {[MW_Minisembler_Tier.ELECTRIC] = {sentity_shape = "2x1", uses_fluid = "no" }}},
+  [MW_Minisembler.ROLLER]         = {shape_data = {[MW_Minisembler_Tier.ELECTRIC] = {sentity_shape = "2x1", uses_fluid = "no" }}},
+  [MW_Minisembler.BENDER]         = {shape_data = {[MW_Minisembler_Tier.ELECTRIC] = {sentity_shape = "2x1", uses_fluid = "no" }}},
+  [MW_Minisembler.ELECTROPLATER]  = {shape_data = {[MW_Minisembler_Tier.ELECTRIC] = {sentity_shape = "2x1", uses_fluid = "yes"}}},
+})
+
+MW_Data.minisembler_entity_data = {
+  ["2x1"] = {collision_box = {{-0.29, -0.9}, {0.29, 0.9}}, selection_box = {{-0.5, -1}, {0.5, 1}}, fluid_box = {}}
 }
 
 MW_Data.minisemblers_rendering_data = { -- Set up the minisembler rendering data
@@ -385,29 +432,29 @@ MW_Data.multi_property_pairs = { -- Two or more properties in a table.
 
 if advanced then -- metal_stocks_pairs : [metal | list of stocks that it has] FIXME : Fan EVERYTHING out and make more accurate culling
   MW_Data.metal_stocks_pairs = {
-    [MW_Metal.IRON]              = map{MW_Stock.PLATE, MW_Stock.SHEET, MW_Stock.SQUARE, MW_Stock.ANGLE, MW_Stock.GIRDER, MW_Stock.WIRE, MW_Stock.GEAR, MW_Stock.FINE_GEAR, MW_Stock.PIPE, MW_Stock.FINE_PIPE},
-    [MW_Metal.COPPER]            = map{MW_Stock.PLATE, MW_Stock.SHEET, MW_Stock.SQUARE,                                  MW_Stock.WIRE, MW_Stock.GEAR, MW_Stock.FINE_GEAR, MW_Stock.PIPE, MW_Stock.FINE_PIPE},
-    [MW_Metal.LEAD]              = map{MW_Stock.PLATE, MW_Stock.SHEET,                                                                                                     MW_Stock.PIPE, MW_Stock.FINE_PIPE},
-    [MW_Metal.TITANIUM]          = map{MW_Stock.PLATE, MW_Stock.SHEET, MW_Stock.SQUARE, MW_Stock.ANGLE, MW_Stock.GIRDER, MW_Stock.WIRE, MW_Stock.GEAR, MW_Stock.FINE_GEAR, MW_Stock.PIPE, MW_Stock.FINE_PIPE},
-    [MW_Metal.ZINC]              = map{MW_Stock.PLATE                                                                                                                                                       },
-    [MW_Metal.NICKEL]            = map{MW_Stock.PLATE, MW_Stock.SHEET, MW_Stock.SQUARE, MW_Stock.ANGLE, MW_Stock.GIRDER,                MW_Stock.GEAR, MW_Stock.FINE_GEAR, MW_Stock.PIPE, MW_Stock.FINE_PIPE},
-    [MW_Metal.STEEL]             = map{MW_Stock.PLATE, MW_Stock.SHEET, MW_Stock.SQUARE, MW_Stock.ANGLE, MW_Stock.GIRDER, MW_Stock.WIRE, MW_Stock.GEAR, MW_Stock.FINE_GEAR, MW_Stock.PIPE, MW_Stock.FINE_PIPE},
-    [MW_Metal.BRASS]             = map{MW_Stock.PLATE, MW_Stock.SHEET, MW_Stock.SQUARE, MW_Stock.ANGLE, MW_Stock.GIRDER, MW_Stock.WIRE, MW_Stock.GEAR, MW_Stock.FINE_GEAR, MW_Stock.PIPE, MW_Stock.FINE_PIPE},
-    [MW_Metal.INVAR]             = map{MW_Stock.PLATE, MW_Stock.SHEET, MW_Stock.SQUARE, MW_Stock.ANGLE, MW_Stock.GIRDER, MW_Stock.WIRE, MW_Stock.GEAR, MW_Stock.FINE_GEAR, MW_Stock.PIPE, MW_Stock.FINE_PIPE},
-    [MW_Metal.GALVANIZED_STEEL]  = map{MW_Stock.PLATE, MW_Stock.SHEET, MW_Stock.SQUARE, MW_Stock.ANGLE, MW_Stock.GIRDER, MW_Stock.WIRE, MW_Stock.GEAR, MW_Stock.FINE_GEAR, MW_Stock.PIPE, MW_Stock.FINE_PIPE}
+    [MW_Metal.IRON]              = map{MW_Stock.PLATE, MW_Stock.SHEET, MW_Stock.SQUARE, MW_Stock.ANGLE, MW_Stock.GIRDER, MW_Stock.WIRE, MW_Stock.GEAR, MW_Stock.FINE_GEAR, MW_Stock.PIPE, MW_Stock.FINE_PIPE                         },
+    [MW_Metal.COPPER]            = map{MW_Stock.PLATE, MW_Stock.SHEET, MW_Stock.SQUARE,                                  MW_Stock.WIRE, MW_Stock.GEAR, MW_Stock.FINE_GEAR, MW_Stock.PIPE, MW_Stock.FINE_PIPE                         },
+    [MW_Metal.LEAD]              = map{MW_Stock.PLATE, MW_Stock.SHEET,                                                                                                     MW_Stock.PIPE, MW_Stock.FINE_PIPE                         },
+    [MW_Metal.TITANIUM]          = map{MW_Stock.PLATE, MW_Stock.SHEET, MW_Stock.SQUARE, MW_Stock.ANGLE, MW_Stock.GIRDER, MW_Stock.WIRE, MW_Stock.GEAR, MW_Stock.FINE_GEAR, MW_Stock.PIPE, MW_Stock.FINE_PIPE                         },
+    [MW_Metal.ZINC]              = map{MW_Stock.PLATE,                                                                                                                                                       MW_Stock.PLATING_BILLET },
+    [MW_Metal.NICKEL]            = map{MW_Stock.PLATE, MW_Stock.SHEET, MW_Stock.SQUARE, MW_Stock.ANGLE, MW_Stock.GIRDER,                MW_Stock.GEAR, MW_Stock.FINE_GEAR, MW_Stock.PIPE, MW_Stock.FINE_PIPE                         },
+    [MW_Metal.STEEL]             = map{MW_Stock.PLATE, MW_Stock.SHEET, MW_Stock.SQUARE, MW_Stock.ANGLE, MW_Stock.GIRDER, MW_Stock.WIRE, MW_Stock.GEAR, MW_Stock.FINE_GEAR, MW_Stock.PIPE, MW_Stock.FINE_PIPE                         },
+    [MW_Metal.BRASS]             = map{MW_Stock.PLATE, MW_Stock.SHEET, MW_Stock.SQUARE, MW_Stock.ANGLE, MW_Stock.GIRDER, MW_Stock.WIRE, MW_Stock.GEAR, MW_Stock.FINE_GEAR, MW_Stock.PIPE, MW_Stock.FINE_PIPE                         },
+    [MW_Metal.INVAR]             = map{MW_Stock.PLATE, MW_Stock.SHEET, MW_Stock.SQUARE, MW_Stock.ANGLE, MW_Stock.GIRDER, MW_Stock.WIRE, MW_Stock.GEAR, MW_Stock.FINE_GEAR, MW_Stock.PIPE, MW_Stock.FINE_PIPE                         },
+    [MW_Metal.GALVANIZED_STEEL]  = map{MW_Stock.PLATE, MW_Stock.SHEET, MW_Stock.SQUARE, MW_Stock.ANGLE, MW_Stock.GIRDER, MW_Stock.WIRE, MW_Stock.GEAR, MW_Stock.FINE_GEAR, MW_Stock.PIPE, MW_Stock.FINE_PIPE                         }
   }
 else
   MW_Data.metal_stocks_pairs = {
-    [MW_Metal.IRON]              = map{MW_Stock.PLATE, MW_Stock.SQUARE, MW_Stock.WIRE},
-    [MW_Metal.COPPER]            = map{MW_Stock.PLATE, MW_Stock.SQUARE, MW_Stock.WIRE},
-    [MW_Metal.LEAD]              = map{MW_Stock.PLATE                                },
-    [MW_Metal.TITANIUM]          = map{MW_Stock.PLATE, MW_Stock.SQUARE, MW_Stock.WIRE},
-    [MW_Metal.ZINC]              = map{MW_Stock.PLATE                                },
-    [MW_Metal.NICKEL]            = map{MW_Stock.PLATE, MW_Stock.SQUARE, MW_Stock.WIRE},
-    [MW_Metal.STEEL]             = map{MW_Stock.PLATE, MW_Stock.SQUARE, MW_Stock.WIRE},
-    [MW_Metal.BRASS]             = map{MW_Stock.PLATE, MW_Stock.SQUARE, MW_Stock.WIRE},
-    [MW_Metal.INVAR]             = map{MW_Stock.PLATE, MW_Stock.SQUARE, MW_Stock.WIRE},
-    [MW_Metal.GALVANIZED_STEEL]  = map{MW_Stock.PLATE, MW_Stock.SQUARE, MW_Stock.WIRE}
+    [MW_Metal.IRON]              = map{MW_Stock.PLATE, MW_Stock.SQUARE, MW_Stock.WIRE                        },
+    [MW_Metal.COPPER]            = map{MW_Stock.PLATE, MW_Stock.SQUARE, MW_Stock.WIRE                        },
+    [MW_Metal.LEAD]              = map{MW_Stock.PLATE                                                        },
+    [MW_Metal.TITANIUM]          = map{MW_Stock.PLATE, MW_Stock.SQUARE, MW_Stock.WIRE                        },
+    [MW_Metal.ZINC]              = map{MW_Stock.PLATE,                                MW_Stock.PLATING_BILLET},
+    [MW_Metal.NICKEL]            = map{MW_Stock.PLATE, MW_Stock.SQUARE, MW_Stock.WIRE                        },
+    [MW_Metal.STEEL]             = map{MW_Stock.PLATE, MW_Stock.SQUARE, MW_Stock.WIRE                        },
+    [MW_Metal.BRASS]             = map{MW_Stock.PLATE, MW_Stock.SQUARE, MW_Stock.WIRE                        },
+    [MW_Metal.INVAR]             = map{MW_Stock.PLATE, MW_Stock.SQUARE, MW_Stock.WIRE                        },
+    [MW_Metal.GALVANIZED_STEEL]  = map{MW_Stock.PLATE, MW_Stock.SQUARE, MW_Stock.WIRE                        }
   }
 end
 
@@ -441,27 +488,42 @@ else
 end
 
 -- duplicate the advancement properties over
-MW_Data.property_machined_part_pairs[MW_Property.HEAVY_LOAD_BEARING] = MW_Data.property_machined_part_pairs[MW_Property.LOAD_BEARING]
-MW_Data.property_machined_part_pairs[MW_Property.VERY_HIGH_TENSILE]  = MW_Data.property_machined_part_pairs[MW_Property.HIGH_TENSILE]
+MW_Data.property_dropdowns = {
+  [MW_Property.LOAD_BEARING] = {{tier = 1, name = MW_Property.LOAD_BEARING}, {tier = 2, name = MW_Property.HEAVY_LOAD_BEARING}},
+  [MW_Property.HIGH_TENSILE] = {{tier = 1, name = MW_Property.HIGH_TENSILE}, {tier = 2, name = MW_Property.VERY_HIGH_TENSILE}},
+}
+
+for property, property_dropdown_list in pairs(MW_Data.property_dropdowns) do
+  for _, property_dropdown in pairs(property_dropdown_list) do
+    if not MW_Data.property_machined_part_pairs[property_dropdown.name] then
+      MW_Data.property_machined_part_pairs[property_dropdown.name] = MW_Data.property_machined_part_pairs[property]    
+    end
+  end
+end
+
+-- MW_Data.property_machined_part_pairs[MW_Property.HEAVY_LOAD_BEARING] = MW_Data.property_machined_part_pairs[MW_Property.LOAD_BEARING]
+-- MW_Data.property_machined_part_pairs[MW_Property.VERY_HIGH_TENSILE]  = MW_Data.property_machined_part_pairs[MW_Property.HIGH_TENSILE]
 
 if advanced then -- stocks_recipe_data : [stock | stock that crafts it] {stock that crafts it, how many it takes, how many it makes}]
   MW_Data.stocks_recipe_data = {
-    [MW_Stock.PLATE]         = {                                                    made_in = "smelting",                    plating_billet_count = 6 },
-    [MW_Stock.ANGLE]         = {precursor = MW_Stock.SHEET,  input = 1, output = 1, made_in = MW_Minisembler.ROLLER,         plating_billet_count = 3 },
-    [MW_Stock.FINE_GEAR]     = {precursor = MW_Stock.SHEET,  input = 2, output = 1, made_in = MW_Minisembler.METAL_BANDSAW,  plating_billet_count = 6 },
-    [MW_Stock.FINE_PIPE]     = {precursor = MW_Stock.SHEET,  input = 3, output = 1, made_in = MW_Minisembler.BENDER,         plating_billet_count = 9 },
-    [MW_Stock.SHEET]         = {precursor = MW_Stock.PLATE,  input = 1, output = 2, made_in = MW_Minisembler.BENDER,         plating_billet_count = 3 },
-    [MW_Stock.PIPE]          = {precursor = MW_Stock.PLATE,  input = 1, output = 1, made_in = MW_Minisembler.METAL_EXTRUDER, plating_billet_count = 6 },
-    [MW_Stock.GIRDER]        = {precursor = MW_Stock.PLATE,  input = 4, output = 1, made_in = MW_Minisembler.MILL,           plating_billet_count = 24},
-    [MW_Stock.GEAR]          = {precursor = MW_Stock.PLATE,  input = 2, output = 1, made_in = MW_Minisembler.MILL,           plating_billet_count = 12},
-    [MW_Stock.SQUARE]        = {precursor = MW_Stock.PLATE,  input = 1, output = 2, made_in = MW_Minisembler.ROLLER,         plating_billet_count = 3 },
-    [MW_Stock.WIRE]          = {precursor = MW_Stock.SQUARE, input = 1, output = 2, made_in = MW_Minisembler.ROLLER,         plating_billet_count = 2 },
+    [MW_Stock.PLATE]          = {                                                     made_in = "smelting",                    plating_billet_count = 6 , plating_fluid_count = 100},
+    [MW_Stock.ANGLE]          = {precursor = MW_Stock.SHEET,  input = 1, output = 1,  made_in = MW_Minisembler.ROLLER,         plating_billet_count = 3 , plating_fluid_count = 100},
+    [MW_Stock.FINE_GEAR]      = {precursor = MW_Stock.SHEET,  input = 2, output = 1,  made_in = MW_Minisembler.METAL_BANDSAW,  plating_billet_count = 6 , plating_fluid_count = 100},
+    [MW_Stock.FINE_PIPE]      = {precursor = MW_Stock.SHEET,  input = 3, output = 1,  made_in = MW_Minisembler.BENDER,         plating_billet_count = 9 , plating_fluid_count = 100},
+    [MW_Stock.SHEET]          = {precursor = MW_Stock.PLATE,  input = 1, output = 2,  made_in = MW_Minisembler.BENDER,         plating_billet_count = 3 , plating_fluid_count = 100},
+    [MW_Stock.PIPE]           = {precursor = MW_Stock.PLATE,  input = 1, output = 1,  made_in = MW_Minisembler.METAL_EXTRUDER, plating_billet_count = 6 , plating_fluid_count = 100},
+    [MW_Stock.GIRDER]         = {precursor = MW_Stock.PLATE,  input = 4, output = 1,  made_in = MW_Minisembler.MILL,           plating_billet_count = 24, plating_fluid_count = 100},
+    [MW_Stock.GEAR]           = {precursor = MW_Stock.PLATE,  input = 2, output = 1,  made_in = MW_Minisembler.MILL,           plating_billet_count = 12, plating_fluid_count = 100},
+    [MW_Stock.SQUARE]         = {precursor = MW_Stock.PLATE,  input = 1, output = 2,  made_in = MW_Minisembler.ROLLER,         plating_billet_count = 3 , plating_fluid_count = 100},
+    [MW_Stock.WIRE]           = {precursor = MW_Stock.SQUARE, input = 1, output = 2,  made_in = MW_Minisembler.ROLLER,         plating_billet_count = 2 , plating_fluid_count = 100},
+    [MW_Stock.PLATING_BILLET] = {precursor = MW_Stock.PLATE,  input = 1, output = 50, made_in = MW_Minisembler.METAL_BANDSAW                                                       }
   }
 else
   MW_Data.stocks_recipe_data = {
-    [MW_Stock.PLATE]         = {                                                    made_in = "smelting",                    plating_billet_count = 10},
-    [MW_Stock.SQUARE]        = {precursor = MW_Stock.PLATE , input = 1, output = 2, made_in = MW_Minisembler.METAL_BANDSAW,  plating_billet_count = 5 },
-    [MW_Stock.WIRE]          = {precursor = MW_Stock.SQUARE, input = 1, output = 2, made_in = MW_Minisembler.METAL_EXTRUDER, plating_billet_count = 5 },
+    [MW_Stock.PLATE]          = {                                                     made_in = "smelting",                    plating_billet_count = 10},
+    [MW_Stock.SQUARE]         = {precursor = MW_Stock.PLATE , input = 1, output = 2,  made_in = MW_Minisembler.METAL_BANDSAW,  plating_billet_count = 5 },
+    [MW_Stock.WIRE]           = {precursor = MW_Stock.SQUARE, input = 1, output = 2,  made_in = MW_Minisembler.METAL_EXTRUDER, plating_billet_count = 5 },
+    [MW_Stock.PLATING_BILLET] = {precursor = MW_Stock.PLATE,  input = 1, output = 50, made_in = MW_Minisembler.METAL_BANDSAW                            }
   }
 end
 
