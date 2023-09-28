@@ -7,9 +7,10 @@ Date:
     - Added 'detailed' tooltips toggle in settings
     - Added Electroplater minisembler
     - Added Treated Metals (currently only Galvanized Steel)
-    - Lots of behind the scenes refactoring to facilitate future updates
     - *** Fluid Boxes in Minisemblers
-    - Property dropdown recipes
+    - Property downgrade recipes
+    - Culled unused stocks (added debug setting to *remove* unused stocks)
+    - Lots of behind the scenes refactoring to facilitate future updates
 ---------------------------------------------------------------------------------------------------
 Version: 0.1.14
 Date: 2023-08-24

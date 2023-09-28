@@ -305,7 +305,70 @@ end
 
 
 
+-- Eliminate all unused Stocks (as per the list above) from technologies and recipes
+for item_name, item_prototype in pairs(GM_global_mw_data.stock_items) do
+  if not seen_stocks[item_name] then
+    for _, recipe_prototypes in pairs(GM_global_mw_data.stock_recipes[item_name]) do
+      for recipe_name, recipe_prototype in pairs(recipe_prototypes) do
+        
+        -- Pull the recipes out of the technologies
+        local metal = item_prototype.gm_item_data.metal
+        if MW_Data.metal_data[metal].tech_stock ~= "starter" then
+          local current_effects = data.raw.technology[MW_Data.metal_data[metal].tech_stock].effects
+          local new_effects = {}
+          for _, effect in pairs(current_effects) do
+            if effect.recipe ~= recipe_name then
+              table.insert(new_effects, effect)
+            end
+          end
+          data.raw.technology[MW_Data.metal_data[metal].tech_stock].effects = new_effects
+        end
+
+        -- Pull the recipes out of crafting
+        data.raw.recipe[recipe_prototype.name].enabled = false
+        if gm_debug_delete_culled_recipes then
+          data.raw.recipe[recipe_prototype.name] = nil
+        end
+
+      end
+    end
+  end 
+end
+
+
 -- Eliminate all unused Machined Parts (as per the list above) from technologies and recipes
+for item_name, item_prototype in pairs(GM_global_mw_data.machined_part_items) do
+  if not seen_machined_parts[item_name] then
+    for _, recipe_prototypes in pairs(GM_global_mw_data.machined_part_recipes[item_name]) do
+      for recipe_name, recipe_prototype in pairs(recipe_prototypes) do
+        
+        -- Pull the recipes out of the technologies
+        for metal, metal_data in pairs(MW_Data.metal_data) do
+          if MW_Data.metal_data[metal].tech_machined_part ~= "starter" then
+            local current_effects = data.raw.technology[MW_Data.metal_data[metal].tech_machined_part].effects
+            local new_effects = {}
+            for _, effect in pairs(current_effects) do
+              if effect.recipe ~= recipe_name then
+                table.insert(new_effects, effect)
+              end
+            end
+            data.raw.technology[MW_Data.metal_data[metal].tech_machined_part].effects = new_effects
+          end
+          
+          -- Pull the recipes out of crafting
+          data.raw.recipe[recipe_prototype.name].enabled = false
+          if gm_debug_delete_culled_recipes then
+            data.raw.recipe[recipe_prototype.name] = nil
+          end
+
+        end
+
+      end
+    end
+  end 
+end
+
+--[[
 local new_effects
 local i, j
 for item_name, item in pairs(data.raw.item) do
@@ -339,6 +402,7 @@ for item_name, item in pairs(data.raw.item) do
     end
   end
 end
+--]]
 
 
 

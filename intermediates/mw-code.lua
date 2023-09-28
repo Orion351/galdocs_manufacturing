@@ -38,12 +38,12 @@ local gm_debug_delete_culled_recipes = settings.startup["gm-debug-delete-culled-
 -- local MW_Enums = require("intermediates.mw-enums")
 local MW_Data = require("intermediates.mw-data")
 
--- Build data onto data.raw. This is a weird cross-dependency thing, and I have no idea if this is a best, worst, or moderate practice. But it IS practice
-data.raw.gm_mw_data = {}
-data.raw.gm_mw_data.stock_items = {}
-data.raw.gm_mw_data.stock_recipes = {}
-data.raw.gm_mw_data.machined_part_items = {}
-data.raw.gm_mw_data.machined_part_recipes = {}
+-- Build global variable data. This is to communicate with other files without needing the require() command
+GM_global_mw_data = {}
+GM_global_mw_data.stock_items = {}
+GM_global_mw_data.stock_recipes = {}
+GM_global_mw_data.machined_part_items = {}
+GM_global_mw_data.machined_part_recipes = {}
 
 
 
@@ -528,7 +528,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
         }
       }
       data:extend(item_prototype)
-      data.raw.gm_mw_data.stock_items[item_prototype[1].name] = item_prototype[1]
+      GM_global_mw_data.stock_items[item_prototype[1].name] = item_prototype[1]
 
       local recipe_prototype = {}
       if stock ~= MW_Data.MW_Stock.PLATE then -- If it's not a plate, then make the recipe as normal
@@ -563,7 +563,8 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
           }
         }
         data:extend(recipe_prototype)
-        data.raw.gm_mw_data.stock_recipes[recipe_prototype[1].name] = recipe_prototype[1]
+        if not GM_global_mw_data.stock_recipes[item_prototype[1].name] then GM_global_mw_data.stock_recipes[item_prototype[1].name] = {} end
+        table.insert(GM_global_mw_data.stock_recipes[item_prototype[1].name], {[recipe_prototype[1].name] = recipe_prototype[1]})
       end
         
       if stock == MW_Data.MW_Stock.PLATE and MW_Data.metal_data[metal].alloy_plate_recipe then -- If it is a plate, make the special-case alloy-from-plate recipes
@@ -602,7 +603,8 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
           }
         }
         data:extend(recipe_prototype)
-        data.raw.gm_mw_data.stock_recipes[recipe_prototype[1].name] = recipe_prototype[1]
+        if not GM_global_mw_data.stock_recipes[item_prototype[1].name] then GM_global_mw_data.stock_recipes[item_prototype[1].name] = {} end
+        table.insert(GM_global_mw_data.stock_recipes[item_prototype[1].name], {[recipe_prototype[1].name] = recipe_prototype[1]})
       end
       
       if stock == MW_Data.MW_Stock.PLATE and MW_Data.metal_data[metal].alloy_ore_recipe then -- If it is a plate, make the special-case alloy-from-plate recipes
@@ -641,7 +643,8 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
           }
         }
         data:extend(recipe_prototype)
-        data.raw.gm_mw_data.stock_recipes[recipe_prototype[1].name] = recipe_prototype[1]
+        if not GM_global_mw_data.stock_recipes[item_prototype[1].name] then GM_global_mw_data.stock_recipes[item_prototype[1].name] = {} end
+        table.insert(GM_global_mw_data.stock_recipes[item_prototype[1].name], {[recipe_prototype[1].name] = recipe_prototype[1]})
       end   
       
       if stock == MW_Data.MW_Stock.PLATE and MW_Data.metal_data[metal].type == MW_Data.MW_Metal_Type.ELEMENT then -- If it is a plate, make the special-case elemental plate recipes that take ores instead of stocks.
@@ -670,7 +673,8 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
           }
         }
         data:extend(recipe_prototype)
-        data.raw.gm_mw_data.stock_recipes[recipe_prototype[1].name] = recipe_prototype[1]
+        if not GM_global_mw_data.stock_recipes[item_prototype[1].name] then GM_global_mw_data.stock_recipes[item_prototype[1].name] = {} end
+        table.insert(GM_global_mw_data.stock_recipes[item_prototype[1].name], {[recipe_prototype[1].name] = recipe_prototype[1]})
       end
     end
   end
@@ -757,7 +761,8 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the treated [M
           localized_description_item = {"gm.metal-stock-item-description-brief", {"gm." .. metal}, {"gm." .. stock}}
         end      
 
-        data:extend({ -- item
+        
+        local item_prototype = { -- item
         { 
           type = "item",
           name = metal .. "-" .. stock .. "-stock",
@@ -796,12 +801,14 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the treated [M
           localised_description = localized_description_item,
           gm_item_data = {type = "stocks", metal = metal, stock = stock, special = "treatment"}
           }
-        })
+        }
+        data:extend(item_prototype)
+        GM_global_mw_data.stock_items[item_prototype[1].name] = item_prototype[1]
 
         local hide_from_player_crafting = show_non_hand_craftables
         if stock == MW_Data.MW_Stock.PLATE then hide_from_player_crafting = false end
 
-        data:extend({ -- recipe
+        local recipe_prototype = { -- recipe
           {      
             type = "recipe",
             name = metal .. "-" .. stock .. "-stock",
@@ -824,8 +831,10 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the treated [M
             localised_name = {"gm.metal-stock-item-name", {"gm." .. metal}, {"gm." .. stock}},
             gm_recipe_data = {type = "stocks", metal = metal, stock = stock, special = "treatment"}
           }
-        })
-
+        }
+        data:extend(recipe_prototype)
+        if not GM_global_mw_data.stock_recipes[item_prototype[1].name] then GM_global_mw_data.stock_recipes[item_prototype[1].name] = {} end
+        table.insert(GM_global_mw_data.stock_recipes[item_prototype[1].name], {[recipe_prototype[1].name] = recipe_prototype[1]})
       end
     end
   end 
@@ -982,7 +991,7 @@ for property, parts in pairs(MW_Data.property_machined_part_pairs) do -- Make th
       item_subgroup = "gm-machined-parts-" .. property
     end
 
-    data:extend({ -- item
+    local item_prototype = { -- item
       {
         type = "item",
         name = property .. "-" .. part .. "-machined-part",
@@ -994,7 +1003,9 @@ for property, parts in pairs(MW_Data.property_machined_part_pairs) do -- Make th
         localised_description = localized_description_item,
         gm_item_data = {type = "machined-parts", property = property, part = part}
       }
-    })
+    }
+    data:extend(item_prototype)
+    GM_global_mw_data.machined_part_items[item_prototype[1].name] = item_prototype[1]
 
     for metal, metal_properties in pairs(MW_Data.metal_properties_pairs) do
       local precursor = MW_Data.machined_parts_recipe_data[part].precursor
@@ -1024,29 +1035,9 @@ for property, parts in pairs(MW_Data.property_machined_part_pairs) do -- Make th
           )
         end
         
-        -- Build recipe data
-        local recipe = { -- recipe
-          type = "recipe",
-          name = property .. "-" .. part .. "-from-" .. metal .. "-" .. precursor,
-          enabled = MW_Data.metal_data[metal].tech_machined_part == "starter",
-          ingredients =
-          {
-            {metal .. "-" .. precursor .. "-stock", MW_Data.machined_parts_recipe_data[part].input}
-          },
-          result = property .. "-" .. part .. "-machined-part",
-          result_count = MW_Data.machined_parts_recipe_data[part].output,
-          category = "gm-" .. MW_Data.machined_parts_recipe_data[part].made_in,
-          hide_from_player_crafting = show_non_hand_craftables,
-          icons = icons_data_recipe,
-          crafting_machine_tint = { -- I don't know if anything will use this, but here it is just in case. You're welcome, future me.
-            primary = MW_Data.metal_data[metal].tint_metal,
-            secondary = MW_Data.metal_data[metal].tint_oxidation
-          },
-          always_show_made_in = true,
-          energy_required = 0.3,
-          localised_name = {"gm.metal-machined-part-recipe", {"gm." .. property}, {"gm." .. part}, {"gm." .. metal}, {"gm." .. precursor}},
-          gm_recipe_data = {type = "machined-parts", property = property, part = part}
-        }
+        -- Un-hide and put in '-player-crafting' set the recipes intended to be useable at the beginning of the game
+        local recipe_category = "gm-" .. MW_Data.machined_parts_recipe_data[part].made_in
+        local hide_from_player_crafting = show_non_hand_craftables
         if (advanced and ( -- carve-outs for player crafting for bootstrap purposes
                           (property == MW_Data.MW_Property.BASIC                    and metal == MW_Data.MW_Metal.COPPER                                                                                              ) or
                           (property == MW_Data.MW_Property.BASIC                    and metal == MW_Data.MW_Metal.IRON                                                                                                ) or
@@ -1054,21 +1045,47 @@ for property, parts in pairs(MW_Data.property_machined_part_pairs) do -- Make th
                           (property == MW_Data.MW_Property.THERMALLY_CONDUCTIVE     and metal == MW_Data.MW_Metal.COPPER and precursor == MW_Data.MW_Stock.WIRE      and part == MW_Data.MW_Machined_Part.WIRING      ) or
                           (property == MW_Data.MW_Property.CORROSION_RESISTANT      and metal == MW_Data.MW_Metal.BRASS  and precursor == MW_Data.MW_Stock.FINE_PIPE and part == MW_Data.MW_Machined_Part.FINE_PIPING ) or
                           (property == MW_Data.MW_Property.CORROSION_RESISTANT      and metal == MW_Data.MW_Metal.BRASS  and precursor == MW_Data.MW_Stock.PIPE      and part == MW_Data.MW_Machined_Part.PIPING      )
-                          )
-            ) or
-            (advanced == false and (
+                        )) or
+        (advanced == false and (
                           (property == MW_Data.MW_Property.BASIC                   and metal == MW_Data.MW_Metal.COPPER                                                                                      ) or
                           (property == MW_Data.MW_Property.BASIC                   and metal == MW_Data.MW_Metal.IRON                                                                                        ) or
                           (property == MW_Data.MW_Property.ELECTRICALLY_CONDUCTIVE and metal == MW_Data.MW_Metal.COPPER and precursor == MW_Data.MW_Stock.SQUARE and part == MW_Data.MW_Machined_Part.WIRING ) or
                           (property == MW_Data.MW_Property.THERMALLY_CONDUCTIVE    and metal == MW_Data.MW_Metal.COPPER and precursor == MW_Data.MW_Stock.SQUARE and part == MW_Data.MW_Machined_Part.WIRING ) or
                           (property == MW_Data.MW_Property.CORROSION_RESISTANT     and metal == MW_Data.MW_Metal.BRASS  and precursor == MW_Data.MW_Stock.PLATE  and part == MW_Data.MW_Machined_Part.PIPING )
-                          )
-            )
+        ))
         then
-          recipe.category = recipe.category .. "-player-crafting"
-          recipe.hide_from_player_crafting = false
+          recipe_category = recipe_category .. "-player-crafting"
+          hide_from_player_crafting = false
         end
-        data:extend({recipe})
+
+        -- Build recipe data
+        local recipe_prototype = { -- recipe
+          { 
+            type = "recipe",
+            name = property .. "-" .. part .. "-from-" .. metal .. "-" .. precursor,
+            enabled = MW_Data.metal_data[metal].tech_machined_part == "starter",
+            ingredients =
+            {
+              {metal .. "-" .. precursor .. "-stock", MW_Data.machined_parts_recipe_data[part].input}
+            },
+            result = property .. "-" .. part .. "-machined-part",
+            result_count = MW_Data.machined_parts_recipe_data[part].output,
+            category = recipe_category,
+            hide_from_player_crafting = hide_from_player_crafting,
+            icons = icons_data_recipe,
+            crafting_machine_tint = { -- I don't know if anything will use this, but here it is just in case. You're welcome, future me.
+              primary = MW_Data.metal_data[metal].tint_metal,
+              secondary = MW_Data.metal_data[metal].tint_oxidation
+            },
+            always_show_made_in = true,
+            energy_required = 0.3,
+            localised_name = {"gm.metal-machined-part-recipe", {"gm." .. property}, {"gm." .. part}, {"gm." .. metal}, {"gm." .. precursor}},
+            gm_recipe_data = {type = "machined-parts", property = property, part = part}
+          }
+        }
+        data:extend(recipe_prototype)
+        if not GM_global_mw_data.machined_part_recipes[item_prototype[1].name] then GM_global_mw_data.machined_part_recipes[item_prototype[1].name] = {} end
+        table.insert(GM_global_mw_data.machined_part_recipes[item_prototype[1].name], {[recipe_prototype[1].name] = recipe_prototype[1]})
       end
     end
   end
@@ -1183,8 +1200,8 @@ for property_key, multi_properties in pairs(multi_property_with_key_pairs) do --
             end
           end
 
-          data:extend({
-            { -- item
+          local item_prototype = { -- item
+            {
               type = "item",
               name = property_key .. "-" .. part .. "-machined-part",
               icons = icons_data_item,
@@ -1195,7 +1212,10 @@ for property_key, multi_properties in pairs(multi_property_with_key_pairs) do --
               localised_description = localized_description_item,
               gm_item_data = {type = "machined-parts", properties = multi_properties, compound_property = property_key, part = part}
             }
-          })
+          }
+
+          data:extend(item_prototype)
+          GM_global_mw_data.machined_part_items[item_prototype[1].name] = item_prototype[1]
 
           -- Make recipe icon
           local icons_data_recipe = {
@@ -1226,30 +1246,34 @@ for property_key, multi_properties in pairs(multi_property_with_key_pairs) do --
             end
           end
 
-          local recipe = { -- recipe
-            type = "recipe",
-            name = property_key .. "-" .. part .. "-from-" .. metal .. "-" .. MW_Data.machined_parts_recipe_data[part].precursor,
-            enabled = MW_Data.metal_data[metal].tech_machined_part == "starter",
-            ingredients =
-            {
-              {metal .. "-" .. MW_Data.machined_parts_recipe_data[part].precursor .. "-stock", MW_Data.machined_parts_recipe_data[part].input}
-            },
-            result = property_key .. "-" .. part .. "-machined-part",
-            result_count = MW_Data.machined_parts_recipe_data[part].output,
-            category = "gm-" .. MW_Data.machined_parts_recipe_data[part].made_in,
-            hide_from_player_crafting = show_non_hand_craftables,
-            icons = icons_data_recipe,
-            crafting_machine_tint = { -- I don't know if anything will use this, but here it is just in case. You're welcome, future me.
-              primary = MW_Data.metal_data[metal].tint_metal,
-              secondary = MW_Data.metal_data[metal].tint_oxidation
-            },
-            always_show_made_in = true,
-            energy_required = 0.3,
-            gm_recipe_data = {type = "machined-parts", properties = multi_properties, compound_property = property_key, part = part}
-            -- localised_name = {"gm.metal-machined-part-recipe", {"gm." .. property}, {"gm." .. part}, {"gm." .. metal}, {"gm." .. machined_parts_precurors[part][1]}}
+          local recipe_prototype = {
+            { -- recipe
+              type = "recipe",
+              name = property_key .. "-" .. part .. "-from-" .. metal .. "-" .. MW_Data.machined_parts_recipe_data[part].precursor,
+              enabled = MW_Data.metal_data[metal].tech_machined_part == "starter",
+              ingredients =
+              {
+                {metal .. "-" .. MW_Data.machined_parts_recipe_data[part].precursor .. "-stock", MW_Data.machined_parts_recipe_data[part].input}
+              },
+              result = property_key .. "-" .. part .. "-machined-part",
+              result_count = MW_Data.machined_parts_recipe_data[part].output,
+              category = "gm-" .. MW_Data.machined_parts_recipe_data[part].made_in,
+              hide_from_player_crafting = show_non_hand_craftables,
+              icons = icons_data_recipe,
+              crafting_machine_tint = { -- I don't know if anything will use this, but here it is just in case. You're welcome, future me.
+                primary = MW_Data.metal_data[metal].tint_metal,
+                secondary = MW_Data.metal_data[metal].tint_oxidation
+              },
+              always_show_made_in = true,
+              energy_required = 0.3,
+              gm_recipe_data = {type = "machined-parts", properties = multi_properties, compound_property = property_key, part = part}
+              -- localised_name = {"gm.metal-machined-part-recipe", {"gm." .. property}, {"gm." .. part}, {"gm." .. metal}, {"gm." .. machined_parts_precurors[part][1]}}
+            }
           }
           -- if, by some miracle, one needs a multi-property machined part to be available to the player at the start of the game, the (il)logic for that would go here.
-          data:extend({recipe})
+          data:extend(recipe_prototype)
+          if not GM_global_mw_data.machined_part_recipes[item_prototype[1].name] then GM_global_mw_data.machined_part_recipes[item_prototype[1].name] = {} end
+          table.insert(GM_global_mw_data.machined_part_recipes[item_prototype[1].name], {[recipe_prototype[1].name] = recipe_prototype[1]})
         end
       end
     end
@@ -1285,7 +1309,7 @@ for metal, metal_data in pairs(MW_Data.metal_data) do -- Make "Basic" property d
         )
         end
 
-        data:extend({
+        local recipe_prototype = {
           {
             type = "recipe",
             name = property .. "-" .. part .. "-downgrade-to-basic-" .. part,
@@ -1301,8 +1325,11 @@ for metal, metal_data in pairs(MW_Data.metal_data) do -- Make "Basic" property d
             localised_name = {"gm.metal-machined-part-downgrade-recipe", {"gm.basic"}, {"gm." .. part}},
             gm_recipe_data = {type = "machined-parts", start_property = property, end_property = MW_Data.MW_Property.BASIC, part = part, special = "downgrade"}
           }
-        })
-      end
+        }
+        data:extend(recipe_prototype)
+        if not GM_global_mw_data.machined_part_recipes["basic-" .. part .. "-machined-part"] then GM_global_mw_data.machined_part_recipes["basic-" .. part .. "-machined-part"] = {} end
+        table.insert(GM_global_mw_data.machined_part_recipes["basic-" .. part .. "-machined-part"], {[recipe_prototype[1].name] = recipe_prototype[1]})
+    end
     end
   end
 end
@@ -1344,7 +1371,7 @@ for property, property_downgrade_list in pairs(MW_Data.property_downgrades) do -
       )
       end
 
-      data:extend({
+      local recipe_prototype = {
         {
           type = "recipe",
           name = next_property .. "-" .. part .. "-downgrade-to-" .. previous_property .. "-" .. part,
@@ -1360,7 +1387,10 @@ for property, property_downgrade_list in pairs(MW_Data.property_downgrades) do -
           localised_name = {"gm.metal-machined-part-downgrade-recipe", {"gm." .. previous_property}, {"gm." .. part}},
           gm_recipe_data = {type = "machined-parts", start_property = next_property, end_property = previous_property, part = part, special = "downgrade"}
         }
-      })
+      }
+      data:extend(recipe_prototype)
+      if not GM_global_mw_data.machined_part_recipes[previous_property .. "-" .. part .. "-machined-part"] then GM_global_mw_data.machined_part_recipes[previous_property .. "-" .. part .. "-machined-part"] = {} end
+      table.insert(GM_global_mw_data.machined_part_recipes[previous_property .. "-" .. part .. "-machined-part"], {[recipe_prototype[1].name] = recipe_prototype[1]})
     end
   end
 end
@@ -1399,7 +1429,7 @@ for property_key, multi_properties in pairs(multi_property_with_key_pairs) do --
         end
       end
 
-      data:extend({
+      local recipe_prototype = {
         {
           type = "recipe",
           name = property_key .. "-" .. part .. "-downgrade-to-" .. multi_property .. "-" .. part,
@@ -1415,7 +1445,10 @@ for property_key, multi_properties in pairs(multi_property_with_key_pairs) do --
           localised_name = {"gm.metal-machined-part-downgrade-recipe", {"gm." .. multi_property}, {"gm." .. part}},
           gm_recipe_data = {type = "machined-parts", start_compound_property = property_key, end_property = multi_property, part = part, special = "downgrade"}
         }
-      })
+      }
+      data:extend(recipe_prototype)
+      if not GM_global_mw_data.machined_part_recipes[multi_property .. "-" .. part .. "-machined-part"] then GM_global_mw_data.machined_part_recipes[multi_property .. "-" .. part .. "-machined-part"] = {} end
+      table.insert(GM_global_mw_data.machined_part_recipes[multi_property .. "-" .. part .. "-machined-part"], {[recipe_prototype[1].name] = recipe_prototype[1]})
     end
   end
 end
