@@ -226,11 +226,11 @@ MW_Data.minisembler_data = { -- Initialize the Minisembler data
 	[MW_Minisembler.SPOOLER]        = {rgba = {r = 1.0, g = 0.2, b = 1.0, a = 1.0}, tiers = {MW_Minisembler_Tier.ELECTRIC}, stage = MW_Minisembler_Stage.MACHINING},
 	[MW_Minisembler.ROLLER]         = {rgba = {r = 1.0, g = 1.0, b = 0.2, a = 1.0}, tiers = {MW_Minisembler_Tier.ELECTRIC}, stage = MW_Minisembler_Stage.MACHINING},
 	[MW_Minisembler.BENDER]         = {rgba = {r = 0.2, g = 0.2, b = 1.0, a = 1.0}, tiers = {MW_Minisembler_Tier.ELECTRIC}, stage = MW_Minisembler_Stage.MACHINING},
-  -- [MW_Minisembler.METAL_ASSAYER]  = {rgba = {r = 0.2, g = 0.2, b = 1.0, a = 1.0}, tiers = {MW_Minisembler_Tier.ELECTRIC}, stage = {MW_Minisembler_Stage.MACHINING},
+  [MW_Minisembler.METAL_ASSAYER]  = {rgba = {r = 0.2, g = 0.2, b = 1.0, a = 1.0}, tiers = {MW_Minisembler_Tier.ELECTRIC}, stage = MW_Minisembler_Stage.ASSAYING},
 	[MW_Minisembler.ELECTROPLATER]  = {rgba = {r = 0.2, g = 0.2, b = 1.0, a = 1.0}, tiers = {MW_Minisembler_Tier.ELECTRIC}, stage = MW_Minisembler_Stage.TREATING, treatment_type = MW_Treatment_Type.PLATING},
 }
 
-MW_Data.minisembler_data = table.merge_subtables(MW_Data.minisembler_data, {
+MW_Data.minisembler_data = table.merge_subtables(MW_Data.minisembler_data, { -- Adds worldspace entity data to the minisemblers
   [MW_Minisembler.WELDER]         = {shape_data = {[MW_Minisembler_Tier.ELECTRIC] = {sentity_shape = "2x1", uses_fluid = "no" }}},
   [MW_Minisembler.DRILL_PRESS]    = {shape_data = {[MW_Minisembler_Tier.ELECTRIC] = {sentity_shape = "2x1", uses_fluid = "no" }}},
   [MW_Minisembler.GRINDER]        = {shape_data = {[MW_Minisembler_Tier.ELECTRIC] = {sentity_shape = "2x1", uses_fluid = "no" }}},
@@ -242,10 +242,11 @@ MW_Data.minisembler_data = table.merge_subtables(MW_Data.minisembler_data, {
   [MW_Minisembler.SPOOLER]        = {shape_data = {[MW_Minisembler_Tier.ELECTRIC] = {sentity_shape = "2x1", uses_fluid = "no" }}},
   [MW_Minisembler.ROLLER]         = {shape_data = {[MW_Minisembler_Tier.ELECTRIC] = {sentity_shape = "2x1", uses_fluid = "no" }}},
   [MW_Minisembler.BENDER]         = {shape_data = {[MW_Minisembler_Tier.ELECTRIC] = {sentity_shape = "2x1", uses_fluid = "no" }}},
+  [MW_Minisembler.METAL_ASSAYER]  = {shape_data = {[MW_Minisembler_Tier.ELECTRIC] = {sentity_shape = "2x1", uses_fluid = "no" }}},
   [MW_Minisembler.ELECTROPLATER]  = {shape_data = {[MW_Minisembler_Tier.ELECTRIC] = {sentity_shape = "2x1", uses_fluid = "yes"}}},
 })
 
-MW_Data.minisembler_entity_data = {
+MW_Data.minisembler_entity_data = { -- General worldspace entity data used by minisemblers. FIXME : This should live in a 'meta' file because it will apply to all phases, not just metalworking
   ["2x1"] = {collision_box = {{-0.29, -0.9}, {0.29, 0.9}}, selection_box = {{-0.5, -1}, {0.5, 1}}, fluid_box = {}}
 }
 
@@ -400,13 +401,15 @@ else
   }
 end
 
-if advanced then
+if advanced then -- Append special minisembler recipes
   table.merge(MW_Data.minisemblers_recipe_parameters, {
-    [MW_Minisembler.ELECTROPLATER]  = {}
+    [MW_Minisembler.ELECTROPLATER]  = {{"corrosion-resistant-large-paneling-machined-part", 2}, {"load-bearing-girdering-machined-part", 2}, {"corrosion-resistant-piping-machined-part", 2}, {"electrically-conductive-wiring-machined-part", 2}, {"basic-bolts-machined-part", 1}},
+    [MW_Minisembler.METAL_ASSAYER] = {}
   })
 else
   table.merge(MW_Data.minisemblers_recipe_parameters, {
-    [MW_Minisembler.ELECTROPLATER]  = {}
+    [MW_Minisembler.ELECTROPLATER]  = {{"corrosion-resistant-paneling-machined-part", 2}, {"load-bearing-framing-machined-part", 2}, {"corrosion-resistant-piping-machined-part", 2}, {"electrically-conductive-wiring-machined-part", 2}, {"basic-bolts-machined-part", 1}},
+    [MW_Minisembler.METAL_ASSAYER] = {}
   })
 end
 
@@ -420,7 +423,7 @@ MW_Data.metal_properties_pairs = { -- [metal | list of properties]
   [MW_Metal.STEEL]            = map{MW_Property.BASIC, MW_Property.HIGH_TENSILE, MW_Property.LOAD_BEARING, MW_Property.HEAVY_LOAD_BEARING},
   [MW_Metal.BRASS]            = map{MW_Property.BASIC, MW_Property.DUCTILE, MW_Property.CORROSION_RESISTANT},
   [MW_Metal.INVAR]            = map{MW_Property.BASIC, MW_Property.LOAD_BEARING, MW_Property.THERMALLY_STABLE, MW_Property.HIGH_TENSILE},
-  [MW_Metal.GALVANIZED_STEEL] = map{MW_Property.BASIC, MW_Property.CORROSION_RESISTANT, MW_Property.HIGH_TENSILE, MW_Property.LOAD_BEARING, MW_Property.HEAVY_LOAD_BEARING},
+  [MW_Metal.GALVANIZED_STEEL] = map{MW_Property.BASIC, MW_Property.CORROSION_RESISTANT, MW_Property.HIGH_TENSILE, MW_Property.LOAD_BEARING, MW_Property.HEAVY_LOAD_BEARING, MW_Property.VERY_HEAVY_LOAD_BEARING},
 }
 
 MW_Data.multi_property_pairs = { -- Two or more properties in a table.
@@ -487,35 +490,31 @@ else
   }
 end
 
--- duplicate the advancement properties over
-MW_Data.property_dropdowns = {
-  [MW_Property.LOAD_BEARING] = {{tier = 1, name = MW_Property.LOAD_BEARING}, {tier = 2, name = MW_Property.HEAVY_LOAD_BEARING}},
-  [MW_Property.HIGH_TENSILE] = {{tier = 1, name = MW_Property.HIGH_TENSILE}, {tier = 2, name = MW_Property.VERY_HIGH_TENSILE}},
+MW_Data.property_downgrades = { -- Make property tier downgrade list things
+  [MW_Property.LOAD_BEARING] = {MW_Property.HEAVY_LOAD_BEARING, MW_Property.VERY_HEAVY_LOAD_BEARING},
+  [MW_Property.HIGH_TENSILE] = {MW_Property.VERY_HIGH_TENSILE, },
 }
 
-for property, property_dropdown_list in pairs(MW_Data.property_dropdowns) do
-  for _, property_dropdown in pairs(property_dropdown_list) do
-    if not MW_Data.property_machined_part_pairs[property_dropdown.name] then
-      MW_Data.property_machined_part_pairs[property_dropdown.name] = MW_Data.property_machined_part_pairs[property]    
+for property, property_downgrade_list in pairs(MW_Data.property_downgrades) do -- Propogate the tiers into the property_machined_part_pairs table
+  for tier, property_downgrade in pairs(property_downgrade_list) do
+    if not MW_Data.property_machined_part_pairs[property_downgrade] then
+      MW_Data.property_machined_part_pairs[property_downgrade] = MW_Data.property_machined_part_pairs[property]
     end
   end
 end
 
--- MW_Data.property_machined_part_pairs[MW_Property.HEAVY_LOAD_BEARING] = MW_Data.property_machined_part_pairs[MW_Property.LOAD_BEARING]
--- MW_Data.property_machined_part_pairs[MW_Property.VERY_HIGH_TENSILE]  = MW_Data.property_machined_part_pairs[MW_Property.HIGH_TENSILE]
-
 if advanced then -- stocks_recipe_data : [stock | stock that crafts it] {stock that crafts it, how many it takes, how many it makes}]
   MW_Data.stocks_recipe_data = {
     [MW_Stock.PLATE]          = {                                                     made_in = "smelting",                    plating_billet_count = 6 , plating_fluid_count = 100},
-    [MW_Stock.ANGLE]          = {precursor = MW_Stock.SHEET,  input = 1, output = 1,  made_in = MW_Minisembler.ROLLER,         plating_billet_count = 3 , plating_fluid_count = 100},
-    [MW_Stock.FINE_GEAR]      = {precursor = MW_Stock.SHEET,  input = 2, output = 1,  made_in = MW_Minisembler.METAL_BANDSAW,  plating_billet_count = 6 , plating_fluid_count = 100},
-    [MW_Stock.FINE_PIPE]      = {precursor = MW_Stock.SHEET,  input = 3, output = 1,  made_in = MW_Minisembler.BENDER,         plating_billet_count = 9 , plating_fluid_count = 100},
-    [MW_Stock.SHEET]          = {precursor = MW_Stock.PLATE,  input = 1, output = 2,  made_in = MW_Minisembler.BENDER,         plating_billet_count = 3 , plating_fluid_count = 100},
-    [MW_Stock.PIPE]           = {precursor = MW_Stock.PLATE,  input = 1, output = 1,  made_in = MW_Minisembler.METAL_EXTRUDER, plating_billet_count = 6 , plating_fluid_count = 100},
-    [MW_Stock.GIRDER]         = {precursor = MW_Stock.PLATE,  input = 4, output = 1,  made_in = MW_Minisembler.MILL,           plating_billet_count = 24, plating_fluid_count = 100},
+    [MW_Stock.ANGLE]          = {precursor = MW_Stock.SHEET,  input = 1, output = 1,  made_in = MW_Minisembler.BENDER,         plating_billet_count = 3 , plating_fluid_count = 100},
+    [MW_Stock.FINE_GEAR]      = {precursor = MW_Stock.SHEET,  input = 2, output = 1,  made_in = MW_Minisembler.MILL,           plating_billet_count = 6 , plating_fluid_count = 100},
+    [MW_Stock.FINE_PIPE]      = {precursor = MW_Stock.SHEET,  input = 3, output = 1,  made_in = MW_Minisembler.ROLLER,         plating_billet_count = 9 , plating_fluid_count = 100},
+    [MW_Stock.SHEET]          = {precursor = MW_Stock.PLATE,  input = 1, output = 2,  made_in = MW_Minisembler.ROLLER,         plating_billet_count = 3 , plating_fluid_count = 100},
+    [MW_Stock.PIPE]           = {precursor = MW_Stock.PLATE,  input = 1, output = 1,  made_in = MW_Minisembler.ROLLER,         plating_billet_count = 6 , plating_fluid_count = 100},
+    [MW_Stock.GIRDER]         = {precursor = MW_Stock.PLATE,  input = 4, output = 1,  made_in = MW_Minisembler.BENDER,         plating_billet_count = 24, plating_fluid_count = 100},
     [MW_Stock.GEAR]           = {precursor = MW_Stock.PLATE,  input = 2, output = 1,  made_in = MW_Minisembler.MILL,           plating_billet_count = 12, plating_fluid_count = 100},
-    [MW_Stock.SQUARE]         = {precursor = MW_Stock.PLATE,  input = 1, output = 2,  made_in = MW_Minisembler.ROLLER,         plating_billet_count = 3 , plating_fluid_count = 100},
-    [MW_Stock.WIRE]           = {precursor = MW_Stock.SQUARE, input = 1, output = 2,  made_in = MW_Minisembler.ROLLER,         plating_billet_count = 2 , plating_fluid_count = 100},
+    [MW_Stock.SQUARE]         = {precursor = MW_Stock.PLATE,  input = 1, output = 2,  made_in = MW_Minisembler.METAL_BANDSAW,  plating_billet_count = 3 , plating_fluid_count = 100},
+    [MW_Stock.WIRE]           = {precursor = MW_Stock.SQUARE, input = 1, output = 2,  made_in = MW_Minisembler.METAL_EXTRUDER, plating_billet_count = 2 , plating_fluid_count = 100},
     [MW_Stock.PLATING_BILLET] = {precursor = MW_Stock.PLATE,  input = 1, output = 50, made_in = MW_Minisembler.METAL_BANDSAW                                                       }
   }
 else
@@ -556,7 +555,17 @@ else
   }
 end
 
-
+for part, machined_part_recipe_data in pairs(MW_Data.machined_parts_recipe_data) do
+  if machined_part_recipe_data.precursor then
+    local current_precursor = machined_part_recipe_data.precursor
+    local current_backchain = {current_precursor}
+    while current_precursor ~= MW_Stock.PLATE do
+      current_precursor = MW_Data.stocks_recipe_data[current_precursor].precursor
+      table.insert(current_backchain, current_precursor)
+    end
+    MW_Data.machined_parts_recipe_data[part].backchain = current_backchain
+  end
+end
 
 -- ***************
 -- Return the data

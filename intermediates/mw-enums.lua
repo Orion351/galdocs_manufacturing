@@ -89,10 +89,9 @@ return {
 	
 		CORROSION_RESISTANT     = "corrosion-resistant",
 		HEAVY_LOAD_BEARING      = "heavy-load-bearing",
+		VERY_HEAVY_LOAD_BEARING = "very-heavy-load-bearing",
 		-- HIGH_MELTING_POINT      = "high-melting-point"
 	},
-
-
 
 	MW_Minisembler = {
 		-- Machining
@@ -110,7 +109,7 @@ return {
 
 		-- Treating
 		ELECTROPLATER  = "electroplater",
-		-- METAL_ASSAYER  = "metal-assayer",
+		METAL_ASSAYER  = "metal-assayer",
 	},
 
 	MW_Minisembler_Tier = {
@@ -119,6 +118,7 @@ return {
 
 	MW_Minisembler_Stage = {
 		MACHINING = "machining",
+		ASSAYING = "assaying",
 		TREATING  = "treating"
 	}	
 }
