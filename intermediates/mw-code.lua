@@ -319,7 +319,7 @@ data:extend({ -- add alloy recipe category
   {
     type = "recipe-category",
     name = "gm-alloys",
-    order = "a" .. "gm-alloy" .. order_count,
+    order = "a" .. "gm-alloy"
   }
 })
 
@@ -328,6 +328,14 @@ data:extend({ -- Make plate smelting category so player can see recipes in inven
     type = "item-subgroup",
     group = "gm-intermediates",
     name = "gm-plates"
+  }
+})
+
+data:extend({
+  {
+    type = "recipe-category",
+    name = "gm-remelting",
+    order = "a" .. "gm-remelting"
   }
 })
 
@@ -557,6 +565,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
             always_show_made_in = true,
             hide_from_player_crafting = recipe_hide_from_player_crafting,
             energy_required = 0.3,
+            order = "a[" .. metal .. "-" .. stock .. "-stock" .. "]",
             category = recipe_category,
             localised_name = {"gm.metal-stock-item-name", {"gm." .. metal}, {"gm." .. stock}},
             gm_recipe_data = {type = "stocks", metal = metal, stock = stock}
@@ -565,6 +574,51 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
         data:extend(recipe_prototype)
         if not GM_global_mw_data.stock_recipes[item_prototype[1].name] then GM_global_mw_data.stock_recipes[item_prototype[1].name] = {} end
         table.insert(GM_global_mw_data.stock_recipes[item_prototype[1].name], {[recipe_prototype[1].name] = recipe_prototype[1]})
+
+        -- Make recipe icon for remelting recipe
+        local icons_data_recipe = {
+          {
+            icon = "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. metal .. "/" .. metal .. "-plate-stock-0000.png",
+            icon_size = 64,
+          },
+          {
+            scale = 0.3,
+            icon = "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. metal .. "/" .. metal .. "-" .. stock .. "-stock-0000.png",
+            shift = {10, -10},
+            icon_size = 64
+          }
+        }
+
+        recipe_prototype = { -- remelting recipe
+        {
+          type = "recipe",
+          name = metal .. "-" .. stock .. "-remelting-stock",
+          enabled = MW_Data.metal_data[metal].tech_stock == "starter",
+          icons = icons_data_recipe,
+          ingredients = {
+            {name = item_prototype[1].name, 
+            amount = MW_Data.stocks_recipe_data[stock].remelting_cost}
+          },
+          result = metal .. "-plate-stock",
+          result_count = MW_Data.stocks_recipe_data[stock].remelting_yield,
+          crafting_machine_tint = {
+            primary = MW_Data.metal_data[metal].tint_metal,
+            secondary = MW_Data.metal_data[metal].tint_oxidation
+          },
+          always_show_made_in = true,
+          hide_from_player_crafting = show_non_hand_craftables,
+          energy_required = 3.2,
+          order = "b[" .. metal .. "-" .. stock .. "-remelting-stock" .. "]",
+          category = "gm-remelting",
+          -- subgroup = "gm-stocks-" .. metal,
+          localised_name = {"gm.metal-stock-remelting-recipe-name", {"gm." .. metal}, {"gm." .. MW_Data.MW_Stock.PLATE}},
+          gm_recipe_data = {type = "remelting", metal = metal, stock = stock}
+        }
+      }
+      data:extend(recipe_prototype)
+      if not GM_global_mw_data.stock_recipes[item_prototype[1].name] then GM_global_mw_data.stock_recipes[item_prototype[1].name] = {} end
+      table.insert(GM_global_mw_data.stock_recipes[item_prototype[1].name], {[recipe_prototype[1].name] = recipe_prototype[1]})
+
       end
         
       if stock == MW_Data.MW_Stock.PLATE and MW_Data.metal_data[metal].alloy_plate_recipe then -- If it is a plate, make the special-case alloy-from-plate recipes
@@ -808,11 +862,11 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the treated [M
         local hide_from_player_crafting = show_non_hand_craftables
         if stock == MW_Data.MW_Stock.PLATE then hide_from_player_crafting = false end
 
-        local recipe_prototype = { -- recipe
+        local recipe_prototype = { -- recipe for the stock
           {      
             type = "recipe",
             name = metal .. "-" .. stock .. "-stock",
-            enabled = MW_Data.metal_data[metal].tech_stock == "starter", 
+            enabled = MW_Data.metal_data[metal].tech_stock == "starter",
             ingredients = {
               {name = MW_Data.metal_data[metal].core_metal .. "-" .. stock .. "-stock",      amount = 1},
               {name = MW_Data.metal_data[metal].plate_metal .. "-" .. "plating-billet" .. "-stock", amount = MW_Data.metal_data[metal].plating_ratio_multiplier * MW_Data.stocks_recipe_data[stock].plating_billet_count},
@@ -829,7 +883,50 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the treated [M
             energy_required = 0.3,
             category = "gm-electroplating",
             localised_name = {"gm.metal-stock-item-name", {"gm." .. metal}, {"gm." .. stock}},
-            gm_recipe_data = {type = "stocks", metal = metal, stock = stock, special = "treatment"}
+            gm_recipe_data = {type = "stocks", metal = metal, stock = stock, special = "plating", core_metal = MW_Data.metal_data[metal].core_metal, plate_metal = MW_Data.metal_data[metal].plate_metal}
+          }
+        }
+        data:extend(recipe_prototype)
+        if not GM_global_mw_data.stock_recipes[item_prototype[1].name] then GM_global_mw_data.stock_recipes[item_prototype[1].name] = {} end
+        table.insert(GM_global_mw_data.stock_recipes[item_prototype[1].name], {[recipe_prototype[1].name] = recipe_prototype[1]})
+
+        -- Make recipe icon for remelting recipe
+        local icons_data_recipe = {
+          {
+            icon = "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. MW_Data.metal_data[metal].core_metal .. "/" .. MW_Data.metal_data[metal].core_metal .. "-plate-stock-0000.png",
+            icon_size = 64,
+          },
+          {
+            scale = 0.3,
+            icon = "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. metal .. "/" .. metal .. "-" .. stock .. "-stock-0000.png",
+            shift = {10, -10},
+            icon_size = 64
+          }
+        }
+
+        recipe_prototype = { -- remelting recipe
+          {
+            type = "recipe",
+            name = metal .. "-" .. stock .. "-remelting-stock",
+            enabled = MW_Data.metal_data[metal].tech_stock == "starter",
+            icons = icons_data_recipe,
+            ingredients = {
+              {name = item_prototype[1].name, 
+              amount = MW_Data.stocks_recipe_data[stock].remelting_cost}
+            },
+            result = MW_Data.metal_data[metal].core_metal .. "-plate-stock",
+            result_count = MW_Data.stocks_recipe_data[stock].remelting_yield,            
+            crafting_machine_tint = {  
+              primary = MW_Data.metal_data[metal].tint_metal,
+              secondary = MW_Data.metal_data[metal].tint_oxidation
+            },
+            always_show_made_in = true,
+            hide_from_player_crafting = hide_from_player_crafting,
+            energy_required = 3.2,
+            category = "gm-remelting",
+            -- subgroup = "gm-stocks-" .. metal,
+            localised_name = {"gm.metal-stock-remelting-recipe-name", {"gm." .. metal}, {"gm." .. MW_Data.MW_Stock.PLATE}},
+            gm_recipe_data = {type = "remelting", metal = metal, stock = stock}
           }
         }
         data:extend(recipe_prototype)
@@ -2122,6 +2219,7 @@ for metal, metal_data in pairs(MW_Data.metal_data) do -- Add Stocks and Machined
     for stock, _ in pairs(MW_Data.metal_stocks_pairs[metal]) do
       if stock ~= MW_Data.MW_Stock.PLATE then
         table.insert(stock_technology_effects, {type = "unlock-recipe", recipe = metal .. "-" .. stock .. "-stock"})
+        table.insert(stock_technology_effects, {type = "unlock-recipe", recipe = metal .. "-" .. stock .. "-remelting-stock"})
       end
       if stock == MW_Data.MW_Stock.PLATE then
         if metal_data.alloy_plate_recipe then table.insert(stock_technology_effects, {type = "unlock-recipe", recipe = metal .. "-" .. stock .. "-stock-from-plate"}) end

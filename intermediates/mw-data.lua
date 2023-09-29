@@ -73,6 +73,13 @@ function table.merge_subtables(table1, table2)
   return new_table
 end
 
+local function gcd(a, b)
+  while b ~= 0 do
+      a, b = b, a % b
+  end
+  return math.abs(a)  -- to ensure a positive result
+end
+
 --[[
 local blarg = table.merge_subtables(
   {["iron"] = {smartness = "dumb", dumbness = "stoopud"}, 
@@ -555,7 +562,24 @@ else
   }
 end
 
-for part, machined_part_recipe_data in pairs(MW_Data.machined_parts_recipe_data) do
+for stock, stock_recipe_data in pairs(MW_Data.stocks_recipe_data) do -- Plate Ratios for remelting recipes
+  local inputs = 1
+  local outputs = 1
+  if stock ~= MW_Stock.PLATE then
+    inputs = inputs * stock_recipe_data.input
+    outputs = outputs * stock_recipe_data.output
+    local current_precursor = stock_recipe_data.precursor
+    while current_precursor ~= MW_Stock.PLATE do
+      inputs = inputs * MW_Data.stocks_recipe_data[current_precursor].input
+      outputs = outputs * MW_Data.stocks_recipe_data[current_precursor].output
+      current_precursor = MW_Data.stocks_recipe_data[current_precursor].precursor
+    end
+  end
+  MW_Data.stocks_recipe_data[stock].remelting_cost = math.floor(outputs / gcd(inputs, outputs))
+  MW_Data.stocks_recipe_data[stock].remelting_yield = math.floor(inputs / gcd(inputs, outputs))
+end
+
+for part, machined_part_recipe_data in pairs(MW_Data.machined_parts_recipe_data) do -- Backchains lists of stocks for each machined parts for culling
   if machined_part_recipe_data.precursor then
     local current_precursor = machined_part_recipe_data.precursor
     local current_backchain = {current_precursor}

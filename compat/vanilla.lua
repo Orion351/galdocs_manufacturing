@@ -315,13 +315,13 @@ for item_name, item_prototype in pairs(GM_global_mw_data.stock_items) do
         local metal = item_prototype.gm_item_data.metal
         if MW_Data.metal_data[metal].tech_stock ~= "starter" then
           local current_effects = data.raw.technology[MW_Data.metal_data[metal].tech_stock].effects
-          local new_effects = {}
-          for _, effect in pairs(current_effects) do
-            if effect.recipe ~= recipe_name then
-              table.insert(new_effects, effect)
-            end
+          
+          for i = #current_effects, 1, -1 do
+            if current_effects[i].recipe == recipe_name then table.remove(current_effects, i) end
+            -- if recipe_prototype.gm_recipe_data.type == "remelting" and recipe_prototype.gm_recipe_data.stock == item_prototype.gm_item_data.stock then table.remove(current_effects, i) end
           end
-          data.raw.technology[MW_Data.metal_data[metal].tech_stock].effects = new_effects
+
+          data.raw.technology[MW_Data.metal_data[metal].tech_stock].effects = current_effects
         end
 
         -- Pull the recipes out of crafting

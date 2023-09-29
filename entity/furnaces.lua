@@ -15,6 +15,7 @@ for key, value in pairs(data.raw.furnace) do
       local furnace = table.deepcopy(value)
       furnace.type = "assembling-machine"
       table.insert(furnace.crafting_categories, "gm-alloys")
+      table.insert(furnace.crafting_categories, "gm-remelting")
 
       data.raw.furnace[key] = nil
       data:extend({furnace})
