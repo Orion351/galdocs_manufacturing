@@ -766,7 +766,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the treated [M
       
       local is_machined_part_precursor = false
       for _, check_part in pairs(MW_Data.MW_Machined_Part) do -- Check to see if the stock is an immediate precursor of a machined part
-        if MW_Data.machined_parts_recipe_data[check_part].precursor == stock then is_machined_part_precursor = true end
+        if MW_Data.machined_parts_recipe_data[check_part] and MW_Data.machined_parts_recipe_data[check_part].precursor == stock then is_machined_part_precursor = true end
       end
 
       if is_machined_part_precursor then
@@ -1898,6 +1898,7 @@ for _, tier in pairs(MW_Data.MW_Minisembler_Tier) do -- make the minisembler ent
         {
           production_type = "input",
           pipe_covers = pipecoverspictures(),
+          pipe_picture = assembler2pipepictures(),
           base_area = 10,
           height = 1,
           base_level = 0,

@@ -3,14 +3,19 @@ Version: 0.1.15
 Date: 
   Changes:
     - Added multi-property machined parts
+    - Updated some icon art for consistency
+    - Added some complexity to vanilla re-recipes
+    - Altering power-pole connections now needs "Ductile And Electrically Conductive Wiring"
     - Fixed extra line at the end of minisembler detailed tooltips
-    - Added 'detailed' tooltips toggle in settings
-    - Added Electroplater minisembler
-    - Added Treated Metals (currently only Galvanized Steel)
-    - *** Fluid Boxes in Minisemblers
-    - Property downgrade recipes
-    - Culled unused stocks (added debug setting to *remove* unused stocks)
+    - Added option to disable oRe sPaRkLe, 'detailed' tooltips, and non-craftables in settings
+    - Added Electroplater and Metal Assayer minisemblers
+    - Added Treated Metals (currently Galvanized Steel and Annealed Copper)
+    - Minisemblers can now have fluid boxes (currently only Electroplater)
+    - Added property downgrade recipes in Metal Assayer
+    - Basic machined parts get their own rows; other re-ordering
+    - Cull unused stocks/parts (added EXPERIMENTAL debug setting to "nil" unused recipes/items)
     - Lots of behind the scenes refactoring to facilitate future updates
+    - Beginning compatability with other mods ("Better than nothing") (NOT other overhauls yet)
 ---------------------------------------------------------------------------------------------------
 Version: 0.1.14
 Date: 2023-08-24
