@@ -2,5 +2,5 @@
 dev/**
 
 # Ignore all python code
-*.py
+# *.py
 *.zip

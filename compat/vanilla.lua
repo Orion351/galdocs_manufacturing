@@ -185,6 +185,7 @@ end
 -- =======
 
 local mw_van_intermediates_to_replace
+-- FIXME: This is duplicate code and will break if this changes without it's analogue in data-final-updates.lua changing as well
 if advanced then -- make list of vanilla items to remove and replace
   mw_van_intermediates_to_replace = { -- list of item-names
     ["iron-plate"]      = "iron-plate-stock",
@@ -210,10 +211,16 @@ end
 -- For logging a csv, make the log argument: {"paneling", "large-paneling", "framing", "girdering", "fine-gearing", "gearing", "fine-piping", "piping", "shafting", "wiring", "shielding", "bolts", "rivets"}
 re_recipe(mw_van_intermediates_to_replace, "gm-mw-van", "-machined-part", "-stock", {})
 
+
+
+-- ********************************************************
 -- Cull Vanilla Metalworking Intermediates, EXCEPT the pipe
+-- ********************************************************
 for intermediate, _ in pairs(mw_van_intermediates_to_replace) do
   if intermediate ~= "pipe" then data.raw.recipe[intermediate].hidden = true end
 end
+
+
 
 -- ***************************************
 -- Flat replace ingredients for everything
@@ -249,19 +256,17 @@ end
 -- Culling Unused Machined Parts
 -- *****************************
 
---- @diagnostic disable-next-line: undefined-field
-
-
 -- Build list of Machined Parts that are actually used in recipes
 local seen_machined_parts = {}
 local seen_stocks = {}
 local current_ingredients = {}
 local current_name
 
-for recipe_name, recipe in pairs(data.raw.recipe) do
+for recipe_name, recipe in pairs(data.raw.recipe) do -- Map which machined parts are actually used in re-recipe-ing
   -- Skip Downgrade recipes
   if not string.find(recipe_name, "downgrade") then
     current_ingredients = recipe.ingredients
+
     for _, ingredient in pairs(current_ingredients) do
       if type(ingredient) ~= "boolean" then
         if ingredient.type ~= "fluid" then
@@ -275,6 +280,11 @@ for recipe_name, recipe in pairs(data.raw.recipe) do
           local current_item = data.raw.item[current_name]
           if current_item then
             
+            -- Is this a plating recipe? If so, add the plating-billet to seens stocks.
+            if recipe.gm_recipe_data and recipe.gm_recipe_data.special == "plating" and recipe.gm_recipe_data.type == "stocks"then
+              seen_stocks[recipe.gm_recipe_data.plate_metal .. "-plating-billet-stock"] = true
+            end
+
             -- log("asdf : current_name:" .. current_name .. "   current_item: " .. current_item.name)
             --- @diagnostic disable-next-line: undefined-field
             if current_item.gm_item_data and current_item.gm_item_data.type == "machined-parts" then
@@ -291,53 +301,15 @@ for recipe_name, recipe in pairs(data.raw.recipe) do
                   end
                 end
               end
-
             end
           end
-          -- if string.sub(current_name, #current_name - 13, #current_name) == "-machined-part" then
-          --   seen_machined_parts[current_name] = true
-          -- end
         end
       end
     end
   end
 end
 
-
-
--- Eliminate all unused Stocks (as per the list above) from technologies and recipes
-for item_name, item_prototype in pairs(GM_global_mw_data.stock_items) do
-  if not seen_stocks[item_name] then
-    for _, recipe_prototypes in pairs(GM_global_mw_data.stock_recipes[item_name]) do
-      for recipe_name, recipe_prototype in pairs(recipe_prototypes) do
-        
-        -- Pull the recipes out of the technologies
-        local metal = item_prototype.gm_item_data.metal
-        if MW_Data.metal_data[metal].tech_stock ~= "starter" then
-          local current_effects = data.raw.technology[MW_Data.metal_data[metal].tech_stock].effects
-          
-          for i = #current_effects, 1, -1 do
-            if current_effects[i].recipe == recipe_name then table.remove(current_effects, i) end
-            -- if recipe_prototype.gm_recipe_data.type == "remelting" and recipe_prototype.gm_recipe_data.stock == item_prototype.gm_item_data.stock then table.remove(current_effects, i) end
-          end
-
-          data.raw.technology[MW_Data.metal_data[metal].tech_stock].effects = current_effects
-        end
-
-        -- Pull the recipes out of crafting
-        data.raw.recipe[recipe_prototype.name].enabled = false
-        if gm_debug_delete_culled_recipes then
-          data.raw.recipe[recipe_prototype.name] = nil
-        end
-
-      end
-    end
-  end 
-end
-
-
--- Eliminate all unused Machined Parts (as per the list above) from technologies and recipes
-for item_name, item_prototype in pairs(GM_global_mw_data.machined_part_items) do
+for item_name, item_prototype in pairs(GM_global_mw_data.machined_part_items) do -- Eliminate all unused Machined Parts (as per the list above) from technologies and recipes
   if not seen_machined_parts[item_name] then
     for _, recipe_prototypes in pairs(GM_global_mw_data.machined_part_recipes[item_name]) do
       for recipe_name, recipe_prototype in pairs(recipe_prototypes) do
@@ -356,61 +328,57 @@ for item_name, item_prototype in pairs(GM_global_mw_data.machined_part_items) do
           end
           
           -- Pull the recipes out of crafting
-          data.raw.recipe[recipe_prototype.name].enabled = false
           if gm_debug_delete_culled_recipes then
             data.raw.recipe[recipe_prototype.name] = nil
+          else
+            data.raw.recipe[recipe_prototype.name].enabled = false
           end
-
         end
-
       end
+    end
+    if gm_debug_delete_culled_recipes then
+      -- data.raw.item[item_name] = nil
     end
   end 
 end
 
---[[
-local new_effects
-local i, j
-for item_name, item in pairs(data.raw.item) do
-  -- Cull Stocks
-  if item.gm_item_data and item.gm_item_data.type == "stocks" and seen_stocks[item_name] == nil then
-    
-  end
-
-  -- Cull Machined Parts
-  -- if string.sub(item_name, #item_name - 13, #item_name) == "-machined-part"  and seen_machined_parts[item_name] == nil then
-  if item.gm_item_data and item.gm_item_data.type == "machined-parts" and seen_machined_parts[item_name] == nil then
-    for recipe_name, recipe in pairs(data.raw.recipe) do
-      i, j = string.find(recipe_name, string.sub(item_name, 0, #item_name - 14), 1, true)
-      if i ~= nil then
-        for technology_name, technology in pairs(data.raw.technology) do
-          new_effects = {}
-          if technology.effects ~= nil then
-            for _, effect in pairs(technology.effects) do
-              if effect.recipe ~= recipe_name then
-                table.insert(new_effects, effect)
-              end
-            end
+for item_name, item_prototype in pairs(GM_global_mw_data.stock_items) do -- Eliminate all unused Stocks (as per the list above) from technologies and recipes
+  if not seen_stocks[item_name] then
+    for _, recipe_prototypes in pairs(GM_global_mw_data.stock_recipes[item_name]) do
+      for recipe_name, recipe_prototype in pairs(recipe_prototypes) do
+        
+        -- Pull the recipes out of the technologies
+        local metal = item_prototype.gm_item_data.metal
+        if MW_Data.metal_data[metal].tech_stock ~= "starter" then
+          local current_effects = data.raw.technology[MW_Data.metal_data[metal].tech_stock].effects
+          
+          for i = #current_effects, 1, -1 do
+            if current_effects[i].recipe == recipe_name then table.remove(current_effects, i) end
+            -- if recipe_prototype.gm_recipe_data.type == "remelting" and recipe_prototype.gm_recipe_data.stock == item_prototype.gm_item_data.stock then table.remove(current_effects, i) end
           end
-          data.raw.technology[technology_name].effects = new_effects
+
+          data.raw.technology[MW_Data.metal_data[metal].tech_stock].effects = current_effects
         end
-        data.raw.recipe[recipe_name].enabled = false
+
+        -- Pull the recipes out of crafting
         if gm_debug_delete_culled_recipes then
-          data.raw.recipe[recipe_name] = nil
+          data.raw.recipe[recipe_prototype.name] = nil
+        else
+          data.raw.recipe[recipe_prototype.name].enabled = false
         end
       end
     end
-  end
+    if gm_debug_delete_culled_recipes then
+      -- data.raw.item[item_name] = nil
+    end
+  end 
 end
---]]
 
 
 
-for metal, metal_data in pairs(MW_Data.metal_data) do
-  for property, _ in pairs(MW_Data.metal_properties_pairs) do
-    
-  end
-end
+-- ****************************
+-- Update the copper cable item
+-- ****************************
 
 -- Put the "copper-cable" item back in so that people can connect up the wires of power poles manually again.
 -- This is kept separate for code clarity. It takes a bit longer. Meh.
@@ -418,25 +386,25 @@ for _, recipe in pairs(data.raw.recipe) do
   if recipe.ingredients ~= nil then
     for _, ingredient in pairs(recipe.ingredients) do
       if ingredient.name ~= nil then
-        if ingredient.name == "electrically-conductive-wiring-machined-part" then ingredient.name = "copper-cable" end
+        if ingredient.name == "ductile-and-electrically-conductive-wiring-machined-part" then ingredient.name = "copper-cable" end
       else
-        if ingredient[1] == "electrically-conductive-wiring-machined-part" then ingredient[1] = "copper-cable" end
+        if ingredient[1] == "ductile-and-electrically-conductive-wiring-machined-part" then ingredient[1] = "copper-cable" end
       end
     end
   end
   if recipe.result ~= nil then
-    if recipe.result == "electrically-conductive-wiring-machined-part" then recipe.result = "copper-cable" end
+    if recipe.result == "ductile-and-electrically-conductive-wiring-machined-part" then recipe.result = "copper-cable" end
   end
   if recipe.results ~= nil and recipe.results ~= {} then
     for _, result in pairs(recipe.results) do
-      if result.name == "electrically-conductive-wiring-machined-part" then result.name = "copper-cable" end
+      if result.name == "ductile-and-electrically-conductive-wiring-machined-part" then result.name = "copper-cable" end
     end
   end
 end
 
--- Make the 'copper-cable' essentially look like 'electrically-conductive-wiring-machined-part'
-local wire = data.raw.item["electrically-conductive-wiring-machined-part"]
+-- Make the 'copper-cable' essentially look like 'ductile-and-electrically-conductive-wiring-machined-part'
+local wire = data.raw.item["ductile-and-electrically-conductive-wiring-machined-part"]
 wire.name = "copper-cable"
 wire.wire_count = 1
 data:extend{wire}
-data.raw.item["electrically-conductive-wiring-machined-part"] = nil
+data.raw.item["ductile-and-electrically-conductive-wiring-machined-part"] = nil

@@ -16,6 +16,7 @@ for key, value in pairs(data.raw.furnace) do
       furnace.type = "assembling-machine"
       table.insert(furnace.crafting_categories, "gm-alloys")
       table.insert(furnace.crafting_categories, "gm-remelting")
+      table.insert(furnace.crafting_categories, "gm-annealing")
 
       data.raw.furnace[key] = nil
       data:extend({furnace})

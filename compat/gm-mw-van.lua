@@ -22,8 +22,8 @@ return function(advanced)
 
       ["small-electric-pole"]         = {{"electrically-conductive-wiring", 1}, },
       ["medium-electric-pole"]        = {{"load-bearing-girdering", 2}, {"electrically-conductive-wiring", 4}, {"high-tensile-wiring", 2}, {"basic-bolts", 2}, {"basic-rivets", 1}, },
-      ["big-electric-pole"]           = {{"load-bearing-girdering", 6}, {"electrically-conductive-wiring", 10}, {"high-tensile-wiring", 10}, {"basic-rivets", 4}, },
-      ["substation"]                  = {{"high-tensile-large-paneling", 4}, {"load-bearing-girdering", 6}, {"electrically-conductive-wiring", 10}, {"high-tensile-wiring", 10}, {"high-tensile-rivets", 6}, },
+      ["big-electric-pole"]           = {{"load-bearing-girdering", 6}, {"ductile-and-electrically-conductive-wiring", 10}, {"high-tensile-wiring", 10}, {"basic-rivets", 4}, },
+      ["substation"]                  = {{"high-tensile-large-paneling", 4}, {"load-bearing-girdering", 6}, {"ductile-and-electrically-conductive-wiring", 10}, {"high-tensile-wiring", 10}, {"high-tensile-rivets", 6}, },
 
       ["pipe"]                        = {{"corrosion-resistant-piping", 1}, {"basic-rivets", 1}, },
       ["pipe-to-ground"]              = {{"corrosion-resistant-piping", 10}, {"basic-rivets", 1}, },
@@ -60,7 +60,7 @@ return function(advanced)
       ["solar-panel"]                 = {{"load-bearing-girdering", 4}, {"electrically-conductive-wiring", 4}, {"high-tensile-rivets", 8}, },
       ["accumulator"]                 = {{"load-bearing-girdering", 1}, {"electrically-conductive-wiring", 8}, {"corrosion-resistant-rivets", 1}, },
 
-      ["nuclear-reactor"]             = {{"very-high-tensile-large-paneling", 40}, {"corrosion-resistant-and-heavy-load-bearing-girdering", 60}, {"corrosion-resistant-piping", 50}, {"thermally-conductive-shafting", 45}, {"electrically-conductive-wiring", 200}, {"radiation-resistant-shielding", 300}, {"thermally-stable-shielding", 100}, {"very-high-tensile-rivets", 100}, },
+      ["nuclear-reactor"]             = {{"very-high-tensile-large-paneling", 40}, {"corrosion-resistant-and-heavy-load-bearing-girdering", 60}, {"radiation-resistant-piping", 50}, {"thermally-conductive-shafting", 45}, {"electrically-conductive-wiring", 200}, {"radiation-resistant-shielding", 300}, {"thermally-stable-shielding", 100}, {"very-high-tensile-rivets", 100}, },
       ["heat-pipe"]                   = {{"thermally-conductive-shafting", 15}, {"thermally-stable-shielding", 20}, {"thermally-stable-rivets", 4}, },
       ["heat-exchanger"]              = {{"corrosion-resistant-and-load-bearing-large-paneling", 3}, {"load-bearing-girdering", 2}, {"corrosion-resistant-fine-piping", 20}, {"thermally-conductive-shafting", 40}, {"thermally-stable-shielding", 40}, {"high-tensile-rivets", 10}, },
       ["steam-turbine"]               = {{"corrosion-resistant-and-load-bearing-large-paneling", 6}, {"load-bearing-girdering", 10}, {"ductile-gearing", 30}, {"corrosion-resistant-fine-piping", 30}, {"thermally-conductive-shafting", 30}, {"electrically-conductive-wiring", 10}, {"thermally-stable-shielding", 10}, {"high-tensile-rivets", 10}, },
@@ -133,8 +133,8 @@ return function(advanced)
 
       ["small-electric-pole"]         = {{"electrically-conductive-wiring", 1}, },
       ["medium-electric-pole"]        = {{"load-bearing-framing", 4}, {"electrically-conductive-wiring", 4}, {"high-tensile-wiring", 2}, {"basic-bolts", 2}, },
-      ["big-electric-pole"]           = {{"load-bearing-framing", 10}, {"electrically-conductive-wiring", 10}, {"high-tensile-wiring", 10}, {"basic-bolts", 6}, },
-      ["substation"]                  = {{"high-tensile-paneling", 6}, {"load-bearing-framing", 8}, {"electrically-conductive-wiring", 10}, {"high-tensile-wiring", 10}, {"high-tensile-bolts", 8}, },
+      ["big-electric-pole"]           = {{"load-bearing-framing", 10}, {"ductile-and-electrically-conductive-wiring", 10}, {"high-tensile-wiring", 10}, {"basic-bolts", 6}, },
+      ["substation"]                  = {{"high-tensile-paneling", 6}, {"load-bearing-framing", 8}, {"ductile-and-electrically-conductive-wiring", 10}, {"high-tensile-wiring", 10}, {"high-tensile-bolts", 8}, },
 
       ["pipe"]                        = {{"corrosion-resistant-piping", 1}, {"basic-bolts", 1}, },
       ["pipe-to-ground"]              = {{"corrosion-resistant-piping", 10}, {"basic-bolts", 1}, },
@@ -171,7 +171,7 @@ return function(advanced)
       ["solar-panel"]                 = {{"load-bearing-framing", 8}, {"electrically-conductive-wiring", 4}, {"high-tensile-bolts", 8}, },
       ["accumulator"]                 = {{"load-bearing-framing", 1}, {"electrically-conductive-wiring", 8}, {"corrosion-resistant-bolts", 1}, },
 
-      ["nuclear-reactor"]             = {{"very-high-tensile-paneling", 50}, {"corrosion-resistant-and-heavy-load-bearing-framing", 65}, {"corrosion-resistant-piping", 55}, {"thermally-conductive-shafting", 55}, {"electrically-conductive-wiring", 200}, {"radiation-resistant-shielding", 300}, {"thermally-stable-shielding", 100}, {"very-high-tensile-bolts", 120}, },
+      ["nuclear-reactor"]             = {{"very-high-tensile-paneling", 50}, {"corrosion-resistant-and-heavy-load-bearing-framing", 65}, {"radiation-resistant-piping", 55}, {"thermally-conductive-shafting", 55}, {"electrically-conductive-wiring", 200}, {"radiation-resistant-shielding", 300}, {"thermally-stable-shielding", 100}, {"very-high-tensile-bolts", 120}, },
       ["heat-pipe"]                   = {{"thermally-conductive-shafting", 7}, {"thermally-stable-shielding", 11}, {"thermally-stable-bolts", 2}, },
       ["heat-exchanger"]              = {{"corrosion-resistant-and-load-bearing-paneling", 3}, {"load-bearing-framing", 2}, {"corrosion-resistant-piping", 8}, {"thermally-conductive-shafting", 28}, {"thermally-stable-shielding", 18}, {"high-tensile-bolts", 8}, },
       ["steam-turbine"]               = {{"corrosion-resistant-and-load-bearing-paneling", 4}, {"load-bearing-framing", 7}, {"ductile-gearing", 18}, {"corrosion-resistant-piping", 18}, {"thermally-conductive-shafting", 18}, {"electrically-conductive-wiring", 8}, {"thermally-stable-shielding", 6}, {"high-tensile-bolts", 8}, },

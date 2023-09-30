@@ -29,7 +29,8 @@ return {
 		INVAR            = "invar",
 
 		-- Treated
-		GALVANIZED_STEEL = "galvanized-steel"
+		GALVANIZED_STEEL = "galvanized-steel",
+		ANNEALED_COPPER  = "annealed-copper"
 	},
 
 	MW_Metal_Type = {
@@ -120,5 +121,5 @@ return {
 		MACHINING = "machining",
 		ASSAYING = "assaying",
 		TREATING  = "treating"
-	}	
+	}
 }
