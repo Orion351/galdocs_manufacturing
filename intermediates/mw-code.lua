@@ -120,6 +120,7 @@ data:extend({ -- Create item group
     name = "gm-intermediates",
     icon = "__galdocs-manufacturing__/graphics/group-icons/galdocs-intermediates-group-icon.png",
     localised_name = {"gm.item-group"},
+    order = "c-a",
     icon_size = 128
   }
 })
@@ -2043,7 +2044,8 @@ for _, tier in pairs(MW_Data.MW_Minisembler_Tier) do -- make the minisembler ent
   
     
 
-    local generic_minisembler_pipe_pictures = {
+    local generic_minisembler_pipe_pictures = 
+    {
       north =
         {
           filename = "__galdocs-manufacturing__/graphics/entity/minisemblers/2x1-pipe-graphics/minisembler-pipe-underrun-north.png",
@@ -2651,6 +2653,14 @@ for metal, metal_data in pairs(MW_Data.metal_data) do -- Add Stocks and Machined
 
   end
 end
+
+-- Remove original "steel-plate" from the steel processing technology
+local new_effects = {}
+for _, unlock in pairs(data.raw.technology["steel-processing"].effects) do
+  if unlock.recipe ~= "steel-plate" then table.insert(new_effects, unlock) end
+end
+data.raw.technology["steel-processing"].effects = new_effects
+
 
 --[[
 -- are you serious right now

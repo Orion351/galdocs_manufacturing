@@ -1,6 +1,6 @@
 ---------------------------------------------------------------------------------------------------
 Version: 0.1.15
-Date: 
+Date: 2023-10-03
   Changes:
     - Added multi-property machined parts
     - Updated some icon art for consistency
@@ -16,6 +16,7 @@ Date:
     - Cull unused stocks/parts (added EXPERIMENTAL debug setting to "nil" unused recipes/items)
     - Lots of behind the scenes refactoring to facilitate future updates
     - Beginning compatability with other mods ("Better than nothing") (NOT other overhauls yet)
+    - Put "Stocks and Machined Parts" tab in a more sensible place
 ---------------------------------------------------------------------------------------------------
 Version: 0.1.14
 Date: 2023-08-24
