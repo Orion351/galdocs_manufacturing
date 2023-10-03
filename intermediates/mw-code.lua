@@ -1893,19 +1893,241 @@ for _, tier in pairs(MW_Data.MW_Minisembler_Tier) do -- make the minisembler ent
     local selection_box = {{-0.5, -1}, {0.5, 1}}
     local current_fluid_box = nil
     
+    local generic_minisembler_pipe_cover_pictures = 
+    {
+      north =
+      {
+        layers =
+        {
+          {
+            filename = "__base__/graphics/entity/pipe-covers/pipe-cover-north.png",
+            priority = "extra-high",
+            width = 64,
+            height = 64,
+            hr_version =
+            {
+              filename = "__base__/graphics/entity/pipe-covers/hr-pipe-cover-north.png",
+              priority = "extra-high",
+              width = 128,
+              height = 128,
+              scale = 0.5
+            }
+          },
+          {
+            filename = "__galdocs-manufacturing__/graphics/entity/minisemblers/2x1-pipe-graphics/pipe-cover-minisembler-north-shadow.png",
+            priority = "extra-high",
+            width = 64,
+            height = 64,
+            draw_as_shadow = true,
+            hr_version =
+            {
+              filename = "__galdocs-manufacturing__/graphics/entity/minisemblers/2x1-pipe-graphics/hr-pipe-cover-minisembler-north-shadow.png",
+              priority = "extra-high",
+              width = 128,
+              height = 128,
+              scale = 0.5,
+              draw_as_shadow = true
+            }
+          }
+        }
+      },
+      east =
+      {
+        layers =
+        {
+          {
+            filename = "__base__/graphics/entity/pipe-covers/pipe-cover-east.png",
+            priority = "extra-high",
+            width = 64,
+            height = 64,
+            hr_version =
+            {
+              filename = "__base__/graphics/entity/pipe-covers/hr-pipe-cover-east.png",
+              priority = "extra-high",
+              width = 128,
+              height = 128,
+              scale = 0.5
+            }
+          },
+          {
+            filename = "__base__/graphics/entity/pipe-covers/pipe-cover-east-shadow.png",
+            priority = "extra-high",
+            width = 64,
+            height = 64,
+            draw_as_shadow = true,
+            hr_version =
+            {
+              filename = "__base__/graphics/entity/pipe-covers/hr-pipe-cover-east-shadow.png",
+              priority = "extra-high",
+              width = 128,
+              height = 128,
+              scale = 0.5,
+              draw_as_shadow = true
+            }
+          }
+        }
+      },
+      south =
+      {
+        layers =
+        {
+          {
+            filename = "__base__/graphics/entity/pipe-covers/pipe-cover-south.png",
+            priority = "extra-high",
+            width = 64,
+            height = 64,
+            hr_version =
+            {
+              filename = "__base__/graphics/entity/pipe-covers/hr-pipe-cover-south.png",
+              priority = "extra-high",
+              width = 128,
+              height = 128,
+              scale = 0.5
+            }
+          },
+          {
+            filename = "__galdocs-manufacturing__/graphics/entity/minisemblers/2x1-pipe-graphics/pipe-cover-minisembler-south-shadow.png",
+            priority = "extra-high",
+            width = 64,
+            height = 64,
+            draw_as_shadow = true,
+            hr_version =
+            {
+              filename = "__galdocs-manufacturing__/graphics/entity/minisemblers/2x1-pipe-graphics/hr-pipe-cover-minisembler-south-shadow.png",
+              priority = "extra-high",
+              width = 128,
+              height = 128,
+              scale = 0.5,
+              draw_as_shadow = true
+            }
+          }
+        }
+      },
+      west =
+      {
+        layers =
+        {
+          {
+            filename = "__base__/graphics/entity/pipe-covers/pipe-cover-west.png",
+            priority = "extra-high",
+            width = 64,
+            height = 64,
+            hr_version =
+            {
+              filename = "__base__/graphics/entity/pipe-covers/hr-pipe-cover-west.png",
+              priority = "extra-high",
+              width = 128,
+              height = 128,
+              scale = 0.5
+            }
+          },
+          {
+            filename = "__base__/graphics/entity/pipe-covers/pipe-cover-west-shadow.png",
+            priority = "extra-high",
+            width = 64,
+            height = 64,
+            draw_as_shadow = true,
+            hr_version =
+            {
+              filename = "__base__/graphics/entity/pipe-covers/hr-pipe-cover-west-shadow.png",
+              priority = "extra-high",
+              width = 128,
+              height = 128,
+              scale = 0.5,
+              draw_as_shadow = true
+            }
+          }
+        }
+      }
+    }
+  
+    
+
+    local generic_minisembler_pipe_pictures = {
+      north =
+        {
+          filename = "__galdocs-manufacturing__/graphics/entity/minisemblers/2x1-pipe-graphics/minisembler-pipe-underrun-north.png",
+          priority = "extra-high",
+          width = 44,
+          height = 31,
+          shift = {0, 1},
+          hr_version =
+          {
+            filename = "__galdocs-manufacturing__/graphics/entity/minisemblers/2x1-pipe-graphics/hr-minisembler-pipe-underrun-north.png",
+            priority = "extra-high",
+            width = 88,
+            height = 61,
+            shift = {0, 1},
+            scale = 0.5
+          }
+        },
+      south =
+        {
+          filename = "__galdocs-manufacturing__/graphics/entity/minisemblers/2x1-pipe-graphics/minisembler-pipe-underrun-south.png",
+          priority = "extra-high",
+          width = 44,
+          height = 31,
+          shift = util.by_pixel(0, -30),
+          hr_version =
+          {
+            filename = "__galdocs-manufacturing__/graphics/entity/minisemblers/2x1-pipe-graphics/hr-minisembler-pipe-underrun-south.png",
+            priority = "extra-high",
+            width = 88,
+            height = 61,
+            shift = util.by_pixel(0, -30),
+            scale = 0.5
+          }
+        },
+      east =
+        {
+          filename = "__galdocs-manufacturing__/graphics/entity/minisemblers/2x1-pipe-graphics/minisembler-pipe-underrun.png",
+          priority = "extra-high",
+          width = 64,
+          height = 64,
+          shift = {-1, 0},
+          hr_version =
+          {
+            filename = "__galdocs-manufacturing__/graphics/entity/minisemblers/2x1-pipe-graphics/hr-minisembler-pipe-underrun.png",
+            priority = "extra-high",
+            width = 128,
+            height = 128,
+            shift = {-1, 0},
+            scale = 0.5
+          }
+        },
+      west =
+        {
+          filename = "__galdocs-manufacturing__/graphics/entity/minisemblers/2x1-pipe-graphics/minisembler-pipe-underrun.png",
+          priority = "extra-high",
+          width = 64,
+          height = 64,
+          shift = {1, 0},
+          hr_version =
+          {
+            filename = "__galdocs-manufacturing__/graphics/entity/minisemblers/2x1-pipe-graphics/hr-minisembler-pipe-underrun.png",
+            priority = "extra-high",
+            width = 128,
+            height = 128,
+            shift = {1, 0},
+            scale = 0.5
+          }
+        },
+    }
+    
     if MW_Data.minisembler_data[minisembler].shape_data[tier].uses_fluid then
       current_fluid_box = {
         {
           production_type = "input",
-          pipe_covers = pipecoverspictures(),
-          pipe_picture = assembler2pipepictures(),
+          pipe_covers = generic_minisembler_pipe_cover_pictures,
+          pipe_picture = generic_minisembler_pipe_pictures,
           base_area = 10,
           height = 1,
           base_level = 0,
           pipe_connections = {
-            {type="input-output", position = {-0.7, 0.5}},
-            {type="input-output", position = {0.7, 0.5}}
-          }
+            {type="input-output", position = {-1, 0.5}},
+            {type="input-output", position = {1, 0.5}}
+          },
+          secondary_draw_orders = {north = -1, east = -1, west = -1}
         }
       }
     end

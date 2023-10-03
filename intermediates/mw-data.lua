@@ -400,6 +400,7 @@ if advanced then -- Store data to differentiate the different minisemblers
     [MW_Minisembler.SPOOLER]         = map_minisembler_recipes{1, 1, 2, 2, 1, 1},
     [MW_Minisembler.ROLLER]          = map_minisembler_recipes{1, 3, 1, 1, 2, 1},
     [MW_Minisembler.BENDER]          = map_minisembler_recipes{1, 3, 1, 1, 0, 1},
+    [MW_Minisembler.METAL_ASSAYER]   = map_minisembler_recipes{2, 3, 2, 1, 3, 1},
   }
 else
   MW_Data.minisemblers_recipe_parameters = {
@@ -410,18 +411,17 @@ else
     [MW_Minisembler.METAL_LATHE]     = map_minisembler_recipes{1, 1, 1, 1, 1, 1},
     [MW_Minisembler.ROLLER]          = map_minisembler_recipes{1, 3, 1, 1, 2, 1},
     [MW_Minisembler.BENDER]          = map_minisembler_recipes{1, 3, 1, 1, 0, 1},
+    [MW_Minisembler.METAL_ASSAYER]   = map_minisembler_recipes{2, 3, 2, 1, 3, 1},
   }
 end
 
 if advanced then -- Append special minisembler recipes
   table.merge(MW_Data.minisemblers_recipe_parameters, {
     [MW_Minisembler.ELECTROPLATER]  = {{"corrosion-resistant-large-paneling-machined-part", 2}, {"load-bearing-girdering-machined-part", 2}, {"corrosion-resistant-piping-machined-part", 2}, {"electrically-conductive-wiring-machined-part", 2}, {"basic-bolts-machined-part", 1}},
-    [MW_Minisembler.METAL_ASSAYER] = {}
   })
 else
   table.merge(MW_Data.minisemblers_recipe_parameters, {
     [MW_Minisembler.ELECTROPLATER]  = {{"corrosion-resistant-paneling-machined-part", 2}, {"load-bearing-framing-machined-part", 2}, {"corrosion-resistant-piping-machined-part", 2}, {"electrically-conductive-wiring-machined-part", 2}, {"basic-bolts-machined-part", 1}},
-    [MW_Minisembler.METAL_ASSAYER] = {}
   })
 end
 
