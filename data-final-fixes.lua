@@ -1,9 +1,9 @@
-local MW_Data = require("intermediates.mw-data")
+local MW_Data = require("prototypes.metalworking.mw-data")
 local minisemblers = MW_Data.minisemblers_recipe_parameters
 local advanced = settings.startup["gm-advanced-mode"].value
 
-require("compat.vanilla")
-require("entity.furnaces")
+require("prototypes.metalworking.mw-compat-vanilla")
+require("prototypes.general.furnaces")
 
 -- **********************
 -- Update Player Crafting
