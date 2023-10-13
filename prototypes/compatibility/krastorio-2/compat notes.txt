@@ -1,0 +1,193 @@
+- Make sure minisembler research is moved to a place where the player will not be deadlocked
+
+Metnal note to self: Fun metals to have in Rare Metals:
+  Tantalum (lab equipment; very high melting point)
+  Niobium (alloy with Titanium and Tin to make superconductors)
+  Chromium (alloy with Steel to make Stainless Steel)
+  
+  Vanadium (alloy with steel and Molybdenum to make very high tensile steel?)
+  Molybdenum (see above)
+  Tungsten 
+  Zirconium
+
+  Neodineum
+  Cobalt
+
+
+
+Yellow Tech: 
+  Automation Core (6 Copper Plate, 4 Iron Gear, 4 Iron Stick)
+  Pipe, Underground Pipe, Offshore Pump
+  Boiler, Steam Engine
+  Crusher (10 Iron Beam, 20 Iron Gears, 6 Copper Cable, 2 Automation Core)
+  Greenhouse (10 Iron Beam, 2 Automation Core)
+  Red Tech (1 Automation Core, 5 Blank Tech Cards), Blank Tech Card: (2 Iron Plate, 2 Copper Wire)
+Red Tech:
+  Galvanized Steel
+  Nickel and Invar
+  Minisemblers?
+  Assembling Machine 1 (4 Iron Beam, 2 Automation Core, [GM])
+  Lamp
+  Gun Turret (5 Iron Beam, 3 Automation Core, [GM])
+  Electric Mining Drill (2 Iron beam, 2 Automation Core, [GM])
+  Underground Belt (2 Iron Beam, [GM]), Splitter (1 Automation Core, [GM]), Inserter (1 Inserter Parts, 1 Automation Core [GM]), Long Inserter (1 Inserter Parts, 1 Automation Core, [GM]), Loader (2 Iron Beam, 10 Iron Gear, 1 Transport Belt)
+  Steal gear and steal beam (which will be replaced)
+  Fast Inserter (1 Inserter Parts), Filter Inserter (1 Inserter Parts)
+  Sentinel (1 Automation Core, 2 Iron Plate, 1 Copper Cable)
+  Shelter (25 Iron Beam, 25 Iron Plate, 10 Copper Cable)
+  Gate (1 Automation Core, 2 Copper Cable, [GM])
+  Storage Tank (5 Iron Beam, [GM]), Pump ([GM]), 
+  Filtration Plant (10 Steel Beam, 3 Automation Core), Electrolysis Plant (10 Steel Beam, 3 Automation Core, 10 Copper Plate), Chemical Plant (4 Steel Beam, 5 Steel Gear, 3 Automation Core, [GM])
+  Oil Pumpjack (4 Steel Beam, 10 Steel Gear, 3 Automation Core, [GM]),  Oil Refinery (4 Steel Beam, 10 Steel Gear, 5 Automation Core, [GM])
+  Plastic
+  Green Tech (5 Iron Gear, 5 Blank Tech)
+
+Green Tech:
+  Annealed Copper
+  Assembling Machine 2 ([GM])
+  Mineral Pumpjack (5 Steel beam, 5 Steel Gear, 2 Automation Core, 5 Pipe)
+  Steel Furnace ([GM])
+  Steel Pipe (1 Steel Plate), Steel Underground Pipe (15 Steel Pipe, 5 Steel Plate), Steel Pump (1 Steel Beam, 4 Steel Gear, 1 Steel Pipe)
+  Circuit Network
+  Large Storage Tank (10 Steel Beam, 4 Steel Pipe, 20 Steel Plate), Huge Storage Tank (20 Steel beam, 12 Steel Pipe, 60 Steel Plate)
+  Medium Power Pole (2 Iron Beam, [GM]), Large Power Pole (4 Steel Beam, [GM])
+  Fuel Refinery (5 Steel Plate, 5 Iron Gear, 5 Pipe)
+  Flare Stack (10 Steel Beam, 20 Steel Plate)
+  Battery ([GM])
+  Accumulator ([GM])
+  Advanced Circuit, Electronics Components
+  Personal battery ([GM]), Personal Big Battery (4 Iron Plate, 1 Copper), Small Portable Generator (2 Iron beam, 1 engine)
+  Modules
+  Fast Transport Belt ([GM]), Fast Splitter ([GM]), Fast Underground ([GM]), Fast Load (10 Iron Gear)
+  Car ([GM])
+  Stack Inserter (2 Steel Gear, 1 Inserter Parts, [GM]), Stack Filter Inserter (2 Steel Gear, 1 Inserter Part, [GM])
+  Rail (1 Steel Beam, [GM]), Locomotive ([GM]), Cargo Wagon (10 Steel Beam, [GM]); Train Stop ([GM]); Rail Signal ([GM]), Rail Chain Signal ([GM]); Fluid Wagon ([GM])
+  Solar Panel ([GM])
+  Portable Solar Panel ([GM]), Big Portable Solar Panel; Nightvision Goggles ([GM]); Belt Immunity Equipment ([GM])
+  Gas Power Station (10 Steel beam)
+  Military Tech
+  Blue Tech
+
+Military Tech
+  Flamethrower (5 Steel Plate, 10 Basic Gear), Flamethrower Ammo (5 Iron), Flamethrower Turret ([GM]); Mines ([GM]); Defender Capsule ([GM]); Rocket Launcher (5 Iron Plate, 5 Iron Gear); Shield Generator ([GM])
+
+Blue Tech
+  Nuclear Power Plant (200 Rare Metal, [GM]), Heat Exchanger ([GM]), Steam Turbine ([GM]), Heat Pipe ([GM]) **** Lead
+  Electric Mining Drill Mk2 (4 Rare Metals, 5 Steel Gear)     **** Osmium for Drill Bits
+  
+  Lead
+  Titanium
+  Ore Enrichment
+  Lithium; Lithium battery
+  Blue Circuits
+  Electric Engine
+  Bioprocessing (10 Iron Beam)
+  LOW DENSITY STRUCTURE IS BORKED
+  Research Server (4 Steel Beam)
+  Condenser (10 Steel Beam, 10 Steel Gear)
+  Centrifuge ([GM]), Uranium Fuel Cell ([GM])
+
+  Tesla Coil (20 Steel Beam, 100 Copper Cable), Energy Absorber (6 Copper Plate, 12 Copper Cable)
+  Rocket Fuel (1 Iron Plate)
+  Electric Furnace ([GM])
+  Advanced Lab (5 Steel beam, 10 Copper Cable)
+  Air Purifier (4 Steel Beam), Air Filter (2 Steel Plate)
+  Substation (8 Steel Beam, [GM])
+  Flying Robot Frame ([GM]); Logistic and Construction Robots, Roboport (20 Steel Beam, [GM]), Passive Provider Chest, Storage Chest
+  Modules 2
+  Black / White Reinforced Plate (5 Steel Beam)
+  
+  Heavily Armored Vehicle (30 Steel Gear, [GM]); Discharge Defense ([GM])
+  Radar ([GM])
+  Laser Turret ([GM])
+
+  Personal Battery 2 (2 Steel Plate) Big Personal Battery 2 (4 Steel Plate)
+  Exoskeleton ([GM])
+  Personal Roboporty ([GM]), Vehicle Roboport (4 Steel Plate), Advanced Electric Engine (5 Steel Plate)
+  Portable Nuclear Power Reactor (50 Copper Plate, 50 Steel Plate)
+  Portable Generator 2 (2 Iron Beam)
+  
+  Yellow Tech
+  Purple Tech
+
+Purple Tech
+  Nuclear Locomotive (80 Rare Metal, 20 Steel Gear)    **** Lead
+  Kovarex Enrichment
+  Modules 3; Beacon ([GM])
+  Assembling Machine 3 (5 Steel Gear, [GM])
+  Express Belt (4 Steel Gear [GM]), Express Underground ([GM]), Express Splitter (4 Steel Gear, [GM]), Express Loader (10 Steel Gears)
+  Quarry Drill (50 Rare Metal, 50 Steel Beam, 50 Steel Plate), IMERSITE  **** Osmium from Rare Metal for Drill bits 
+  Advanced Solar Panel
+  Personal Battery 3, Personal Big Battery 3
+
+Yellow Tech
+  Advanced Radar (5 Rare Metal, 5 Steel Beam)    **** Titanium
+  Advanced Additional Electric Engine (5 Steel Plate Stock); Advanced Exoskeleton, Imersite Night Vision (Imersite Crystal), Portable Imersite Solar Panel (Imersite Crystal), Big Portable Imersite Solar Panel (Imersite Crystal), 
+  Personal Roboport Mk2, Shield Generator, Portable Fusion Reactor
+  Rocket Control Unit
+  Purble, Blue and Green Logistic Chests
+  Personal Laser Defense (5 Steel Plate)
+  Artilery Wagon, (20 Rare Metal, 20 Steel Gear [GM]), Artillery Turret ([GM]) **** Titanium
+  Railgun Turret (20 Rare Metal, 10 Steel Beam) **** Osmium
+
+Yellow and Purple Tech
+  Fusion Reactor (350 Rare Metal, 350 Steel Beam, 500 Copper Plate, 500 Steel Plate), Advanced Steam Turbine (60 Rare Metal, 10 Steel Beam, 10 Steel Gear), Empty DT Fuel Cell (1 Rare metal), DT Fuel Cell **** Titanium, Osmium, 
+  Nuclear Artillery Shell (10 Steel Plate)
+  Advanced Belt (1 Rare Metal, 4 Steel Gear), Advanced Splitter (4 Steel Gear), Advanced Underground, Advanced Loader (10 Rare Metal)   **** Titanium
+  AI Core (Imersite Crystal)
+  Spidertron
+  ADD Niobimersium here, Enriched Rare Metal Sorting goes here (adds Niobium to the outputs)
+  Quantum Computer (50 Rare Metal, 20 Steel Beam, 20 Copper Plate),    **** Niobium, Titanium, Imersite Powder Superconductor Alloy
+  Rocket Silo ([GM])
+  Singularity Lab (60 Rare Metal, 40 Steel Plate) **** Niobium, Titanium Superconductor, Imersite Powder Alloy, 
+  Cyan Tech (Matter Research Data), Matter Research Data (5 Rare metal, 5 Imersite) **** Osmium, Niobium, Titanium
+  Optimization Tech Card, Satelite
+
+Cyan Tech:
+  Improved Pollution Filter (Imersite powder)
+  Energy Control Unit (3 Imersite Crystal)
+  Energy Storage (50 Rare Metal, 10 Steel Beam) **** Titanium, Osmium, Superconductor
+  CHANGE 3 Imersium Plate (6 Rare Metal, 9 Imersite Powder), Imersium Gear (Imersium Plate), Imersium Beam (2 Imersium Plate)
+    Stable Imersium, "Imersium" (AKA Titanimersium)
+  Matter Plant (10 Imersium Beam, 10 Steel Pipe), Matter Assembler (4 Imersium Beam, 4 Steel Pipe), Stabilizer Charging Station (4 Imersium Beam), Matter Stabilizer (6 Imersium Plate)
+  A Tech (10 Imersium Gear)
+
+A Tech:
+  Shield Generator Mk4 (10 Imersium Plate)
+  Substation Mk2 (6 Rare Metal, 3 Imersium Beam)
+  Electric Minig Drill Mk3 (5 Imersium Gear, 4 Imersium Crystal)
+  Advanced Roboport (20 Rare Metal, 3 Imersium Beam, 10 Steel Plate)
+  Large Roboport (80 Rare Metal, 20 Imersium Beam, 20 Imersium Gear, 20 Steel Plate)
+  Superior Inserter (1 Imersium Plate, 4 Imersium Gear, 1 Inserter Parts), Superior Long Inserter (2 Imersium Plate, 4 Imersium Gear, 2 Inserter Parts), Superior Filter Inserter (1 Imersium Plate, 4 Imersium Gear, 1 Inserter Parts), Superior Long FIlter Inserter (2 Imersium Plate, 4 Imersium Gear, 2 Inserter Parts), 
+  Superior Belt (4 Imersium Gear), Superior Splitter (4 Imersium Gear), Superior Underground, Superior Loader (10 Imersium Gear) 
+  Laser Artillery Turret (20 Rare Metal, 10 Steel Beam)
+  Rocket Turret (20 Rare Metal, 10 Steel Beam)
+  Personal Submachine Laser Defense (5 Imersium Plate), Personal Sniper Laser Defense (5 Imersium Plate) **** Titanimersium
+  Shield Generator (10 Imersium Plate) **** Titanimersium
+  Superior Exosekelton (10 Imersium Plate) **** Titanimersium
+  Advanced Chemical Plant (80 Rare Metal, 20 Imersium Beam, 20 Imersium Gear, 10 Steel Pipe)  **** Stable Imersium
+  Advanced Furnace (80 Rare Metal, 80 Steel Beam, 20 Imersium Beam, 60 Copper Plate) **** Stable Imersium
+  Advanced Assembling Machine (4 Imersium Beam) **** Stable Imersium **** Titanimersium, **** Stable Imersium
+  Tank (50 Rare Metal, 50 Imersium Plate, 50 Imersium Gear) **** Titanimersium
+  Anti Creep Virus (5 Imersite Powder)
+  Anti Biter Virus Capsule (5 Imersite Powder)
+
+S Tech:
+  Personal Submachine Laser Defense 4, Personal Sniper Laser Defense 4
+  Power Armor Mk4 (40 Imersium Plate, 10 Imersite Crystal) **** Titanimersium
+  Matter Cube
+  Singularity Beacon
+  ADD Resonant-Imersium
+  Planetary Teleporter (10 Imersium Beam, 4 Imersite Crystal)   **** Resonant Imersium
+  Antimatter Reactor (350 Rare Metal, 350 Imersium Plate, 100 Imersium Beam, 350 Steel Plate), Empty Antimatter Fuel Cell (8 Imersium Plate) **** Resonant Imersium
+  Antimatter Ammo (1 Imersium Plate), Antimatter Artillery Shell (1 Imersium Plate), Antimatter Rocket (2 Imersium Plate), Antimatter Railgun Shell (1 Imersium Plate) **** Resonant Imersium
+  Portable Antimatter Reactor (100 Imersium Plate) **** Resonant Imersium
+  Intergalactic Tranciever (1000 Rare Metal, 500 Imersium Plate, 500 Imersium Beam) **** Resonant Imersium
+
+
+
+
+
+
+
+

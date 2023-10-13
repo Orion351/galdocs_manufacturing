@@ -8,7 +8,7 @@ local function table_contains(table, value_to_search)
   return false
 end
 
---Go through every furnace, convert to assembling-machine and add the alloy recipes
+-- Go through every furnace, convert to assembling-machine and add the alloy recipes
 for key, value in pairs(data.raw.furnace) do
   --Only Furnaces that can Smelt can Alloy
   if table_contains(value.crafting_categories, "smelting") then
@@ -23,7 +23,6 @@ for key, value in pairs(data.raw.furnace) do
   end
 end
 
---Factorio Complains if it doesnt know about at least 1 furnace
 data:extend({
   {
     type = "recipe-category",

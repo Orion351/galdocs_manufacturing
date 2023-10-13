@@ -24,6 +24,8 @@ local consumable_parts = false -- not implemented yet
 
 -- Graphical variables
 local multi_property_badge_offset = 10
+local property_badge_scale = 0.2
+local ore_particle_lifetime = 180
 
 -- Settings variables
 local show_property_badges = settings.startup["gm-show-badges"].value
@@ -38,14 +40,12 @@ local gm_debug_delete_culled_recipes = settings.startup["gm-debug-delete-culled-
 -- Game Tables
 -- ***********
 
-local MW_Data = require("prototypes.metalworking.mw-data")
+-- local MW_Data = require("prototypes.passes.metalworking.mw-couplings")
+local MW_Data = GM_global_mw_data.MW_Data
 
 -- Build global variable data. This is to communicate with other files without needing the require() command
-GM_global_mw_data = {}
-GM_global_mw_data.stock_items = {}
-GM_global_mw_data.stock_recipes = {}
-GM_global_mw_data.machined_part_items = {}
-GM_global_mw_data.machined_part_recipes = {}
+-- GM_global_mw_data = {}
+
 
 
 
@@ -299,7 +299,7 @@ local function resource_spawn(resource_parameters, autoplace_parameters) -- Put 
   }
 end
 
-local ore_particle_lifetime = 180
+
 for resource, resource_data in pairs(MW_Data.ore_data) do -- Make mining debris
   if resource_data.new_debris_art then
     local oreyn = ""
@@ -1214,7 +1214,7 @@ for property, parts in pairs(MW_Data.property_machined_part_pairs) do -- Make th
     if show_property_badges == "all" then
       table.insert(icons_data_item, 2,
       {
-        scale = 0.4,
+        scale = property_badge_scale,
         icon = "__galdocs-manufacturing__/graphics/icons/intermediates/property-icons/" .. property .. ".png",
         shift = {-10, -10},
         icon_size = 64
@@ -1320,7 +1320,7 @@ for property, parts in pairs(MW_Data.property_machined_part_pairs) do -- Make th
         if show_property_badges == "recipes" or show_property_badges == "all" then
           table.insert(icons_data_recipe, 2, 
             {
-              scale = 0.4,
+              scale = property_badge_scale,
               icon = "__galdocs-manufacturing__/graphics/icons/intermediates/property-icons/" .. property .. ".png",
               shift = {-10, 10},
               icon_size = 64
@@ -1484,7 +1484,7 @@ for property_key, multi_properties in pairs(multi_property_with_key_pairs) do --
             for _, multi_property in pairs(multi_properties) do
               table.insert(icons_data_item, 2,
               {
-                scale = 0.4,
+                scale = property_badge_scale,
                 icon = "__galdocs-manufacturing__/graphics/icons/intermediates/property-icons/" .. multi_property .. ".png",
                 shift = {-10 + current_badge_offset, -10},
                 icon_size = 64
@@ -1530,7 +1530,7 @@ for property_key, multi_properties in pairs(multi_property_with_key_pairs) do --
             for _, multi_property in pairs(multi_properties) do
               table.insert(icons_data_item, 2,
               {
-                scale = 0.4,
+                scale = property_badge_scale,
                 icon = "__galdocs-manufacturing__/graphics/icons/intermediates/property-icons/" .. multi_property .. ".png",
                 shift = {-10 + current_badge_offset, -10},
                 icon_size = 64
@@ -1594,7 +1594,7 @@ for metal, metal_data in pairs(MW_Data.metal_data) do -- Make "Basic" property d
         if show_property_badges == "all" then
           table.insert(icons_data, 2,
           {
-            scale = 0.4,
+            scale = property_badge_scale,
             icon = "__galdocs-manufacturing__/graphics/icons/intermediates/property-icons/basic.png",
             shift = {-10, -10},
             icon_size = 64
@@ -1656,7 +1656,7 @@ for property, property_downgrade_list in pairs(MW_Data.property_downgrades) do -
       if show_property_badges == "all" then
         table.insert(icons_data, 2,
         {
-          scale = 0.4,
+          scale = property_badge_scale,
           icon = "__galdocs-manufacturing__/graphics/icons/intermediates/property-icons/" .. previous_property .. ".png",
           shift = {-10, -10},
           icon_size = 64
@@ -1714,7 +1714,7 @@ for property_key, multi_properties in pairs(multi_property_with_key_pairs) do --
           for _, multi_property in pairs(multi_properties) do
             table.insert(icons_data, 2,
             {
-              scale = 0.4,
+              scale = property_badge_scale,
               icon = "__galdocs-manufacturing__/graphics/icons/intermediates/property-icons/" .. multi_property .. ".png",
               shift = {-10 + current_badge_offset, -10},
               icon_size = 64
@@ -2781,7 +2781,7 @@ for _, unlock in pairs(data.raw.technology["steel-processing"].effects) do
 end
 data.raw.technology["steel-processing"].effects = new_effects
 
-
+return MW_Data
 --[[
 -- are you serious right now
 data:extend({

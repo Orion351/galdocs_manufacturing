@@ -4,8 +4,10 @@
 	"title": "Galdoc's manufacturing (ALPHA)",
 	"author": "Galdoc",
 	"factorio_version": "1.1",
-	"dependencies": ["base >= 1.1"],
   "package":{
-    "ignore":[ "dev/**", "*.py", "*.md" ]
-  }
+		"ignore":[ "dev/**", "*.py", "*.md" ]
+  },
+	"dependencies": ["base >= 1.1",
+		"? Krastorio2 > 1.0"
+	]
 }

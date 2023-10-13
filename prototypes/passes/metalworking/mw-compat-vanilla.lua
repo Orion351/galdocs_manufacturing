@@ -26,8 +26,8 @@ local gm_debug_delete_culled_recipes = settings.startup["gm-debug-delete-culled-
 -- Metalworking Data
 -- *****************
 
-local MW_Data = require("prototypes.metalworking.mw-data")
-
+-- local MW_Data = require("prototypes.passes.metalworking.mw-couplings")
+local MW_Data = GM_global_mw_data.MW_Data
 
 
 -- ****************
@@ -211,7 +211,7 @@ else
 end
 
 -- For logging a csv, make the log argument: {"paneling", "large-paneling", "framing", "girdering", "fine-gearing", "gearing", "fine-piping", "piping", "shafting", "wiring", "shielding", "bolts", "rivets"}
-re_recipe(mw_van_intermediates_to_replace, "prototypes.metalworking.mw-compat-vanilla-rerecipe", "-machined-part", "-stock", {})
+re_recipe(mw_van_intermediates_to_replace, "prototypes.passes.metalworking.mw-compat-vanilla-rerecipe", "-machined-part", "-stock", {})
 
 
 
@@ -248,8 +248,8 @@ for _, recipe in pairs(data.raw.recipe) do
   data.raw.recipe[recipe.name].ingredients = current_ingredients
 
   -- get rekt normal vs. expensive
-  data.raw.recipe[recipe.name].normal = nil
-  data.raw.recipe[recipe.name].expensive = nil
+  -- data.raw.recipe[recipe.name].normal = nil
+  -- data.raw.recipe[recipe.name].expensive = nil
 end
 
 
