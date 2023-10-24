@@ -1,4 +1,3 @@
--- local MW_Data = require("prototypes.passes.metalworking.mw-data")
 local MW_Data = GM_global_mw_data.MW_Data
 local minisemblers = MW_Data.minisemblers_recipe_parameters
 local advanced = settings.startup["gm-advanced-mode"].value

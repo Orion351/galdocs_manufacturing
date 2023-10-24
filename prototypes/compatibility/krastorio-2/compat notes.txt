@@ -13,8 +13,6 @@ Metnal note to self: Fun metals to have in Rare Metals:
   Neodineum
   Cobalt
 
-
-
 Yellow Tech: 
   Automation Core (6 Copper Plate, 4 Iron Gear, 4 Iron Stick)
   Pipe, Underground Pipe, Offshore Pump
@@ -22,6 +20,7 @@ Yellow Tech:
   Crusher (10 Iron Beam, 20 Iron Gears, 6 Copper Cable, 2 Automation Core)
   Greenhouse (10 Iron Beam, 2 Automation Core)
   Red Tech (1 Automation Core, 5 Blank Tech Cards), Blank Tech Card: (2 Iron Plate, 2 Copper Wire)
+
 Red Tech:
   Galvanized Steel
   Nickel and Invar

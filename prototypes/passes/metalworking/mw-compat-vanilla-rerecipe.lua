@@ -96,7 +96,7 @@ return function(advanced)
       ["uranium-fuel-cell"]           = {{"radiation-resistant-paneling", 1}, {"electrically-conductive-wiring", 1}, {"radiation-resistant-shielding", 1}, {"high-tensile-bolts", 2}, },
 
       ["gate"]                        = {{"high-tensile-paneling", 1}, {"electrically-conductive-wiring", 2}, {"corrosion-resistant-shielding", 1}, {"high-tensile-bolts", 2}, },
-      ["gun-turret"]                  = {{"ductile-large-paneling", 2}, {"load-bearing-girdering", 4}, {"high-tensile-gearing", 2}, {"electrically-conductive-wiring", 1}, {"high-tensile-shielding", 2}, {"high-tensile-rivets", 4}, },
+      ["gun-turret"]                  = {{"ductile-large-paneling", 2}, {"load-bearing-girdering", 4}, {"basic-gearing", 2}, {"electrically-conductive-wiring", 1}, {"basic-rivets", 4}, },
       ["laser-turret"]                = {{"ductile-large-paneling", 4}, {"load-bearing-girdering", 3}, {"high-tensile-gearing", 8}, {"electrically-conductive-wiring", 8}, {"high-tensile-shielding", 2}, {"high-tensile-rivets", 8}, },
       ["flamethrower-turret"]         = {{"ductile-large-paneling", 4}, {"heavy-load-bearing-girdering", 4}, {"high-tensile-gearing", 8}, {"electrically-conductive-wiring", 10}, {"thermally-stable-shielding", 15}, {"high-tensile-rivets", 8}, },
       ["artillery-turret"]            = {{"ductile-large-paneling", 16}, {"heavy-load-bearing-girdering", 20}, {"very-high-tensile-gearing", 20}, {"electrically-conductive-wiring", 20}, {"high-tensile-shielding", 15}, {"very-high-tensile-rivets", 10}, },
@@ -207,7 +207,7 @@ return function(advanced)
       ["uranium-fuel-cell"]           = {{"radiation-resistant-paneling", 1}, {"electrically-conductive-wiring", 1}, {"radiation-resistant-shielding", 1}, {"high-tensile-bolts", 1}, },
 
       ["gate"]                        = {{"high-tensile-paneling", 1}, {"electrically-conductive-wiring", 2}, {"corrosion-resistant-shielding", 1}, {"high-tensile-bolts", 2}, },
-      ["gun-turret"]                  = {{"ductile-paneling", 3}, {"load-bearing-framing", 5}, {"high-tensile-gearing", 3}, {"electrically-conductive-wiring", 2}, {"high-tensile-shielding", 3}, {"high-tensile-bolts", 4}, },
+      ["gun-turret"]                  = {{"ductile-paneling", 3}, {"load-bearing-framing", 5}, {"basic-gearing", 3}, {"electrically-conductive-wiring", 2}, {"basic-bolts", 4}, },
       ["laser-turret"]                = {{"ductile-paneling", 8}, {"load-bearing-framing", 6}, {"high-tensile-gearing", 9}, {"electrically-conductive-wiring", 12}, {"high-tensile-shielding", 4}, {"high-tensile-bolts", 8}, },
       ["flamethrower-turret"]         = {{"ductile-paneling", 8}, {"heavy-load-bearing-framing", 6}, {"high-tensile-gearing", 10}, {"electrically-conductive-wiring", 10}, {"thermally-stable-shielding", 18}, {"high-tensile-bolts", 8}, },
       ["artillery-turret"]            = {{"ductile-paneling", 24}, {"heavy-load-bearing-framing", 32}, {"very-high-tensile-gearing", 32}, {"electrically-conductive-wiring", 28}, {"high-tensile-shielding", 20}, {"very-high-tensile-bolts", 10}, },

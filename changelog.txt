@@ -3,6 +3,10 @@ Version: 0.1.16
 Date: 
   Changes:
     - Added custom debris particles (working)
+    - Began K2 compatibility (NOT IMPLEMENTED YET)
+    - Remelting recipes sent to a separate tab
+    - Gun Turrets no longer require high-tensile parts
+    - Updated Crafting Tab icons
 ---------------------------------------------------------------------------------------------------
 Version: 0.1.15
 Date: 2023-10-03

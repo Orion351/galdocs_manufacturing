@@ -21,6 +21,8 @@ local ore_stack_size = 200
 local advanced = settings.startup["gm-advanced-mode"].value
 local specialty_parts = false -- not implimented yet
 local consumable_parts = false -- not implemented yet
+local metalworking_byproducts = false -- not implemented yet
+local metalworking_kits = false -- not implemented yet
 
 -- Graphical variables
 local multi_property_badge_offset = 10
@@ -175,12 +177,24 @@ end
 -- General
 -- =======
 
-data:extend({ -- Create item group
+data:extend({ -- Create metalworking intermediates item group
   {
     type = "item-group",
     name = "gm-intermediates",
     icon = "__galdocs-manufacturing__/graphics/group-icons/galdocs-intermediates-group-icon.png",
-    localised_name = {"gm.item-group"},
+    
+    localised_name = {"gm.item-intermediates-group"},
+    order = "c-a",
+    icon_size = 128
+  }
+})
+
+data:extend({ -- Create metalworking remelting item group
+  {
+    type = "item-group",
+    name = "gm-remelting",
+    icon = "__galdocs-manufacturing__/graphics/group-icons/galdocs-metal-remelting-group-icon.png",
+    localised_name = {"gm.item-remelting-group"},
     order = "c-a",
     icon_size = 128
   }
@@ -496,12 +510,17 @@ end
 order_count = 0
 for _, metal in pairs(MW_Data.MW_Metal) do -- Make [Metal] Stock Subgroups
   data:extend({
-    {
+    { -- Make Stock Subgroups
       type = "item-subgroup",
       name = "gm-stocks-" .. metal,
       group = "gm-intermediates",
       order = "a" .. "gm-intermediates-stocks" .. order_count,
       localised_name = {"gm.stocks-subgroup", {"gm." .. metal}}
+    },
+    { -- Make Stock Remelting Subgroups
+      type = "item-subgroup",
+      group = "gm-remelting",
+      name = "gm-remelting-" .. metal
     }
   })
   order_count = order_count + 1
@@ -757,7 +776,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
           energy_required = 3.2,
           order = "b[" .. metal .. "-" .. stock .. "-remelting-stock" .. "]",
           category = "gm-remelting",
-          -- subgroup = "gm-stocks-" .. metal,
+          subgroup = "gm-remelting-" .. metal,
           localised_name = {"gm.metal-stock-remelting-recipe-name", {"gm." .. metal}, {"gm." .. MW_Data.MW_Stock.PLATE}},
           gm_recipe_data = {type = "remelting", metal = metal, stock = stock}
         }

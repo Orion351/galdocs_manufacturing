@@ -19,7 +19,7 @@ local overhaul_modpack_data = {  -- Data for supported overhauls
     dir_name = "krastorio-2",
     titles = {"Krastorio2", },
     passes = {
-      metalworking = {enums = false, data = false, couplings = false, code = false}
+      metalworking = {enums = false, data = false, code = false}
     }
   }
 }
@@ -31,7 +31,7 @@ local overhaul_modpack_data = {  -- Data for supported overhauls
 -- Determine which supported overhaul set is augmenting GM
 local current_overhaul_data = {}
 -- if mods["Krastorio2"] then
---  current_overhaul_data = overhaul_modpack_data["Krastorio2"]
+--   current_overhaul_data = overhaul_modpack_data["Krastorio2"]
 -- end
 
 
@@ -53,12 +53,6 @@ end
 GM_global_mw_data.MW_Data = require("prototypes.passes.metalworking.mw-data")
 if current_overhaul_data.passes and current_overhaul_data.passes.metalworking and current_overhaul_data.passes.metalworking.data then
   GM_global_mw_data.MW_Data = require("prototypes.compatibility." .. current_overhaul_data.dir_name .. ".mw-data-augment")
-end
-
--- Couplings
-GM_global_mw_data.MW_Data = require("prototypes.passes.metalworking.mw-couplings")
-if current_overhaul_data.passes and current_overhaul_data.passes.metalworking and current_overhaul_data.passes.metalworking.couplings then
-  GM_global_mw_data.MW_Data = require("prototypes.compatibility." .. current_overhaul_data.dir_name .. ".mw-couplings-augment")
 end
 
 
