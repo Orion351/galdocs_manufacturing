@@ -13,10 +13,11 @@ data:extend({
     default_value = true
   },
   { -- Display non-hand-craftable recipes in player crafting menu
-    type = "bool-setting",
+    type = "string-setting",
     name = "gm-show-non-hand-craftable",
     setting_type = "startup",
-    default_value = false
+    default_value = "starter",
+    allowed_values = {"none", "starter", "all"}
   },
   { -- Display detailed tooltips
     type = "bool-setting",

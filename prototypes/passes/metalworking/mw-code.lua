@@ -31,7 +31,7 @@ local ore_particle_lifetime = 180
 
 -- Settings variables
 local show_property_badges = settings.startup["gm-show-badges"].value
-local show_non_hand_craftables = not settings.startup["gm-show-non-hand-craftable"].value -- I'm flipping the value because it's 'hide_from_player_crafting' rather than 'show'.
+local show_non_hand_craftables = settings.startup["gm-show-non-hand-craftable"].value
 local show_detailed_tooltips = settings.startup["gm-show-detailed-tooltips"].value
 local show_ore_sPaRkLe = settings.startup["gm-ore-sPaRkLe"].value    -- ✧･ﾟ: *✧･ﾟ:*
 local gm_debug_delete_culled_recipes = settings.startup["gm-debug-delete-culled-recipes"].value
@@ -708,12 +708,20 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
       if stock ~= MW_Data.MW_Stock.PLATE then -- If it's not a plate, then make the recipe as normal
         -- Work out the special cases that get to be in player crafting
         local recipe_category = ""
-        local recipe_hide_from_player_crafting = show_non_hand_craftables
+        local recipe_hide_from_player_crafting = true
         if ((metal == MW_Data.MW_Metal.COPPER or metal == MW_Data.MW_Metal.IRON) or (metal == MW_Data.MW_Metal.BRASS and (stock == MW_Data.MW_Stock.PIPE or stock == MW_Data.MW_Stock.FINE_PIPE or stock == MW_Data.MW_Stock.SHEET))) then
           recipe_category = "gm-" .. MW_Data.stocks_recipe_data[stock].made_in .. "-player-crafting"
           recipe_hide_from_player_crafting = false
         else 
           recipe_category = "gm-" .. MW_Data.stocks_recipe_data[stock].made_in
+        end
+
+        if (show_non_hand_craftables == "starter") and (metal == MW_Data.MW_Metal.BRASS or metal == MW_Data.MW_Metal.ZINC) then
+          recipe_hide_from_player_crafting = false
+        end        
+        
+        if (show_non_hand_craftables == "all") then
+          recipe_hide_from_player_crafting = false
         end
 
         recipe_prototype = { -- recipe
@@ -755,6 +763,11 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
           }
         }
 
+        recipe_hide_from_player_crafting = true
+        if (show_non_hand_craftables == "all") then
+          recipe_hide_from_player_crafting = false
+        end
+
         recipe_prototype = { -- remelting recipe
         {
           type = "recipe",
@@ -772,7 +785,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
             secondary = MW_Data.metal_data[metal].tint_oxidation
           },
           always_show_made_in = true,
-          hide_from_player_crafting = show_non_hand_craftables,
+          hide_from_player_crafting = recipe_hide_from_player_crafting,
           energy_required = 3.2,
           order = "b[" .. metal .. "-" .. stock .. "-remelting-stock" .. "]",
           category = "gm-remelting",
@@ -788,8 +801,10 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
       end
         
       if stock == MW_Data.MW_Stock.PLATE and MW_Data.metal_data[metal].alloy_plate_recipe then -- If it is a plate, make the special-case alloy-from-plate recipes
-        -- Because this is a plate recipe, add it to the productivity whitelist -- except, it's an alloys, so ... don't. For now.
-        -- table.insert(productivity_whitelist, #productivity_whitelist, metal .. "-" .. stock .. "-stock")
+        -- Only add the Steel plate recipe_difficulty to the productivity whitelist
+        if metal == MW_Data.MW_Metal.STEEL then 
+          table.insert(productivity_whitelist, #productivity_whitelist, metal .. "-" .. stock .. "-stock-from-plate")
+        end
 
         local output_count = 0
         local ingredient_list = {}
@@ -829,7 +844,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
       
       if stock == MW_Data.MW_Stock.PLATE and MW_Data.metal_data[metal].alloy_ore_recipe then -- If it is a plate, make the special-case alloy-from-plate recipes
         -- Because this is a plate recipe, add it to the productivity whitelist -- except, it's an alloys, so ... don't. For now.
-        -- table.insert(productivity_whitelist, #productivity_whitelist, metal .. "-" .. stock .. "-stock")
+        table.insert(productivity_whitelist, #productivity_whitelist, metal .. "-" .. stock .. "-stock-from-ore")
 
         local output_count = 0
         local ingredient_list = {}
@@ -1025,8 +1040,12 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the treated [M
         data:extend(item_prototype)
         GM_global_mw_data.stock_items[item_prototype[1].name] = item_prototype[1]
 
-        local hide_from_player_crafting = show_non_hand_craftables
+        local hide_from_player_crafting = true
         if stock == MW_Data.MW_Stock.PLATE then hide_from_player_crafting = false end
+
+        if (show_non_hand_craftables == "all") then
+          hide_from_player_crafting = false
+        end
 
         local recipe_ingredients = {}
         local recipe_gm_recipe_data = {}
@@ -1126,7 +1145,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the treated [M
             type = "recipe",
             name = metal .. "-" .. stock .. "-remelting-stock",
             enabled = MW_Data.metal_data[metal].tech_stock == "starter",
-            subgroup = treatment_subgroup_name,
+            -- subgroup = treatment_subgroup_name,
             icons = icons_data_recipe,
             ingredients = recipe_remelting_ingredients,
             result = recipe_remelting_result,
@@ -1139,7 +1158,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the treated [M
             hide_from_player_crafting = hide_from_player_crafting,
             energy_required = 3.2,
             category = "gm-remelting",
-            -- subgroup = "gm-stocks-" .. metal,
+            subgroup = "gm-remelting-" .. metal,
             localised_name = {"gm.metal-stock-remelting-recipe-name", {"gm." .. metal}, {"gm." .. MW_Data.MW_Stock.PLATE}},
             gm_recipe_data = {type = "remelting", metal = metal, stock = stock},
           }
@@ -1349,7 +1368,7 @@ for property, parts in pairs(MW_Data.property_machined_part_pairs) do -- Make th
         
         -- Un-hide and put in '-player-crafting' set the recipes intended to be useable at the beginning of the game
         local recipe_category = "gm-" .. MW_Data.machined_parts_recipe_data[part].made_in
-        local hide_from_player_crafting = show_non_hand_craftables
+        local hide_from_player_crafting = true
         if (advanced and ( -- carve-outs for player crafting for bootstrap purposes
                           (property == MW_Data.MW_Property.BASIC                    and metal == MW_Data.MW_Metal.COPPER                                                                                              ) or
                           (property == MW_Data.MW_Property.BASIC                    and metal == MW_Data.MW_Metal.IRON                                                                                                ) or
@@ -1367,6 +1386,14 @@ for property, parts in pairs(MW_Data.property_machined_part_pairs) do -- Make th
         ))
         then
           recipe_category = recipe_category .. "-player-crafting"
+          hide_from_player_crafting = false
+        end
+
+        if (show_non_hand_craftables == "starter") and (metal == MW_Data.MW_Metal.COPPER or metal == MW_Data.MW_Metal.IRON or metal == MW_Data.MW_Metal.BRASS or metal == MW_Data.MW_Metal.ZINC) then
+          hide_from_player_crafting = false
+        end
+
+        if (show_non_hand_craftables == "all") then
           hide_from_player_crafting = false
         end
 
@@ -1557,6 +1584,11 @@ for property_key, multi_properties in pairs(multi_property_with_key_pairs) do --
               current_badge_offset = current_badge_offset + multi_property_badge_offset
             end
           end
+          
+          local recipe_hide_from_player_crafting = true
+          if show_non_hand_craftables == "all" then
+            recipe_hide_from_player_crafting = false
+          end
 
           local recipe_prototype = {
             { -- recipe
@@ -1570,7 +1602,7 @@ for property_key, multi_properties in pairs(multi_property_with_key_pairs) do --
               result = property_key .. "-" .. part .. "-machined-part",
               result_count = MW_Data.machined_parts_recipe_data[part].output,
               category = "gm-" .. MW_Data.machined_parts_recipe_data[part].made_in,
-              hide_from_player_crafting = show_non_hand_craftables,
+              hide_from_player_crafting = recipe_hide_from_player_crafting,
               icons = icons_data_recipe,
               crafting_machine_tint = { -- I don't know if anything will use this, but here it is just in case. You're welcome, future me.
                 primary = MW_Data.metal_data[metal].tint_metal,
@@ -1596,52 +1628,65 @@ for metal, metal_data in pairs(MW_Data.metal_data) do -- Make "Basic" property d
   for property, _ in pairs(MW_Data.metal_properties_pairs[metal]) do
     if property ~= MW_Data.MW_Property.BASIC and not table.subtable_contains(MW_Data.property_downgrades, property) then 
       for part, _ in pairs(MW_Data.property_machined_part_pairs[property]) do
+        if (not data.raw.recipe[property .. "-" .. part .. "-downgrade-to-basic-" .. part]) or
+          (data.raw.recipe[property .. "-" .. part .. "-downgrade-to-basic-" .. part] and data.raw.recipe[property .. "-" .. part .. "-downgrade-to-basic-" .. part].enabled == false) then
+          -- Make icon
+          local icons_data = {
+            {
+              icon = "__galdocs-manufacturing__/graphics/icons/intermediates/machined-parts/basic/basic-" .. part .. ".png",
+              icon_size = 64
+            },
+            {
+              scale = 0.3,
+              icon = "__galdocs-manufacturing__/graphics/icons/intermediates/machined-parts/" .. property .. "/" .. property .. "-" .. part .. ".png",
+              shift = {10, -10},
+              icon_size = 64
+            }
+          }
+          if show_property_badges == "all" then
+            table.insert(icons_data, 2,
+            {
+              scale = property_badge_scale,
+              icon = "__galdocs-manufacturing__/graphics/icons/intermediates/property-icons/basic.png",
+              shift = {-10, -10},
+              icon_size = 64
+            }
+          )
+          end
 
-        -- Make icon
-        local icons_data = {
-          {
-            icon = "__galdocs-manufacturing__/graphics/icons/intermediates/machined-parts/basic/basic-" .. part .. ".png",
-            icon_size = 64
-          },
-          {
-            scale = 0.3,
-            icon = "__galdocs-manufacturing__/graphics/icons/intermediates/machined-parts/" .. property .. "/" .. property .. "-" .. part .. ".png",
-            shift = {10, -10},
-            icon_size = 64
+          local recipe_hide_from_player_crafting = true
+          if show_non_hand_craftables == "all" then
+            recipe_hide_from_player_crafting = false
+          end
+
+          local recipe_enabled = false
+          if metal_data.tech_machined_part == "starter" then
+            recipe_enabled = true
+          end
+
+          local recipe_prototype = {
+            {
+              type = "recipe",
+              name = property .. "-" .. part .. "-downgrade-to-basic-" .. part,
+              enabled = recipe_enabled,
+              ingredients = {{property .. "-" .. part .. "-machined-part", 1}},
+              result = "basic-" .. part .. "-machined-part",
+              result_count = 1,
+              category = "gm-metal-assaying",
+              hide_from_player_crafting = recipe_hide_from_player_crafting,
+              icons = icons_data,
+              always_show_made_in = true,
+              energy_required = 0.3,
+              localised_name = {"gm.metal-machined-part-downgrade-recipe", {"gm.basic"}, {"gm." .. part}},
+              gm_recipe_data = {type = "machined-parts", start_property = property, end_property = MW_Data.MW_Property.BASIC, part = part, special = "downgrade"}
+            }
           }
-        }
-        if show_property_badges == "all" then
-          table.insert(icons_data, 2,
-          {
-            scale = property_badge_scale,
-            icon = "__galdocs-manufacturing__/graphics/icons/intermediates/property-icons/basic.png",
-            shift = {-10, -10},
-            icon_size = 64
-          }
-        )
+
+          data:extend(recipe_prototype)
+          if not GM_global_mw_data.machined_part_recipes["basic-" .. part .. "-machined-part"] then GM_global_mw_data.machined_part_recipes["basic-" .. part .. "-machined-part"] = {} end
+          table.insert(GM_global_mw_data.machined_part_recipes["basic-" .. part .. "-machined-part"], {[recipe_prototype[1].name] = recipe_prototype[1]})
         end
-
-        local recipe_prototype = {
-          {
-            type = "recipe",
-            name = property .. "-" .. part .. "-downgrade-to-basic-" .. part,
-            enabled = MW_Data.metal_data[metal].tech_machined_part == "starter",
-            ingredients = {{property .. "-" .. part .. "-machined-part", 1}},
-            result = "basic-" .. part .. "-machined-part",
-            result_count = 1,
-            category = "gm-metal-assaying",
-            hide_from_player_crafting = show_non_hand_craftables,
-            icons = icons_data,
-            always_show_made_in = true,
-            energy_required = 0.3,
-            localised_name = {"gm.metal-machined-part-downgrade-recipe", {"gm.basic"}, {"gm." .. part}},
-            gm_recipe_data = {type = "machined-parts", start_property = property, end_property = MW_Data.MW_Property.BASIC, part = part, special = "downgrade"}
-          }
-        }
-        data:extend(recipe_prototype)
-        if not GM_global_mw_data.machined_part_recipes["basic-" .. part .. "-machined-part"] then GM_global_mw_data.machined_part_recipes["basic-" .. part .. "-machined-part"] = {} end
-        table.insert(GM_global_mw_data.machined_part_recipes["basic-" .. part .. "-machined-part"], {[recipe_prototype[1].name] = recipe_prototype[1]})
-    end
+      end
     end
   end
 end
@@ -1683,6 +1728,11 @@ for property, property_downgrade_list in pairs(MW_Data.property_downgrades) do -
       )
       end
 
+      local recipe_hide_from_player_crafting = true
+      if show_non_hand_craftables == "all" then
+        recipe_hide_from_player_crafting = false
+      end
+
       local recipe_prototype = {
         {
           type = "recipe",
@@ -1692,7 +1742,7 @@ for property, property_downgrade_list in pairs(MW_Data.property_downgrades) do -
           result = previous_property .. "-" .. part .. "-machined-part",
           result_count = 1,
           category = "gm-metal-assaying",
-          hide_from_player_crafting = show_non_hand_craftables,
+          hide_from_player_crafting = recipe_hide_from_player_crafting,
           icons = icons_data,
           always_show_made_in = true,
           energy_required = 0.3,
@@ -1742,6 +1792,11 @@ for property_key, multi_properties in pairs(multi_property_with_key_pairs) do --
           end
         end
 
+        local recipe_hide_from_player_crafting = true
+        if show_non_hand_craftables == "all" then
+          recipe_hide_from_player_crafting = false
+        end
+
         local recipe_prototype = {
           {
             type = "recipe",
@@ -1751,7 +1806,7 @@ for property_key, multi_properties in pairs(multi_property_with_key_pairs) do --
             result = multi_property .. "-" .. part .. "-machined-part",
             result_count = 1,
             category = "gm-metal-assaying",
-            hide_from_player_crafting = show_non_hand_craftables,
+            hide_from_player_crafting = recipe_hide_from_player_crafting,
             icons = icons_data,
             always_show_made_in = true,
             energy_required = 0.3,
@@ -1928,7 +1983,11 @@ for _, tier in pairs(MW_Data.MW_Minisembler_Tier) do -- make the minisembler ent
           -- " - [item=source_stock]  into [item=product_stock]\n"
           table.insert(item_localized_description_stock_to_stock, " - [item=iron-".. stock_recipe_data.precursor .. "-stock]  ")
           table.insert(item_localized_description_stock_to_stock, {"gm." .. stock_recipe_data.precursor})
-          table.insert(item_localized_description_stock_to_stock, " Stock into  [item=iron-" .. stock .. "-stock]  ")
+          if stock == MW_Data.MW_Stock.PLATING_BILLET then
+            table.insert(item_localized_description_stock_to_stock, " Stock into  [item=zinc-" .. stock .. "-stock]  ")
+          else
+            table.insert(item_localized_description_stock_to_stock, " Stock into  [item=iron-" .. stock .. "-stock]  ")
+          end
           table.insert(item_localized_description_stock_to_stock, {"gm." .. stock})
           table.insert(item_localized_description_stock_to_stock, " Stock\n")
         end
@@ -2337,6 +2396,7 @@ for _, tier in pairs(MW_Data.MW_Minisembler_Tier) do -- make the minisembler ent
         max_health = 300,
         corpse = "pump-remnants", -- FIXME : what
         dying_explosion = "pump-explosion", -- FIXME : what
+        damaged_trigger_effect = hit_effects.entity(),
         resistances =
         {
           {
@@ -2350,9 +2410,10 @@ for _, tier in pairs(MW_Data.MW_Minisembler_Tier) do -- make the minisembler ent
         selection_box = selection_box,
         fluid_boxes = current_fluid_box,
 
-        damaged_trigger_effect = hit_effects.entity(),
+        -- Display data
         alert_icon_shift = util.by_pixel(0, -12),
-        entity_info_icon_shift = util.by_pixel(0, -8),
+        scale_entity_info_icon = true,
+        entity_info_icon_shift = {0, -.5}, -- util.by_pixel(0, -8),
         
         -- Graphical layers
         animation = current_animation,
@@ -2402,6 +2463,7 @@ for _, tier in pairs(MW_Data.MW_Minisembler_Tier) do -- make the minisembler ent
         module_specification = 
         {
           module_slots = 1,
+          module_info_icon_shift = {0, 0},
         },
         allowed_effects = {"speed", "consumption", "pollution"}
       }
