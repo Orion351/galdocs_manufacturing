@@ -6,6 +6,13 @@ data:extend({
     default_value = "none",
     allowed_values = {"none", "recipes", "all"}
   },
+  {
+    type = "string-setting",
+    name = "gm-show-badges-scale",
+    setting_type = "startup",
+    default_value = "average",
+    allowed_values = {"tiny", "small", "average", "big", "why"}
+  },
   { -- Advanced mode setting
     type = "bool-setting",
     name = "gm-advanced-mode",

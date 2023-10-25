@@ -26,8 +26,17 @@ local metalworking_kits = false -- not implemented yet
 
 -- Graphical variables
 local multi_property_badge_offset = 10
-local property_badge_scale = 0.2
 local ore_particle_lifetime = 180
+
+local property_badge_scale_string = settings.startup["gm-show-badges-scale"].value
+local property_badge_scale_pairings = {
+  ["tiny"]    = 0.1,
+  ["small"]   = 0.15,
+  ["average"] = 0.2,
+  ["big"]     = 0.25,
+  ["why"]     = 0.3,
+}
+local property_badge_scale = property_badge_scale_pairings[property_badge_scale_string]
 
 -- Settings variables
 local show_property_badges = settings.startup["gm-show-badges"].value

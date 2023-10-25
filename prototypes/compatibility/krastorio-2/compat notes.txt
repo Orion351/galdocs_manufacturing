@@ -1,4 +1,5 @@
 - Make sure minisembler research is moved to a place where the player will not be deadlocked
+- Basic needs to be a hollow square - or absent entirely
 
 Metnal note to self: Fun metals to have in Rare Metals:
   Tantalum (lab equipment; very high melting point)

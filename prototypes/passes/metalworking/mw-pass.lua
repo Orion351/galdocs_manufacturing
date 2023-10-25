@@ -70,3 +70,50 @@ GM_global_mw_data.MW_Data = require("prototypes.passes.metalworking.mw-code")
 if current_overhaul_data.passes and current_overhaul_data.passes.metalworking and current_overhaul_data.passes.metalworking.code then
   GM_global_mw_data.MW_Data = require("prototypes.compatibility." .. current_overhaul_data.dir_name .. ".mw-code-augment")
 end
+
+--[[
+local test_names = {"imersium", "resonant-imersium", "stable-imersium", "niobimersium"}
+for _, k2_type in pairs(test_names) do
+  for _, stock in  pairs(GM_global_mw_data.MW_Data.MW_Stock) do
+    if stock ~= GM_global_mw_data.MW_Data.MW_Stock.PLATING_BILLET then
+      data:extend({
+        {
+          type = "item",
+          name = k2_type .. "-" .. stock .. "-stock",
+          icon = "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. k2_type .. "/" .. k2_type .. "-" .. stock .. "-stock-0000.png",
+          icon_size = 64, icon_mipmaps = 1,
+          pictures = { -- FIXME: Create and add element 'badges' for stocks
+            {
+              filename = "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. k2_type .. "/" .. k2_type .. "-" .. stock .. "-stock-0000.png",
+              width = 64,
+              height = 64,
+              scale = 0.25
+            },
+            {
+              filename = "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. k2_type .. "/" .. k2_type .. "-" .. stock .. "-stock-0001.png",
+              width = 64,
+              height = 64,
+              scale = 0.25
+            },
+            {
+              filename = "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. k2_type .. "/" .. k2_type .. "-" .. stock .. "-stock-0002.png",
+              width = 64,
+              height = 64,
+              scale = 0.25
+            },
+            {
+              filename = "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. k2_type .. "/" .. k2_type .. "-" .. stock .. "-stock-0003.png",
+              width = 64,
+              height = 64,
+              scale = 0.25
+            }
+          },
+          
+          stack_size = 200,
+          gm_item_data = {type = "stocks", metal = k2_type, stock = stock}
+        }
+      })
+    end
+  end
+end
+--]]
