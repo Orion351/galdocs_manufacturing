@@ -25,7 +25,6 @@ local metalworking_byproducts = false -- not implemented yet
 local metalworking_kits = false -- not implemented yet
 
 -- Graphical variables
-local multi_property_badge_offset = 10
 local ore_particle_lifetime = 180
 
 local property_badge_scale_string = settings.startup["gm-show-badges-scale"].value
@@ -37,6 +36,9 @@ local property_badge_scale_pairings = {
   ["why"]     = 0.3,
 }
 local property_badge_scale = property_badge_scale_pairings[property_badge_scale_string]
+local property_badge_shift = {-10, -10}
+local property_badge_stride = {10, 0}
+local ingredient_badge_shift = {10, -10}
 
 -- Settings variables
 local show_property_badges = settings.startup["gm-show-badges"].value
@@ -767,7 +769,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
           {
             scale = 0.3,
             icon = "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. metal .. "/" .. metal .. "-" .. stock .. "-stock-0000.png",
-            shift = {10, -10},
+            shift = ingredient_badge_shift,
             icon_size = 64
           }
         }
@@ -1137,7 +1139,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the treated [M
           {
             scale = 0.3,
             icon = "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. metal .. "/" .. metal .. "-" .. stock .. "-stock-0000.png",
-            shift = {10, -10},
+            shift = ingredient_badge_shift,
             icon_size = 64
           }
         }
@@ -1259,14 +1261,12 @@ for property, parts in pairs(MW_Data.property_machined_part_pairs) do -- Make th
       }
     }
     if show_property_badges == "all" then
-      table.insert(icons_data_item, 2,
-      {
+      table.insert(icons_data_item, {
         scale = property_badge_scale,
         icon = "__galdocs-manufacturing__/graphics/icons/intermediates/property-icons/" .. property .. ".png",
-        shift = {-10, -10},
+        shift = property_badge_shift,
         icon_size = 64
-      }
-    )
+      })
     end
 
     -- For the tooltip, populate metal_list with the metals that can make this type of Machined Part.
@@ -1360,21 +1360,19 @@ for property, parts in pairs(MW_Data.property_machined_part_pairs) do -- Make th
           {
             scale = 0.3,
             icon = "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. metal .. "/" .. metal .. "-plate-stock-0000.png",
-            shift = {10, -10},
+            shift = ingredient_badge_shift,
             icon_size = 64
           }
         }
         if show_property_badges == "recipes" or show_property_badges == "all" then
-          table.insert(icons_data_recipe, 2, 
-            {
-              scale = property_badge_scale,
-              icon = "__galdocs-manufacturing__/graphics/icons/intermediates/property-icons/" .. property .. ".png",
-              shift = {-10, 10},
-              icon_size = 64
-            }
-          )
+          table.insert(icons_data_recipe, {
+            scale = property_badge_scale,
+            icon = "__galdocs-manufacturing__/graphics/icons/intermediates/property-icons/" .. property .. ".png",
+            shift = property_badge_shift,
+            icon_size = 64
+          })
         end
-        
+
         -- Un-hide and put in '-player-crafting' set the recipes intended to be useable at the beginning of the game
         local recipe_category = "gm-" .. MW_Data.machined_parts_recipe_data[part].made_in
         local hide_from_player_crafting = true
@@ -1535,16 +1533,19 @@ for property_key, multi_properties in pairs(multi_property_with_key_pairs) do --
 
           -- Add multi-property badges
           if show_property_badges == "all" then
-            local current_badge_offset = 0
+            local current_badge_shift = property_badge_shift
             for _, multi_property in pairs(multi_properties) do
-              table.insert(icons_data_item, 2,
-              {
+              table.insert(icons_data_item, {
                 scale = property_badge_scale,
                 icon = "__galdocs-manufacturing__/graphics/icons/intermediates/property-icons/" .. multi_property .. ".png",
-                shift = {-10 + current_badge_offset, -10},
+                shift = current_badge_shift,
                 icon_size = 64
               })
-              current_badge_offset = current_badge_offset + multi_property_badge_offset
+
+              current_badge_shift = {
+                current_badge_shift[1] + property_badge_stride[1],
+                current_badge_shift[2] + property_badge_stride[2]
+              }
             end
           end
 
@@ -1574,26 +1575,29 @@ for property_key, multi_properties in pairs(multi_property_with_key_pairs) do --
             {
               scale = 0.3,
               icon = "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. metal .. "/" .. metal .. "-plate-stock-0000.png",
-              shift = {10, -10},
+              shift = ingredient_badge_shift,
               icon_size = 64
             }
           }
 
           -- Add multi-property badges
           if show_property_badges == "recipes" or show_property_badges == "all" then
-            local current_badge_offset = 0
+            local current_badge_shift = property_badge_shift
             for _, multi_property in pairs(multi_properties) do
-              table.insert(icons_data_item, 2,
-              {
+              table.insert(icons_data_item, {
                 scale = property_badge_scale,
                 icon = "__galdocs-manufacturing__/graphics/icons/intermediates/property-icons/" .. multi_property .. ".png",
-                shift = {-10 + current_badge_offset, -10},
+                shift = current_badge_shift,
                 icon_size = 64
               })
-              current_badge_offset = current_badge_offset + multi_property_badge_offset
+
+              current_badge_shift = {
+                current_badge_shift[1] + property_badge_stride[1],
+                current_badge_shift[2] + property_badge_stride[2]
+              }
             end
           end
-          
+
           local recipe_hide_from_player_crafting = true
           if show_non_hand_craftables == "all" then
             recipe_hide_from_player_crafting = false
@@ -1648,16 +1652,15 @@ for metal, metal_data in pairs(MW_Data.metal_data) do -- Make "Basic" property d
             {
               scale = 0.3,
               icon = "__galdocs-manufacturing__/graphics/icons/intermediates/machined-parts/" .. property .. "/" .. property .. "-" .. part .. ".png",
-              shift = {10, -10},
+              shift = ingredient_badge_shift,
               icon_size = 64
             }
           }
           if show_property_badges == "all" then
-            table.insert(icons_data, 2,
-            {
+            table.insert(icons_data, {
               scale = property_badge_scale,
               icon = "__galdocs-manufacturing__/graphics/icons/intermediates/property-icons/basic.png",
-              shift = {-10, -10},
+              shift = property_badge_shift,
               icon_size = 64
             }
           )
@@ -1722,16 +1725,15 @@ for property, property_downgrade_list in pairs(MW_Data.property_downgrades) do -
         {
           scale = 0.3,
           icon = "__galdocs-manufacturing__/graphics/icons/intermediates/machined-parts/" .. next_property .. "/" .. next_property .. "-" .. part .. ".png",
-          shift = {10, -10},
+          shift = ingredient_badge_shift,
           icon_size = 64
         }
       }
       if show_property_badges == "all" then
-        table.insert(icons_data, 2,
-        {
+        table.insert(icons_data, {
           scale = property_badge_scale,
           icon = "__galdocs-manufacturing__/graphics/icons/intermediates/property-icons/" .. previous_property .. ".png",
-          shift = {-10, -10},
+          shift = property_badge_shift,
           icon_size = 64
         }
       )
@@ -1768,10 +1770,10 @@ end
 
 for property_key, multi_properties in pairs(multi_property_with_key_pairs) do -- Make Multi-property machined part downgrade recipes.
 
-  for _, multi_property in pairs(multi_properties) do  
+  for _, multi_property in pairs(multi_properties) do
     for part, _ in pairs(MW_Data.property_machined_part_pairs[multi_property]) do
       if MW_Data.property_machined_part_pairs[multi_property][part] then
-        
+
         -- Make icon
         local icons_data = {
           {
@@ -1781,23 +1783,26 @@ for property_key, multi_properties in pairs(multi_property_with_key_pairs) do --
           {
             scale = 0.3,
             icon = "__galdocs-manufacturing__/graphics/icons/intermediates/machined-parts/" .. property_key .. "/" .. property_key .. "-" .. part .. ".png",
-            shift = {10, -10},
+            shift = ingredient_badge_shift,
             icon_size = 64
           }
         }
 
         -- Add multi-property badges
         if show_property_badges == "recipes" or show_property_badges == "all" then
-          local current_badge_offset = 0
+          local current_badge_shift = property_badge_shift
           for _, multi_property in pairs(multi_properties) do
-            table.insert(icons_data, 2,
-            {
+            table.insert(icons_data, {
               scale = property_badge_scale,
               icon = "__galdocs-manufacturing__/graphics/icons/intermediates/property-icons/" .. multi_property .. ".png",
-              shift = {-10 + current_badge_offset, -10},
+              shift = current_badge_shift,
               icon_size = 64
             })
-            current_badge_offset = current_badge_offset + multi_property_badge_offset
+
+            current_badge_shift = {
+              current_badge_shift[1] + property_badge_stride[1],
+              current_badge_shift[2] + property_badge_stride[2]
+            }
           end
         end
 
