@@ -161,7 +161,7 @@ local multi_property_with_key_pairs = {}
 local multi_property_metal_pairs = {}
 for _, multi_properties in pairs(MW_Data.multi_property_pairs) do -- Pair metals with multi-property sets
   local property_key = table.concat_values(multi_properties, "-and-")
-  
+
   multi_property_with_key_pairs[property_key] = multi_properties
   multi_property_metal_pairs[property_key] = {}
 
@@ -193,7 +193,7 @@ data:extend({ -- Create metalworking intermediates item group
     type = "item-group",
     name = "gm-intermediates",
     icon = "__galdocs-manufacturing__/graphics/group-icons/galdocs-intermediates-group-icon.png",
-    
+
     localised_name = {"gm.item-intermediates-group"},
     order = "c-a",
     icon_size = 128
@@ -257,7 +257,7 @@ for resource, resource_data in pairs(MW_Data.ore_data) do -- Replacing original 
       data.raw.resource[resource .. "-ore"].stages.sheet.filename = "__galdocs-manufacturing__/graphics/entity/resource/" .. resource .. "/" .. resource .. "-ore.png"
       data.raw.resource[resource .. "-ore"].stages.sheet.hr_version.filename = "__galdocs-manufacturing__/graphics/entity/resource/" .. resource .. "/hr-" .. resource .. "-ore.png"
       data.raw.resource[resource .. "-ore"].icon = "__galdocs-manufacturing__/graphics/icons/intermediates/ore/" .. resource .. "/" .. resource .. "-ore-1.png"
-    else    
+    else
       data.raw.resource[resource].stages.sheet.filename = "__galdocs-manufacturing__/graphics/entity/resource/" .. resource .. "/" .. resource .. ".png"
       data.raw.resource[resource].stages.sheet.hr_version.filename = "__galdocs-manufacturing__/graphics/entity/resource/" .. resource .. "/hr-" .. resource .. ".png"
       -- data.raw.resource[resource].icon = "__galdocs-manufacturing__/graphics/icons/intermediates/ore/" .. resource .. "/" .. resource .. "-1.png"
@@ -337,10 +337,10 @@ for resource, resource_data in pairs(MW_Data.ore_data) do -- Make mining debris
       current_resource = table.deepcopy(data.raw["optimized-particle"]["copper-ore-particle"])
       current_resource.name = resource .. oreyn .. "-particle"
     end
-    
+
     current_resource.pictures = {}
     current_resource.shadows = {}
-    for i = 0, ore_particle_count, 1 do 
+    for i = 0, ore_particle_count, 1 do
       table.insert(current_resource.pictures, {
         filename = "__galdocs-manufacturing__/graphics/particle/" .. resource .. oreyn .. "-particle/" .. resource .. oreyn .. "-particle-000" .. i .. ".png",
         priority = "extra-high",
@@ -385,7 +385,7 @@ for resource, resource_data in pairs(MW_Data.ore_data) do -- Build autoplace set
   end
   if not resource_data.original then
     local test_map_color = MW_Data.metal_data[resource].tint_map
-    
+
     local particle_name = nil
     if resource_data.new_debris_art then particle_name = resource .. "-ore-particle" end
 
@@ -583,8 +583,8 @@ order_count = 0
 for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treated [Metal] [Stock] Items and Recipes
   if MW_Data.metal_data[metal].type ~= MW_Data.MW_Metal_Type.TREATMENT then
     for stock, _ in pairs(stocks) do
-      
-      -- For the tooltip, populate property_list with the properties of the metal. 
+
+      -- For the tooltip, populate property_list with the properties of the metal.
       local property_list = {""}
       for property, _ in pairs(MW_Data.metal_properties_pairs[metal]) do
         table.insert(property_list, " - [img=" .. property ..  "-sprite]  ")
@@ -595,7 +595,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
 
       -- For the tooltip, populate takers with the minisemblers that can use this stock, and with the stocks and machined parts that will result, respectively.
       local produces_list = {}
-      
+
       -- Add in the stocks to the list
       for product_stock, precursor_recipe_data in pairs(MW_Data.stocks_recipe_data) do
         if stock == precursor_recipe_data.precursor and MW_Data.metal_stocks_pairs[metal][product_stock] then
@@ -607,7 +607,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
           table.insert(produces_list, {"gm.line-separator"})
         end
       end
-      
+
       -- Add in the machined-parts to the list
       for product_machined_part, precursor_recipe_data in pairs(MW_Data.machined_parts_recipe_data) do
         if stock == precursor_recipe_data.precursor then
@@ -622,12 +622,12 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
 
       -- For the tooltip, show what machine prduces this stock
       local made_in = {""}
-      if stock ~= MW_Data.MW_Stock.PLATE then 
+      if stock ~= MW_Data.MW_Stock.PLATE then
         table.insert(made_in, " - [item=gm-" .. MW_Data.stocks_recipe_data[stock].made_in .. "]  ")
         table.insert(made_in, {"gm." .. MW_Data.stocks_recipe_data[stock].made_in})
         table.insert(made_in, {"gm.line-separator"})
       end
-      if stock == MW_Data.MW_Stock.PLATE then 
+      if stock == MW_Data.MW_Stock.PLATE then
         table.insert(made_in, " - [item=stone-furnace]  ")
         table.insert(made_in, {"gm.smelting-type"})
         table.insert(made_in, {"gm.line-separator"})
@@ -659,7 +659,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
       for i = 1, 6 do
         if produces_list_pieces[i] == nil then produces_list_pieces[i] = {""} end
       end
-      
+
       if #produces_list_pieces[1] == 1 and metal == "zinc" then
         table.insert(produces_list_pieces[1], " - None")
       end
@@ -670,8 +670,8 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
         localized_description_item = {"gm.metal-stock-item-description-detailed", {"gm." .. metal}, {"gm." .. stock}, made_in, property_list, produces_list_pieces[1], produces_list_pieces[2], produces_list_pieces[3], produces_list_pieces[4], produces_list_pieces[5], produces_list_pieces[6]}
       else
         localized_description_item = {"gm.metal-stock-item-description-brief", {"gm." .. metal}, {"gm." .. stock}}
-      end      
-      
+      end
+
       -- Make item icon
       local icons_data_item = {
         {
@@ -692,7 +692,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
       end
 
       local item_prototype = { -- item
-        { 
+        {
           type = "item",
           name = metal .. "-" .. stock .. "-stock",
           icons = icons_data_item,
@@ -741,23 +741,23 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
         if ((metal == MW_Data.MW_Metal.COPPER or metal == MW_Data.MW_Metal.IRON) or (metal == MW_Data.MW_Metal.BRASS and (stock == MW_Data.MW_Stock.PIPE or stock == MW_Data.MW_Stock.FINE_PIPE or stock == MW_Data.MW_Stock.SHEET))) then
           recipe_category = "gm-" .. MW_Data.stocks_recipe_data[stock].made_in .. "-player-crafting"
           recipe_hide_from_player_crafting = false
-        else 
+        else
           recipe_category = "gm-" .. MW_Data.stocks_recipe_data[stock].made_in
         end
 
         if (show_non_hand_craftables == "starter") and (metal == MW_Data.MW_Metal.BRASS or metal == MW_Data.MW_Metal.ZINC) then
           recipe_hide_from_player_crafting = false
-        end        
-        
+        end
+
         if (show_non_hand_craftables == "all") then
           recipe_hide_from_player_crafting = false
         end
 
         recipe_prototype = { -- recipe
-          {      
+          {
             type = "recipe",
             name = metal .. "-" .. stock .. "-stock",
-            enabled = MW_Data.metal_data[metal].tech_stock == "starter", 
+            enabled = MW_Data.metal_data[metal].tech_stock == "starter",
             ingredients = {{metal .. "-" .. MW_Data.stocks_recipe_data[stock].precursor .. "-stock", MW_Data.stocks_recipe_data[stock].input}},
             result = metal .. "-" .. stock .. "-stock",
             result_count = MW_Data.stocks_recipe_data[stock].output,
@@ -804,7 +804,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
           enabled = MW_Data.metal_data[metal].tech_stock == "starter",
           icons = icons_data_recipe,
           ingredients = {
-            {name = item_prototype[1].name, 
+            {name = item_prototype[1].name,
             amount = MW_Data.stocks_recipe_data[stock].remelting_cost}
           },
           result = metal .. "-plate-stock",
@@ -828,10 +828,10 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
       table.insert(GM_global_mw_data.stock_recipes[item_prototype[1].name], {[recipe_prototype[1].name] = recipe_prototype[1]})
 
       end
-        
+
       if stock == MW_Data.MW_Stock.PLATE and MW_Data.metal_data[metal].alloy_plate_recipe then -- If it is a plate, make the special-case alloy-from-plate recipes
         -- Only add the Steel plate recipe_difficulty to the productivity whitelist
-        if metal == MW_Data.MW_Metal.STEEL then 
+        if metal == MW_Data.MW_Metal.STEEL then
           table.insert(productivity_whitelist, #productivity_whitelist, metal .. "-" .. stock .. "-stock-from-plate")
         end
 
@@ -845,7 +845,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
             table.insert(ingredient_list, {ingredient.name, ingredient.amount}) -- This is going to break when the 'name' field in MW_Data.metal_data[metal].alloy_plate_recipe doesn't match with an item.
           end
         end
-        
+
         recipe_prototype = {
           { -- recipe
             type = "recipe",
@@ -870,7 +870,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
         if not GM_global_mw_data.stock_recipes[item_prototype[1].name] then GM_global_mw_data.stock_recipes[item_prototype[1].name] = {} end
         table.insert(GM_global_mw_data.stock_recipes[item_prototype[1].name], {[recipe_prototype[1].name] = recipe_prototype[1]})
       end
-      
+
       if stock == MW_Data.MW_Stock.PLATE and MW_Data.metal_data[metal].alloy_ore_recipe then -- If it is a plate, make the special-case alloy-from-plate recipes
         -- Because this is a plate recipe, add it to the productivity whitelist -- except, it's an alloys, so ... don't. For now.
         table.insert(productivity_whitelist, #productivity_whitelist, metal .. "-" .. stock .. "-stock-from-ore")
@@ -909,8 +909,8 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
         data:extend(recipe_prototype)
         if not GM_global_mw_data.stock_recipes[item_prototype[1].name] then GM_global_mw_data.stock_recipes[item_prototype[1].name] = {} end
         table.insert(GM_global_mw_data.stock_recipes[item_prototype[1].name], {[recipe_prototype[1].name] = recipe_prototype[1]})
-      end   
-      
+      end
+
       if stock == MW_Data.MW_Stock.PLATE and MW_Data.metal_data[metal].type == MW_Data.MW_Metal_Type.ELEMENT then -- If it is a plate, make the special-case elemental plate recipes that take ores instead of stocks.
         -- Because this is a plate recipe, add it to the productivity whitelist
         table.insert(productivity_whitelist, #productivity_whitelist, metal .. "-" .. stock .. "-stock")
@@ -947,14 +947,14 @@ end
 for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the treated [Metal] [Stock] Items and Recipes
   if MW_Data.metal_data[metal].type == MW_Data.MW_Metal_Type.TREATMENT then
     for stock, _ in pairs(stocks) do
-      
+
       local is_machined_part_precursor = false
       for _, check_part in pairs(MW_Data.MW_Machined_Part) do -- Check to see if the stock is an immediate precursor of a machined part
         if MW_Data.machined_parts_recipe_data[check_part] and MW_Data.machined_parts_recipe_data[check_part].precursor == stock then is_machined_part_precursor = true end
       end
 
       if is_machined_part_precursor then
-        -- For the tooltip, populate property_list with the properties of the metal. 
+        -- For the tooltip, populate property_list with the properties of the metal.
         local property_list = {""}
         for property, _ in pairs(MW_Data.metal_properties_pairs[metal]) do
           table.insert(property_list, " - [img=" .. property ..  "-sprite]  ")
@@ -962,10 +962,10 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the treated [M
           table.insert(property_list, {"gm.line-separator"})
         end
         table.remove(property_list, #property_list)
-        
+
         -- For the tooltip, populate takers with the minisemblers that can use this stock, and with the stocks and machined parts that will result, respectively.
         local produces_list = {}
-      
+
         -- Add in the machined-parts to the list
         for product_machined_part, precursor_recipe_data in pairs(MW_Data.machined_parts_recipe_data) do
           if stock == precursor_recipe_data.precursor then
@@ -980,12 +980,12 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the treated [M
 
         -- For the tooltip, show what machine prduces this stock
         local made_in = {""}
-        if stock ~= MW_Data.MW_Stock.PLATE then 
+        if stock ~= MW_Data.MW_Stock.PLATE then
           table.insert(made_in, " - [item=gm-" .. MW_Data.stocks_recipe_data[stock].made_in .. "]  ")
           table.insert(made_in, {"gm." .. MW_Data.stocks_recipe_data[stock].made_in})
           table.insert(made_in, {"gm.line-separator"})
         end
-        if stock == MW_Data.MW_Stock.PLATE then 
+        if stock == MW_Data.MW_Stock.PLATE then
           table.insert(made_in, " - [item=stone-furnace]  ")
           table.insert(made_in, {"gm.smelting-type"})
           table.insert(made_in, {"gm.line-separator"})
@@ -1017,17 +1017,17 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the treated [M
         for i = 1, 6 do
           if produces_list_pieces[i] == nil then produces_list_pieces[i] = {""} end
         end
-        
+
         -- Entirely disable the tootips according to the user's settings
         local localized_description_item = {}
         if show_detailed_tooltips then
           localized_description_item = {"gm.metal-stock-item-description-detailed", {"gm." .. metal}, {"gm." .. stock}, made_in, property_list, produces_list_pieces[1], produces_list_pieces[2], produces_list_pieces[3], produces_list_pieces[4], produces_list_pieces[5], produces_list_pieces[6]}
         else
           localized_description_item = {"gm.metal-stock-item-description-brief", {"gm." .. metal}, {"gm." .. stock}}
-        end      
-        
+        end
+
         local item_prototype = { -- item
-        { 
+        {
           type = "item",
           name = metal .. "-" .. stock .. "-stock",
           icon = "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. metal .. "/" .. metal .. "-" .. stock .. "-stock-0000.png",
@@ -1100,7 +1100,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the treated [M
         end
 
         local recipe_prototype = { -- recipe for the stock
-          {      
+          {
             type = "recipe",
             name = metal .. "-" .. stock .. "-stock",
             enabled = MW_Data.metal_data[metal].tech_stock == "starter",
@@ -1140,7 +1140,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the treated [M
 
         -- Annealing-specific properties for remelting recipe
         if MW_Data.metal_data[metal].treatment_type == MW_Data.MW_Treatment_Type.ANNEALING then
-          main_remelting_icon = "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. MW_Data.metal_data[metal].source_metal .. "/" .. MW_Data.metal_data[metal].source_metal .. "-plate-stock-0000.png"          
+          main_remelting_icon = "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. MW_Data.metal_data[metal].source_metal .. "/" .. MW_Data.metal_data[metal].source_metal .. "-plate-stock-0000.png"
           recipe_remelting_ingredients = {
             {name = item_prototype[1].name, amount = 1}
           }
@@ -1197,10 +1197,10 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the treated [M
         table.insert(GM_global_mw_data.stock_recipes[item_prototype[1].name], {[recipe_prototype[1].name] = recipe_prototype[1]})
       end
     end
-  end 
+  end
 end
 
--- Check each module to see if 'productivity' is in its 'effect' list; if so, then add the plate-stock recipes to it. 
+-- Check each module to see if 'productivity' is in its 'effect' list; if so, then add the plate-stock recipes to it.
 for _, module in pairs(data.raw.module) do
   if module.effect["productivity"] then
       local module_with_productivity = table.deepcopy(module)
@@ -1270,7 +1270,7 @@ order_count = 0
 for property, parts in pairs(MW_Data.property_machined_part_pairs) do -- Make the [Property] [Machined Part] Items and Recipes
   for part, _ in pairs(parts) do
     -- Work out how to fan out the machined parts
-    
+
     -- Make item icon
     local icons_data_item = {
       {
@@ -1299,7 +1299,7 @@ for property, parts in pairs(MW_Data.property_machined_part_pairs) do -- Make th
         end
       end
     end
-    
+
     -- Split up the giant list of locale above into pieces so that each piece has 20 or fewer items in it.
     -- FIXME: Turn this into a function
     local metal_list_pieces = {}
@@ -1368,7 +1368,7 @@ for property, parts in pairs(MW_Data.property_machined_part_pairs) do -- Make th
     for metal, metal_properties in pairs(MW_Data.metal_properties_pairs) do
       local precursor = MW_Data.machined_parts_recipe_data[part].precursor
       if metal_properties[property] and MW_Data.metal_stocks_pairs[metal][precursor] then
-        
+
         -- Make recipe icon
         local icons_data_recipe = {
           {
@@ -1424,7 +1424,7 @@ for property, parts in pairs(MW_Data.property_machined_part_pairs) do -- Make th
 
         -- Build recipe data
         local recipe_prototype = { -- recipe
-          { 
+          {
             type = "recipe",
             name = property .. "-" .. part .. "-from-" .. metal .. "-" .. precursor,
             enabled = MW_Data.metal_data[metal].tech_machined_part == "starter",
@@ -1471,7 +1471,7 @@ end
 
 for property_key, multi_properties in pairs(multi_property_with_key_pairs) do -- Make Multi-property machined part items and recipes.
   if multi_property_metal_pairs[property_key] then
-    -- 
+    --
     local combined_parts_list = {}
     for _, multi_property in pairs(multi_properties) do
       for part, _ in pairs(MW_Data.property_machined_part_pairs[multi_property]) do
@@ -1492,7 +1492,7 @@ for property_key, multi_properties in pairs(multi_property_with_key_pairs) do --
           end
 
           -- Split up the giant list of locale above into pieces so that each piece has 20 or fewer items in it.
-          -- FIXME: Turn this into a function 
+          -- FIXME: Turn this into a function
           local metal_list_pieces = {}
           local subtable_size = 18
           local num_subtables = math.ceil(#metal_list / subtable_size)
@@ -1539,7 +1539,7 @@ for property_key, multi_properties in pairs(multi_property_with_key_pairs) do --
             localized_description_item = {"gm.metal-machined-part-item-description-detailed", item_name, {"gm." .. part}, made_in, metal_list_pieces[1], metal_list_pieces[2], metal_list_pieces[3], metal_list_pieces[4], metal_list_pieces[5], metal_list_pieces[6]}
           else
             localized_description_item = {"gm.metal-machined-part-item-description-brief", item_name, {"gm." .. part}}
-          end      
+          end
 
           -- Make item icon
           local icons_data_item = {
@@ -1657,7 +1657,7 @@ end
 
 for metal, metal_data in pairs(MW_Data.metal_data) do -- Make "Basic" property downgrade recipes
   for property, _ in pairs(MW_Data.metal_properties_pairs[metal]) do
-    if property ~= MW_Data.MW_Property.BASIC and not table.subtable_contains(MW_Data.property_downgrades, property) then 
+    if property ~= MW_Data.MW_Property.BASIC and not table.subtable_contains(MW_Data.property_downgrades, property) then
       for part, _ in pairs(MW_Data.property_machined_part_pairs[property]) do
         if (not data.raw.recipe[property .. "-" .. part .. "-downgrade-to-basic-" .. part]) or
           (data.raw.recipe[property .. "-" .. part .. "-downgrade-to-basic-" .. part] and data.raw.recipe[property .. "-" .. part .. "-downgrade-to-basic-" .. part].enabled == false) then
@@ -1725,15 +1725,15 @@ for property, property_downgrade_list in pairs(MW_Data.property_downgrades) do -
   for tier_minus_one, next_property in pairs(property_downgrade_list) do
     local tier = tier_minus_one + 1
     local previous_property
-    
+
     if tier == 2 then
       previous_property = property
     else
       previous_property = property_downgrade_list[tier_minus_one - 1]
     end
-    
+
     for part, _ in pairs(MW_Data.property_machined_part_pairs[previous_property]) do
-      
+
       -- Make icon
       local icons_data = {
         {
@@ -1849,7 +1849,7 @@ for property_key, multi_properties in pairs(multi_property_with_key_pairs) do --
         data:extend(recipe_prototype)
         if not GM_global_mw_data.machined_part_recipes[multi_property .. "-" .. part .. "-machined-part"] then GM_global_mw_data.machined_part_recipes[multi_property .. "-" .. part .. "-machined-part"] = {} end
         table.insert(GM_global_mw_data.machined_part_recipes[multi_property .. "-" .. part .. "-machined-part"], {[recipe_prototype[1].name] = recipe_prototype[1]})
-        
+
       end
     end
   end
@@ -1898,9 +1898,9 @@ for _, tier in pairs(MW_Data.MW_Minisembler_Tier) do -- make the minisembler ent
     local direction_set = {}
     for _, direction_name in pairs(animation_directions) do -- build current_animation, FIXME: Name the minisembler looping table more gooder
       local layer_set = {}
-            
+
       for layer_number, layer_name in pairs(animation_layers) do
-        
+
         -- Set normal and hr filenames
         if direction_name == "north" then
           current_normal_filename = "__galdocs-manufacturing__/graphics/entity/minisemblers/" .. minisembler .. "/" .. minisembler .. "-v-" .. layer_name .. ".png"
@@ -1936,7 +1936,7 @@ for _, tier in pairs(MW_Data.MW_Minisembler_Tier) do -- make the minisembler ent
         -- if layer_name == "base" then current_idle_animation = layer end
         table.insert(layer_set, layer_number, layer)
       end
-      
+
       if (direction_name == "north") then
         direction_set["north"] = {layers = layer_set}
         direction_set["south"] = {layers = layer_set}
@@ -1956,7 +1956,7 @@ for _, tier in pairs(MW_Data.MW_Minisembler_Tier) do -- make the minisembler ent
     direction_set["west"]["layers"][2]["filename"] = "__galdocs-manufacturing__/graphics/entity/minisemblers/" .. minisembler .. "/" .. minisembler .. "-h-idle.png"
     direction_set["west"]["layers"][2]["hr_version"]["filename"] = "__galdocs-manufacturing__/graphics/entity/minisemblers/" .. minisembler .. "/hr-" .. minisembler .. "-h-idle.png"
     local current_idle_animation = direction_set
-    
+
     local layer_set_2 = {}
     for layer_name, recipe_tint in pairs(working_visualization_layer_tint_pairs) do
       direction_set = {apply_recipe_tint = recipe_tint}
@@ -2001,7 +2001,7 @@ for _, tier in pairs(MW_Data.MW_Minisembler_Tier) do -- make the minisembler ent
       table.insert(layer_set_2, direction_set)
     end
     local current_working_visualizations = layer_set_2
-    
+
     -- Set localized name and crafting categories, based on minisembler stage and stage type
     local localized_description_item = {}
     local crafting_categories = {}
@@ -2063,19 +2063,19 @@ for _, tier in pairs(MW_Data.MW_Minisembler_Tier) do -- make the minisembler ent
           table.insert(item_localized_description_stock_to_machined_part, {"gm.line-separator"})
         end
       end
-      
+
       if #item_localized_description_stock_to_stock > 1 and #item_localized_description_stock_to_machined_part == 1 then
         table.remove(item_localized_description_stock_to_stock, #item_localized_description_stock_to_stock)
         table.insert(item_localized_description_stock_to_stock, " Stock")
       end
 
       if #item_localized_description_stock_to_machined_part > 1 then table.remove(item_localized_description_stock_to_machined_part, #item_localized_description_stock_to_machined_part) end
-      
+
       if show_detailed_tooltips then
         localized_description_item = {"gm.minisembler-machining-item-description-detailed", {"gm." .. minisembler}, item_localized_description_stock_to_stock, item_localized_description_stock_to_machined_part}
       else
         localized_description_item = {"gm.minisembler-machining-item-description-brief", {"gm." .. minisembler}}
-      end      
+      end
     end
 
     if MW_Data.minisembler_data[minisembler].stage == MW_Data.MW_Minisembler_Stage.TREATING then
@@ -2099,7 +2099,7 @@ for _, tier in pairs(MW_Data.MW_Minisembler_Tier) do -- make the minisembler ent
           localized_description_item = {"gm.minisembler-plating-item-description-detailed", {"gm." .. minisembler}, item_localized_description_plating}
         else
           localized_description_item = {"gm.minisembler-plating-item-description-brief", {"gm." .. minisembler}}
-        end     
+        end
 
       end
     end
@@ -2107,24 +2107,24 @@ for _, tier in pairs(MW_Data.MW_Minisembler_Tier) do -- make the minisembler ent
     if MW_Data.minisembler_data[minisembler].stage == MW_Data.MW_Minisembler_Stage.ASSAYING then
 
       crafting_categories = {"gm-metal-assaying"}
-      
+
       if show_detailed_tooltips then
         localized_description_item = {"gm.minisembler-assaying-item-description-detailed", {"gm." .. minisembler}}
       else
         localized_description_item = {"gm.minisembler-assaying-item-description-brief", {"gm." .. minisembler}}
-      end     
+      end
     end
 
     -- FIXME : Must pair 'stage' with recipes and assign them appropriately here.
-    
+
     -- Geometry data
     -- Set default geometry data
-    
+
     local collision_box = {{-0.29, -0.9}, {0.29, 0.9}}
     local selection_box = {{-0.5, -1}, {0.5, 1}}
     local current_fluid_box = nil
-    
-    local generic_minisembler_pipe_cover_pictures = 
+
+    local generic_minisembler_pipe_cover_pictures =
     {
       north =
       {
@@ -2271,10 +2271,10 @@ for _, tier in pairs(MW_Data.MW_Minisembler_Tier) do -- make the minisembler ent
         }
       }
     }
-  
-    
 
-    local generic_minisembler_pipe_pictures = 
+
+
+    local generic_minisembler_pipe_pictures =
     {
       north =
         {
@@ -2345,7 +2345,7 @@ for _, tier in pairs(MW_Data.MW_Minisembler_Tier) do -- make the minisembler ent
           }
         },
     }
-    
+
     if MW_Data.minisembler_data[minisembler].shape_data[tier].uses_fluid then
       current_fluid_box = {
         {
@@ -2387,7 +2387,7 @@ for _, tier in pairs(MW_Data.MW_Minisembler_Tier) do -- make the minisembler ent
         place_result = "gm-" .. minisembler,
         stack_size = 50,
         localised_name = {"gm.minisembler-item-name", {"gm." .. minisembler}},
-        
+
         localised_description = localized_description_item
       },
       { -- recipe
@@ -2423,7 +2423,7 @@ for _, tier in pairs(MW_Data.MW_Minisembler_Tier) do -- make the minisembler ent
         fast_replaceable_group = "gm-minisemblers",
         flags = {"placeable-neutral", "placeable-player", "player-creation"},
         minable = {mining_time = 0.2, result = "gm-" .. minisembler},
-        
+
         -- Combat data
         max_health = 300,
         corpse = "pump-remnants", -- FIXME : what
@@ -2436,7 +2436,7 @@ for _, tier in pairs(MW_Data.MW_Minisembler_Tier) do -- make the minisembler ent
             percent = 70
           }
         },
-        
+
         -- Geometry data
         collision_box = collision_box,
         selection_box = selection_box,
@@ -2446,12 +2446,12 @@ for _, tier in pairs(MW_Data.MW_Minisembler_Tier) do -- make the minisembler ent
         alert_icon_shift = util.by_pixel(0, -12),
         scale_entity_info_icon = true,
         entity_info_icon_shift = {0, -.5}, -- util.by_pixel(0, -8),
-        
+
         -- Graphical layers
         animation = current_animation,
         idle_animation = current_idle_animation,
         working_visualisations = current_working_visualizations,
-        
+
         -- Crafting data
         crafting_categories = crafting_categories,
         crafting_speed = 0.5,
@@ -2479,20 +2479,20 @@ for _, tier in pairs(MW_Data.MW_Minisembler_Tier) do -- make the minisembler ent
           audible_distance_modifier = 0.5,
           fade_in_ticks = 4,
           fade_out_ticks = 20
-        },  
-        build_sound = 
+        },
+        build_sound =
         {
           {
             filename = "__galdocs-manufacturing__/sound/entity/minisembler-placed.ogg",
             volume = 0.5
           }
         },
-        
+
         -- Localization Data
         localised_name = {"gm.minisembler-entity-name", {"gm." .. minisembler}},
-        
+
         -- Module Data
-        module_specification = 
+        module_specification =
         {
           module_slots = 1,
           module_info_icon_shift = {0, 0},
@@ -2862,7 +2862,7 @@ for metal, metal_data in pairs(MW_Data.metal_data) do -- Add Stocks and Machined
       for _, check_metal in pairs(multi_property_metal_pairs[property_key]) do
         if check_metal == metal then metal_found = true end
       end
-      
+
       -- Combine the lists of machined parts the metals can make; this will ADD to the parts, and make things that couldn't be made otherwise
       if metal_found then -- FIXME this is parallel code; make this into a function smoosh_table
         local combined_parts_list = {}
@@ -2880,7 +2880,7 @@ for metal, metal_data in pairs(MW_Data.metal_data) do -- Add Stocks and Machined
             table.insert(machined_part_technology_effects, {type = "unlock-recipe", recipe = property_key .. "-" .. part .. "-from-" .. metal .. "-" .. MW_Data.machined_parts_recipe_data[part].precursor})
           end
         end
-                
+
       end
     end
 
