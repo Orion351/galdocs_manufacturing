@@ -39,6 +39,8 @@ local property_badge_scale = property_badge_scale_pairings[property_badge_scale_
 local property_badge_shift = {-10, -10}
 local property_badge_stride = {10, 0}
 local ingredient_badge_shift = {10, -10}
+local inventory_icon_size = 40 -- determined empirically; used to compute pixel-perfect scaling
+local legend_image_size = 32
 
 -- Settings variables
 local show_property_badges = settings.startup["gm-show-badges"].value
@@ -151,6 +153,21 @@ local default_ended_in_water_trigger_effect = function()
     }
   }
 
+end
+
+local function build_legend_icon(material, shift)
+  local pixel_perfect_scale = legend_image_size / inventory_icon_size
+
+  return {
+    scale = pixel_perfect_scale,
+    icon = "__galdocs-manufacturing__/graphics/legends/" .. material .. ".png",
+    icon_size = legend_image_size,
+
+    shift = {
+      math.floor(shift[1] / pixel_perfect_scale + 0.5) * pixel_perfect_scale,
+      math.floor(shift[2] / pixel_perfect_scale + 0.5) * pixel_perfect_scale
+    }
+  }
 end
 
 -- *******************
@@ -690,6 +707,9 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
         }
       )
       end
+      if show_property_badges == "recipes" or show_property_badges == "all" then
+        table.insert(icons_data_item, build_legend_icon(metal, property_badge_shift))
+      end
 
       local item_prototype = { -- item
         {
@@ -699,28 +719,24 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
           pictures = { -- FIXME: Create and add element 'badges' for stocks
             {
               filename = "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. metal .. "/" .. metal .. "-" .. stock .. "-stock-0000.png",
-              width = 64,
-              height = 64,
+              size = 64,
               scale = 0.25
             },
             {
               filename = "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. metal .. "/" .. metal .. "-" .. stock .. "-stock-0001.png",
-              width = 64,
-              height = 64,
+              size = 64,
               scale = 0.25
             },
             {
               filename = "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. metal .. "/" .. metal .. "-" .. stock .. "-stock-0002.png",
-              width = 64,
-              height = 64,
+              size = 64,
               scale = 0.25
             },
             {
               filename = "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. metal .. "/" .. metal .. "-" .. stock .. "-stock-0003.png",
-              width = 64,
-              height = 64,
+              size = 64,
               scale = 0.25
-            }
+            },
           },
           subgroup = "gm-stocks-" .. metal,
           order = order_count .. "gm-stocks-" .. metal,
@@ -791,6 +807,9 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
             icon_size = 64
           }
         }
+        if show_property_badges == "recipes" or show_property_badges == "all" then
+          table.insert(icons_data_recipe, build_legend_icon(metal, property_badge_shift))
+        end
 
         recipe_hide_from_player_crafting = true
         if (show_non_hand_craftables == "all") then
@@ -1026,35 +1045,40 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the treated [M
           localized_description_item = {"gm.metal-stock-item-description-brief", {"gm." .. metal}, {"gm." .. stock}}
         end
 
+        local icons_data_item = {
+          {
+            icon = "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. metal .. "/" .. metal .. "-" .. stock .. "-stock-0000.png",
+            icon_size = 64
+          }
+        }
+        if show_property_badges == "recipes" or show_property_badges == "all" then
+          table.insert(icons_data_item, build_legend_icon(metal, property_badge_shift))
+        end
+
         local item_prototype = { -- item
         {
           type = "item",
           name = metal .. "-" .. stock .. "-stock",
-          icon = "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. metal .. "/" .. metal .. "-" .. stock .. "-stock-0000.png",
-          icon_size = 64, icon_mipmaps = 1,
+          icons = icons_data_item,
           pictures = { -- FIXME: Create and add element 'badges' for stocks
             {
               filename = "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. metal .. "/" .. metal .. "-" .. stock .. "-stock-0000.png",
-              width = 64,
-              height = 64,
+              size = 64,
               scale = 0.25
             },
             {
               filename = "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. metal .. "/" .. metal .. "-" .. stock .. "-stock-0001.png",
-              width = 64,
-              height = 64,
+              size = 64,
               scale = 0.25
             },
             {
               filename = "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. metal .. "/" .. metal .. "-" .. stock .. "-stock-0002.png",
-              width = 64,
-              height = 64,
+              size = 64,
               scale = 0.25
             },
             {
               filename = "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. metal .. "/" .. metal .. "-" .. stock .. "-stock-0003.png",
-              width = 64,
-              height = 64,
+              size = 64,
               scale = 0.25
             }
           },
@@ -1128,8 +1152,10 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the treated [M
         local recipe_remelting_result = {}
         local recipe_remelting_result_count = 1
         local recipe_remelting_ingredients = {}
+        local result_metal = metal
         -- Plating-specific properties for remelting recipe
         if MW_Data.metal_data[metal].treatment_type == MW_Data.MW_Treatment_Type.PLATING then
+          result_metal = MW_Data.metal_data[metal].core_metal
           main_remelting_icon = "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. MW_Data.metal_data[metal].core_metal .. "/" .. MW_Data.metal_data[metal].core_metal .. "-plate-stock-0000.png"
           recipe_remelting_ingredients = {
             {name = item_prototype[1].name, amount = MW_Data.stocks_recipe_data[stock].remelting_cost}
@@ -1140,6 +1166,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the treated [M
 
         -- Annealing-specific properties for remelting recipe
         if MW_Data.metal_data[metal].treatment_type == MW_Data.MW_Treatment_Type.ANNEALING then
+          result_metal = MW_Data.metal_data[metal].source_metal
           main_remelting_icon = "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. MW_Data.metal_data[metal].source_metal .. "/" .. MW_Data.metal_data[metal].source_metal .. "-plate-stock-0000.png"
           recipe_remelting_ingredients = {
             {name = item_prototype[1].name, amount = 1}
@@ -1161,6 +1188,12 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the treated [M
             icon_size = 64
           }
         }
+        if show_property_badges == "recipes" or show_property_badges == "all" then
+          table.insert(icons_data_recipe, build_legend_icon(result_metal, property_badge_shift))
+          if result_metal ~= metal then
+            table.insert(icons_data_recipe, build_legend_icon(metal, ingredient_badge_shift))
+          end
+        end
 
         local treatment_subgroup_name = ""
         if MW_Data.metal_data[metal].treatment_type == MW_Data.MW_Treatment_Type.PLATING then
@@ -1389,6 +1422,7 @@ for property, parts in pairs(MW_Data.property_machined_part_pairs) do -- Make th
             shift = property_badge_shift,
             icon_size = 64
           })
+          table.insert(icons_data_recipe, build_legend_icon(metal, ingredient_badge_shift))
         end
 
         -- Un-hide and put in '-player-crafting' set the recipes intended to be useable at the beginning of the game
@@ -1597,6 +1631,9 @@ for property_key, multi_properties in pairs(multi_property_with_key_pairs) do --
               icon_size = 64
             }
           }
+          if show_property_badges == "recipes" or show_property_badges == "all" then
+            table.insert(icons_data_recipe, build_legend_icon(metal, ingredient_badge_shift))
+          end
 
           -- Add multi-property badges
           if show_property_badges == "recipes" or show_property_badges == "all" then
