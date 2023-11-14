@@ -670,12 +670,30 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
         localized_description_item = {"gm.metal-stock-item-description-brief", {"gm." .. metal}, {"gm." .. stock}}
       end      
       
+      -- Make item icon
+      local icons_data_item = {
+        {
+          icon = "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. metal .. "/" .. metal .. "-" .. stock .. "-stock-0000.png",
+          icon_size = 64,
+          icon_mipmaps = 1,
+        }
+      }
+      if show_property_badges == "all" then
+        table.insert(icons_data_item, 2,
+        {
+          scale = property_badge_scale,
+          icon = "__galdocs-manufacturing__/graphics/icons/intermediates/metal-icons/" .. metal .. "-badge.png",
+          shift = {-10, -10},
+          icon_size = 64
+        }
+      )
+      end
+
       local item_prototype = { -- item
         { 
           type = "item",
           name = metal .. "-" .. stock .. "-stock",
-          icon = "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. metal .. "/" .. metal .. "-" .. stock .. "-stock-0000.png",
-          icon_size = 64, icon_mipmaps = 1,
+          icons = icons_data_item,
           pictures = { -- FIXME: Create and add element 'badges' for stocks
             {
               filename = "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. metal .. "/" .. metal .. "-" .. stock .. "-stock-0000.png",

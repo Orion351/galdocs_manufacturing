@@ -16,21 +16,21 @@ return {
 		
 	MW_Metal = {
 		-- Elemental
-		IRON             = "iron",
-		COPPER           = "copper",
-		LEAD             = "lead",
-		TITANIUM         = "titanium",
-		ZINC             = "zinc",
-		NICKEL           = "nickel",
+		IRON             = "iron",             -- Fe
+		COPPER           = "copper",           -- Cu
+		LEAD             = "lead",             -- Pb
+		TITANIUM         = "titanium",         -- Ti
+		ZINC             = "zinc",             -- Zn
+		NICKEL           = "nickel",           -- Ni
 
 		-- Alloy
-		STEEL            = "steel",
-		BRASS            = "brass",
-		INVAR            = "invar",
+		STEEL            = "steel",            -- ST
+		BRASS            = "brass",            -- BR
+		INVAR            = "invar",            -- IV
 
 		-- Treated
-		GALVANIZED_STEEL = "galvanized-steel",
-		ANNEALED_COPPER  = "annealed-copper"
+		GALVANIZED_STEEL = "galvanized-steel", -- ST (border)
+		ANNEALED_COPPER  = "annealed-copper"   -- Cu (border)
 	},
 
 	MW_Metal_Type = {
