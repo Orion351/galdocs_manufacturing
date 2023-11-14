@@ -35,12 +35,13 @@ local property_badge_scale_pairings = {
   ["big"]     = 0.25,
   ["why"]     = 0.3,
 }
+
 local property_badge_scale = property_badge_scale_pairings[property_badge_scale_string]
 local property_badge_shift = {-10, -10}
 local property_badge_stride = {10, 0}
 local ingredient_badge_shift = {10, -10}
 local inventory_icon_size = 40 -- determined empirically; used to compute pixel-perfect scaling
-local legend_image_size = 32
+local badge_image_size = 32
 
 -- Settings variables
 local show_property_badges = settings.startup["gm-show-badges"].value
@@ -60,7 +61,6 @@ local MW_Data = GM_global_mw_data.MW_Data
 
 -- Build global variable data. This is to communicate with other files without needing the require() command
 -- GM_global_mw_data = {}
-
 
 
 
@@ -94,74 +94,13 @@ function table.concat_values(table, joiner)
   return new_string
 end
 
-local default_ended_in_water_trigger_effect = function()
-  return
-  {
-
-    {
-      type = "create-particle",
-      probability = 1,
-      affects_target = false,
-      show_in_tooltip = false,
-      particle_name = "deep-water-particle",
-      offset_deviation = { { -0.05, -0.05 }, { 0.05, 0.05 } },
-      tile_collision_mask = nil,
-      initial_height = 0,
-      initial_height_deviation = 0.02,
-      initial_vertical_speed = 0.05,
-      initial_vertical_speed_deviation = 0.05,
-      speed_from_center = 0.01,
-      speed_from_center_deviation = 0.006,
-      frame_speed = 1,
-      frame_speed_deviation = 0,
-      tail_length = 2,
-      tail_length_deviation = 1,
-      tail_width = 3
-    },
-    {
-      type = "create-particle",
-      repeat_count = 10,
-      repeat_count_deviation = 6,
-      probability = 0.03,
-      affects_target = false,
-      show_in_tooltip = false,
-      particle_name = "water-particle",
-      offsets =
-      {
-        { 0, 0 },
-        { 0.01563, -0.09375 },
-        { 0.0625, 0.09375 },
-        { -0.1094, 0.0625 }
-      },
-      offset_deviation = { { -0.2969, -0.1992 }, { 0.2969, 0.1992 } },
-      tile_collision_mask = nil,
-      initial_height = 0,
-      initial_height_deviation = 0.02,
-      initial_vertical_speed = 0.053,
-      initial_vertical_speed_deviation = 0.005,
-      speed_from_center = 0.02,
-      speed_from_center_deviation = 0.006,
-      frame_speed = 1,
-      frame_speed_deviation = 0,
-      tail_length = 9,
-      tail_length_deviation = 0,
-      tail_width = 1
-    },
-    {
-      type = "play-sound",
-      sound = sounds.small_splash
-    }
-  }
-
-end
-
-local function build_legend_icon(material, shift)
-  local pixel_perfect_scale = legend_image_size / inventory_icon_size
+local function build_badge_icon(material, shift)
+  local pixel_perfect_scale = badge_image_size / inventory_icon_size
 
   return {
     scale = pixel_perfect_scale,
     icon = "__galdocs-manufacturing__/graphics/legends/" .. material .. ".png",
-    icon_size = legend_image_size,
+    icon_size = badge_image_size,
 
     shift = {
       math.floor(shift[1] / pixel_perfect_scale + 0.5) * pixel_perfect_scale,
@@ -708,7 +647,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
       )
       end
       if show_property_badges == "recipes" or show_property_badges == "all" then
-        table.insert(icons_data_item, build_legend_icon(metal, property_badge_shift))
+        table.insert(icons_data_item, build_badge_icon(metal, property_badge_shift))
       end
 
       local item_prototype = { -- item
@@ -808,7 +747,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
           }
         }
         if show_property_badges == "recipes" or show_property_badges == "all" then
-          table.insert(icons_data_recipe, build_legend_icon(metal, property_badge_shift))
+          table.insert(icons_data_recipe, build_badge_icon(metal, property_badge_shift))
         end
 
         recipe_hide_from_player_crafting = true
@@ -1052,7 +991,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the treated [M
           }
         }
         if show_property_badges == "recipes" or show_property_badges == "all" then
-          table.insert(icons_data_item, build_legend_icon(metal, property_badge_shift))
+          table.insert(icons_data_item, build_badge_icon(metal, property_badge_shift))
         end
 
         local item_prototype = { -- item
@@ -1189,9 +1128,9 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the treated [M
           }
         }
         if show_property_badges == "recipes" or show_property_badges == "all" then
-          table.insert(icons_data_recipe, build_legend_icon(result_metal, property_badge_shift))
+          table.insert(icons_data_recipe, build_badge_icon(result_metal, property_badge_shift))
           if result_metal ~= metal then
-            table.insert(icons_data_recipe, build_legend_icon(metal, ingredient_badge_shift))
+            table.insert(icons_data_recipe, build_badge_icon(metal, ingredient_badge_shift))
           end
         end
 
@@ -1422,7 +1361,7 @@ for property, parts in pairs(MW_Data.property_machined_part_pairs) do -- Make th
             shift = property_badge_shift,
             icon_size = 64
           })
-          table.insert(icons_data_recipe, build_legend_icon(metal, ingredient_badge_shift))
+          table.insert(icons_data_recipe, build_badge_icon(metal, ingredient_badge_shift))
         end
 
         -- Un-hide and put in '-player-crafting' set the recipes intended to be useable at the beginning of the game
@@ -1632,7 +1571,7 @@ for property_key, multi_properties in pairs(multi_property_with_key_pairs) do --
             }
           }
           if show_property_badges == "recipes" or show_property_badges == "all" then
-            table.insert(icons_data_recipe, build_legend_icon(metal, ingredient_badge_shift))
+            table.insert(icons_data_recipe, build_badge_icon(metal, ingredient_badge_shift))
           end
 
           -- Add multi-property badges
@@ -2836,6 +2775,7 @@ for metal, metal_data in pairs(MW_Data.metal_data) do -- Add Stocks and Machined
       if stock == MW_Data.MW_Stock.PLATE then
         if metal_data.alloy_plate_recipe then table.insert(stock_technology_effects, {type = "unlock-recipe", recipe = metal .. "-" .. stock .. "-stock-from-plate"}) end
         if metal_data.alloy_ore_recipe then table.insert(stock_technology_effects, {type = "unlock-recipe", recipe = metal .. "-" .. stock .. "-stock-from-ore"}) end
+        if metal_data.type == MW_Data.MW_Metal_Type.TREATMENT then table.insert(stock_technology_effects, {type = "unlock-recipe", recipe = metal .. "-" .. stock .. "-stock"}) end
         if metal_data.alloy_plate_recipe == nil and metal_data.alloy_ore_recipe == nil and metal_data.type == MW_Data.MW_Metal_Type.ELEMENT then table.insert(stock_technology_effects, {type = "unlock-recipe", recipe = metal .. "-" .. stock .. "-stock"}) end
       end
     end

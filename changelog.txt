@@ -5,13 +5,14 @@ Date:
     - Added custom debris particles (working)
     - Began K2 compatibility (NOT IMPLEMENTED YET)
     - Remelting recipes sent to a separate tab
-    - Gun Turrets no longer require high-tensile parts
+    - Gun Turrets and Radar no longer require high-tensile parts
     - Updated Crafting Tab icons
     - Downgradable Machined Parts made from starter metals are enabled at game start
     - Fixed Bandsaw tooltip
     - Added migration to make sure recipes unlocked by updated technologies are current
     - Ore-to-Alloy recipes can now use Productivity modules
     - Fixed alt-mode and module overlays for minisemblers
+    - Galvanized Steel Plate now properly unlocks with its associated technology
 ---------------------------------------------------------------------------------------------------
 Version: 0.1.15
 Date: 2023-10-03
