@@ -40,8 +40,9 @@ local property_badge_scale = property_badge_scale_pairings[property_badge_scale_
 local property_badge_shift = {-10, -10}
 local property_badge_stride = {10, 0}
 local ingredient_badge_shift = {10, -10}
-local inventory_icon_size = 40 -- determined empirically; used to compute pixel-perfect scaling
-local badge_image_size = 32
+-- local inventory_icon_size = 40 -- determined empirically; used to compute pixel-perfect scaling
+local badge_image_size = 64
+local badge_inventory_text_scale_match = .3125
 
 -- Settings variables
 local show_property_badges = settings.startup["gm-show-badges"].value
@@ -94,20 +95,31 @@ function table.concat_values(table, joiner)
   return new_string
 end
 
+-- Credit to Elusive for helping with badges
 local function build_badge_icon(material, shift)
-  local pixel_perfect_scale = badge_image_size / inventory_icon_size
+  -- local pixel_perfect_scale = badge_image_size / inventory_icon_size
+  local pixel_perfect_scale = badge_inventory_text_scale_match
 
   return {
     scale = pixel_perfect_scale,
-    icon = "__galdocs-manufacturing__/graphics/legends/" .. material .. ".png",
+    icon = "__galdocs-manufacturing__/graphics/badges/" .. material .. ".png",
     icon_size = badge_image_size,
-
     shift = {
       math.floor(shift[1] / pixel_perfect_scale + 0.5) * pixel_perfect_scale,
       math.floor(shift[2] / pixel_perfect_scale + 0.5) * pixel_perfect_scale
     }
   }
 end
+
+local function build_badge_pictures(material, shift)
+  return {
+    scale = property_badge_scale,
+    filename = "__galdocs-manufacturing__/graphics/badges/" .. material .. ".png",
+    size = badge_image_size,
+    shift = util.by_pixel(shift[1] * badge_inventory_text_scale_match, shift[2] * badge_inventory_text_scale_match)
+  }
+end
+
 
 -- *******************
 -- Pre-processing data
@@ -172,21 +184,42 @@ data:extend({ -- Create metalworking remelting item group
 
 for resource, resource_data in pairs(MW_Data.ore_data) do -- Ore Items
 
+  local icons_data_item = {
+    {
+      icon = "__galdocs-manufacturing__/graphics/icons/intermediates/ore/" .. resource .. "/" .. resource .. "-ore-1.png",
+      icon_size = 64,
+      icon_mipmaps = 1,
+    }
+  }
+  
+  if show_property_badges == "recipes" or show_property_badges == "all" then
+    table.insert(icons_data_item, build_badge_icon(resource, property_badge_shift))
+  end
+  
+  local pictures_data = {}
+  for i = 1, 4, 1 do
+    local single_picture = {
+      {
+        size = 64,
+        filename = "__galdocs-manufacturing__/graphics/icons/intermediates/ore/" .. resource .. "/" .. resource .. "-ore-" .. i .. ".png",
+        scale = 0.25,
+      }
+    }
+
+    if show_property_badges == "all" then
+      table.insert(single_picture, build_badge_pictures(resource, property_badge_shift))
+    end
+
+    table.insert(pictures_data, {layers = single_picture})
+  end
+
   if resource_data.to_add then -- Add in new ore items
     data:extend({
       {
         type = "item",
         name = resource .. "-ore",
-        icon = "__galdocs-manufacturing__/graphics/icons/intermediates/ore/" .. resource .. "/" .. resource .. "-ore-1.png",
-        icon_size = 64,
-        icon_mipmaps = 4,
-        pictures =
-        {
-          { size = 64, filename = "__galdocs-manufacturing__/graphics/icons/intermediates/ore/" .. resource .. "/" .. resource .. "-ore-1.png", scale = 0.25, mipmap_count = 1 },
-          { size = 64, filename = "__galdocs-manufacturing__/graphics/icons/intermediates/ore/" .. resource .. "/" .. resource .. "-ore-2.png", scale = 0.25, mipmap_count = 1 },
-          { size = 64, filename = "__galdocs-manufacturing__/graphics/icons/intermediates/ore/" .. resource .. "/" .. resource .. "-ore-3.png", scale = 0.25, mipmap_count = 1 },
-          { size = 64, filename = "__galdocs-manufacturing__/graphics/icons/intermediates/ore/" .. resource .. "/" .. resource .. "-ore-4.png", scale = 0.25, mipmap_count = 1 }
-        },
+        icons = icons_data_item,
+        pictures = pictures_data,
         subgroup = "raw-resource",
         order = "f[" .. resource .. "-ore]",
         stack_size = 50,
@@ -196,14 +229,14 @@ for resource, resource_data in pairs(MW_Data.ore_data) do -- Ore Items
   end
 
   if resource_data.original and resource_data.new_icon_art then -- Replace original ore itme icons
-    data.raw.item[resource .. "-ore"].icon = "__galdocs-manufacturing__/graphics/icons/intermediates/ore/" .. resource .. "/" .. resource .. "-ore-1.png"
-    data.raw.item[resource .. "-ore"].pictures =
-      {
-        { size = 64, filename = "__galdocs-manufacturing__/graphics/icons/intermediates/ore/" .. resource .. "/" .. resource .. "-ore-1.png", scale = 0.25, mipmap_count = 1 },
-        { size = 64, filename = "__galdocs-manufacturing__/graphics/icons/intermediates/ore/" .. resource .. "/" .. resource .. "-ore-2.png", scale = 0.25, mipmap_count = 1 },
-        { size = 64, filename = "__galdocs-manufacturing__/graphics/icons/intermediates/ore/" .. resource .. "/" .. resource .. "-ore-3.png", scale = 0.25, mipmap_count = 1 },
-        { size = 64, filename = "__galdocs-manufacturing__/graphics/icons/intermediates/ore/" .. resource .. "/" .. resource .. "-ore-4.png", scale = 0.25, mipmap_count = 1 }
-      }
+    data.raw.item[resource .. "-ore"].icons = icons_data_item
+    data.raw.item[resource .. "-ore"].pictures = pictures_data
+      -- {
+      --   { size = 64, filename = "__galdocs-manufacturing__/graphics/icons/intermediates/ore/" .. resource .. "/" .. resource .. "-ore-1.png", scale = 0.25, mipmap_count = 1 },
+      --   { size = 64, filename = "__galdocs-manufacturing__/graphics/icons/intermediates/ore/" .. resource .. "/" .. resource .. "-ore-2.png", scale = 0.25, mipmap_count = 1 },
+      --   { size = 64, filename = "__galdocs-manufacturing__/graphics/icons/intermediates/ore/" .. resource .. "/" .. resource .. "-ore-3.png", scale = 0.25, mipmap_count = 1 },
+      --   { size = 64, filename = "__galdocs-manufacturing__/graphics/icons/intermediates/ore/" .. resource .. "/" .. resource .. "-ore-4.png", scale = 0.25, mipmap_count = 1 }
+      -- }
     end
 end
 
@@ -279,7 +312,6 @@ local function resource_spawn(resource_parameters, autoplace_parameters) -- Put 
     mining_visualisation_tint = resource_parameters.mining_visualisation_tint
   }
 end
-
 
 for resource, resource_data in pairs(MW_Data.ore_data) do -- Make mining debris
   if resource_data.new_debris_art then
@@ -636,18 +668,25 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
           icon_mipmaps = 1,
         }
       }
-      if show_property_badges == "all" then
-        table.insert(icons_data_item, 2,
-        {
-          scale = property_badge_scale,
-          icon = "__galdocs-manufacturing__/graphics/icons/intermediates/metal-icons/" .. metal .. "-badge.png",
-          shift = {-10, -10},
-          icon_size = 64
-        }
-      )
-      end
       if show_property_badges == "recipes" or show_property_badges == "all" then
         table.insert(icons_data_item, build_badge_icon(metal, property_badge_shift))
+      end
+
+      local pictures_data = {}
+      for i = 0, 3, 1 do
+        local single_picture = {
+          {
+            size = 64,
+            filename = "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. metal .. "/" .. metal .. "-" .. stock .. "-stock-000" .. i .. ".png",
+            scale = 0.25,
+          }
+        }
+    
+        if show_property_badges == "all" then
+          table.insert(single_picture, build_badge_pictures(metal, property_badge_shift))
+        end
+    
+        table.insert(pictures_data, {layers = single_picture})
       end
 
       local item_prototype = { -- item
@@ -655,28 +694,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
           type = "item",
           name = metal .. "-" .. stock .. "-stock",
           icons = icons_data_item,
-          pictures = { -- FIXME: Create and add element 'badges' for stocks
-            {
-              filename = "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. metal .. "/" .. metal .. "-" .. stock .. "-stock-0000.png",
-              size = 64,
-              scale = 0.25
-            },
-            {
-              filename = "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. metal .. "/" .. metal .. "-" .. stock .. "-stock-0001.png",
-              size = 64,
-              scale = 0.25
-            },
-            {
-              filename = "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. metal .. "/" .. metal .. "-" .. stock .. "-stock-0002.png",
-              size = 64,
-              scale = 0.25
-            },
-            {
-              filename = "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. metal .. "/" .. metal .. "-" .. stock .. "-stock-0003.png",
-              size = 64,
-              scale = 0.25
-            },
-          },
+          pictures = pictures_data,
           subgroup = "gm-stocks-" .. metal,
           order = order_count .. "gm-stocks-" .. metal,
           stack_size = stock_stack_size,
@@ -994,33 +1012,29 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the treated [M
           table.insert(icons_data_item, build_badge_icon(metal, property_badge_shift))
         end
 
+        local pictures_data = {}
+        for i = 0, 3, 1 do
+          local single_picture = {
+            {
+              size = 64,
+              filename = "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. metal .. "/" .. metal .. "-" .. stock .. "-stock-000" .. i .. ".png",
+              scale = 0.25,
+            }
+          }
+      
+          if show_property_badges == "all" then
+            table.insert(single_picture, build_badge_pictures(metal, property_badge_shift))
+          end
+      
+          table.insert(pictures_data, {layers = single_picture})
+        end
+
         local item_prototype = { -- item
         {
           type = "item",
           name = metal .. "-" .. stock .. "-stock",
           icons = icons_data_item,
-          pictures = { -- FIXME: Create and add element 'badges' for stocks
-            {
-              filename = "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. metal .. "/" .. metal .. "-" .. stock .. "-stock-0000.png",
-              size = 64,
-              scale = 0.25
-            },
-            {
-              filename = "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. metal .. "/" .. metal .. "-" .. stock .. "-stock-0001.png",
-              size = 64,
-              scale = 0.25
-            },
-            {
-              filename = "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. metal .. "/" .. metal .. "-" .. stock .. "-stock-0002.png",
-              size = 64,
-              scale = 0.25
-            },
-            {
-              filename = "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. metal .. "/" .. metal .. "-" .. stock .. "-stock-0003.png",
-              size = 64,
-              scale = 0.25
-            }
-          },
+          pictures = pictures_data,
           subgroup = "gm-stocks-" .. metal,
           order = order_count .. "gm-stocks-" .. metal,
           stack_size = stock_stack_size,
