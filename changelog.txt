@@ -9,6 +9,7 @@ Date:
     - Updated Crafting Tab icons
     - Downgradable Machined Parts made from starter metals are enabled at game start
     - Fixed Bandsaw tooltip
+    - Fixed extra lines at the bottom of some tooltips
     - Added migration to make sure recipes unlocked by updated technologies are current
     - Ore-to-Alloy recipes can now use Productivity modules
     - Fixed alt-mode and module overlays for minisemblers

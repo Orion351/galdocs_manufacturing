@@ -14,6 +14,11 @@ return {
 		NICKEL           = "nickel",
 	},
 		
+	MW_Ore_Type = {
+		NONMETAL = "nonmetal",
+		ELEMENT  = "element",
+	},
+
 	MW_Metal = {
 		-- Elemental
 		IRON             = "iron",             -- Fe

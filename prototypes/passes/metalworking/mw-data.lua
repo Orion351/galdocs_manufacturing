@@ -81,6 +81,7 @@ local MW_Property          = MW_Data.MW_Property
 local MW_Minisembler       = MW_Data.MW_Minisembler
 local MW_Minisembler_Tier  = MW_Data.MW_Minisembler_Tier
 local MW_Minisembler_Stage = MW_Data.MW_Minisembler_Stage
+local MW_Ore_Type          = MW_Data.MW_Ore_Type
 
 
 
@@ -88,17 +89,27 @@ local MW_Minisembler_Stage = MW_Data.MW_Minisembler_Stage
 -- Data
 -- ****
 
+-- Ore Data
+-- ********
+
 MW_Data.ore_data = { -- Initialize basic ore data
-  [MW_Resource.COAL]     = {original = true,  ore_in_name = false, add_to_starting_area = false, to_add = false, new_icon_art = false, new_patch_art = true,  new_debris_art = false },
-  [MW_Resource.STONE]    = {original = true,  ore_in_name = false, add_to_starting_area = false, to_add = false, new_icon_art = false, new_patch_art = true,  new_debris_art = false },
-  [MW_Resource.URANIUM]  = {original = true,  ore_in_name = true,  add_to_starting_area = false, to_add = false, new_icon_art = false, new_patch_art = false, new_debris_art = false},
-  [MW_Resource.COPPER]   = {original = true,  ore_in_name = true,  add_to_starting_area = false, to_add = false, new_icon_art = true,  new_patch_art = true,  new_debris_art = true },
-  [MW_Resource.IRON]     = {original = true,  ore_in_name = true,  add_to_starting_area = false, to_add = false, new_icon_art = true,  new_patch_art = true,  new_debris_art = true },
-  [MW_Resource.LEAD]     = {original = false, ore_in_name = true,  add_to_starting_area = false, to_add = true,  new_icon_art = false, new_patch_art = false, new_debris_art = true },
-  [MW_Resource.TITANIUM] = {original = false, ore_in_name = true,  add_to_starting_area = false, to_add = true,  new_icon_art = false, new_patch_art = false, new_debris_art = true },
-  [MW_Resource.ZINC]     = {original = false, ore_in_name = true,  add_to_starting_area = true,  to_add = true,  new_icon_art = false, new_patch_art = false, new_debris_art = true },
-  [MW_Resource.NICKEL]   = {original = false, ore_in_name = true,  add_to_starting_area = false, to_add = true,  new_icon_art = false, new_patch_art = false, new_debris_art = true }
+  [MW_Resource.COAL]     = {original = true,  ore_in_name = false, add_to_starting_area = false, to_add = false, new_icon_art = false, new_patch_art = true,  new_debris_art = false, introduced = Mod_Names.VANILLA},
+  [MW_Resource.STONE]    = {original = true,  ore_in_name = false, add_to_starting_area = false, to_add = false, new_icon_art = false, new_patch_art = true,  new_debris_art = false, introduced = Mod_Names.VANILLA},
+  [MW_Resource.URANIUM]  = {original = true,  ore_in_name = true,  add_to_starting_area = false, to_add = false, new_icon_art = false, new_patch_art = false, new_debris_art = false, introduced = Mod_Names.VANILLA},
+  [MW_Resource.COPPER]   = {original = true,  ore_in_name = true,  add_to_starting_area = false, to_add = false, new_icon_art = true,  new_patch_art = true,  new_debris_art = true,  introduced = Mod_Names.VANILLA},
+  [MW_Resource.IRON]     = {original = true,  ore_in_name = true,  add_to_starting_area = false, to_add = false, new_icon_art = true,  new_patch_art = true,  new_debris_art = true,  introduced = Mod_Names.VANILLA},
+  [MW_Resource.LEAD]     = {original = false, ore_in_name = true,  add_to_starting_area = false, to_add = true,  new_icon_art = false, new_patch_art = false, new_debris_art = true,  introduced = Mod_Names.GM},
+  [MW_Resource.TITANIUM] = {original = false, ore_in_name = true,  add_to_starting_area = false, to_add = true,  new_icon_art = false, new_patch_art = false, new_debris_art = true,  introduced = Mod_Names.GM},
+  [MW_Resource.ZINC]     = {original = false, ore_in_name = true,  add_to_starting_area = true,  to_add = true,  new_icon_art = false, new_patch_art = false, new_debris_art = true,  introduced = Mod_Names.GM},
+  [MW_Resource.NICKEL]   = {original = false, ore_in_name = true,  add_to_starting_area = false, to_add = true,  new_icon_art = false, new_patch_art = false, new_debris_art = true,  introduced = Mod_Names.GM}
 }
+
+MW_Data.ore_data = table.merge_subtables(MW_Data.ore_data, { -- Staple on the map tints
+  [MW_Resource.LEAD]             = {tint_map = gamma_correct_rgb{r = 0.847, g = 0.748, b = 0.144, a = 1.0}},
+  [MW_Resource.TITANIUM]         = {tint_map = gamma_correct_rgb{r = 1.0,   g = 1.0,   b = 1.0,   a = 1.0}},
+  [MW_Resource.ZINC]             = {tint_map = gamma_correct_rgb{r = 0.205, g = 0.076, b = 0.3,   a = 1.0}},
+  [MW_Resource.NICKEL]           = {tint_map = gamma_correct_rgb{r = 0.388, g = 0.463, b = 0.314, a = 1.0}},
+})
 
 -- Metal Data
 -- **********
@@ -117,6 +128,7 @@ MW_Data.metal_data = { -- Staple on visualization tints for metal and oxidation
   [MW_Metal.ANNEALED_COPPER]  = {tint_metal = gamma_correct_rgb{r = 1.0,   g = 0.183, b = 0.013, a = 1.0}, tint_oxidation = gamma_correct_rgb{r = 1.0,   g = 0.183, b = 0.013, a = 1.0}}, -- Cu (border)
 }
 
+--[[
 MW_Data.metal_data = table.merge_subtables(MW_Data.metal_data, { -- Staple on the map tints
   [MW_Metal.IRON]             = {tint_map = gamma_correct_rgb{r = 0.206, g = 0.077, b = 0.057, a = 1.0}},
   [MW_Metal.COPPER]           = {tint_map = gamma_correct_rgb{r = 0.144, g = 0.177, b = 0.133, a = 1.0}},
@@ -130,6 +142,7 @@ MW_Data.metal_data = table.merge_subtables(MW_Data.metal_data, { -- Staple on th
   [MW_Metal.GALVANIZED_STEEL] = {tint_map = gamma_correct_rgb{r = 0.095, g = 0.104, b = 0.148, a = 1.0}},
   [MW_Metal.ANNEALED_COPPER]  = {tint_map = gamma_correct_rgb{r = 0.144, g = 0.177, b = 0.133, a = 1.0}},
 })
+--]]
 
 MW_Data.metal_data = table.merge_subtables(MW_Data.metal_data, { -- Staple on the tech name data
   [MW_Metal.IRON]             = {tech_stock = "starter",                              tech_machined_part = "starter"                                     },
@@ -144,6 +157,97 @@ MW_Data.metal_data = table.merge_subtables(MW_Data.metal_data, { -- Staple on th
   [MW_Metal.GALVANIZED_STEEL] = {tech_stock = "gm-galvanized-steel-stock-processing", tech_machined_part = "gm-galvanized-steel-machined-part-processing"},
   [MW_Metal.ANNEALED_COPPER]  = {tech_stock = "gm-annealed-copper-stock-processing",  tech_machined_part = "gm-annealed-copper-machined-part-processing" },
 })
+
+MW_Data.metal_data = table.merge_subtables(MW_Data.metal_data, { -- Staple on the mod data
+  [MW_Metal.IRON]             = {introduced = Mod_Names.VANILLA},
+  [MW_Metal.COPPER]           = {introduced = Mod_Names.VANILLA},
+  [MW_Metal.LEAD]             = {introduced = Mod_Names.GM},
+  [MW_Metal.TITANIUM]         = {introduced = Mod_Names.GM},
+  [MW_Metal.ZINC]             = {introduced = Mod_Names.GM},
+  [MW_Metal.NICKEL]           = {introduced = Mod_Names.GM},
+  [MW_Metal.STEEL]            = {introduced = Mod_Names.GM},
+  [MW_Metal.BRASS]            = {introduced = Mod_Names.GM},
+  [MW_Metal.INVAR]            = {introduced = Mod_Names.GM},
+  [MW_Metal.GALVANIZED_STEEL] = {introduced = Mod_Names.GM},
+  [MW_Metal.ANNEALED_COPPER]  = {introduced = Mod_Names.GM},
+})
+
+-- Stock Data
+-- **********
+
+if advanced then -- Stock data: which mod did this come from
+  MW_Data.stock_data = {
+    [MW_Stock.PLATE]          = {introduced = Mod_Names.VANILLA},
+    [MW_Stock.ANGLE]          = {introduced = Mod_Names.GM},
+    [MW_Stock.FINE_GEAR]      = {introduced = Mod_Names.GM},
+    [MW_Stock.FINE_PIPE]      = {introduced = Mod_Names.GM},
+    [MW_Stock.SHEET]          = {introduced = Mod_Names.GM},
+    [MW_Stock.PIPE]           = {introduced = Mod_Names.GM},
+    [MW_Stock.GIRDER]         = {introduced = Mod_Names.GM},
+    [MW_Stock.GEAR]           = {introduced = Mod_Names.GM},
+    [MW_Stock.SQUARE]         = {introduced = Mod_Names.GM},
+    [MW_Stock.WIRE]           = {introduced = Mod_Names.GM},
+    [MW_Stock.PLATING_BILLET] = {introduced = Mod_Names.GM},
+  }
+else
+  MW_Data.stock_data = {
+    [MW_Stock.PLATE]          = {introduced = Mod_Names.GM},
+    [MW_Stock.SQUARE]         = {introduced = Mod_Names.GM},
+    [MW_Stock.WIRE]           = {introduced = Mod_Names.GM},
+    [MW_Stock.PLATING_BILLET] = {introduced = Mod_Names.GM},
+  }
+end
+
+-- Machined Part Data
+-- ******************
+
+if advanced then -- Machined Part data: which mod did this come from
+  MW_Data.machined_part_data = {
+    [MW_Machined_Part.PANELING]        = {introduced = Mod_Names.GM},
+    [MW_Machined_Part.LARGE_PANELING]  = {introduced = Mod_Names.GM},
+    [MW_Machined_Part.FRAMING]         = {introduced = Mod_Names.GM},
+    [MW_Machined_Part.GIRDERING]       = {introduced = Mod_Names.GM},
+    [MW_Machined_Part.GEARING]         = {introduced = Mod_Names.GM},
+    [MW_Machined_Part.FINE_GEARING]    = {introduced = Mod_Names.GM},
+    [MW_Machined_Part.PIPING]          = {introduced = Mod_Names.GM},
+    [MW_Machined_Part.FINE_PIPING]     = {introduced = Mod_Names.GM},
+    [MW_Machined_Part.WIRING]          = {introduced = Mod_Names.GM},
+    [MW_Machined_Part.SHIELDING]       = {introduced = Mod_Names.GM},
+    [MW_Machined_Part.SHAFTING]        = {introduced = Mod_Names.GM},
+    [MW_Machined_Part.BOLTS]           = {introduced = Mod_Names.GM},
+    [MW_Machined_Part.RIVETS]          = {introduced = Mod_Names.GM},
+  }
+else
+  MW_Data.machined_part_data = {
+    [MW_Machined_Part.PANELING]        = {introduced = Mod_Names.GM},
+    [MW_Machined_Part.FRAMING]         = {introduced = Mod_Names.GM},
+    [MW_Machined_Part.GEARING]         = {introduced = Mod_Names.GM},
+    [MW_Machined_Part.PIPING]          = {introduced = Mod_Names.GM},
+    [MW_Machined_Part.SHIELDING]       = {introduced = Mod_Names.GM},
+    [MW_Machined_Part.WIRING]          = {introduced = Mod_Names.GM},
+    [MW_Machined_Part.SHAFTING]        = {introduced = Mod_Names.GM},
+    [MW_Machined_Part.BOLTS]           = {introduced = Mod_Names.GM},
+  }
+end
+
+-- Property Data
+-- *************
+
+MW_Data.property_data = { -- Property data: which mod did this come from
+  [MW_Property.BASIC]                    = {introduced = Mod_Names.GM},
+  [MW_Property.LOAD_BEARING]             = {introduced = Mod_Names.GM},
+  [MW_Property.ELECTRICALLY_CONDUCTIVE]  = {introduced = Mod_Names.GM},
+  [MW_Property.HIGH_TENSILE]             = {introduced = Mod_Names.GM},
+  [MW_Property.CORROSION_RESISTANT]      = {introduced = Mod_Names.GM},
+  [MW_Property.LIGHTWEIGHT]              = {introduced = Mod_Names.GM},
+  [MW_Property.DUCTILE]                  = {introduced = Mod_Names.GM},
+  [MW_Property.THERMALLY_STABLE]         = {introduced = Mod_Names.GM},
+  [MW_Property.THERMALLY_CONDUCTIVE]     = {introduced = Mod_Names.GM},
+  [MW_Property.RADIATION_RESISTANT]      = {introduced = Mod_Names.GM},
+  [MW_Property.HEAVY_LOAD_BEARING]       = {introduced = Mod_Names.GM},
+  [MW_Property.VERY_HEAVY_LOAD_BEARING]  = {introduced = Mod_Names.GM},
+  [MW_Property.VERY_HIGH_TENSILE]        = {introduced = Mod_Names.GM},
+}
 
 -- Minisembler Data
 -- ****************
@@ -178,6 +282,22 @@ MW_Data.minisembler_data = table.merge_subtables(MW_Data.minisembler_data, { -- 
   [MW_Minisembler.BENDER]         = {shape_data = {[MW_Minisembler_Tier.ELECTRIC] = {entity_shape = "2x1", uses_fluid = false }}},
   [MW_Minisembler.METAL_ASSAYER]  = {shape_data = {[MW_Minisembler_Tier.ELECTRIC] = {entity_shape = "2x1", uses_fluid = false }}},
   [MW_Minisembler.ELECTROPLATER]  = {shape_data = {[MW_Minisembler_Tier.ELECTRIC] = {entity_shape = "2x1", uses_fluid = true  }}},
+})
+
+MW_Data.minisembler_data = table.merge_subtables(MW_Data.minisembler_data, { -- Staple on the mod data
+  [MW_Minisembler.WELDER]         = {introduced = Mod_Names.GM},
+  [MW_Minisembler.DRILL_PRESS]    = {introduced = Mod_Names.GM},
+  [MW_Minisembler.GRINDER]        = {introduced = Mod_Names.GM},
+  [MW_Minisembler.METAL_BANDSAW]  = {introduced = Mod_Names.GM},
+  [MW_Minisembler.METAL_EXTRUDER] = {introduced = Mod_Names.GM},
+  [MW_Minisembler.MILL]           = {introduced = Mod_Names.GM},
+  [MW_Minisembler.METAL_LATHE]    = {introduced = Mod_Names.GM},
+  [MW_Minisembler.THREADER]       = {introduced = Mod_Names.GM},
+  [MW_Minisembler.SPOOLER]        = {introduced = Mod_Names.GM},
+  [MW_Minisembler.ROLLER]         = {introduced = Mod_Names.GM},
+  [MW_Minisembler.BENDER]         = {introduced = Mod_Names.GM},
+  [MW_Minisembler.METAL_ASSAYER]  = {introduced = Mod_Names.GM},
+  [MW_Minisembler.ELECTROPLATER]  = {introduced = Mod_Names.GM},
 })
 
 MW_Data.minisembler_entity_data = { -- General worldspace entity data used by minisemblers. FIXME : This should live in a 'meta' file because it will apply to all phases, not just metalworking
@@ -349,6 +469,20 @@ else
     [MW_Minisembler.ELECTROPLATER]  = {{"corrosion-resistant-paneling-machined-part", 2}, {"load-bearing-framing-machined-part", 2}, {"corrosion-resistant-piping-machined-part", 2}, {"electrically-conductive-wiring-machined-part", 2}, {"basic-bolts-machined-part", 1}},
   })
 end
+
+-- Ore Couplings
+-- *************
+MW_Data.ore_data = table.merge_subtables(MW_Data.ore_data, { -- Couple ores to ore shapes
+  [MW_Resource.COAL]            = {ore_type = MW_Ore_Type.NONMETAL},
+  [MW_Resource.STONE]           = {ore_type = MW_Ore_Type.NONMETAL},
+  [MW_Resource.URANIUM]         = {ore_type = MW_Ore_Type.NONMETAL},
+  [MW_Resource.COPPER]          = {ore_type = MW_Ore_Type.ELEMENT },
+  [MW_Resource.IRON]            = {ore_type = MW_Ore_Type.ELEMENT },
+  [MW_Resource.LEAD]            = {ore_type = MW_Ore_Type.ELEMENT },
+  [MW_Resource.TITANIUM]        = {ore_type = MW_Ore_Type.ELEMENT },
+  [MW_Resource.ZINC]            = {ore_type = MW_Ore_Type.ELEMENT },
+  [MW_Resource.NICKEL]          = {ore_type = MW_Ore_Type.ELEMENT },
+})
 
 -- Metal Couplings
 -- ***************
@@ -594,6 +728,5 @@ end
 -- ***************
 -- Return the data
 -- ***************
-
 
 return MW_Data

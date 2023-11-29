@@ -6,7 +6,7 @@ data:extend({
     default_value = "none",
     allowed_values = {"none", "recipes", "all"}
   },
-  {
+  { -- Badge Scale
     type = "string-setting",
     name = "gm-show-badges-scale",
     setting_type = "startup",
@@ -44,17 +44,10 @@ data:extend({
     setting_type = "startup",
     default_value = false
   },
-  --[[
-  {
-    -- Gul'var, Destroyer of Worlds
-    type = "string-setting",
-    name = "gm-gulvar",
-    setting_type = "startup",
-    default_value = "Red",
-    allowed_values = {"Red", "Blue", "Sort of Blue", "Mostly Blue", "Mostly not not-blue", "Slightly Kinda Blue", "1/10th standard deviation above average Blueness", "Sky except Darker and Bluer", "Ocean except no Green", "r = 0, g = 0, b = yes"}
-  }
-  --]]
 })
+
+-- For compatibility with other mods, make settings HIDDEN rather than existant or not so as not to bloat the main options menu.
+
 
 -- Settings to add:
 -- Metalworking Byproducts

@@ -13,13 +13,13 @@
 -- Compatibility Data
 -- ******************
 
-local overhaul_modpack_data = {  -- Data for supported overhauls
+local overhaul_modpack_data = {  -- Data for supported overhauls FIXME: Move to data.lua
   ["Krastorio2"] = {
     active = false,
     dir_name = "krastorio-2",
     titles = {"Krastorio2", },
     passes = {
-      metalworking = {enums = false, data = false, code = false}
+      metalworking = {enums = true, data = true, code = false}
     }
   }
 }
@@ -30,9 +30,9 @@ local overhaul_modpack_data = {  -- Data for supported overhauls
 
 -- Determine which supported overhaul set is augmenting GM
 local current_overhaul_data = {}
--- if mods["Krastorio2"] then
---   current_overhaul_data = overhaul_modpack_data["Krastorio2"]
--- end
+if mods["Krastorio2"] then
+  current_overhaul_data = overhaul_modpack_data["Krastorio2"]
+end
 
 
 
@@ -66,6 +66,7 @@ GM_global_mw_data.stock_recipes = {}
 GM_global_mw_data.machined_part_items = {}
 GM_global_mw_data.machined_part_recipes = {}
 
+-- Code
 GM_global_mw_data.MW_Data = require("prototypes.passes.metalworking.mw-code")
 if current_overhaul_data.passes and current_overhaul_data.passes.metalworking and current_overhaul_data.passes.metalworking.code then
   GM_global_mw_data.MW_Data = require("prototypes.compatibility." .. current_overhaul_data.dir_name .. ".mw-code-augment")
@@ -73,6 +74,7 @@ end
 
 
 
+--[[
 -- Krastoro 2 compat temp code
 
 local neutral_tint = {r = 1, g = 1, b = 1, a = 1}
@@ -289,4 +291,4 @@ end
 -- c1  54  ff
 -- 74  BB  DA
 -- FF  F1  88
-
+--]]

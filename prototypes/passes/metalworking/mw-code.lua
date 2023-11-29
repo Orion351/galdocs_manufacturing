@@ -2,15 +2,17 @@
 -- Variables
 -- *********
 
+-- FIXME : This code is written twice; make a global variable to contain all of this information
+
 -- Prototype Necessities
 local hit_effects = require ("__base__.prototypes.entity.hit-effects")
 local sounds = require("__base__.prototypes.entity.sounds")
 local explosion_animations = require("__base__.prototypes.entity.explosion-animations")
 local resource_autoplace = require("resource-autoplace")
 
+--[[
 -- Utility variables
 local order_count = 0 -- FIXME : check alloy ordering
-local ore_particle_count = 9
 
 -- Game Balance values
 local machined_part_stack_size = 200
@@ -26,6 +28,7 @@ local metalworking_kits = false -- not implemented yet
 
 -- Graphical variables
 local ore_particle_lifetime = 180
+local ore_particle_count = 9
 
 local property_badge_scale_string = settings.startup["gm-show-badges-scale"].value
 local property_badge_scale_pairings = {
@@ -50,7 +53,7 @@ local show_non_hand_craftables = settings.startup["gm-show-non-hand-craftable"].
 local show_detailed_tooltips = settings.startup["gm-show-detailed-tooltips"].value
 local show_ore_sPaRkLe = settings.startup["gm-ore-sPaRkLe"].value    -- ✧･ﾟ: *✧･ﾟ:*
 local gm_debug_delete_culled_recipes = settings.startup["gm-debug-delete-culled-recipes"].value
-
+--]]
 
 
 -- ***********
@@ -60,23 +63,20 @@ local gm_debug_delete_culled_recipes = settings.startup["gm-debug-delete-culled-
 -- local MW_Data = require("prototypes.passes.metalworking.mw-couplings")
 local MW_Data = GM_global_mw_data.MW_Data
 
--- Build global variable data. This is to communicate with other files without needing the require() command
--- GM_global_mw_data = {}
-
 
 
 -- ****************
 -- Halper Functions
 -- ****************
 
-function table.contains(check_table, value)
+function table.contains(check_table, value) -- Checks to see if a table has a certain value (not key!)
   for _, v in pairs(check_table) do
       if v == value then return true end
   end
   return false
 end
 
-function table.subtable_contains(check_table, value)
+function table.subtable_contains(check_table, value) -- Check to see if a subtable has a certain value (one level deep)
   local subtable_contains = false
   for _, subtable in pairs(check_table) do
     if table.contains(subtable, value) then subtable_contains = true end
@@ -84,7 +84,7 @@ function table.subtable_contains(check_table, value)
   return subtable_contains
 end
 
-function table.concat_values(table, joiner)
+function table.concat_values(table, joiner) -- Concatenate an entire table of strings; will break if one value isn't a string
   local new_string = ""
   for index, v in pairs(table) do
     new_string = new_string .. v
@@ -95,11 +95,10 @@ function table.concat_values(table, joiner)
   return new_string
 end
 
--- Credit to Elusive for helping with badges
-local function build_badge_icon(material, shift)
+local function build_badge_icon(material, shift) -- Builds a table with data for an 'icons' property in recipes, items, etc.
+  -- Credit to Elusive for helping with badges
   -- local pixel_perfect_scale = badge_image_size / inventory_icon_size
   local pixel_perfect_scale = badge_inventory_text_scale_match
-
   return {
     scale = pixel_perfect_scale,
     icon = "__galdocs-manufacturing__/graphics/badges/" .. material .. ".png",
@@ -111,7 +110,7 @@ local function build_badge_icon(material, shift)
   }
 end
 
-local function build_badge_pictures(material, shift)
+local function build_badge_pictures(material, shift) -- Builds a table with data for a 'layer' property in a 'pictures' property in recipes, items, etc.
   return {
     scale = property_badge_scale,
     filename = "__galdocs-manufacturing__/graphics/badges/" .. material .. ".png",
@@ -119,6 +118,57 @@ local function build_badge_pictures(material, shift)
     shift = util.by_pixel(shift[1] * badge_inventory_text_scale_match, shift[2] * badge_inventory_text_scale_match)
   }
 end
+
+local function localization_split(localization_list, entry_size, num_total_subtables, snip_last)
+  -- localization_list = 18, entry_size = 6, num_total_subtables = 6
+
+  -- initialize pieces list
+  local localization_list_pieces = {}
+  for i = 1, num_total_subtables do
+    localization_list_pieces[i] = {""}
+  end
+
+  -- Are you lost?
+  if #localization_list == 0 then return localization_list_pieces end
+
+  -- Calculate number of entries per subtable
+  local subtable_size = math.floor(19/entry_size) * entry_size
+  
+  -- Calculate number of populated subtables needed
+  local num_populated_subtables = math.ceil(#localization_list / subtable_size)
+  
+  -- Plop stuff in subtables
+  local seen_final_element = false
+  for i = 1, num_populated_subtables do
+    for j = 1, subtable_size do
+      -- Use   M A T H   to figure out which entry in localization_list we need to sequentially add
+      local element = localization_list[ (i - 1) * subtable_size + j ] 
+      
+      -- Check to make sure 'element' isn't nil, which happens when we run out of items in localization_list
+      if element then
+        table.insert(localization_list_pieces[i], element)
+      else
+
+        if not seen_final_element then
+          seen_final_element = true
+          
+          -- Delete last element; this usually happens when getting rid of carraige returns
+          if snip_last then
+            table.remove(localization_list_pieces[i], #localization_list_pieces[i])
+          end
+        end
+      end
+    end
+  end
+
+  -- Remove the last element even if we had exactly enough elements to fill the subtables
+  if (not seen_final_element) and snip_last then
+    table.remove(localization_list_pieces[num_populated_subtables], #localization_list_pieces[num_populated_subtables])
+  end
+
+  return localization_list_pieces
+end
+
 
 
 -- *******************
@@ -183,61 +233,58 @@ data:extend({ -- Create metalworking remelting item group
 -- ===
 
 for resource, resource_data in pairs(MW_Data.ore_data) do -- Ore Items
-
-  local icons_data_item = {
-    {
-      icon = "__galdocs-manufacturing__/graphics/icons/intermediates/ore/" .. resource .. "/" .. resource .. "-ore-1.png",
-      icon_size = 64,
-      icon_mipmaps = 1,
-    }
-  }
-  
-  if show_property_badges == "recipes" or show_property_badges == "all" then
-    table.insert(icons_data_item, build_badge_icon(resource, property_badge_shift))
-  end
-  
-  local pictures_data = {}
-  for i = 1, 4, 1 do
-    local single_picture = {
+  if resource_data.to_add or resource_data.new_icon_art then
+    
+    local icons_data_item = { -- Prepare icon data for item
       {
-        size = 64,
-        filename = "__galdocs-manufacturing__/graphics/icons/intermediates/ore/" .. resource .. "/" .. resource .. "-ore-" .. i .. ".png",
-        scale = 0.25,
+        icon = "__galdocs-manufacturing__/graphics/icons/intermediates/ore/" .. resource .. "/" .. resource .. "-ore-1.png",
+        icon_size = 64,
+        icon_mipmaps = 1,
       }
     }
+    
+    if show_property_badges == "recipes" or show_property_badges == "all" then -- Apply badges to icons
+      table.insert(icons_data_item, build_badge_icon(resource, property_badge_shift))
+    end
+    
+    local pictures_data = {}
+    for i = 1, 4, 1 do -- Prepare picture data for belt items
+      local single_picture = {
+        {
+          size = 64,
+          filename = "__galdocs-manufacturing__/graphics/icons/intermediates/ore/" .. resource .. "/" .. resource .. "-ore-" .. i .. ".png",
+          scale = 0.25,
+        }
+      }
 
-    if show_property_badges == "all" then
-      table.insert(single_picture, build_badge_pictures(resource, property_badge_shift))
+      -- Apply badges to icons
+      if show_property_badges == "all" then
+        table.insert(single_picture, build_badge_pictures(resource, property_badge_shift))
+      end
+
+      table.insert(pictures_data, {layers = single_picture})
     end
 
-    table.insert(pictures_data, {layers = single_picture})
-  end
-
-  if resource_data.to_add then -- Add in new ore items
-    data:extend({
-      {
-        type = "item",
-        name = resource .. "-ore",
-        icons = icons_data_item,
-        pictures = pictures_data,
-        subgroup = "raw-resource",
-        order = "f[" .. resource .. "-ore]",
-        stack_size = 50,
-        localised_name = {"gm.ore-item-name", {"gm." .. resource}}
-      },
-    })
-  end
-
-  if resource_data.original and resource_data.new_icon_art then -- Replace original ore itme icons
-    data.raw.item[resource .. "-ore"].icons = icons_data_item
-    data.raw.item[resource .. "-ore"].pictures = pictures_data
-      -- {
-      --   { size = 64, filename = "__galdocs-manufacturing__/graphics/icons/intermediates/ore/" .. resource .. "/" .. resource .. "-ore-1.png", scale = 0.25, mipmap_count = 1 },
-      --   { size = 64, filename = "__galdocs-manufacturing__/graphics/icons/intermediates/ore/" .. resource .. "/" .. resource .. "-ore-2.png", scale = 0.25, mipmap_count = 1 },
-      --   { size = 64, filename = "__galdocs-manufacturing__/graphics/icons/intermediates/ore/" .. resource .. "/" .. resource .. "-ore-3.png", scale = 0.25, mipmap_count = 1 },
-      --   { size = 64, filename = "__galdocs-manufacturing__/graphics/icons/intermediates/ore/" .. resource .. "/" .. resource .. "-ore-4.png", scale = 0.25, mipmap_count = 1 }
-      -- }
+    if resource_data.to_add then -- Add in new ore items
+      data:extend({
+        {
+          type = "item",
+          name = resource .. "-ore",
+          icons = icons_data_item,
+          pictures = pictures_data,
+          subgroup = "raw-resource",
+          order = "f[" .. resource .. "-ore]",
+          stack_size = 50,
+          localised_name = {"gm.ore-item-name", {"gm." .. resource}}
+        },
+      })
     end
+
+    if resource_data.original and resource_data.new_icon_art then -- Replace original ore itme icons
+      data.raw.item[resource .. "-ore"].icons = icons_data_item
+      data.raw.item[resource .. "-ore"].pictures = pictures_data
+    end
+  end
 end
 
 for resource, resource_data in pairs(MW_Data.ore_data) do -- Replacing original ore patch art
@@ -367,12 +414,18 @@ for resource, resource_data in pairs(MW_Data.ore_data) do -- Make mining debris
 end
 
 for resource, resource_data in pairs(MW_Data.ore_data) do -- Build autoplace settings
+  
   local current_starting_rq_factor = 0
   if resource_data.add_to_starting_area then
     current_starting_rq_factor = 1.5
   end
-  if not resource_data.original then
-    local test_map_color = MW_Data.metal_data[resource].tint_map
+
+  if resource_data.introduced == Mod_Names.GM then
+    
+    local test_map_color = {r = 1, b = 0, g = 1, a = 1} -- Ugly Pink Color -- this means problem!
+    if MW_Data.ore_data[resource].tint_map then 
+      test_map_color = MW_Data.ore_data[resource].tint_map
+    end
 
     local particle_name = nil
     if resource_data.new_debris_art then particle_name = resource .. "-ore-particle" end
@@ -392,7 +445,7 @@ for resource, resource_data in pairs(MW_Data.ore_data) do -- Build autoplace set
           order = "c",
           walking_sound = sounds.ore,
           mining_time = 1,
-          map_color = MW_Data.metal_data[resource].tint_map,
+          map_color = test_map_color,
           particle_name = particle_name,
         },
         { -- autoplace_parameters
@@ -493,13 +546,15 @@ for _, property in pairs(MW_Data.MW_Property) do  -- Make sprites for property i
     {
       type = "sprite",
       name = property .. "-sprite",
-      filename = "__galdocs-manufacturing__/graphics/icons/intermediates/property-icons/" .. property .. ".png",
+      filename = "__galdocs-manufacturing__/graphics/badges/" .. property .. ".png",
       width = 64,
       height = 64,
       scale = 1.5
     }
   })
 end
+
+-- Do I need to make sprites for the elements?
 
 
 
@@ -508,6 +563,7 @@ end
 
 order_count = 0
 for _, metal in pairs(MW_Data.MW_Metal) do -- Make [Metal] Stock Subgroups
+  
   data:extend({
     { -- Make Stock Subgroups
       type = "item-subgroup",
@@ -522,15 +578,19 @@ for _, metal in pairs(MW_Data.MW_Metal) do -- Make [Metal] Stock Subgroups
       name = "gm-remelting-" .. metal
     }
   })
+
   order_count = order_count + 1
-  if MW_Data.metal_data[metal].type == MW_Data.MW_Metal_Type.TREATMENT then
+  if MW_Data.metal_data[metal].type == MW_Data.MW_Metal_Type.TREATMENT then -- Make Treated Stock Subgroups
+    
+    -- Develop subgroup name
     local treatment_subgroup_name = ""
     if MW_Data.metal_data[metal].treatment_type == MW_Data.MW_Treatment_Type.PLATING then
       treatment_subgroup_name = "gm-stocks-" .. metal .. "-annealing"
     else
       treatment_subgroup_name = "gm-stocks-" .. metal .. "-plating"
     end
-    data:extend({
+
+    data:extend({ -- Make Treated Stock Subgroups
       {
         type = "item-subgroup",
         name = treatment_subgroup_name,
@@ -539,6 +599,7 @@ for _, metal in pairs(MW_Data.MW_Metal) do -- Make [Metal] Stock Subgroups
         localised_name = {"gm.stocks-subgroup", {"gm." .. metal}}
       }
     })
+
     order_count = order_count + 1
   end
 end
@@ -572,43 +633,65 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
   if MW_Data.metal_data[metal].type ~= MW_Data.MW_Metal_Type.TREATMENT then
     for stock, _ in pairs(stocks) do
 
-      -- For the tooltip, populate property_list with the properties of the metal.
+      -- Tooltip
+      -- *******
+      -- We need three lists:
+      --    property_list: Properties of the Metal
+      --    produces_list: Stocks and Machined Parts this stock can be made into
+      --    made_in: The machine that makes it (for when the tooltip doesn't show it)
+
+      -- Populate property_list
       local property_list = {""}
+
+      -- Add properties to property_list
       for property, _ in pairs(MW_Data.metal_properties_pairs[metal]) do
         table.insert(property_list, " - [img=" .. property ..  "-sprite]  ")
         table.insert(property_list, {"gm." .. property})
         table.insert(property_list, {"gm.line-separator"})
       end
-      table.remove(property_list, #property_list)
 
-      -- For the tooltip, populate takers with the minisemblers that can use this stock, and with the stocks and machined parts that will result, respectively.
+      -- Break up produces_list for use in localization
+      local property_list_pieces = localization_split(property_list, 3, 6, true)
+      -- If there weren't any entries for property_list, then ... well ... this.
+      if #property_list_pieces[1] == 1 then
+        table.insert(property_list_pieces[1], " - None")
+      end
+
+      -- Populate produces_list
       local produces_list = {}
-
-      -- Add in the stocks to the list
+      
+      -- Add stocks to produces_list
       for product_stock, precursor_recipe_data in pairs(MW_Data.stocks_recipe_data) do
         if stock == precursor_recipe_data.precursor and MW_Data.metal_stocks_pairs[metal][product_stock] then
           table.insert(produces_list, " - [item=" .. metal .. "-" .. product_stock .. "-stock]  ")
           table.insert(produces_list, {"gm.metal-stock-item-name", {"gm." .. metal}, {"gm." .. product_stock}})
-          table.insert(produces_list, " in a  ")
-          table.insert(produces_list, "[item=gm-" .. precursor_recipe_data.made_in .. "]  ")
+          table.insert(produces_list, {"gm.in-a"})
+          table.insert(produces_list, " [item=gm-" .. precursor_recipe_data.made_in .. "]  ")
           table.insert(produces_list, {"gm." .. precursor_recipe_data.made_in})
           table.insert(produces_list, {"gm.line-separator"})
         end
       end
 
-      -- Add in the machined-parts to the list
+      -- Add machined-parts to produces_list
       for product_machined_part, precursor_recipe_data in pairs(MW_Data.machined_parts_recipe_data) do
         if stock == precursor_recipe_data.precursor then
           table.insert(produces_list, " - [item=basic-" .. product_machined_part .. "-machined-part]  ")
           table.insert(produces_list, {"gm." .. product_machined_part})
-          table.insert(produces_list, " in a  ")
-          table.insert(produces_list, "[item=gm-" .. precursor_recipe_data.made_in .. "]  ")
+          table.insert(produces_list, {"gm.in-a"})
+          table.insert(produces_list, " [item=gm-" .. precursor_recipe_data.made_in .. "]  ")
           table.insert(produces_list, {"gm." .. precursor_recipe_data.made_in})
           table.insert(produces_list, {"gm.line-separator"})
         end
       end
 
-      -- For the tooltip, show what machine prduces this stock
+      -- Break up produces_list for use in localization
+      local produces_list_pieces = localization_split(produces_list, 6, 6, true)
+      -- If there weren't any entries for produces_list, then ... well ... this.
+      if #produces_list_pieces[1] == 1 then
+        table.insert(produces_list_pieces[1], " - None")
+      end
+
+      -- Populate made_in
       local made_in = {""}
       if stock ~= MW_Data.MW_Stock.PLATE then
         table.insert(made_in, " - [item=gm-" .. MW_Data.stocks_recipe_data[stock].made_in .. "]  ")
@@ -621,41 +704,12 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
         table.insert(made_in, {"gm.line-separator"})
       end
 
-      -- Split up the giant list of locale above into pieces so that each piece has 20 or fewer items in it.
-      -- FIXME: Turn this into a function
-      local produces_list_pieces = {}
-      local subtable_size = 18
-      local num_subtables = math.ceil(#produces_list / subtable_size)
-      local seen_final_element = false
-      for i = 1, num_subtables do
-        local subtable = {""}
-        for j = 1, subtable_size do
-          local element = produces_list[(i-1)*subtable_size + j]
-          if element then
-            table.insert(subtable, element)
-          else
-            if not seen_final_element then
-              table.remove(subtable, #subtable)
-              seen_final_element = true
-            end
-          end
-        end
-        table.insert(produces_list_pieces, subtable)
-      end
-
-      -- Populate the empty list pieces
-      for i = 1, 6 do
-        if produces_list_pieces[i] == nil then produces_list_pieces[i] = {""} end
-      end
-
-      if #produces_list_pieces[1] == 1 and metal == "zinc" then
-        table.insert(produces_list_pieces[1], " - None")
-      end
-
       -- Entirely disable the tootips according to the user's settings
       local localized_description_item = {}
       if show_detailed_tooltips then
-        localized_description_item = {"gm.metal-stock-item-description-detailed", {"gm." .. metal}, {"gm." .. stock}, made_in, property_list, produces_list_pieces[1], produces_list_pieces[2], produces_list_pieces[3], produces_list_pieces[4], produces_list_pieces[5], produces_list_pieces[6]}
+        localized_description_item = {"gm.metal-stock-item-description-detailed", {"gm." .. metal}, {"gm." .. stock}, made_in,
+        property_list_pieces[1], property_list_pieces[2], property_list_pieces[3], property_list_pieces[4], property_list_pieces[5], property_list_pieces[6],
+        produces_list_pieces[1], produces_list_pieces[2], produces_list_pieces[3], produces_list_pieces[4], produces_list_pieces[5], produces_list_pieces[6]}
       else
         localized_description_item = {"gm.metal-stock-item-description-brief", {"gm." .. metal}, {"gm." .. stock}}
       end
@@ -887,7 +941,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
         table.insert(GM_global_mw_data.stock_recipes[item_prototype[1].name], {[recipe_prototype[1].name] = recipe_prototype[1]})
       end
 
-      if stock == MW_Data.MW_Stock.PLATE and MW_Data.metal_data[metal].type == MW_Data.MW_Metal_Type.ELEMENT then -- If it is a plate, make the special-case elemental plate recipes that take ores instead of stocks.
+      if stock == MW_Data.MW_Stock.PLATE and MW_Data.ore_data[metal] and MW_Data.ore_data[metal].ore_type == MW_Data.MW_Ore_Type.ELEMENT then -- If it is a plate, make the special-case elemental plate recipes that take ores instead of stocks.
         -- Because this is a plate recipe, add it to the productivity whitelist
         table.insert(productivity_whitelist, #productivity_whitelist, metal .. "-" .. stock .. "-stock")
         recipe_prototype = {
@@ -929,17 +983,31 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the treated [M
         if MW_Data.machined_parts_recipe_data[check_part] and MW_Data.machined_parts_recipe_data[check_part].precursor == stock then is_machined_part_precursor = true end
       end
 
+      -- Tooltip
+      -- *******
+      -- We need three lists:
+      --    property_list: Properties of the Metal
+      --    produces_list: Stocks and Machined Parts this stock can be made into
+      --    made_in: The machine that makes it (for when the tooltip doesn't show it)
+
+      -- Populate property_list
       if is_machined_part_precursor then
-        -- For the tooltip, populate property_list with the properties of the metal.
+        -- Add properties to property_list
         local property_list = {""}
         for property, _ in pairs(MW_Data.metal_properties_pairs[metal]) do
           table.insert(property_list, " - [img=" .. property ..  "-sprite]  ")
           table.insert(property_list, {"gm." .. property})
           table.insert(property_list, {"gm.line-separator"})
         end
-        table.remove(property_list, #property_list)
+        
+        -- Break up produces_list for use in localization
+        local property_list_pieces = localization_split(property_list, 3, 6, true)
+        -- If there weren't any entries for property_list, then ... well ... this.
+        if #property_list_pieces[1] == 1 then
+          table.insert(property_list_pieces[1], " - None")
+        end
 
-        -- For the tooltip, populate takers with the minisemblers that can use this stock, and with the stocks and machined parts that will result, respectively.
+        -- Populate produces_list
         local produces_list = {}
 
         -- Add in the machined-parts to the list
@@ -947,57 +1015,43 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the treated [M
           if stock == precursor_recipe_data.precursor then
             table.insert(produces_list, " - [item=basic-" .. product_machined_part .. "-machined-part]  ")
             table.insert(produces_list, {"gm." .. product_machined_part})
-            table.insert(produces_list, " in a  ")
-            table.insert(produces_list, "[item=gm-" .. precursor_recipe_data.made_in .. "]  ")
+            table.insert(produces_list, {"gm.in-a"})
+            table.insert(produces_list, " [item=gm-" .. precursor_recipe_data.made_in .. "]  ")
             table.insert(produces_list, {"gm." .. precursor_recipe_data.made_in})
             table.insert(produces_list, {"gm.line-separator"})
           end
         end
 
-        -- For the tooltip, show what machine prduces this stock
+        -- Break up produces_list for use in localization
+        local produces_list_pieces = localization_split(produces_list, 6, 6, true)
+        -- If there weren't any entries for produces_list, then ... well ... this.
+        if #produces_list_pieces[1] == 1 then
+          table.insert(produces_list_pieces[1], " - None")
+        end
+
+        -- Populate made_in
         local made_in = {""}
-        if stock ~= MW_Data.MW_Stock.PLATE then
-          table.insert(made_in, " - [item=gm-" .. MW_Data.stocks_recipe_data[stock].made_in .. "]  ")
-          table.insert(made_in, {"gm." .. MW_Data.stocks_recipe_data[stock].made_in})
+
+        -- Plating
+        if MW_Data.metal_data[metal].treatment_type == MW_Data.MW_Treatment_Type.PLATING then
+          table.insert(made_in, " - [item=gm-" .. MW_Data.MW_Minisembler.ELECTROPLATER .. "]  ")
+          table.insert(made_in, {"gm." .. MW_Data.MW_Minisembler.ELECTROPLATER})
           table.insert(made_in, {"gm.line-separator"})
         end
-        if stock == MW_Data.MW_Stock.PLATE then
+
+        -- Annealing
+        if MW_Data.metal_data[metal].treatment_type == MW_Data.MW_Treatment_Type.ANNEALING then
           table.insert(made_in, " - [item=stone-furnace]  ")
           table.insert(made_in, {"gm.smelting-type"})
           table.insert(made_in, {"gm.line-separator"})
         end
 
-        -- Split up the giant list of locale above into pieces so that each piece has 20 or fewer items in it.
-        -- FIXME: Turn this into a function
-        local produces_list_pieces = {}
-        local subtable_size = 18
-        local num_subtables = math.ceil(#produces_list / subtable_size)
-        local seen_final_element = false
-        for i = 1, num_subtables do
-          local subtable = {""}
-          for j = 1, subtable_size do
-            local element = produces_list[(i-1)*subtable_size + j]
-            if element then
-              table.insert(subtable, element)
-            else
-              if not seen_final_element then
-                table.remove(subtable, #subtable)
-                seen_final_element = true
-              end
-            end
-          end
-          table.insert(produces_list_pieces, subtable)
-        end
-
-        -- Populate the empty list pieces
-        for i = 1, 6 do
-          if produces_list_pieces[i] == nil then produces_list_pieces[i] = {""} end
-        end
-
         -- Entirely disable the tootips according to the user's settings
         local localized_description_item = {}
         if show_detailed_tooltips then
-          localized_description_item = {"gm.metal-stock-item-description-detailed", {"gm." .. metal}, {"gm." .. stock}, made_in, property_list, produces_list_pieces[1], produces_list_pieces[2], produces_list_pieces[3], produces_list_pieces[4], produces_list_pieces[5], produces_list_pieces[6]}
+          localized_description_item = {"gm.metal-stock-item-description-detailed", {"gm." .. metal}, {"gm." .. stock}, made_in, 
+          property_list_pieces[1], property_list_pieces[2], property_list_pieces[3], property_list_pieces[4], property_list_pieces[5], property_list_pieces[6],
+          produces_list_pieces[1], produces_list_pieces[2], produces_list_pieces[3], produces_list_pieces[4], produces_list_pieces[5], produces_list_pieces[6]}
         else
           localized_description_item = {"gm.metal-stock-item-description-brief", {"gm." .. metal}, {"gm." .. stock}}
         end
@@ -1267,13 +1321,20 @@ for property, parts in pairs(MW_Data.property_machined_part_pairs) do -- Make th
     if show_property_badges == "all" then
       table.insert(icons_data_item, {
         scale = property_badge_scale,
-        icon = "__galdocs-manufacturing__/graphics/icons/intermediates/property-icons/" .. property .. ".png",
+        icon = "__galdocs-manufacturing__/graphics/badges/" .. property .. ".png",
         shift = property_badge_shift,
         icon_size = 64
       })
     end
 
-    -- For the tooltip, populate metal_list with the metals that can make this type of Machined Part.
+
+    -- Tooltip
+    -- *******
+    -- We need two lists:
+    --    metal_list: Metals that can make this machined part
+    --    made_in: The machine that makes it (for when the tooltip doesn't show it)
+
+    -- Populate metal_list
     local metal_list = {""}
     for metal, properties in pairs(MW_Data.metal_properties_pairs) do
       if properties[property] then
@@ -1286,34 +1347,14 @@ for property, parts in pairs(MW_Data.property_machined_part_pairs) do -- Make th
       end
     end
 
-    -- Split up the giant list of locale above into pieces so that each piece has 20 or fewer items in it.
-    -- FIXME: Turn this into a function
-    local metal_list_pieces = {}
-    local subtable_size = 18
-    local num_subtables = math.ceil(#metal_list / subtable_size)
-    local seen_final_element = false
-    for i = 1, num_subtables do
-      local subtable = {""}
-      for j = 1, subtable_size do
-        local element = metal_list[(i-1)*subtable_size + j]
-        if element then
-          table.insert(subtable, element)
-        else
-          if not seen_final_element then
-            table.remove(subtable, #subtable)
-            seen_final_element = true
-          end
-        end
-      end
-      table.insert(metal_list_pieces, subtable)
+    -- Break up metal_list for use in localization
+    local metal_list_pieces = localization_split(metal_list, 6, 6, true)
+    -- If there weren't any entries for metal_list, then ... well ... this.
+    if #metal_list_pieces[1] == 1 then
+      table.insert(metal_list_pieces[1], " - None")
     end
 
-    -- Populate the empty list pieces
-    for i = 1, 6 do
-      if metal_list_pieces[i] == nil then metal_list_pieces[i] = {""} end
-    end
-
-    -- For the tooltip, list what minisembler makes this machined part
+    -- Populate made_in
     local made_in = {""}
     table.insert(made_in, " - [item=gm-" .. MW_Data.machined_parts_recipe_data[part].made_in .. "]  ")
     table.insert(made_in, {"gm." .. MW_Data.machined_parts_recipe_data[part].made_in})
@@ -1322,7 +1363,8 @@ for property, parts in pairs(MW_Data.property_machined_part_pairs) do -- Make th
     -- Entirely disable the tootips according to the user's settings
     local localized_description_item = {}
     if show_detailed_tooltips then
-      localized_description_item = {"gm.metal-machined-part-item-description-detailed", {"gm." .. property}, {"gm." .. part}, made_in, metal_list_pieces[1], metal_list_pieces[2], metal_list_pieces[3], metal_list_pieces[4], metal_list_pieces[5], metal_list_pieces[6]}
+      localized_description_item = {"gm.metal-machined-part-item-description-detailed", {"gm." .. property}, {"gm." .. part}, made_in, 
+      metal_list_pieces[1], metal_list_pieces[2], metal_list_pieces[3], metal_list_pieces[4], metal_list_pieces[5], metal_list_pieces[6]}
     else
       localized_description_item = {"gm.metal-machined-part-item-description-brief", {"gm." .. property}, {"gm." .. part}}
     end
@@ -1371,7 +1413,7 @@ for property, parts in pairs(MW_Data.property_machined_part_pairs) do -- Make th
         if show_property_badges == "recipes" or show_property_badges == "all" then
           table.insert(icons_data_recipe, {
             scale = property_badge_scale,
-            icon = "__galdocs-manufacturing__/graphics/icons/intermediates/property-icons/" .. property .. ".png",
+            icon = "__galdocs-manufacturing__/graphics/badges/" .. property .. ".png",
             shift = property_badge_shift,
             icon_size = 64
           })
@@ -1470,7 +1512,13 @@ for property_key, multi_properties in pairs(multi_property_with_key_pairs) do --
       for part, _ in pairs(combined_parts_list) do
         if MW_Data.metal_stocks_pairs[metal][MW_Data.machined_parts_recipe_data[part].precursor] then -- work out how to fan out the machined parts
 
-          -- For the tooltip, populate metal_list with the metals that can make this type of Machined Part.
+          -- Tooltip
+          -- *******
+          -- We need three lists:
+          --    metal_list: Metals that can make this machined part
+          --    made_in: The machine that makes it (for when the tooltip doesn't show it)
+
+          -- Populate metal_list
           local metal_list = {""}
           for _, possible_metal in pairs(multi_property_metal_pairs[property_key]) do
             table.insert(metal_list, " - [item=" .. possible_metal .. "-" .. MW_Data.machined_parts_recipe_data[part].precursor ..  "-stock]  ")
@@ -1478,31 +1526,11 @@ for property_key, multi_properties in pairs(multi_property_with_key_pairs) do --
             table.insert(metal_list, {"gm.line-separator"})
           end
 
-          -- Split up the giant list of locale above into pieces so that each piece has 20 or fewer items in it.
-          -- FIXME: Turn this into a function
-          local metal_list_pieces = {}
-          local subtable_size = 18
-          local num_subtables = math.ceil(#metal_list / subtable_size)
-          local seen_final_element = false
-          for i = 1, num_subtables do
-            local subtable = {""}
-            for j = 1, subtable_size do
-              local element = metal_list[(i-1)*subtable_size + j]
-              if element then
-                table.insert(subtable, element)
-              else
-                if not seen_final_element then
-                  table.remove(subtable, #subtable)
-                  seen_final_element = true
-                end
-              end
-            end
-            table.insert(metal_list_pieces, subtable)
-          end
-
-          -- Populate the empty list pieces
-          for i = 1, 6 do
-            if metal_list_pieces[i] == nil then metal_list_pieces[i] = {""} end
+          -- Break up metal_list for use in localization
+          local metal_list_pieces = localization_split(metal_list, 6, 6, true)
+          -- If there weren't any entries for metal_list, then ... well ... this.
+          if #metal_list_pieces[1] == 1 then
+            table.insert(metal_list_pieces[1], " - None")
           end
 
           -- For the tooltip, list what minisembler makes this machined part
@@ -1517,13 +1545,14 @@ for property_key, multi_properties in pairs(multi_property_with_key_pairs) do --
             table.insert(item_name, {"gm." .. property})
             table.insert(item_name, ", ")
           end
-
+          -- Get rid of trailing comma
           if #item_name > 1 then table.remove(item_name, #item_name) end
 
           -- Entirely disable the tootips according to the user's settings
           local localized_description_item = {}
           if show_detailed_tooltips then
-            localized_description_item = {"gm.metal-machined-part-item-description-detailed", item_name, {"gm." .. part}, made_in, metal_list_pieces[1], metal_list_pieces[2], metal_list_pieces[3], metal_list_pieces[4], metal_list_pieces[5], metal_list_pieces[6]}
+            localized_description_item = {"gm.metal-machined-part-item-description-detailed", item_name, {"gm." .. part}, made_in, 
+            metal_list_pieces[1], metal_list_pieces[2], metal_list_pieces[3], metal_list_pieces[4], metal_list_pieces[5], metal_list_pieces[6]}
           else
             localized_description_item = {"gm.metal-machined-part-item-description-brief", item_name, {"gm." .. part}}
           end
@@ -1542,7 +1571,7 @@ for property_key, multi_properties in pairs(multi_property_with_key_pairs) do --
             for _, multi_property in pairs(multi_properties) do
               table.insert(icons_data_item, {
                 scale = property_badge_scale,
-                icon = "__galdocs-manufacturing__/graphics/icons/intermediates/property-icons/" .. multi_property .. ".png",
+                icon = "__galdocs-manufacturing__/graphics/badges/" .. multi_property .. ".png",
                 shift = current_badge_shift,
                 icon_size = 64
               })
@@ -1594,7 +1623,7 @@ for property_key, multi_properties in pairs(multi_property_with_key_pairs) do --
             for _, multi_property in pairs(multi_properties) do
               table.insert(icons_data_item, {
                 scale = property_badge_scale,
-                icon = "__galdocs-manufacturing__/graphics/icons/intermediates/property-icons/" .. multi_property .. ".png",
+                icon = "__galdocs-manufacturing__/graphics/badges/" .. multi_property .. ".png",
                 shift = current_badge_shift,
                 icon_size = 64
               })
@@ -1667,7 +1696,7 @@ for metal, metal_data in pairs(MW_Data.metal_data) do -- Make "Basic" property d
           if show_property_badges == "all" then
             table.insert(icons_data, {
               scale = property_badge_scale,
-              icon = "__galdocs-manufacturing__/graphics/icons/intermediates/property-icons/basic.png",
+              icon = "__galdocs-manufacturing__/graphics/badges/basic.png",
               shift = property_badge_shift,
               icon_size = 64
             }
@@ -1740,7 +1769,7 @@ for property, property_downgrade_list in pairs(MW_Data.property_downgrades) do -
       if show_property_badges == "all" then
         table.insert(icons_data, {
           scale = property_badge_scale,
-          icon = "__galdocs-manufacturing__/graphics/icons/intermediates/property-icons/" .. previous_property .. ".png",
+          icon = "__galdocs-manufacturing__/graphics/badges/" .. previous_property .. ".png",
           shift = property_badge_shift,
           icon_size = 64
         }
@@ -1802,7 +1831,7 @@ for property_key, multi_properties in pairs(multi_property_with_key_pairs) do --
           for _, multi_property in pairs(multi_properties) do
             table.insert(icons_data, {
               scale = property_badge_scale,
-              icon = "__galdocs-manufacturing__/graphics/icons/intermediates/property-icons/" .. multi_property .. ".png",
+              icon = "__galdocs-manufacturing__/graphics/badges/" .. multi_property .. ".png",
               shift = current_badge_shift,
               icon_size = 64
             })
@@ -1844,7 +1873,6 @@ for property_key, multi_properties in pairs(multi_property_with_key_pairs) do --
     end
   end
 end
-
 
 -- Minisemblers
 -- ============
@@ -1999,70 +2027,55 @@ for _, tier in pairs(MW_Data.MW_Minisembler_Tier) do -- make the minisembler ent
 
       crafting_categories = {"gm-" .. minisembler, "gm-" .. minisembler .. "-player-crafting"}
 
-      local item_localized_description_stock_to_stock = {""}
+      -- Tooltip
+      -- *******
+      -- We need two lists:
+      --    to_stock: Stocks to stocks
+      --    to_machined_part: Stocks to machined parts
+
+      -- Populate to_stock
+      local to_stock = {}
       for stock, stock_recipe_data in pairs(MW_Data.stocks_recipe_data) do
         if minisembler == stock_recipe_data.made_in then
-          -- " - [item=source_stock]  into [item=product_stock]\n"
-          table.insert(item_localized_description_stock_to_stock, " - [item=iron-".. stock_recipe_data.precursor .. "-stock]  ")
-          table.insert(item_localized_description_stock_to_stock, {"gm." .. stock_recipe_data.precursor})
+          table.insert(to_stock, " - [item=iron-".. stock_recipe_data.precursor .. "-stock]  ")
+          table.insert(to_stock, {"metal-stock-generic-metal-name", {"gm." .. stock_recipe_data.precursor}})
+          table.insert(to_stock, {"gm.into"})
           if stock == MW_Data.MW_Stock.PLATING_BILLET then
-            table.insert(item_localized_description_stock_to_stock, " Stock into  [item=zinc-" .. stock .. "-stock]  ")
+            table.insert(to_stock, " - [item=zinc-".. stock .. "-stock]  ")
           else
-            table.insert(item_localized_description_stock_to_stock, " Stock into  [item=iron-" .. stock .. "-stock]  ")
+            table.insert(to_stock, " - [item=iron-".. stock .. "-stock]  ")
           end
-          table.insert(item_localized_description_stock_to_stock, {"gm." .. stock})
-          table.insert(item_localized_description_stock_to_stock, " Stock\n")
+          table.insert(to_stock, {"metal-stock-generic-metal-name", {"gm." .. stock}})
+          table.insert(to_stock, {"gm.line-separator"})
         end
       end
 
-      --[[
-      local item_localized_description_stock_to_stock_pieces = {}
-      local subtable_size = 18
-      local num_subtables = math.ceil(#item_localized_description_stock_to_stock / subtable_size)
-      local seen_final_element = false
-      for i = 1, num_subtables do
-        local subtable = {""}
-        for j = 1, subtable_size do
-          local element = item_localized_description_stock_to_stock[(i-1)*subtable_size + j]
-          if element then
-            table.insert(subtable, element)
-          else
-            if not seen_final_element then
-              table.remove(subtable, #subtable)
-              seen_final_element = true
-            end
-          end
-        end
-        table.insert(item_localized_description_stock_to_stock_pieces, subtable)
-      end
-
-      for i = 1, 6 do
-        if item_localized_description_stock_to_stock_pieces[i] == nil then item_localized_description_stock_to_stock_pieces[i] = {""} end
-      end
-      --]]
-
-      local item_localized_description_stock_to_machined_part = {""}
+      -- Populate to_machined_part
+      local to_machined_part = {}
       for part, machined_part_recipe_data in pairs(MW_Data.machined_parts_recipe_data) do
         if minisembler == machined_part_recipe_data.made_in then
-          -- " - [item=source_stock]  into [item=product_stock]\n"
-          -- table.insert(item_localized_description_stock_to_machined_part, " - [item=iron-".. machined_parts_precurors[part][1] .. "-stock]  into  [item=basic-" .. part .. "-machined-part]\n")
-          table.insert(item_localized_description_stock_to_machined_part, " - [item=iron-".. machined_part_recipe_data.precursor .. "-stock]  ")
-          table.insert(item_localized_description_stock_to_machined_part, {"gm." .. machined_part_recipe_data.precursor})
-          table.insert(item_localized_description_stock_to_machined_part, " Stock into  [item=basic-" .. part .. "-machined-part]  ")
-          table.insert(item_localized_description_stock_to_machined_part, {"gm." .. part})
-          table.insert(item_localized_description_stock_to_machined_part, {"gm.line-separator"})
+          table.insert(to_machined_part, " - [item=iron-".. machined_part_recipe_data.precursor .. "-stock]  ")
+          table.insert(to_machined_part, {"metal-stock-generic-metal-name", {"gm." .. machined_part_recipe_data.precursor}})
+          table.insert(to_machined_part, {"gm.into"})
+          table.insert(to_machined_part, " [item=basic-" .. part .. "-machined-part]  ")
+          table.insert(to_machined_part, {"gm." .. part})
+          table.insert(to_machined_part, {"gm.line-separator"})
         end
       end
 
-      if #item_localized_description_stock_to_stock > 1 and #item_localized_description_stock_to_machined_part == 1 then
-        table.remove(item_localized_description_stock_to_stock, #item_localized_description_stock_to_stock)
-        table.insert(item_localized_description_stock_to_stock, " Stock")
-      end
+      -- Break up to_stock for use in localization
+      -- I put this here because it depends on to_machined_part
+      -- If there were stocks but no machined parts, then snip the carraige return off the end of the stocks list; this is the bonkers boolean at the end
+      local to_stock_pieces = localization_split(to_stock, 6, 6, (#to_stock > 0 and #to_machined_part == 0))
+      
+      -- Break up to_machined_part for use in localization
+      local to_machined_part_pieces = localization_split(to_machined_part, 6, 6, true)
 
-      if #item_localized_description_stock_to_machined_part > 1 then table.remove(item_localized_description_stock_to_machined_part, #item_localized_description_stock_to_machined_part) end
-
+      -- Entirely disable the tootips according to the user's settings
       if show_detailed_tooltips then
-        localized_description_item = {"gm.minisembler-machining-item-description-detailed", {"gm." .. minisembler}, item_localized_description_stock_to_stock, item_localized_description_stock_to_machined_part}
+        localized_description_item = {"gm.minisembler-machining-item-description-detailed", {"gm." .. minisembler}, 
+        to_stock_pieces[1], to_stock_pieces[2], to_stock_pieces[3], to_stock_pieces[4], to_stock_pieces[5], to_stock_pieces[6],
+        to_machined_part_pieces[1], to_machined_part_pieces[2], to_machined_part_pieces[3], to_machined_part_pieces[4], to_machined_part_pieces[5], to_machined_part_pieces[6]}
       else
         localized_description_item = {"gm.minisembler-machining-item-description-brief", {"gm." .. minisembler}}
       end
@@ -2072,21 +2085,33 @@ for _, tier in pairs(MW_Data.MW_Minisembler_Tier) do -- make the minisembler ent
 
       crafting_categories = {"gm-electroplating"}
 
+      -- Tooltip
+      -- *******
+      -- We need one list:
+      --    can_plate: Metals that can be plated
       if MW_Data.minisembler_data[minisembler].treatment_type == MW_Data.MW_Treatment_Type.PLATING then
-        local item_localized_description_plating = {""}
+        local can_plate = {""}
         for _, metal in pairs(MW_Data.MW_Metal) do
           if MW_Data.metal_data[metal].type == MW_Data.MW_Metal_Type.TREATMENT and MW_Data.metal_data[metal].treatment_type == MW_Data.MW_Treatment_Type.PLATING then
-            table.insert(item_localized_description_plating, " - [item=" .. MW_Data.metal_data[metal].plate_metal .. "-plate-stock]  ")
-            table.insert(item_localized_description_plating, {"gm." .. MW_Data.metal_data[metal].plate_metal})
-            table.insert(item_localized_description_plating, " onto [item=" .. MW_Data.metal_data[metal].core_metal .. "-plate-stock]  ")
-            table.insert(item_localized_description_plating, {"gm." .. MW_Data.metal_data[metal].core_metal})
-            table.insert(item_localized_description_plating, " stocks, making [item=" .. metal .. "-plate-stock]  ")
-            table.insert(item_localized_description_plating, {"gm." .. metal})
-            table.insert(item_localized_description_plating, " stocks\n")
+            table.insert(can_plate, " - [item=" .. MW_Data.metal_data[metal].plate_metal .. "-plate-stock]  ")
+            table.insert(can_plate, {"gm." .. MW_Data.metal_data[metal].plate_metal})
+            table.insert(can_plate, {"gm.onto"})
+            table.insert(can_plate, "[item=" .. MW_Data.metal_data[metal].core_metal .. "-plate-stock]  ")
+            table.insert(can_plate, {"gm.metal-stock-generic-stock-name", {"gm." .. MW_Data.metal_data[metal].core_metal}})
+            table.insert(can_plate, {"gm.making"})
+            table.insert(can_plate, " [item=" .. metal .. "-plate-stock]  ")
+            table.insert(can_plate, {"gm.metal-stock-generic-metal-name", {"gm." .. metal}})
+            table.insert(can_plate, {"gm.line-separator"})
           end
         end
+
+        -- Break up can_plate for use in localization
+        local can_plate_pieces = localization_split(can_plate, 9, 6, true)
+
+        -- Entirely disable the tootips according to the user's settings
         if show_detailed_tooltips then
-          localized_description_item = {"gm.minisembler-plating-item-description-detailed", {"gm." .. minisembler}, item_localized_description_plating}
+          localized_description_item = {"gm.minisembler-plating-item-description-detailed", {"gm." .. minisembler},
+          can_plate_pieces[1], can_plate_pieces[2], can_plate_pieces[3], can_plate_pieces[4], can_plate_pieces[5], can_plate_pieces[6]}
         else
           localized_description_item = {"gm.minisembler-plating-item-description-brief", {"gm." .. minisembler}}
         end
@@ -2097,7 +2122,8 @@ for _, tier in pairs(MW_Data.MW_Minisembler_Tier) do -- make the minisembler ent
     if MW_Data.minisembler_data[minisembler].stage == MW_Data.MW_Minisembler_Stage.ASSAYING then
 
       crafting_categories = {"gm-metal-assaying"}
-
+      
+      -- Entirely disable the tootips according to the user's settings
       if show_detailed_tooltips then
         localized_description_item = {"gm.minisembler-assaying-item-description-detailed", {"gm." .. minisembler}}
       else

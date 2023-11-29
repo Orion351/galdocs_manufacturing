@@ -1,10 +1,11 @@
 local MW_Data = GM_global_mw_data.MW_Data
 
 MW_Data.MW_Resource = table.merge(MW_Data.MW_Resource, {
-  RARE_METAL       = "rare-metal",
+  RARE_METALS      = "rare-metals",
   OSMIUM           = "osmium",
   NIOBIUM          = "niobium",
-  IMERSITE_POWDER  = "imersite_powder",
+  IMERSITE_POWDER  = "imersite-powder",
+  COKE             = "coke",
 })
 
 MW_Data.MW_Ore_Shape = {
@@ -13,21 +14,20 @@ MW_Data.MW_Ore_Shape = {
   PEBBLE   = "pebble"
 }
 
-MW_Data.MW_Ore_Type = {
-  NONMETAL = "nonmetal",
-  ELEMENT  = "element",
+MW_Data.MW_Ore_Type = table.merge({MW_Data.MW_Ore_Type, 
   MIXED    = "mixed",
-}
+})
 
 MW_Data.MW_Metal = table.merge(MW_Data.MW_Metal, {
   -- Base Krastorio 2 compatibility
   IMERSIUM   = "imersium",
   -- LITHIUM = "lithium",
-  RARE_METAL = "rare-metal",
+  RARE_METALS = "rare-metals",
 
   -- New Metals
-  OSMIUM = "osmium",    -- (alloy and useful by itself)
-  NIOBIUM = "niobium",  -- (alloyer)
+  OSMIUM  = "osmium",    -- (alloy and useful by itself)
+  NIOBIUM = "niobium",   -- (alloyer)
+  -- GOLD    = "gold",      -- (electronic contacts)
 
   -- New Alloys
   -- TITANIMERSIUM     = "titanimersium", (this is 'default' imersium) (TI)
@@ -38,15 +38,15 @@ MW_Data.MW_Metal = table.merge(MW_Data.MW_Metal, {
 })
 
 MW_Data.MW_Metal_Type = table.merge(MW_Data.MW_Metal_Type, {
-  MIXED = "mixed"
+  -- MIXED = "mixed"
 })
 
 MW_Data.MW_Treatment_Type = table.merge(MW_Data.MW_Treatment_Type, {
-  IMERSIUM_INFUSION = "imersium-infusion"
+  -- IMERSIUM_INFUSION = "imersium-infusion"
 })
 
 MW_Data.MW_Stock = table.merge(MW_Data.MW_Stock, {
-  WAFER = "wafer"
+  -- WAFER = "wafer"
 })
 
 MW_Data.MW_Machined_Part = table.merge(MW_Data.MW_Machined_Part, {
@@ -73,5 +73,11 @@ MW_Data.MW_Minisembler_Tier = table.merge(MW_Data.MW_Minisembler_Tier, {
 MW_Data.MW_Minisembler_Stage = table.merge(MW_Data.MW_Minisembler_Stage, {
   -- none
 })
+
+
+
+-- ***************
+-- Return the data
+-- ***************
 
 return MW_Data
