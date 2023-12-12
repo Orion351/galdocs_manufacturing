@@ -130,22 +130,27 @@ function Localization_split(localization_list, entry_size, num_total_subtables, 
   return localization_list_pieces
 end
 
+
+
 -- ********
 -- Mod Data
 -- ********
 
 Mod_Names = {
   VANILLA = "vanilla",
-  GM = "galdocs-manufacturing",
-  K2 = "krastorio2",
+  GM      = "galdocs-manufacturing",
+  K2      = "krastorio2",
 }
 
 -- Global Variables
 GM_globals = require("prototypes.settings-parser")
 GM_globals = table.merge(GM_globals, require("prototypes.global-variables"))
 
+
+
 -- ***************
 -- Material Passes
 -- ***************
 
-require("prototypes.passes.metalworking.mw-pass")
+require("prototypes.passes.metalworking.mw-pass")  -- Metalworking
+-- require("prototypes.passes.metalworking.sw-pass")  -- Stoneworking

@@ -121,6 +121,8 @@ MW_Data.ore_data = table.merge_subtables(MW_Data.ore_data, { -- Staple on the ma
 [MW_Resource.NICKEL]   = {shapes = {MW_Ore_Shape.ORE}},
 })
 
+
+
 -- Metal Data
 -- **********
 
@@ -196,6 +198,8 @@ MW_Data.metal_data = table.merge_subtables(MW_Data.metal_data, { -- Staple on th
   [MW_Metal.ANNEALED_COPPER]  = {order = "i "},
 })
 
+
+
 -- Stock Data
 -- **********
 
@@ -246,6 +250,8 @@ else
     [MW_Stock.PLATING_BILLET] = {order = "d "},
   }
 end
+
+
 
 -- Machined Part Data
 -- ******************
@@ -308,6 +314,8 @@ else
   }
 end
 
+
+
 -- Property Data
 -- *************
 
@@ -342,6 +350,8 @@ MW_Data.property_data = { -- Staple on the ordering
   [MW_Property.VERY_HEAVY_LOAD_BEARING]  = {order = "e "},
   [MW_Property.VERY_HIGH_TENSILE]        = {order = "g "},
 }
+
+
 
 -- Minisembler Data
 -- ****************
@@ -564,6 +574,8 @@ else
   })
 end
 
+
+
 -- Ore Couplings
 -- *************
 MW_Data.ore_data = table.merge_subtables(MW_Data.ore_data, { -- Couple ores to ore shapes
@@ -577,6 +589,8 @@ MW_Data.ore_data = table.merge_subtables(MW_Data.ore_data, { -- Couple ores to o
   [MW_Resource.ZINC]            = {ore_type = MW_Ore_Type.ELEMENT },
   [MW_Resource.NICKEL]          = {ore_type = MW_Ore_Type.ELEMENT },
 })
+
+
 
 -- Metal Couplings
 -- ***************
@@ -662,6 +676,8 @@ else
     [MW_Metal.ANNEALED_COPPER]   = map{MW_Stock.PLATE, MW_Stock.SQUARE, MW_Stock.WIRE                        },
   }
 end
+
+
 
 -- Properties, Stocks and Machined Parts couplings
 -- ***********************************************
@@ -789,6 +805,8 @@ for part, machined_part_recipe_data in pairs(MW_Data.machined_parts_recipe_data)
     MW_Data.machined_parts_recipe_data[part].backchain = current_backchain
   end
 end
+
+
 
 -- Some unused fanout code. Keep!
 

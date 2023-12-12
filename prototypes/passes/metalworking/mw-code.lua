@@ -82,6 +82,8 @@ data:extend({ -- Create metalworking remelting item group
   }
 })
 
+
+
 -- Ore
 -- ===
 
@@ -131,7 +133,6 @@ for resource, resource_data in pairs(MW_Data.ore_data) do -- Ore Items
           localised_name = {"gm.ore-item-name", {"gm." .. resource}}
         },
       })
-      log("asdf added: " .. resource .. "-ore")
     end
 
     if resource_data.original and resource_data.new_icon_art then -- Replace original ore itme icons
@@ -1339,7 +1340,6 @@ for property, parts in pairs(MW_Data.property_machined_part_pairs) do -- Make th
       })
     end
 
-
     -- Tooltip
     -- *******
     -- We need two lists:
@@ -1885,6 +1885,8 @@ for property_key, multi_properties in pairs(multi_property_with_key_pairs) do --
     end
   end
 end
+
+
 
 -- Minisemblers
 -- ============
@@ -2924,6 +2926,7 @@ end
 data.raw.technology["steel-processing"].effects = new_effects
 
 return MW_Data
+
 --[[
 -- are you serious right now
 data:extend({

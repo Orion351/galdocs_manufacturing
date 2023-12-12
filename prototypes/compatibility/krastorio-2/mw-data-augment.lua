@@ -111,13 +111,14 @@ MW_Data.smelting_data = { -- Set up the Smelting Recipes
   -- [MW_Ore_Shape.PEBBLE] = {input_count = 1, output_shape = MW_Data.MW_Stock.WAFER, output_count = 1},
 }
 
---[[
--- FIXME: Needs a machine to do this in! CRUSHER!!!!!!!!!!!
+--[[ FIXME: Needs a machine to do this in! CRUSHER!!!!!!!!!!!
 MW_Data.ore_processing_data = { -- Set up the Pebble to Ore conversions
   [MW_Ore_Shape.ORE]    = {shape = MW_Ore_Shape.PEBBLE, input_count = 1,  output_count = 10},
   -- [MW_Ore_Shape.PEBBLE] = {shape = MW_Ore_Shape.ORE,    input_count = 10, output_count = 1 },
 }
 --]]
+
+
 
 -- Metal Data
 -- **********
@@ -137,15 +138,15 @@ MW_Data.metal_data = table.group_key_assign(MW_Data.metal_data, { -- Staple on v
 
 -- FIXME : Actually tie these to technologies
 MW_Data.metal_data = table.merge_subtables(MW_Data.metal_data, { -- Staple on the tech name data
-  [MW_Metal.RARE_METALS]       = {tech_stock = "starter",                              tech_machined_part = "starter"                                     },
+  [MW_Metal.RARE_METALS]       = {tech_stock = "starter",                               tech_machined_part = "starter"                                        },
+  
+  [MW_Metal.OSMIUM]            = {tech_stock = "gm-osmium-stock-processing",            tech_machined_part = "gm-osmium-machined-part-processing",            },
+  [MW_Metal.NIOBIUM]           = {tech_stock = "gm-niobium-stock-processing",           tech_machined_part = "gm-niobium-machined-part-processing",           },
 
-  [MW_Metal.OSMIUM]            = {tech_stock = "starter",                              tech_machined_part = "starter"                                     },
-  [MW_Metal.NIOBIUM]           = {tech_stock = "starter",                              tech_machined_part = "starter"                                     },
-
-  [MW_Metal.IMERSIUM]          = {tech_stock = "starter",                              tech_machined_part = "starter"                                     },
-  [MW_Metal.NIOBIMERSIUM]      = {tech_stock = "starter",                              tech_machined_part = "starter"                                     },
-  [MW_Metal.STABLE_IMERSIUM]   = {tech_stock = "starter",                              tech_machined_part = "starter"                                     },
-  [MW_Metal.RESONANT_IMERSIUM] = {tech_stock = "starter",                              tech_machined_part = "starter"                                     },
+  [MW_Metal.IMERSIUM]          = {tech_stock = "gm-imersium-stock-processing",          tech_machined_part = "gm-imersium-machined-part-processing",          },
+  [MW_Metal.NIOBIMERSIUM]      = {tech_stock = "gm-niobimersium-stock-processing",      tech_machined_part = "gm-niobimersium-machined-part-processing",      },
+  [MW_Metal.STABLE_IMERSIUM]   = {tech_stock = "gm-stable-imersium-stock-processing",   tech_machined_part = "gm-stable-imersium-machined-part-processing",   },
+  [MW_Metal.RESONANT_IMERSIUM] = {tech_stock = "gm-resonant-imersium-stock-processing", tech_machined_part = "gm-resonant-imersium-machined-part-processing", },
 })
 
 MW_Data.metal_data = table.merge_subtables(MW_Data.metal_data, { -- Staple on mod data
@@ -160,15 +161,41 @@ MW_Data.metal_data = table.merge_subtables(MW_Data.metal_data, { -- Staple on mo
   [MW_Metal.RESONANT_IMERSIUM] = {introduced = Mod_Names.K2},
 })
 
-MW_Data.metal_data = table.merge_subtables(MW_Data.metal_data, { -- Staple on mod data
+MW_Data.metal_data = table.merge_subtables(MW_Data.metal_data, { -- Staple on order data
   [MW_Metal.RARE_METALS]       = {order = "za"},
+
   [MW_Metal.OSMIUM]            = {order = "zb"},
   [MW_Metal.NIOBIUM]           = {order = "zc"},
+
   [MW_Metal.IMERSIUM]          = {order = "zd"},
   [MW_Metal.NIOBIMERSIUM]      = {order = "zf"},
   [MW_Metal.STABLE_IMERSIUM]   = {order = "zg"},
   [MW_Metal.RESONANT_IMERSIUM] = {order = "ze"},
 })
+
+MW_Data.metal_data = table.merge_subtables(MW_Data.metal_data, { -- Staple on glow data
+  [MW_Metal.IRON]              = {has_K2_glow_layer = false},
+  [MW_Metal.COPPER]            = {has_K2_glow_layer = false},
+  [MW_Metal.LEAD]              = {has_K2_glow_layer = false},
+  [MW_Metal.TITANIUM]          = {has_K2_glow_layer = false},
+  [MW_Metal.ZINC]              = {has_K2_glow_layer = false},
+  [MW_Metal.NICKEL]            = {has_K2_glow_layer = false},
+  [MW_Metal.STEEL]             = {has_K2_glow_layer = false},
+  [MW_Metal.BRASS]             = {has_K2_glow_layer = false},
+  [MW_Metal.INVAR]             = {has_K2_glow_layer = false},
+  [MW_Metal.GALVANIZED_STEEL]  = {has_K2_glow_layer = false},
+  [MW_Metal.ANNEALED_COPPER]   = {has_K2_glow_layer = false},
+  [MW_Metal.RARE_METALS]       = {has_K2_glow_layer = false},
+  [MW_Metal.OSMIUM]            = {has_K2_glow_layer = false},
+  [MW_Metal.NIOBIUM]           = {has_K2_glow_layer = false},
+  
+  [MW_Metal.IMERSIUM]          = {has_K2_glow_layer = true, K2_glow_tint = {r = 0.48, g = 0.2,  b = 0.64, a = 1.0} },   -- Hex: 7B33A4  | 0.4823529411764706, 0.2,                0.6431372549019608
+  [MW_Metal.NIOBIMERSIUM]      = {has_K2_glow_layer = true, K2_glow_tint = {r = 0.2,  g = 0.42, b = 0.64, a = 1.0} },   -- Hex: 336ba4  | 0.2,                0.4196078431372549, 0.6431372549019608
+  [MW_Metal.STABLE_IMERSIUM]   = {has_K2_glow_layer = true, K2_glow_tint = {r = 0.51, g = 0.64, b = 0.2,  a = 1.0} },   -- Hex: 82a433  | 0.5098039215686274, 0.6431372549019608, 0.2
+  [MW_Metal.RESONANT_IMERSIUM] = {has_K2_glow_layer = true, K2_glow_tint = {r = 0.21, g = 0.77, b = 0.46, a = 1.0} },   -- Hex: 36C476  | 0.2117647058823529, 0.7686274509803922, 0.4627450980392157
+})
+
+
 
 -- Stock Data
 -- **********
@@ -177,17 +204,56 @@ MW_Data.stock_data = table.group_key_assign(MW_Data.stock_data, {
   -- none
 })
 
+
+
 -- Machined Part Data
 -- ******************
 
-MW_Data.machined_part_data = table.group_key_assign(MW_Data.machined_part_data, {
-  -- none
-})
+if advanced then
+  MW_Data.machined_part_data = table.group_key_assign(MW_Data.machined_part_data, { -- Add new machined parts
+    -- None
+  })
+else
+  MW_Data.machined_part_data = table.group_key_assign(MW_Data.machined_part_data, { -- Add new machined parts
+    -- None
+  })
+end
+
+if advanced then
+  MW_Data.machined_part_data = table.merge_subtables(MW_Data.machined_part_data, { -- Staple on glow data
+    [MW_Machined_Part.PANELING]        = {has_K2_glow_layer = true},
+    [MW_Machined_Part.LARGE_PANELING]  = {has_K2_glow_layer = true},
+    [MW_Machined_Part.FRAMING]         = {has_K2_glow_layer = true},
+    [MW_Machined_Part.GIRDERING]       = {has_K2_glow_layer = true},
+    [MW_Machined_Part.GEARING]         = {has_K2_glow_layer = true},
+    [MW_Machined_Part.FINE_GEARING]    = {has_K2_glow_layer = true},
+    [MW_Machined_Part.PIPING]          = {has_K2_glow_layer = true},
+    [MW_Machined_Part.FINE_PIPING]     = {has_K2_glow_layer = true},
+    [MW_Machined_Part.WIRING]          = {has_K2_glow_layer = true},
+    [MW_Machined_Part.SHIELDING]       = {has_K2_glow_layer = true},
+    [MW_Machined_Part.SHAFTING]        = {has_K2_glow_layer = true},
+    [MW_Machined_Part.BOLTS]           = {has_K2_glow_layer = true},
+    [MW_Machined_Part.RIVETS]          = {has_K2_glow_layer = true},
+  })
+else
+  MW_Data.machined_part_data = table.merge_subtables(MW_Data.machined_part_data, { -- Staple on glow data
+    [MW_Machined_Part.PANELING]        = {has_K2_glow_layer = true},
+    [MW_Machined_Part.FRAMING]         = {has_K2_glow_layer = true},
+    [MW_Machined_Part.GEARING]         = {has_K2_glow_layer = true},
+    [MW_Machined_Part.PIPING]          = {has_K2_glow_layer = true},
+    [MW_Machined_Part.SHIELDING]       = {has_K2_glow_layer = true},
+    [MW_Machined_Part.WIRING]          = {has_K2_glow_layer = true},
+    [MW_Machined_Part.SHAFTING]        = {has_K2_glow_layer = true},
+    [MW_Machined_Part.BOLTS]           = {has_K2_glow_layer = true},
+  })
+end
+
+
 
 -- Property Data
 -- *************
 
-MW_Data.property_data = table.group_key_assign(MW_Data.property_data, {
+MW_Data.property_data = table.group_key_assign(MW_Data.property_data, { -- Staple on mod data
   [MW_Property.IMERSIUM_ENHANCED_HIGH_TENSILE]  = {introduced = Mod_Names.K2},
   [MW_Property.IMERSIUM_GRADE_LOAD_BEARING]     = {introduced = Mod_Names.K2},
   [MW_Property.SUPERCONDUCTING]                 = {introduced = Mod_Names.K2},
@@ -196,13 +262,22 @@ MW_Data.property_data = table.group_key_assign(MW_Data.property_data, {
   [MW_Property.IMERSIUM_GRADE_THERMALLY_STABLE] = {introduced = Mod_Names.K2},
 })
 
-MW_Data.property_data = table.group_key_assign(MW_Data.property_data, {
+MW_Data.property_data = table.merge_subtables(MW_Data.property_data, { -- Staple on order data
   [MW_Property.IMERSIUM_ENHANCED_HIGH_TENSILE]  = {order = "ga"},
   [MW_Property.IMERSIUM_GRADE_LOAD_BEARING]     = {order = "ea"},
   [MW_Property.SUPERCONDUCTING]                 = {order = "ba"},
   [MW_Property.ANTIMATTER_RESISTANT]            = {order = "za"},
   [MW_Property.TRANSDIMENSIONALLY_SENSITIVE]    = {order = "zb"},
   [MW_Property.IMERSIUM_GRADE_THERMALLY_STABLE] = {order = "ja"},
+})
+
+MW_Data.property_data = table.merge_subtables(MW_Data.property_data, { -- Staple on glow data
+  [MW_Property.IMERSIUM_ENHANCED_HIGH_TENSILE]  = {has_K2_glow_layer = true, K2_glow_tint = { r = 0.75, g = 0.3,  b = 1.0,  a = 1.0 } },   -- hex: c154ff = 0.7568627450980392, 0.32941176470588235, 1
+  [MW_Property.IMERSIUM_GRADE_LOAD_BEARING]     = {has_K2_glow_layer = true, K2_glow_tint = { r = 0.3,  g = 0.6,  b = 0.8,  a = 1.0 } },   -- hex: 74BBDA = 0.4549019607843137, 0.7333333333333333,  0.8549019607843137
+  [MW_Property.SUPERCONDUCTING]                 = {has_K2_glow_layer = true, K2_glow_tint = { r = 1.0,  g = 0.95, b = 0.53, a = 1.0 } },   -- hex: FFF188 = 1,                  0.9450980392156862,  0.5333333333333333
+  [MW_Property.ANTIMATTER_RESISTANT]            = {has_K2_glow_layer = true, K2_glow_tint = { r = 0.02, g = 1.0,  b = 0.0,  a = 1.0 } },   -- hex: 05FF00 = 0.0196078431372549, 1,                   0
+  [MW_Property.TRANSDIMENSIONALLY_SENSITIVE]    = {has_K2_glow_layer = true, K2_glow_tint = { r = 1.0,  g = 0.47, b = 0.01, a = 1.0 } },   -- hex: FF7703 = 1,                  0.4666666666666667,  0.011764705882352941
+  [MW_Property.IMERSIUM_GRADE_THERMALLY_STABLE] = {has_K2_glow_layer = true, K2_glow_tint = { r = 0.48, g = 0.0,  b = 1.0,  a = 1.0 } },   -- hex: 7900FF = 0.4745098039215686, 0,                   1
 })
 
 --[[ FIXME : Put something in here so that my system doesn't overwrite what's already in Krastorio 2 
@@ -218,6 +293,8 @@ MW_Data.metal_data = table.merge_subtables(MW_Data.metal_data, { -- Staple on th
 MW_Data.minisembler_data = table.merge_subtables(MW_Data.minisembler_data, { -- Staple on the mod data
   -- none
 })
+
+
 
 -- ****************************
 -- Settings Dependent Couplings
@@ -275,10 +352,12 @@ MW_Data.ore_data = table.merge_subtables(MW_Data.ore_data, { -- Pebble / Gravel 
     gravel_to_pebble_input = 1, gravel_to_pebble_output = GM_globals.pebble_to_gravel_ratio},
 })
 
+
+
 -- Metal Couplings
 -- **************
 
---[[
+--[[ 
 MW_Data.metal_data = table.merge_subtables(MW_Data.metal_data, { -- Set up sorting for smelted Rare Metal (how did it get smelted? MAGIC
   [MW_Metal.RARE_METALS] = {metal_sort_result =
     {metal = MW_Metal.TITANIUM, shape = MW_Stock.WAFER, amount = 1},
@@ -300,7 +379,7 @@ MW_Data.metal_data = table.merge_subtables(MW_Data.metal_data, { -- Staple on th
 })
 
 MW_Data.metal_data = table.merge_subtables(MW_Data.metal_data, { -- Staple on the Alloy Ore recipes
-  -- [MW_Metal.BRASS] = {alloy_ore_recipe = {{name = MW_Resource.COPPER, amount = 3}, {name = MW_Resource.ZINC,   amount = 1}}},
+  -- None
 })
 
 MW_Data.metal_data = table.merge_subtables(MW_Data.metal_data, { -- Staple on the Treated Metals data

@@ -36,11 +36,11 @@ MW_Data.MW_Metal = table.merge(MW_Data.MW_Metal, {
 })
 
 MW_Data.MW_Metal_Type = table.merge(MW_Data.MW_Metal_Type, {
-  -- MIXED = "mixed"
+  -- None
 })
 
 MW_Data.MW_Treatment_Type = table.merge(MW_Data.MW_Treatment_Type, {
-  -- IMERSIUM_INFUSION = "imersium-infusion"
+  -- none
 })
 
 MW_Data.MW_Stock = table.merge(MW_Data.MW_Stock, {

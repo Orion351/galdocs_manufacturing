@@ -291,7 +291,7 @@ for ore, ore_data in pairs(MW_Data.ore_data) do -- Make pebble -> gravel and gra
     data:extend(recipe_prototype)
   end
 
-  if ore_data.gravel_to_pebble_input then -- Pebble To Gravel
+  if ore_data.gravel_to_pebble_input then -- Gravel To Pebble
     local icons_data_recipe = { -- Make icon
       {
         icon = "__galdocs-manufacturing__/graphics/icons/intermediates/ore/" .. ore .. "/" .. ore .. "-pebble-1.png",
@@ -335,6 +335,11 @@ for ore, ore_data in pairs(MW_Data.ore_data) do -- Make pebble -> gravel and gra
     data:extend(recipe_prototype)
   end
 end
+
+
+
+-- Stocks
+-- ******
 
 for ore, ore_data in pairs(MW_Data.ore_data) do -- Make gravel to plate and pebble to plate recipes
   if ore_data.ore_type == MW_Data.MW_Metal_Type.ELEMENT then
@@ -429,13 +434,71 @@ for ore, ore_data in pairs(MW_Data.ore_data) do -- Make gravel to plate and pebb
   end
 end
 
--- Stocks
--- ******
-
+for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Add glow layer to K2 Stocks
+  local metal_data = MW_Data.metal_data[metal]
+  if metal_data.introduced == Mod_Names.K2 and metal_data.has_K2_glow_layer == true then
+    for stock, _ in pairs(stocks) do
+      local glow_me_up_fam = data.raw.item[metal .. "-" .. stock .. "-stock"]
+      for _, picture in pairs(glow_me_up_fam.pictures) do
+        local index = #picture.layers + 1
+        if GM_globals.show_property_badges == "all" then
+          index = index - 1
+        end
+        
+        table.insert(picture.layers, index, {
+          draw_as_light = true,
+          flags = { "light" },
+          blend_mode = "additive",
+          tint = metal_data.K2_glow_tint,
+          size = 64,
+          filename = "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/k2-stock-glow/k2-stock-glow-" .. stock .. "-stock.png",
+          scale = 0.25,
+          mipmap_count = 1,
+        })
+      end
+    end
+  end
+end
 
 
 
 -- Machined Parts
 -- **************
+
+for property, parts in pairs(MW_Data.property_machined_part_pairs) do -- Add glow layer to K2 Machined Parts
+  local property_data = MW_Data.property_data[property]
+  for part, _ in pairs(parts) do
+    local part_data = MW_Data.machined_part_data[part]
+    if property_data.has_K2_glow_layer and part_data.has_K2_glow_layer then
+      local glow_me_up_fam = data.raw.item[property .. "-" .. part .. "-machined-part"]
+      glow_me_up_fam.pictures = {
+        {
+          layers = {
+            {
+              size = 64,
+              filename = "__galdocs-manufacturing__/graphics/icons/intermediates/machined-parts/" .. property .. "/" .. property .. "-" .. part .. ".png",
+              scale = 0.25,
+              mipmap_count = 1,
+            },
+            {
+              draw_as_light = true,
+              flags = { "light" },
+              blend_mode = "additive",
+              tint = tint,
+              size = 64,
+              filename = "__galdocs-manufacturing__/graphics/icons/intermediates/machined-parts/k2-machined-parts-glow/k2-machined-parts-glow-" .. part .. ".png",
+              scale = 0.25,
+              mipmap_count = 1,
+            }
+          }
+        }
+      }
+      if GM_globals.show_property_badges == "all" then
+        table.insert(glow_me_up_fam.pictures[1].layers, Build_badge_pictures(property, GM_globals.property_badge_shift))
+      end
+    end
+  end
+end
+
 
 return MW_Data
