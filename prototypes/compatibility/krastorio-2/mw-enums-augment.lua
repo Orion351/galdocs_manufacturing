@@ -8,13 +8,11 @@ MW_Data.MW_Resource = table.merge(MW_Data.MW_Resource, {
   COKE             = "coke",
 })
 
-MW_Data.MW_Ore_Shape = {
-  ORE      = "ore",
+MW_Data.MW_Ore_Shape = table.merge(MW_Data.MW_Ore_Shape, {
   ENRICHED = "enriched",
-  PEBBLE   = "pebble"
-}
+})
 
-MW_Data.MW_Ore_Type = table.merge({MW_Data.MW_Ore_Type, 
+MW_Data.MW_Ore_Type = table.merge(MW_Data.MW_Ore_Type, {
   MIXED    = "mixed",
 })
 
@@ -46,7 +44,7 @@ MW_Data.MW_Treatment_Type = table.merge(MW_Data.MW_Treatment_Type, {
 })
 
 MW_Data.MW_Stock = table.merge(MW_Data.MW_Stock, {
-  -- WAFER = "wafer"
+  -- None
 })
 
 MW_Data.MW_Machined_Part = table.merge(MW_Data.MW_Machined_Part, {

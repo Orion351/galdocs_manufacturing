@@ -19,6 +19,12 @@ return {
 		ELEMENT  = "element",
 	},
 
+	MW_Ore_Shape = {
+		ORE      = "ore",
+		PEBBLE   = "pebble",
+		GRAVEL   = "gravel",
+	},
+
 	MW_Metal = {
 		-- Elemental
 		IRON             = "iron",             -- Fe
@@ -61,7 +67,8 @@ return {
 		FINE_GEAR       = "fine-gear",
 		PIPE            = "pipe",
 		FINE_PIPE       = "fine-pipe",
-		PLATING_BILLET	= "plating-billet"
+		PLATING_BILLET	= "plating-billet",
+		WAFER						= "wafer",
 	},
 
 	MW_Machined_Part = {

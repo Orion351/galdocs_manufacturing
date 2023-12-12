@@ -2,7 +2,7 @@
 -- Settings
 -- ********
 
-local advanced = settings.startup["gm-advanced-mode"].value
+local advanced = GM_globals.advanced
 
 
 
@@ -160,6 +160,16 @@ MW_Data.metal_data = table.merge_subtables(MW_Data.metal_data, { -- Staple on mo
   [MW_Metal.RESONANT_IMERSIUM] = {introduced = Mod_Names.K2},
 })
 
+MW_Data.metal_data = table.merge_subtables(MW_Data.metal_data, { -- Staple on mod data
+  [MW_Metal.RARE_METALS]       = {order = "za"},
+  [MW_Metal.OSMIUM]            = {order = "zb"},
+  [MW_Metal.NIOBIUM]           = {order = "zc"},
+  [MW_Metal.IMERSIUM]          = {order = "zd"},
+  [MW_Metal.NIOBIMERSIUM]      = {order = "zf"},
+  [MW_Metal.STABLE_IMERSIUM]   = {order = "zg"},
+  [MW_Metal.RESONANT_IMERSIUM] = {order = "ze"},
+})
+
 -- Stock Data
 -- **********
 
@@ -184,6 +194,15 @@ MW_Data.property_data = table.group_key_assign(MW_Data.property_data, {
   [MW_Property.ANTIMATTER_RESISTANT]            = {introduced = Mod_Names.K2},
   [MW_Property.TRANSDIMENSIONALLY_SENSITIVE]    = {introduced = Mod_Names.K2},
   [MW_Property.IMERSIUM_GRADE_THERMALLY_STABLE] = {introduced = Mod_Names.K2},
+})
+
+MW_Data.property_data = table.group_key_assign(MW_Data.property_data, {
+  [MW_Property.IMERSIUM_ENHANCED_HIGH_TENSILE]  = {order = "ga"},
+  [MW_Property.IMERSIUM_GRADE_LOAD_BEARING]     = {order = "ea"},
+  [MW_Property.SUPERCONDUCTING]                 = {order = "ba"},
+  [MW_Property.ANTIMATTER_RESISTANT]            = {order = "za"},
+  [MW_Property.TRANSDIMENSIONALLY_SENSITIVE]    = {order = "zb"},
+  [MW_Property.IMERSIUM_GRADE_THERMALLY_STABLE] = {order = "ja"},
 })
 
 --[[ FIXME : Put something in here so that my system doesn't overwrite what's already in Krastorio 2 
@@ -216,26 +235,44 @@ MW_Data.ore_data = table.merge_subtables(MW_Data.ore_data, { -- Couple ores to o
 })
 
 MW_Data.ore_data = table.merge_subtables(MW_Data.ore_data, { -- Couple ores to ore shapes
-  [MW_Resource.COPPER]      = {shapes = {MW_Ore_Shape.ORE, MW_Ore_Shape.ENRICHED                     }},
-  [MW_Resource.IRON]        = {shapes = {MW_Ore_Shape.ORE, MW_Ore_Shape.ENRICHED                     }},
-  [MW_Resource.LEAD]        = {shapes = {MW_Ore_Shape.ORE, MW_Ore_Shape.ENRICHED                     }},
-  [MW_Resource.TITANIUM]    = {shapes = {MW_Ore_Shape.ORE, MW_Ore_Shape.ENRICHED, MW_Ore_Shape.PEBBLE}},
-  [MW_Resource.ZINC]        = {shapes = {MW_Ore_Shape.ORE, MW_Ore_Shape.ENRICHED                     }},
-  [MW_Resource.NICKEL]      = {shapes = {MW_Ore_Shape.ORE, MW_Ore_Shape.ENRICHED                     }},
-  [MW_Resource.RARE_METALS] = {shapes = {MW_Ore_Shape.ORE, MW_Ore_Shape.ENRICHED                     }},
+  [MW_Resource.COPPER]      = {shapes = {MW_Ore_Shape.ORE, MW_Ore_Shape.ENRICHED, MW_Ore_Shape.PEBBLE, MW_Ore_Shape.GRAVEL}},
+  [MW_Resource.IRON]        = {shapes = {MW_Ore_Shape.ORE, MW_Ore_Shape.ENRICHED, MW_Ore_Shape.PEBBLE, MW_Ore_Shape.GRAVEL}},
+  [MW_Resource.LEAD]        = {shapes = {MW_Ore_Shape.ORE, MW_Ore_Shape.ENRICHED, MW_Ore_Shape.PEBBLE, MW_Ore_Shape.GRAVEL}},
+  [MW_Resource.TITANIUM]    = {shapes = {MW_Ore_Shape.ORE, MW_Ore_Shape.ENRICHED, MW_Ore_Shape.PEBBLE, MW_Ore_Shape.GRAVEL}},
+  [MW_Resource.ZINC]        = {shapes = {MW_Ore_Shape.ORE, MW_Ore_Shape.ENRICHED, MW_Ore_Shape.PEBBLE, MW_Ore_Shape.GRAVEL}},
+  [MW_Resource.NICKEL]      = {shapes = {MW_Ore_Shape.ORE, MW_Ore_Shape.ENRICHED, MW_Ore_Shape.PEBBLE, MW_Ore_Shape.GRAVEL}},
+  [MW_Resource.RARE_METALS] = {shapes = {MW_Ore_Shape.ORE, MW_Ore_Shape.ENRICHED,                                         }},
 
-  [MW_Resource.OSMIUM]      = {shapes = {MW_Ore_Shape.ORE, MW_Ore_Shape.ENRICHED, MW_Ore_Shape.PEBBLE}},
-  [MW_Resource.NIOBIUM]     = {shapes = {MW_Ore_Shape.ORE, MW_Ore_Shape.ENRICHED, MW_Ore_Shape.PEBBLE}},
+  [MW_Resource.OSMIUM]      = {shapes = {MW_Ore_Shape.ORE, MW_Ore_Shape.ENRICHED, MW_Ore_Shape.PEBBLE, MW_Ore_Shape.GRAVEL}},
+  [MW_Resource.NIOBIUM]     = {shapes = {MW_Ore_Shape.ORE, MW_Ore_Shape.ENRICHED, MW_Ore_Shape.PEBBLE, MW_Ore_Shape.GRAVEL}},
 })
 
-MW_Data.ore_data = table.merge_subtables(MW_Data.ore_data, { -- Set up crushing for Rare Metal Ore and Enriched Rare Metal Ore
-  [MW_Resource.RARE_METALS] = {ore_crushing_result = 
-    {metal = MW_Resource.TITANIUM, shape = MW_Resource.PEBBLE, count = 1},
-    {metal = MW_Resource.OSMIUM,   shape = MW_Resource.ORE,    count = 1},},
-  [MW_Resource.RARE_METALS] = {enriched_crushing_result = 
-    {metal = MW_Resource.TITANIUM, shape = MW_Resource.PEBBLE, count = 3},
-    {metal = MW_Resource.OSMIUM,   shape = MW_Resource.ORE,    count = 2},
-    {metal = MW_Resource.NIOBIUM,  shape = MW_Resource.PEBBLE, count = 3},},
+MW_Data.ore_data = table.merge_subtables(MW_Data.ore_data, { -- Set up crushing for Rare Metal Ore
+  [MW_Resource.RARE_METALS] = {
+    ore_crushing_result = {
+      {metal = MW_Resource.NIOBIUM,  shape = MW_Ore_Shape.PEBBLE, amount = 1},
+      {metal = MW_Resource.TITANIUM, shape = MW_Ore_Shape.ORE,    amount = 1},},
+    ore_crushing_ingredient = {metal = MW_Resource.RARE_METALS, shape = MW_Ore_Shape.ORE, amount = 1}
+  },
+})
+
+MW_Data.ore_data = table.merge_subtables(MW_Data.ore_data, { -- Set up crushing for Enriched Rare Metal Ore
+  [MW_Resource.RARE_METALS] = {
+    enriched_crushing_result = {
+      {metal = MW_Resource.TITANIUM, shape = MW_Ore_Shape.ORE,    amount = 1},
+      {metal = MW_Resource.OSMIUM,   shape = MW_Ore_Shape.PEBBLE, amount = 3},
+      {metal = MW_Resource.NIOBIUM,  shape = MW_Ore_Shape.PEBBLE, amount = 3},},
+    enriched_crushing_ingredient = {metal = MW_Resource.RARE_METALS, shape = MW_Ore_Shape.ENRICHED, amount = 1}
+  },
+})
+
+MW_Data.ore_data = table.merge_subtables(MW_Data.ore_data, { -- Pebble / Gravel interface
+  [MW_Resource.OSMIUM] = {
+    pebble_to_gravel_input = GM_globals.pebble_to_gravel_ratio, pebble_to_gravel_output = 1, 
+    gravel_to_pebble_input = 1, gravel_to_pebble_output = GM_globals.pebble_to_gravel_ratio},
+  [MW_Resource.NIOBIUM] = {
+    pebble_to_gravel_input = GM_globals.pebble_to_gravel_ratio, pebble_to_gravel_output = 1, 
+    gravel_to_pebble_input = 1, gravel_to_pebble_output = GM_globals.pebble_to_gravel_ratio},
 })
 
 -- Metal Couplings
@@ -244,20 +281,21 @@ MW_Data.ore_data = table.merge_subtables(MW_Data.ore_data, { -- Set up crushing 
 --[[
 MW_Data.metal_data = table.merge_subtables(MW_Data.metal_data, { -- Set up sorting for smelted Rare Metal (how did it get smelted? MAGIC
   [MW_Metal.RARE_METALS] = {metal_sort_result =
-    {metal = MW_Metal.TITANIUM, shape = MW_Stock.WAFER, count = 1},
-    {metal = MW_Metal.OSMIUM,   shape = MW_Stock.PLATE, count = 1},}
+    {metal = MW_Metal.TITANIUM, shape = MW_Stock.WAFER, amount = 1},
+    {metal = MW_Metal.OSMIUM,   shape = MW_Stock.PLATE, amount = 1},}
 })
 --]]
 
 MW_Data.metal_data = table.merge_subtables(MW_Data.metal_data, { -- Staple on the Alloy Plate
-  [MW_Metal.STEEL]             = {alloy_plate_recipe = {{name = MW_Metal.IRON,     amount = 5}, {name = MW_Resource.COKE,            amount = 1}}                                                                      },
-  [MW_Metal.IMERSIUM]          = {alloy_plate_recipe = {{name = MW_Metal.TITANIUM, amount = 6}, {name = MW_Resource.IMERSITE_POWDER, amount = 9}},
+  [MW_Metal.STEEL]             = {alloy_plate_recipe = {{name = MW_Metal.IRON, shape = MW_Stock.PLATE, amount = 5}, {name = MW_Resource.COKE, amount = 1}}},
+  
+  [MW_Metal.IMERSIUM]          = {alloy_plate_recipe = {{name = MW_Metal.TITANIUM, shape = MW_Stock.PLATE, amount = 6}, {name = MW_Resource.IMERSITE_POWDER, amount = 9}},
                                   {alloy_plate_recipe_output = {{name = MW_Metal.IMERSIUM, amount = 6}}}},
-  [MW_Metal.RESONANT_IMERSIUM] = {alloy_plate_recipe = {{name = MW_Metal.STEEL, amount = 3}, {name = MW_Metal.OSMIUM, amount = 6}, {name = MW_Resource.IMERSITE_POWDER, amount = 12}}, 
+  [MW_Metal.RESONANT_IMERSIUM] = {alloy_plate_recipe = {{name = MW_Metal.STEEL, shape = MW_Stock.PLATE, amount = 3}, {name = MW_Metal.OSMIUM, shape = MW_Stock.PLATE, amount = 6}, {name = MW_Resource.IMERSITE_POWDER, amount = 12}}, 
                                   {alloy_plate_recipe_output = {{name = MW_Metal.IMERSIUM, amount = 9}}}},
-  [MW_Metal.STABLE_IMERSIUM]   = {alloy_plate_recipe = {{name = MW_Metal.INVAR, amount = 5}, {name = MW_Resource.IMERSITE_POWDER, amount = 3}}, 
+  [MW_Metal.STABLE_IMERSIUM]   = {alloy_plate_recipe = {{name = MW_Metal.INVAR, shape = MW_Stock.PLATE, amount = 5}, {name = MW_Resource.IMERSITE_POWDER, amount = 3}}, 
                                   {alloy_plate_recipe_output = {{name = MW_Metal.IMERSIUM, amount = 5}}}},
-  [MW_Metal.NIOBIMERSIUM]      = {alloy_plate_recipe = {{name = MW_Metal.NIOBIUM, amount = 2}, {name = MW_Resource.IMERSITE_POWDER, amount = 8}}, 
+  [MW_Metal.NIOBIMERSIUM]      = {alloy_plate_recipe = {{name = MW_Metal.NIOBIUM, shape = MW_Stock.PLATE, amount = 2}, {name = MW_Resource.IMERSITE_POWDER, amount = 8}}, 
                                   {alloy_plate_recipe_output = {{name = MW_Metal.IMERSIUM, amount = 2}}}},
 })
 

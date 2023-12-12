@@ -19,7 +19,7 @@ local overhaul_modpack_data = {  -- Data for supported overhauls FIXME: Move to 
     dir_name = "krastorio-2",
     titles = {"Krastorio2", },
     passes = {
-      metalworking = {enums = true, data = true, code = false}
+      metalworking = {enums = true, data = true, code = true}
     }
   }
 }
