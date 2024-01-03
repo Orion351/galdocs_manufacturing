@@ -139,7 +139,7 @@ MW_Data.metal_data = table.group_key_assign(MW_Data.metal_data, { -- Staple on v
 -- FIXME : Actually tie these to technologies
 MW_Data.metal_data = table.merge_subtables(MW_Data.metal_data, { -- Staple on the tech name data
   [MW_Metal.RARE_METALS]       = {tech_stock = "starter",                               tech_machined_part = "starter"                                        },
-  
+
   [MW_Metal.OSMIUM]            = {tech_stock = "gm-osmium-stock-processing",            tech_machined_part = "gm-osmium-machined-part-processing",            },
   [MW_Metal.NIOBIUM]           = {tech_stock = "gm-niobium-stock-processing",           tech_machined_part = "gm-niobium-machined-part-processing",           },
 
@@ -327,8 +327,7 @@ MW_Data.ore_data = table.merge_subtables(MW_Data.ore_data, { -- Couple ores to o
 MW_Data.ore_data = table.merge_subtables(MW_Data.ore_data, { -- Set up crushing for Rare Metal Ore
   [MW_Resource.RARE_METALS] = {
     ore_crushing_result = {
-      {metal = MW_Resource.NIOBIUM,  shape = MW_Ore_Shape.PEBBLE, amount = 1},
-      {metal = MW_Resource.TITANIUM, shape = MW_Ore_Shape.ORE,    amount = 1},},
+      {metal = MW_Resource.NIOBIUM,  shape = MW_Ore_Shape.PEBBLE, amount = 4},},
     ore_crushing_ingredient = {metal = MW_Resource.RARE_METALS, shape = MW_Ore_Shape.ORE, amount = 1}
   },
 })
@@ -336,7 +335,6 @@ MW_Data.ore_data = table.merge_subtables(MW_Data.ore_data, { -- Set up crushing 
 MW_Data.ore_data = table.merge_subtables(MW_Data.ore_data, { -- Set up crushing for Enriched Rare Metal Ore
   [MW_Resource.RARE_METALS] = {
     enriched_crushing_result = {
-      {metal = MW_Resource.TITANIUM, shape = MW_Ore_Shape.ORE,    amount = 1},
       {metal = MW_Resource.OSMIUM,   shape = MW_Ore_Shape.PEBBLE, amount = 3},
       {metal = MW_Resource.NIOBIUM,  shape = MW_Ore_Shape.PEBBLE, amount = 3},},
     enriched_crushing_ingredient = {metal = MW_Resource.RARE_METALS, shape = MW_Ore_Shape.ENRICHED, amount = 1}
@@ -398,8 +396,11 @@ MW_Data.metal_properties_pairs = table.group_key_assign(MW_Data.metal_properties
   [MW_Metal.RESONANT_IMERSIUM] = map{MW_Property.ANTIMATTER_RESISTANT, MW_Property.TRANSDIMENSIONALLY_SENSITIVE},
 })
 
-MW_Data.multi_property_pairs = table.merge_subtables(MW_Data.multi_property_pairs, { -- Two or more properties in a table
-  -- None
+table.merge(MW_Data.multi_property_pairs, { -- Two or more properties in a table
+  {MW_Property.RADIATION_RESISTANT, MW_Property.HIGH_TENSILE},
+  {MW_Property.RADIATION_RESISTANT, MW_Property.VERY_HIGH_TENSILE},
+  {MW_Property.CORROSION_RESISTANT, MW_Property.VERY_HIGH_TENSILE},
+  {MW_Property.CORROSION_RESISTANT, MW_Property.ELECTRICALLY_CONDUCTIVE}
 })
 
 if advanced then -- metal_stocks_pairs : [metal | list of stocks that it has]
@@ -450,13 +451,11 @@ if advanced then -- property_machined_part_pairs : [property | list of machined 
 end
 
 MW_Data.property_downgrades = { -- Make property tier downgrade list things
-  [MW_Property.LOAD_BEARING]            = {MW_Property.IMERSIUM_GRADE_LOAD_BEARING, MW_Property.HEAVY_LOAD_BEARING, MW_Property.VERY_HEAVY_LOAD_BEARING},
-  [MW_Property.HIGH_TENSILE]            = {MW_Property.IMERSIUM_ENHANCED_HIGH_TENSILE, MW_Property.VERY_HIGH_TENSILE},
+  [MW_Property.LOAD_BEARING]            = {MW_Property.HEAVY_LOAD_BEARING, MW_Property.VERY_HEAVY_LOAD_BEARING, MW_Property.IMERSIUM_GRADE_LOAD_BEARING},
+  [MW_Property.HIGH_TENSILE]            = {MW_Property.VERY_HIGH_TENSILE, MW_Property.IMERSIUM_ENHANCED_HIGH_TENSILE},
   [MW_Property.ELECTRICALLY_CONDUCTIVE] = {MW_Property.SUPERCONDUCTING},
-  [MW_Property.THERMALLY_STABLE]        = {MW_Property.IMERSIUM_GRADE_THERMALLY_STABLE},  
+  [MW_Property.THERMALLY_STABLE]        = {MW_Property.IMERSIUM_GRADE_THERMALLY_STABLE},
 }
-
-
 
 -- ***************
 -- Return the data

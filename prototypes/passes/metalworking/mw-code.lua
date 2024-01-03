@@ -28,13 +28,13 @@ local MW_Data = GM_global_mw_data.MW_Data
 -- Pre-processing data
 -- *******************
 
-local multi_property_with_key_pairs = {}
-local multi_property_metal_pairs = {}
+MW_Data.multi_property_with_key_pairs = {}
+MW_Data.multi_property_metal_pairs = {}
 for _, multi_properties in pairs(MW_Data.multi_property_pairs) do -- Pair metals with multi-property sets
   local property_key = table.concat_values(multi_properties, "-and-")
 
-  multi_property_with_key_pairs[property_key] = multi_properties
-  multi_property_metal_pairs[property_key] = {}
+  MW_Data.multi_property_with_key_pairs[property_key] = multi_properties
+  MW_Data.multi_property_metal_pairs[property_key] = {}
 
   for metal, properties in pairs(MW_Data.metal_properties_pairs) do
     local metal_works = true
@@ -45,10 +45,11 @@ for _, multi_properties in pairs(MW_Data.multi_property_pairs) do -- Pair metals
       end
     end
     if metal_works then
-      table.insert(multi_property_metal_pairs[property_key], #multi_property_metal_pairs[property_key], metal)
+      table.insert(MW_Data.multi_property_metal_pairs[property_key], #MW_Data.multi_property_metal_pairs[property_key], metal)
     end
   end
 end
+
 
 
 
@@ -1497,7 +1498,7 @@ for property, parts in pairs(MW_Data.property_machined_part_pairs) do -- Make th
 end
 
 order_count = 0
-for property_key, multi_properties in pairs(multi_property_with_key_pairs) do -- Make [Multi-Property] [Machined Part] Subgroups.
+for property_key, multi_properties in pairs(MW_Data.multi_property_with_key_pairs) do -- Make [Multi-Property] [Machined Part] Subgroups.
   data:extend({
     {
       type = "item-subgroup",
@@ -1510,8 +1511,8 @@ for property_key, multi_properties in pairs(multi_property_with_key_pairs) do --
   order_count = order_count + 1
 end
 
-for property_key, multi_properties in pairs(multi_property_with_key_pairs) do -- Make Multi-property machined part items and recipes.
-  if multi_property_metal_pairs[property_key] then
+for property_key, multi_properties in pairs(MW_Data.multi_property_with_key_pairs) do -- Make Multi-property machined part items and recipes.
+  if MW_Data.multi_property_metal_pairs[property_key] then
     --
     local combined_parts_list = {}
     for _, multi_property in pairs(multi_properties) do
@@ -1520,7 +1521,7 @@ for property_key, multi_properties in pairs(multi_property_with_key_pairs) do --
       end
     end
 
-    for _, metal in pairs(multi_property_metal_pairs[property_key]) do
+    for _, metal in pairs(MW_Data.multi_property_metal_pairs[property_key]) do
       for part, _ in pairs(combined_parts_list) do
         if MW_Data.metal_stocks_pairs[metal][MW_Data.machined_parts_recipe_data[part].precursor] then -- work out how to fan out the machined parts
 
@@ -1532,7 +1533,7 @@ for property_key, multi_properties in pairs(multi_property_with_key_pairs) do --
 
           -- Populate metal_list
           local metal_list = {""}
-          for _, possible_metal in pairs(multi_property_metal_pairs[property_key]) do
+          for _, possible_metal in pairs(MW_Data.multi_property_metal_pairs[property_key]) do
             table.insert(metal_list, " - [item=" .. possible_metal .. "-" .. MW_Data.machined_parts_recipe_data[part].precursor ..  "-stock]  ")
             table.insert(metal_list, {"gm.metal-stock-item-name", {"gm." .. possible_metal}, {"gm." .. MW_Data.machined_parts_recipe_data[part].precursor}})
             table.insert(metal_list, {"gm.line-separator"})
@@ -1817,7 +1818,7 @@ for property, property_downgrade_list in pairs(MW_Data.property_downgrades) do -
   end
 end
 
-for property_key, multi_properties in pairs(multi_property_with_key_pairs) do -- Make Multi-property machined part downgrade recipes.
+for property_key, multi_properties in pairs(MW_Data.multi_property_with_key_pairs) do -- Make Multi-property machined part downgrade recipes.
 
   for _, multi_property in pairs(multi_properties) do
     for part, _ in pairs(MW_Data.property_machined_part_pairs[multi_property]) do
@@ -1890,17 +1891,6 @@ end
 
 -- Minisemblers
 -- ============
-
-local technology_list = {}
-for minisembler, _ in pairs(MW_Data.minisemblers_recipe_parameters) do -- put minisemblers in the appropriate tech unlock
-  table.insert(
-    technology_list, #technology_list,
-    {
-      type = "unlock-recipe",
-      recipe = "gm-" .. minisembler .. "-recipe"
-    }
-  )
-end
 
 data:extend({ -- Make the minisemblers item group and technology
   { -- item subgroup
@@ -2535,395 +2525,6 @@ for _, tier in pairs(MW_Data.MW_Minisembler_Tier) do -- make the minisembler ent
 end
 
 
-
--- Technology
--- ==========
-
-data:extend({ -- Make the technologies for the stocks and machined parts
-  { -- annealed copper stock processing
-    type = "technology",
-    name = "gm-annealed-copper-stock-processing",
-    icon_size = 256,
-    icon = "__galdocs-manufacturing__/graphics/technology-icons/annealed-copper-processing.png",
-    prerequisites = {"logistic-science-pack"},
-    unit =
-    {
-      count = 25,
-      ingredients =
-      {
-        {"automation-science-pack", 1},
-        {"logistic-science-pack", 1},
-      },
-      time = 25
-    },
-    effects = {},
-    order = "c-a-a",
-    localised_name = {"gm.technology-stock-processing-name", {"gm.annealed-copper"}, {"gm.stocks"}, {"gm.processing"}},
-    localised_description = {"gm.technology-stock-processing-description", {"gm.annealed-copper"}, {"gm.stocks"}},
-  },
-  { -- annealed copper machined part processing
-  type = "technology",
-  name = "gm-annealed-copper-machined-part-processing",
-  icon_size = 256,
-  icon = "__galdocs-manufacturing__/graphics/technology-icons/annealed-copper-machined-part-processing.png",
-  prerequisites = {"gm-annealed-copper-stock-processing"},
-  unit =
-  {
-    count = 25,
-    ingredients =
-    {
-      {"automation-science-pack", 1},
-      {"logistic-science-pack", 1},
-    },
-    time = 25
-  },
-  effects = {},
-  order = "c-a-b",
-  localised_name = {"gm.technology-machined-part-processing-name", {"gm.annealed-copper"}, {"gm.machined-parts"}, {"gm.processing"}},
-  localised_description = {"gm.technology-machined-part-processing-description", {"gm.annealed-copper"}, {"gm.machined-parts"}},
-  },
-  { -- galvanized steel stock processing
-    type = "technology",
-    name = "gm-galvanized-steel-stock-processing",
-    icon_size = 256,
-    icon = "__galdocs-manufacturing__/graphics/technology-icons/galvanized-steel-processing.png",
-    prerequisites = {"steel-processing"},
-    unit =
-    {
-      count = 25,
-      ingredients =
-      {
-        {"automation-science-pack", 1},
-      },
-      time = 20
-    },
-    effects = {},
-    order = "c-a-a",
-    localised_name = {"gm.technology-stock-processing-name", {"gm.galvanized-steel"}, {"gm.stocks"}, {"gm.processing"}},
-    localised_description = {"gm.technology-stock-processing-description", {"gm.galvanized-steel"}, {"gm.stocks"}},
-  },
-  { -- galvanized steel machined part processing
-    type = "technology",
-    name = "gm-galvanized-steel-machined-part-processing",
-    icon_size = 256,
-    icon = "__galdocs-manufacturing__/graphics/technology-icons/galvanized-steel-machined-part-processing.png",
-    prerequisites = {"gm-galvanized-steel-stock-processing"},
-    unit =
-    {
-      count = 25,
-      ingredients =
-      {
-        {"automation-science-pack", 1},
-      },
-      time = 20
-    },
-    effects = {},
-    order = "c-a-b",
-    localised_name = {"gm.technology-machined-part-processing-name", {"gm.galvanized-steel"}, {"gm.machined-parts"}, {"gm.processing"}},
-    localised_description = {"gm.technology-machined-part-processing-description", {"gm.galvanized-steel"}, {"gm.machined-parts"}},
-  },
-  { -- lead stock processing
-    type = "technology",
-    name = "gm-lead-stock-processing",
-    icon_size = 256,
-    icon = "__galdocs-manufacturing__/graphics/technology-icons/lead-processing.png",
-    prerequisites = {"chemical-science-pack", "concrete"},
-    unit =
-    {
-      ingredients =
-      {
-        {"automation-science-pack", 1},
-        {"logistic-science-pack", 1},
-        {"chemical-science-pack", 1}
-      },
-      time = 30,
-      count = 25
-    },
-    effects = {},
-    order = "e-p-b-c",
-    localised_name = {"gm.technology-stock-processing-name", {"gm.lead"}, {"gm.stocks"}, {"gm.processing"}},
-    localised_description = {"gm.technology-stock-processing-description", {"gm.lead"}, {"gm.stocks"}},
-  },
-  { -- lead machined part processing
-    type = "technology",
-    name = "gm-lead-machined-part-processing",
-    icon_size = 256,
-    icon = "__galdocs-manufacturing__/graphics/technology-icons/lead-machined-part-processing.png",
-    prerequisites = {"gm-lead-stock-processing"},
-    unit =
-    {
-      ingredients =
-      {
-        {"automation-science-pack", 1},
-        {"logistic-science-pack", 1},
-        {"chemical-science-pack", 1}
-      },
-      time = 30,
-      count = 25
-    },
-    effects = {},
-    order = "e-p-b-d",
-    localised_name = {"gm.technology-machined-part-processing-name", {"gm.lead"}, {"gm.machined-parts"}, {"gm.processing"}},
-    localised_description = {"gm.technology-machined-part-processing-description", {"gm.lead"}, {"gm.machined-parts"}},
-  },
-  { -- nickel and invar stock processing
-    type = "technology",
-    name = "gm-nickel-and-invar-stock-processing",
-    icon_size = 256,
-    icon = "__galdocs-manufacturing__/graphics/technology-icons/nickel-and-invar-processing.png",
-    prerequisites = {"steel-processing", "gm-galvanized-steel-machined-part-processing"},
-    unit =
-    {
-      ingredients =
-      {
-        {"automation-science-pack", 1},
-      },
-      time = 30,
-      count = 25
-    },
-    effects = {},
-    order = "c-a-b",
-    localised_name = {"gm.technology-dual-stock-processing-name", {"gm.nickel"}, {"gm.invar"}, {"gm.stocks"}, {"gm.processing"}},
-    localised_description = {"gm.technology-dual-stock-processing-description", {"gm.nickel"}, {"gm.invar"}, {"gm.stocks"}},
-  },
-  { -- nickel and invar machined part processing
-    type = "technology",
-    name = "gm-nickel-and-invar-machined-part-processing",
-    icon_size = 256,
-    icon = "__galdocs-manufacturing__/graphics/technology-icons/nickel-and-invar-machined-part-processing.png",
-    prerequisites = {"gm-nickel-and-invar-stock-processing"},
-    unit =
-    {
-      ingredients =
-      {
-        {"automation-science-pack", 1},
-      },
-      time = 30,
-      count = 25
-    },
-    effects = {},
-    order = "c-a-b",
-    localised_name = {"gm.technology-dual-machined-part-processing-name", {"gm.nickel"}, {"gm.invar"}, {"gm.machined-parts"}, {"gm.processing"}},
-    localised_description = {"gm.technology-dual-machined-part-processing-description", {"gm.nickel"}, {"gm.invar"}, {"gm.machined-parts"}},
-  },
-  { -- steel machined part processing
-    type = "technology",
-    name = "steel-machined-part-processing",
-    icon_size = 256,
-    icon = "__galdocs-manufacturing__/graphics/technology-icons/steel-machined-part-processing.png",
-    prerequisites = {"steel-processing"},
-    effects = {},
-    unit =
-    {
-      count = 25,
-      ingredients = {{"automation-science-pack", 1}},
-      time = 5
-    },
-    order = "c-b",
-    localised_name = {"gm.technology-machined-part-processing-name", {"gm.steel"}, {"gm.machined-parts"}, {"gm.processing"}},
-    localised_description = {"gm.technology-machined-part-processing-description", {"gm.steel"}, {"gm.machined-parts"}},
-  },
-  { -- titanium stock processing
-    type = "technology",
-    name = "gm-titanium-stock-processing",
-    icon_size = 256,
-    icon = "__galdocs-manufacturing__/graphics/technology-icons/titanium-processing.png",
-    prerequisites = {"lubricant"},
-    unit =
-    {
-      count = 25,
-      ingredients =
-      {
-        {"automation-science-pack", 1},
-        {"logistic-science-pack", 1},
-        {"chemical-science-pack", 1}
-      },
-      time = 30
-    },
-    effects = {},
-    order = "b-b-a",
-    localised_name = {"gm.technology-stock-processing-name", {"gm.titanium"}, {"gm.stocks"}, {"gm.processing"}},
-    localised_description = {"gm.technology-stock-processing-description", {"gm.titanium"}, {"gm.stocks"}},
-  },
-  { -- titanium machined part processing
-    type = "technology",
-    name = "gm-titanium-machined-part-processing",
-    icon_size = 256,
-    icon = "__galdocs-manufacturing__/graphics/technology-icons/titanium-machined-part-processing.png",
-    prerequisites = {"gm-titanium-stock-processing"},
-    unit =
-    {
-      count = 25,
-      ingredients =
-      {
-        {"automation-science-pack", 1},
-        {"logistic-science-pack", 1},
-        {"chemical-science-pack", 1}
-      },
-      time = 30
-    },
-    effects = {},
-    order = "b-b-b",
-    localised_name = {"gm.technology-machined-part-processing-name", {"gm.titanium"}, {"gm.machined-parts"}, {"gm.processing"}},
-    localised_description = {"gm.technology-machined-part-processing-description", {"gm.titanium"}, {"gm.machined-parts"}},
-  },
-})
-
-data:extend({ -- Early Inserter Stack Size Bonus
-  {
-    type = "technology",
-    name = "gm-early-inserter-capacity-bonus",
-    icons = util.technology_icon_constant_stack_size("__base__/graphics/technology/inserter-capacity.png"),
-
-    icon_size = 256, icon_mipmaps = 4,
-
-    prerequisites = {"gm-technology-minisemblers"},
-    unit =
-    {
-      count = 40,
-      ingredients =
-      {
-        {"automation-science-pack", 1},
-      },
-      time = 10
-    },
-    effects = {
-      {
-        type = "inserter-stack-size-bonus",
-        modifier = 1
-      },
-    },
-    order = "c-a-a",
-    localised_name = {"gm.technology-early-inserter-capacity-bonus"},
-  }
-})
-
-data:extend({ -- electric metal machining minisembler technology
-  {
-    type = "technology",
-    name = "gm-technology-minisemblers",
-    icon_size = 256, icon_mipmaps = 4,
-    icon = "__galdocs-manufacturing__/graphics/technology-icons/lathe-technology-icon.png",
-    effects = technology_list,
-    unit =
-    {
-      count = 10,
-      ingredients = {{"automation-science-pack", 1}},
-      time = 10
-    },
-    ignore_tech_cost_multiplier = true,
-    order = "a-b-a",
-    localised_name = {"gm.technology-metal-machining-minisembler"}
-  }
-})
-
-data.raw.technology["automation"].prerequisites = {"gm-technology-minisemblers"} -- FIXME: Put this in Data-Updates.lua
-
-for metal, metal_data in pairs(MW_Data.metal_data) do -- Add Stocks and Machined Parts into their appropriate technologies
-  if metal_data.tech_stock ~= "starter" then -- Add Stocks into their appropriate technologies
-    -- Cache a reference to the technology
-    local stock_technology_effects = data.raw.technology[metal_data.tech_stock].effects
-
-    -- Insert each stock recipe into the relevant tech
-    for stock, _ in pairs(MW_Data.metal_stocks_pairs[metal]) do
-      if stock == MW_Data.MW_Stock.PLATE then
-        if metal_data.alloy_plate_recipe then table.insert(stock_technology_effects, {type = "unlock-recipe", recipe = metal .. "-" .. stock .. "-stock-from-plate"}) end
-        if metal_data.alloy_ore_recipe then table.insert(stock_technology_effects, {type = "unlock-recipe", recipe = metal .. "-" .. stock .. "-stock-from-ore"}) end
-        if metal_data.type == MW_Data.MW_Metal_Type.TREATMENT then table.insert(stock_technology_effects, {type = "unlock-recipe", recipe = metal .. "-" .. stock .. "-stock"}) end
-        if metal_data.alloy_plate_recipe == nil and metal_data.alloy_ore_recipe == nil and metal_data.type == MW_Data.MW_Metal_Type.ELEMENT then table.insert(stock_technology_effects, {type = "unlock-recipe", recipe = metal .. "-" .. stock .. "-stock"}) end
-      end
-    end
-    for stock, _ in pairs(MW_Data.metal_stocks_pairs[metal]) do
-      if stock ~= MW_Data.MW_Stock.PLATE then
-        table.insert(stock_technology_effects, {type = "unlock-recipe", recipe = metal .. "-" .. stock .. "-stock"})
-      end
-    end
-    for stock, _ in pairs(MW_Data.metal_stocks_pairs[metal]) do
-      if stock ~= MW_Data.MW_Stock.PLATE then
-        table.insert(stock_technology_effects, {type = "unlock-recipe", recipe = metal .. "-" .. stock .. "-remelting-stock"})
-      end
-    end
-  end
-
-  if metal_data.tech_machined_part ~= "starter" then -- Add single property Machined Parts into their appropriate technologies
-    -- Cache a reference to the technology
-    local machined_part_technology_effects = data.raw.technology[metal_data.tech_machined_part].effects
-
-    for property, _ in pairs(MW_Data.metal_properties_pairs[metal]) do -- Insert each single property Machined Parts recipe into the relevant tech
-      if MW_Data.property_machined_part_pairs[property] then
-        for part, _ in pairs(MW_Data.property_machined_part_pairs[property]) do
-          if MW_Data.metal_stocks_pairs[metal][MW_Data.machined_parts_recipe_data[part].precursor] then -- Unlock stock-to-machined-part recipes
-            table.insert(machined_part_technology_effects, {type = "unlock-recipe", recipe = property .. "-" .. part .. "-from-" .. metal .. "-" .. MW_Data.machined_parts_recipe_data[part].precursor})
-          end
-        end
-      end
-
-      if MW_Data.property_machined_part_pairs[property] then
-        for part, _ in pairs(MW_Data.property_machined_part_pairs[property]) do
-          if MW_Data.property_downgrades[property] then -- Unlock proper downgrade recipes
-            for tier_minus_one, next_property in pairs(MW_Data.property_downgrades[property]) do
-              local tier = tier_minus_one + 1
-              local previous_property
-              if tier == 2 then
-                previous_property = property
-              else
-                previous_property = MW_Data.property_downgrades[property][tier_minus_one - 1]
-              end
-              table.insert(machined_part_technology_effects, {type = "unlock-recipe", recipe = next_property .. "-" .. part .. "-downgrade-to-" .. previous_property .. "-" .. part})
-            end
-          end
-        end
-      end
-
-      if MW_Data.property_machined_part_pairs[property] then
-        for part, _ in pairs(MW_Data.property_machined_part_pairs[property]) do
-          if property ~= MW_Data.MW_Property.BASIC and not table.subtable_contains(MW_Data.property_downgrades, property) then -- Unlock to-basic downgrade recipes
-            table.insert(machined_part_technology_effects, {type = "unlock-recipe", recipe = property .. "-" .. part .. "-downgrade-to-basic-" .. part})
-          end
-        end
-      end
-
-    end
-
-    -- Insert each multi-property Machined Parts recipe into the relevant tech
-    -- This code relies on tables built above. Decouple?
-    for property_key, multi_properties in pairs(multi_property_with_key_pairs) do -- Add in multi-property Machined Parts into their appropriate technologies
-      -- Find metals that work for this machined part; they must have all relevant properties
-      local metal_found = false
-      for _, check_metal in pairs(multi_property_metal_pairs[property_key]) do
-        if check_metal == metal then metal_found = true end
-      end
-
-      -- Combine the lists of machined parts the metals can make; this will ADD to the parts, and make things that couldn't be made otherwise
-      if metal_found then -- FIXME this is parallel code; make this into a function smoosh_table
-        local combined_parts_list = {}
-        for _, multi_property in pairs(multi_properties) do
-          for part, _ in pairs(MW_Data.property_machined_part_pairs[multi_property]) do
-            combined_parts_list[part] = true
-            -- Unlock the associated multi-property downgrade to property machined part recipe
-            table.insert(machined_part_technology_effects, {type = "unlock-recipe", recipe = property_key .. "-" .. part .. "-downgrade-to-" .. multi_property .. "-" .. part})
-          end
-        end
-
-        -- Insert each multi property Machined Parts recipe into the relevant tech
-        for part, _ in pairs(combined_parts_list) do
-          if MW_Data.metal_stocks_pairs[metal][MW_Data.machined_parts_recipe_data[part].precursor] then
-            table.insert(machined_part_technology_effects, {type = "unlock-recipe", recipe = property_key .. "-" .. part .. "-from-" .. metal .. "-" .. MW_Data.machined_parts_recipe_data[part].precursor})
-          end
-        end
-
-      end
-    end
-
-  end
-end
-
--- Remove original "steel-plate" from the steel processing technology
-local new_effects = {}
-for _, unlock in pairs(data.raw.technology["steel-processing"].effects) do
-  if unlock.recipe ~= "steel-plate" then table.insert(new_effects, unlock) end
-end
-data.raw.technology["steel-processing"].effects = new_effects
 
 return MW_Data
 

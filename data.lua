@@ -6,7 +6,10 @@ function table.merge(table1, table2)
   if table1 == nil and table2 == nil then return nil end
   if table1 == nil then return table2 end
   if table2 == nil then return table1 end
-  local new_table = table1
+  local new_table = {}
+  for k, v in pairs(table1) do
+    new_table[k] = v
+  end
   for k, v in pairs(table2) do
     new_table[k] = v
   end
@@ -54,6 +57,32 @@ function table.concat_values(table, joiner) -- Concatenate an entire table of st
     end
   end
   return new_string
+end
+
+function table.drop_string(t, string) -- drop a string from a table of strings
+  if t == nil then return t end
+  if string == nil then return t end
+  local new_table = {}
+  local index = 1
+  for _, v in pairs(t) do
+    if v ~= string then 
+      new_table[index] = v
+      index = index + 1
+    end
+  end
+  return new_table
+end
+
+function table.swap_string(t, string_to_add, string_to_drop) -- replace a string with another string
+  if t == nil then return t end
+  if string_to_add == nil then return table.drop_string(t, string_to_drop) end
+  if string_to_drop == nil and type(string_to_add) == "string" then
+    table.insert(t, string_to_add)
+    return t
+  end
+  local new_table = table.drop_string(t, string_to_drop)
+  table.insert(new_table, string_to_add)
+  return new_table
 end
 
 function Build_badge_icon(material, shift) -- Builds a table with data for an 'icons' property in recipes, items, etc.

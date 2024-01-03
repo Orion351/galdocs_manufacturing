@@ -55,7 +55,7 @@ MW_Data.MW_Property = table.merge(MW_Data.MW_Property, {  -- Alloying this shoul
   IMERSIUM_ENHANCED_HIGH_TENSILE    = "imersium-enhanced-high-tensile",     -- Imersium + Titanium             = titanimersium                                  Color: Pink
   IMERSIUM_GRADE_LOAD_BEARING       = "imersium-grade-load-bearing",        -- Imersium + Titanium             = titanimersium                                  Color: Cyan
   SUPERCONDUCTING                   = "superconducting",                    -- Imersium + Niobium + Titanium   = niobimersium       Symbol: Ohm with a slash    Color: Orange
-  ANTIMATTER_RESISTANT              = "antimatter-resistant",               -- Imersium + Steel + Osmium       = resonant-imersium  Symbol: Hydrogen Atom       Color: 
+  ANTIMATTER_RESISTANT              = "antimatter-resistant",               -- Imersium + Steel + Osmium       = resonant-imersium  Symbol: Hydrogen Atom       Color: Green
   TRANSDIMENSIONALLY_SENSITIVE      = "transdimensionally-sensitive",       -- Imersium + Steel + Osmium       = resonant-imersium  Symbol: Tesseract? Waves?   Color: Dark Purple
   IMERSIUM_GRADE_THERMALLY_STABLE   = "imersium-grade-thermally-stable"     -- Imersium + Invar                = stable-imersium                                Color: Gold
 })

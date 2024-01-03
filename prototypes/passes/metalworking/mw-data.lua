@@ -629,7 +629,7 @@ MW_Data.metal_properties_pairs = { -- [metal | list of properties]
   [MW_Metal.IRON]             = map{MW_Property.BASIC, MW_Property.LOAD_BEARING},
   [MW_Metal.COPPER]           = map{MW_Property.BASIC, MW_Property.THERMALLY_CONDUCTIVE, MW_Property.ELECTRICALLY_CONDUCTIVE},
   [MW_Metal.LEAD]             = map{MW_Property.RADIATION_RESISTANT},
-  [MW_Metal.TITANIUM]         = map{MW_Property.BASIC, MW_Property.LOAD_BEARING, MW_Property.HEAVY_LOAD_BEARING, MW_Property.HIGH_TENSILE, MW_Property.VERY_HIGH_TENSILE, MW_Property.LIGHTWEIGHT, MW_Property.HIGH_MELTING_POINT},
+  [MW_Metal.TITANIUM]         = map{MW_Property.BASIC, MW_Property.LOAD_BEARING, MW_Property.HEAVY_LOAD_BEARING, MW_Property.HIGH_TENSILE, MW_Property.VERY_HIGH_TENSILE, MW_Property.LIGHTWEIGHT},
   [MW_Metal.ZINC]             = map{MW_Property.BASIC},
   [MW_Metal.NICKEL]           = map{MW_Property.BASIC, MW_Property.LOAD_BEARING, MW_Property.DUCTILE},
   [MW_Metal.STEEL]            = map{MW_Property.BASIC, MW_Property.HIGH_TENSILE, MW_Property.LOAD_BEARING, MW_Property.HEAVY_LOAD_BEARING},
@@ -650,11 +650,11 @@ MW_Data.multi_property_pairs = { -- Two or more properties in a table.
 if advanced then -- metal_stocks_pairs : [metal | list of stocks that it has] FIXME : Fan EVERYTHING out and make more accurate culling
   MW_Data.metal_stocks_pairs = {
     [MW_Metal.IRON]             = map{MW_Stock.PLATE, MW_Stock.SHEET, MW_Stock.SQUARE, MW_Stock.ANGLE, MW_Stock.GIRDER, MW_Stock.WIRE, MW_Stock.GEAR, MW_Stock.FINE_GEAR, MW_Stock.PIPE, MW_Stock.FINE_PIPE,                                         },
-    [MW_Metal.COPPER]           = map{MW_Stock.PLATE, MW_Stock.SHEET, MW_Stock.SQUARE, MW_Stock.ANGLE, MW_Stock.GIRDER, MW_Stock.WIRE, MW_Stock.GEAR, MW_Stock.FINE_GEAR, MW_Stock.PIPE, MW_Stock.FINE_PIPE, MW_Stock.WAFER, MW_Stock.PLATING_BILLET },
+    [MW_Metal.COPPER]           = map{MW_Stock.PLATE, MW_Stock.SHEET, MW_Stock.SQUARE, MW_Stock.ANGLE, MW_Stock.GIRDER, MW_Stock.WIRE, MW_Stock.GEAR, MW_Stock.FINE_GEAR, MW_Stock.PIPE, MW_Stock.FINE_PIPE,                 MW_Stock.PLATING_BILLET },
     [MW_Metal.LEAD]             = map{MW_Stock.PLATE, MW_Stock.SHEET,                                                                                                     MW_Stock.PIPE, MW_Stock.FINE_PIPE,                                         },
-    [MW_Metal.TITANIUM]         = map{MW_Stock.PLATE, MW_Stock.SHEET, MW_Stock.SQUARE, MW_Stock.ANGLE, MW_Stock.GIRDER, MW_Stock.WIRE, MW_Stock.GEAR, MW_Stock.FINE_GEAR, MW_Stock.PIPE, MW_Stock.FINE_PIPE, MW_Stock.WAFER, MW_Stock.PLATING_BILLET },
-    [MW_Metal.ZINC]             = map{MW_Stock.PLATE,                                                                                                                                                        MW_Stock.WAFER, MW_Stock.PLATING_BILLET },
-    [MW_Metal.NICKEL]           = map{MW_Stock.PLATE, MW_Stock.SHEET, MW_Stock.SQUARE, MW_Stock.ANGLE, MW_Stock.GIRDER,                MW_Stock.GEAR, MW_Stock.FINE_GEAR, MW_Stock.PIPE, MW_Stock.FINE_PIPE, MW_Stock.WAFER, MW_Stock.PLATING_BILLET },
+    [MW_Metal.TITANIUM]         = map{MW_Stock.PLATE, MW_Stock.SHEET, MW_Stock.SQUARE, MW_Stock.ANGLE, MW_Stock.GIRDER, MW_Stock.WIRE, MW_Stock.GEAR, MW_Stock.FINE_GEAR, MW_Stock.PIPE, MW_Stock.FINE_PIPE,                 MW_Stock.PLATING_BILLET },
+    [MW_Metal.ZINC]             = map{MW_Stock.PLATE,                                                                                                                                                                        MW_Stock.PLATING_BILLET },
+    [MW_Metal.NICKEL]           = map{MW_Stock.PLATE, MW_Stock.SHEET, MW_Stock.SQUARE, MW_Stock.ANGLE, MW_Stock.GIRDER,                MW_Stock.GEAR, MW_Stock.FINE_GEAR, MW_Stock.PIPE, MW_Stock.FINE_PIPE,                 MW_Stock.PLATING_BILLET },
     [MW_Metal.STEEL]            = map{MW_Stock.PLATE, MW_Stock.SHEET, MW_Stock.SQUARE, MW_Stock.ANGLE, MW_Stock.GIRDER, MW_Stock.WIRE, MW_Stock.GEAR, MW_Stock.FINE_GEAR, MW_Stock.PIPE, MW_Stock.FINE_PIPE,                                         },
     [MW_Metal.BRASS]            = map{MW_Stock.PLATE, MW_Stock.SHEET, MW_Stock.SQUARE, MW_Stock.ANGLE, MW_Stock.GIRDER, MW_Stock.WIRE, MW_Stock.GEAR, MW_Stock.FINE_GEAR, MW_Stock.PIPE, MW_Stock.FINE_PIPE,                                         },
     [MW_Metal.INVAR]            = map{MW_Stock.PLATE, MW_Stock.SHEET, MW_Stock.SQUARE, MW_Stock.ANGLE, MW_Stock.GIRDER, MW_Stock.WIRE, MW_Stock.GEAR, MW_Stock.FINE_GEAR, MW_Stock.PIPE, MW_Stock.FINE_PIPE,                                         },
@@ -713,7 +713,7 @@ end
 
 MW_Data.property_downgrades = { -- Make property tier downgrade list things
   [MW_Property.LOAD_BEARING] = {MW_Property.HEAVY_LOAD_BEARING, MW_Property.VERY_HEAVY_LOAD_BEARING},
-  [MW_Property.HIGH_TENSILE] = {MW_Property.VERY_HIGH_TENSILE, },
+  [MW_Property.HIGH_TENSILE] = {MW_Property.VERY_HIGH_TENSILE},
 }
 
 for property, property_downgrade_list in pairs(MW_Data.property_downgrades) do -- Propogate the tiers into the property_machined_part_pairs table
@@ -727,7 +727,7 @@ end
 if advanced then -- stocks_recipe_data : [stock | stock that crafts it] {stock that crafts it, how many it takes, how many it makes}]
   MW_Data.stocks_recipe_data = {
     [MW_Stock.PLATE]          = {precursor = MW_Ore_Shape.ORE,    input = 1, output = 1,  made_in = "smelting",                    plating_billet_count = 6,  plating_fluid_count = 100},
-    [MW_Stock.WAFER]          = {precursor = MW_Ore_Shape.PEBBLE, input = 1, output = 1,  made_in = "smelting",                    plating_billet_count = 1,  plating_fluid_count = 100},
+    -- [MW_Stock.WAFER]          = {precursor = MW_Ore_Shape.PEBBLE, input = 1, output = 1,  made_in = "smelting",                    plating_billet_count = 1,  plating_fluid_count = 100},
     [MW_Stock.ANGLE]          = {precursor = MW_Stock.SHEET,      input = 1, output = 1,  made_in = MW_Minisembler.BENDER,         plating_billet_count = 3,  plating_fluid_count = 100},
     [MW_Stock.FINE_GEAR]      = {precursor = MW_Stock.SHEET,      input = 2, output = 1,  made_in = MW_Minisembler.MILL,           plating_billet_count = 6,  plating_fluid_count = 100},
     [MW_Stock.FINE_PIPE]      = {precursor = MW_Stock.SHEET,      input = 3, output = 1,  made_in = MW_Minisembler.ROLLER,         plating_billet_count = 9,  plating_fluid_count = 100},

@@ -19,7 +19,7 @@ local overhaul_modpack_data = {  -- Data for supported overhauls FIXME: Move to 
     dir_name = "krastorio-2",
     titles = {"Krastorio2", },
     passes = {
-      metalworking = {enums = true, data = true, code = true}
+      metalworking = {enums = true, data = true, code = true, technology = true, technology_processing = true}
     }
   }
 }
@@ -72,7 +72,17 @@ if current_overhaul_data.passes and current_overhaul_data.passes.metalworking an
   GM_global_mw_data.MW_Data = require("prototypes.compatibility." .. current_overhaul_data.dir_name .. ".mw-code-augment")
 end
 
+-- Technology
+GM_global_mw_data.MW_Data = require("prototypes.passes.metalworking.mw-technology")
+if current_overhaul_data.passes and current_overhaul_data.passes.metalworking and current_overhaul_data.passes.metalworking.technology then
+  GM_global_mw_data.MW_Data = require("prototypes.compatibility." .. current_overhaul_data.dir_name .. ".mw-technology-augment")
+end
 
+-- Technology Processing
+GM_global_mw_data.MW_Data = require("prototypes.passes.metalworking.mw-technology-processing")
+if current_overhaul_data.passes and current_overhaul_data.passes.metalworking and current_overhaul_data.passes.metalworking.technology_processing then
+  GM_global_mw_data.MW_Data = require("prototypes.compatibility." .. current_overhaul_data.dir_name .. ".mw-technology-processing-augment")
+end
 
 --[[
 -- Krastoro 2 compat temp code
