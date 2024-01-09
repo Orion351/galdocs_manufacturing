@@ -176,6 +176,7 @@ Utility (Yellow) Tech:
     Railgun Turret (20 Rare Metal, 10 Steel Beam) **** Osmium
 
 Yellow and Purple Tech:
+-----------------------
   Metals Available: Copper, Iron, Zinc, Brass, Nickel/Invar, Steel/Galvanized Steel, Annealed Copper, Niobium, Titanium, Lead, Osmium, Niobimersium
 
   Properties Available: ElecC, LoadB, ThermC, Duck, CorrR, ThermS, HTens, HLoadB, VHLoadB, CorrR/HTens, CorrR/HLoadB, CorrR/VHLoadB,
@@ -259,3 +260,28 @@ Singularity (S) Tech:
     Antimatter Ammo (1 Imersium Plate), Antimatter Artillery Shell (1 Imersium Plate), Antimatter Rocket (2 Imersium Plate), Antimatter Railgun Shell (1 Imersium Plate) **** Resonant Imersium
     Portable Antimatter Reactor (100 Imersium Plate) **** Resonant Imersium
     Intergalactic Tranciever (1000 Rare Metal, 500 Imersium Plate, 500 Imersium Beam) **** Resonant Imersium
+
+
+Pull List Additions:
+  Iron Beam
+  Steel Pipe
+  Steel Beam
+  Steel Gear Wheel
+  Imersium Plate
+  Imersium Beam
+  Imersium Gear Wheel
+
+One-off Pull List?
+  Steel Chest
+
+Replacement Rules (Advanced)
+  Notes:
+    Small components (Framing, Bolts, Paneling, Fine Gearing, Fine Piping)
+    Large components (Girdering, Rivets, Large Paneling, Gearing, Piping)
+  Q1: Entity? (has placeable_result?)
+    Yes: Is it 1x1 or 2x1? (check hitbox, collsionbox, whatever)
+      Yes: Small Components
+      No: Large Components
+    No: Small Components
+  Q2: 
+      

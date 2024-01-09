@@ -1,0 +1,41 @@
+- BASIC
+basic
+electrically-conductive
+load-bearing
+thermally-conductive
+ductile
+corrosion-resistant
+- RED
+thermally-stable
+high-tensile
+heavy-load-bearing
+very-heavy-load-bearing
+corrosion-resistant-and-high-tensile
+corrosion-resistant-and-load-bearing
+corrosion-resistant-and-heavy-load-bearing
+- GREEN
+ductile-and-electrically-conductive
+corrosion-resistant-and-electrically-conductive
+- GREY
+- BLUE
+very-high-tensile
+lightweight
+lightweight-and-high-tensile
+lightweight-and-very-high-tensile
+radiation-resistant
+- PURPLE
+radiation-resistant-and-high-tensile
+radiation-resistant-and-very-high-tensile
+corrosion-resistant-and-very-high-tensile
+- YELLOW
+superconducting
+- PURPLE+YELLOW
+- CYAN
+imersium-enhanced-high-tensile
+imersium-grade-load-bearing
+- WHITE
+- ADVANCED
+imersium-grade-thermally-stable
+- PURPLE
+antimatter-resistant
+transdimensionally-sensitive

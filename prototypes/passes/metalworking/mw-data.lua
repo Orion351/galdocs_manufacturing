@@ -643,6 +643,7 @@ MW_Data.multi_property_pairs = { -- Two or more properties in a table.
   {MW_Property.CORROSION_RESISTANT, MW_Property.HIGH_TENSILE},
   {MW_Property.CORROSION_RESISTANT, MW_Property.HEAVY_LOAD_BEARING},
   {MW_Property.CORROSION_RESISTANT, MW_Property.LOAD_BEARING},
+  {MW_Property.LIGHTWEIGHT,         MW_Property.HIGH_TENSILE},
   {MW_Property.LIGHTWEIGHT,         MW_Property.VERY_HIGH_TENSILE},
   {MW_Property.DUCTILE,             MW_Property.ELECTRICALLY_CONDUCTIVE},
 }
@@ -684,7 +685,6 @@ end
 
 if advanced then -- property_machined_part_pairs : [property | list of machined parts that are able to have that property]
   MW_Data.property_machined_part_pairs = {
-    -- single-properties
     [MW_Property.BASIC]                   = map{MW_Machined_Part.PANELING, MW_Machined_Part.LARGE_PANELING, MW_Machined_Part.FRAMING, MW_Machined_Part.GIRDERING, MW_Machined_Part.GEARING, MW_Machined_Part.FINE_GEARING, MW_Machined_Part.PIPING, MW_Machined_Part.FINE_PIPING, MW_Machined_Part.WIRING, MW_Machined_Part.SHIELDING, MW_Machined_Part.SHAFTING, MW_Machined_Part.BOLTS, MW_Machined_Part.RIVETS},
     [MW_Property.LOAD_BEARING]            = map{                                                            MW_Machined_Part.FRAMING, MW_Machined_Part.GIRDERING,                                                                                                                                          MW_Machined_Part.SHAFTING                                                                             },
     [MW_Property.ELECTRICALLY_CONDUCTIVE] = map{                                                                                                                                                                                                                                  MW_Machined_Part.WIRING                                                                                                        },

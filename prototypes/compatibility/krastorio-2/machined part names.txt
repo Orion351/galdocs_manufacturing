@@ -1,0 +1,13 @@
+-paneling
+-large-paneling
+-framing
+-girdering
+-fine-gearing
+-gearing
+-fine-piping
+-piping
+-shafting
+-wiring
+-shielding
+-bolts
+-rivets
