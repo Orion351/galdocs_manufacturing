@@ -396,12 +396,12 @@ MW_Data.metal_properties_pairs = table.group_key_assign(MW_Data.metal_properties
   [MW_Metal.RESONANT_IMERSIUM] = map{MW_Property.ANTIMATTER_RESISTANT, MW_Property.TRANSDIMENSIONALLY_SENSITIVE},
 })
 
-table.merge(MW_Data.multi_property_pairs, { -- Two or more properties in a table
+MW_Data.multi_property_pairs = table.deduplicate_values(table.staple(MW_Data.multi_property_pairs, { -- Two or more properties in a table
   {MW_Property.RADIATION_RESISTANT, MW_Property.HIGH_TENSILE},
   {MW_Property.RADIATION_RESISTANT, MW_Property.VERY_HIGH_TENSILE},
   {MW_Property.CORROSION_RESISTANT, MW_Property.VERY_HIGH_TENSILE},
   {MW_Property.CORROSION_RESISTANT, MW_Property.ELECTRICALLY_CONDUCTIVE}
-})
+}))
 
 if advanced then -- metal_stocks_pairs : [metal | list of stocks that it has]
   MW_Data.metal_stocks_pairs = table.group_key_assign(MW_Data.metal_stocks_pairs, {
@@ -433,8 +433,8 @@ end
 if advanced then -- property_machined_part_pairs : [property | list of machined parts that are able to have that property]
   MW_Data.property_machined_part_pairs = table.group_key_assign(MW_Data.property_machined_part_pairs, {
     [MW_Property.IMERSIUM_ENHANCED_HIGH_TENSILE]  = map{MW_Machined_Part.PANELING, MW_Machined_Part.LARGE_PANELING, MW_Machined_Part.FRAMING, MW_Machined_Part.GIRDERING, MW_Machined_Part.GEARING, MW_Machined_Part.FINE_GEARING,                                                        MW_Machined_Part.WIRING, MW_Machined_Part.SHIELDING, MW_Machined_Part.SHAFTING, MW_Machined_Part.BOLTS, MW_Machined_Part.RIVETS},
-    [MW_Property.IMERSIUM_GRADE_LOAD_BEARING]     = map{                                                            MW_Machined_Part.FRAMING, MW_Machined_Part.GIRDERING,                                                                                                                                          MW_Machined_Part.SHAFTING                                                                             },
-    [MW_Property.SUPERCONDUCTING]                 = map{                                                                                                                                                                                                                                  MW_Machined_Part.WIRING                                                                                                        },
+    [MW_Property.IMERSIUM_GRADE_LOAD_BEARING]     = map{                                                            MW_Machined_Part.FRAMING, MW_Machined_Part.GIRDERING,                                                                                                                                                                      MW_Machined_Part.SHAFTING                                                 },
+    [MW_Property.SUPERCONDUCTING]                 = map{                                                                                                                                                                                                                                  MW_Machined_Part.WIRING,                             MW_Machined_Part.SHAFTING                                                 },
     [MW_Property.ANTIMATTER_RESISTANT]            = map{MW_Machined_Part.PANELING, MW_Machined_Part.LARGE_PANELING, MW_Machined_Part.FRAMING, MW_Machined_Part.GIRDERING, MW_Machined_Part.GEARING, MW_Machined_Part.FINE_GEARING, MW_Machined_Part.PIPING, MW_Machined_Part.FINE_PIPING, MW_Machined_Part.WIRING, MW_Machined_Part.SHIELDING, MW_Machined_Part.SHAFTING, MW_Machined_Part.BOLTS, MW_Machined_Part.RIVETS},
     [MW_Property.TRANSDIMENSIONALLY_SENSITIVE]    = map{MW_Machined_Part.PANELING, MW_Machined_Part.LARGE_PANELING, MW_Machined_Part.FRAMING, MW_Machined_Part.GIRDERING, MW_Machined_Part.GEARING, MW_Machined_Part.FINE_GEARING, MW_Machined_Part.PIPING, MW_Machined_Part.FINE_PIPING, MW_Machined_Part.WIRING, MW_Machined_Part.SHIELDING, MW_Machined_Part.SHAFTING, MW_Machined_Part.BOLTS, MW_Machined_Part.RIVETS},
     [MW_Property.IMERSIUM_GRADE_THERMALLY_STABLE] = map{MW_Machined_Part.PANELING, MW_Machined_Part.LARGE_PANELING, MW_Machined_Part.FRAMING, MW_Machined_Part.GIRDERING, MW_Machined_Part.GEARING, MW_Machined_Part.FINE_GEARING, MW_Machined_Part.PIPING, MW_Machined_Part.FINE_PIPING, MW_Machined_Part.WIRING, MW_Machined_Part.SHIELDING, MW_Machined_Part.SHAFTING, MW_Machined_Part.BOLTS, MW_Machined_Part.RIVETS},
@@ -443,7 +443,7 @@ if advanced then -- property_machined_part_pairs : [property | list of machined 
     MW_Data.property_machined_part_pairs = table.group_key_assign(MW_Data.property_machined_part_pairs, {
       [MW_Property.IMERSIUM_ENHANCED_HIGH_TENSILE]  = map{MW_Machined_Part.PANELING, MW_Machined_Part.FRAMING, MW_Machined_Part.GEARING,                          MW_Machined_Part.WIRING, MW_Machined_Part.SHIELDING, MW_Machined_Part.SHAFTING, MW_Machined_Part.BOLTS},
       [MW_Property.IMERSIUM_GRADE_LOAD_BEARING]     = map{                           MW_Machined_Part.FRAMING,                                                                                                         MW_Machined_Part.SHAFTING                        },
-      [MW_Property.SUPERCONDUCTING]                 = map{                                                                                                        MW_Machined_Part.WIRING                                                                               },
+      [MW_Property.SUPERCONDUCTING]                 = map{                                                                                                        MW_Machined_Part.WIRING,                             MW_Machined_Part.SHAFTING                        },
       [MW_Property.ANTIMATTER_RESISTANT]            = map{MW_Machined_Part.PANELING, MW_Machined_Part.FRAMING, MW_Machined_Part.GEARING, MW_Machined_Part.PIPING, MW_Machined_Part.WIRING, MW_Machined_Part.SHIELDING, MW_Machined_Part.SHAFTING, MW_Machined_Part.BOLTS},
       [MW_Property.TRANSDIMENSIONALLY_SENSITIVE]    = map{MW_Machined_Part.PANELING, MW_Machined_Part.FRAMING, MW_Machined_Part.GEARING, MW_Machined_Part.PIPING, MW_Machined_Part.WIRING, MW_Machined_Part.SHIELDING, MW_Machined_Part.SHAFTING, MW_Machined_Part.BOLTS},
       [MW_Property.IMERSIUM_GRADE_THERMALLY_STABLE] = map{MW_Machined_Part.PANELING, MW_Machined_Part.FRAMING, MW_Machined_Part.GEARING, MW_Machined_Part.PIPING, MW_Machined_Part.WIRING, MW_Machined_Part.SHIELDING, MW_Machined_Part.SHAFTING, MW_Machined_Part.BOLTS},
@@ -456,6 +456,16 @@ MW_Data.property_downgrades = { -- Make property tier downgrade list things
   [MW_Property.ELECTRICALLY_CONDUCTIVE] = {MW_Property.SUPERCONDUCTING},
   [MW_Property.THERMALLY_STABLE]        = {MW_Property.IMERSIUM_GRADE_THERMALLY_STABLE},
 }
+
+for property, property_downgrade_list in pairs(MW_Data.property_downgrades) do -- Propogate the tiers into the property_machined_part_pairs table
+  for tier, property_downgrade in pairs(property_downgrade_list) do
+    if not MW_Data.property_machined_part_pairs[property_downgrade] then
+      MW_Data.property_machined_part_pairs[property_downgrade] = MW_Data.property_machined_part_pairs[property]
+    end
+  end
+end
+
+
 
 -- ***************
 -- Return the data

@@ -51,6 +51,7 @@ data:extend({ -- Make the technologies for the stocks and machined parts
     localised_name = {"gm.technology-machined-part-processing-name", {"gm.niobium"}, {"gm.machined-parts"}, {"gm.processing"}},
     localised_description = {"gm.technology-machined-part-processing-description", {"gm.niobium"}, {"gm.machined-parts"}},
   },  
+  
   { -- osmium stock processing
     type = "technology",
     name = "gm-osmium-stock-processing",

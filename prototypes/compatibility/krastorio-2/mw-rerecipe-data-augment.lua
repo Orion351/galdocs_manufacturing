@@ -77,7 +77,7 @@ return function(advanced)
       ["kr-atmospheric-condenser"]                        = {{"corrosion-resistant-and-high-tensile-large-paneling", 3}, {"corrosion-resistant-and-load-bearing-girdering", 2}, {"ductile-gearing", 4}, {"corrosion-resistant-fine-piping", 6}, {"lightweight-and-very-high-tensile-shafting", 4}, {"electrically-conductive-wiring", 6}, {"very-high-tensile-rivets", 8}, },
 
       ["kr-advanced-chemical-plant"]                      = {{"imersium-enhanced-high-tensile-large-paneling", 12}, {"imersium-grade-load-bearing-girdering", 20}, {"imersium-grade-thermally-stable-fine-piping", 32}, {"ductile-and-electrically-conductive-wiring", 30}, {"imersium-grade-thermally-stable-shielding", 6}, {"imersium-grade-thermally-stable-rivets", 20}, },
-      ["kr-fuel-refinery"]                                = {{"corrosion-resistant-and-high-tensile-large-paneling", 1}, {"corrosion-resistant-and-load-bearing-girdering", 1}, {"corrosion-resistant-and-high-tensile-fine-piping", 3}, {"electrically-conductive-wiring", 6}, {"thermally-stable-shielding", 1}, {"high-tensile-rivets-rivets", 4}, },
+      ["kr-fuel-refinery"]                                = {{"corrosion-resistant-and-high-tensile-large-paneling", 1}, {"corrosion-resistant-and-load-bearing-girdering", 1}, {"corrosion-resistant-and-high-tensile-fine-piping", 3}, {"electrically-conductive-wiring", 6}, {"thermally-stable-shielding", 1}, {"high-tensile-rivets", 4}, },
 
       ["kr-planetary-teleporter"]                         = {{"imersium-enhanced-high-tensile-large-paneling", 4}, {"imersium-grade-load-bearing-girdering", 4}, {"transdimensionally-sensitive-shafting", 4}, {"superconducting-wiring", 1}, {"antimatter-resistant-shielding", 2}, {"imersium-grade-thermally-stable-rivets", 8}, },
 
@@ -85,8 +85,8 @@ return function(advanced)
 
       ["biusart-lab"]                                     = {{"lightweight-and-very-high-tensile-girdering", 2}, {"corrosion-resistant-and-load-bearing-fine-piping", 2}, {"ductile-and-electrically-conductive-wiring", 8}, {"radiation-resistant-shielding", 2}, {"very-high-tensile-rivets", 4}, },
       ["kr-research-server"]                              = {{"high-tensile-large-paneling", 2}, {"heavy-load-bearing-girdering", 2}, {"ductile-and-electrically-conductive-wiring", 12}, {"very-high-tensile-rivets", 4}, },
-      ["kr-quantum-computer"]                             = {{"lightweight-and-very-high-tensile-large-paneling", 6}, {"heavy-load-bearing-girdering", 10}, {"superconducting-wiring", 60}, {"thermally-conductive-shielding", 8}, {"thermally-conductive-bolts", 15}, {"very-high-tensile-rivets", 6}, },
-      ["kr-singularity-lab"]                              = {{"lightweight-and-very-high-tensile-large-paneling", 8}, {"heavy-load-bearing-girdering", 12}, {"superconducting-wiring", 72}, {"thermally-conductive-shielding", 9}, {"thermally-conductive-bolts", 20}, {"very-high-tensile-rivets", 6}, },
+      ["kr-quantum-computer"]                             = {{"lightweight-and-very-high-tensile-large-paneling", 6}, {"heavy-load-bearing-girdering", 10}, {"superconducting-wiring", 60}, {"radiation-resistant-and-very-high-tensile-shielding", 8}, {"thermally-conductive-bolts", 15}, {"very-high-tensile-rivets", 6}, },
+      ["kr-singularity-lab"]                              = {{"lightweight-and-very-high-tensile-large-paneling", 8}, {"heavy-load-bearing-girdering", 12}, {"superconducting-wiring", 72}, {"radiation-resistant-and-very-high-tensile-shielding", 9}, {"thermally-conductive-bolts", 20}, {"very-high-tensile-rivets", 6}, },
 
       ["kr-air-purifier"]                                 = {{"lightweight-paneling", 2}, {"corrosion-resistant-and-high-tensile-large-paneling", 1}, {"corrosion-resistant-and-heavy-load-bearing-girdering", 1}, {"very-high-tensile-gearing", 2}, {"lightweight-and-very-high-tensile-shafting", 1}, {"electrically-conductive-wiring", 2}, {"very-high-tensile-rivets", 4}, },
       ["pollution-filter"]                                = {{"lightweight-paneling", 1}, {"lightweight-framing", 1}, {"lightweight-bolts", 1}, },
@@ -114,7 +114,7 @@ return function(advanced)
       ["matter-stabilizer"]                               = {{"imersium-enhanced-high-tensile-paneling", 4}, {"imersium-grade-load-bearing-framing", 4}, {"superconducting-wiring", 2}, {"imersium-enhanced-high-tensile-bolts", 2}, },
 
       ["advanced-tech-card"]                              = {{"imersium-enhanced-high-tensile-fine-gearing", 5}, },
-      ["logistic-science-pack"]                           = {{"load-bearing-fine-gearing", 3}, },
+      ["logistic-science-pack"]                           = {{"basic-fine-gearing", 3}, },
 
       ["kr-railgun-turret"]                               = {{"very-heavy-load-bearing-girdering", 4}, {"ductile-gearing", 2}, {"superconducting-shafting", 2}, {"superconducting-wiring", 10}, {"lightweight-and-very-high-tensile-shielding", 4}, {"very-high-tensile-bolts", 10}, },
       ["kr-rocket-turret"]                                = {{"imersium-grade-load-bearing-girdering", 6}, {"ductile-gearing", 2}, {"electrically-conductive-wiring", 4}, {"imersium-enhanced-high-tensile-shielding", 4}, {"imersium-enhanced-high-tensile-bolts", 8}, },
@@ -232,7 +232,7 @@ return function(advanced)
       ["kr-atmospheric-condenser"]                        = {{"corrosion-resistant-and-high-tensile-paneling", 5}, {"corrosion-resistant-and-load-bearing-framing", 4}, {"ductile-gearing", 4}, {"corrosion-resistant-piping", 8}, {"lightweight-and-very-high-tensile-shafting", 4}, {"electrically-conductive-wiring", 4}, {"very-high-tensile-bolts", 6}, },
 
       ["kr-advanced-chemical-plant"]                      = {{"imersium-enhanced-high-tensile-paneling", 14}, {"imersium-grade-load-bearing-framing", 26}, {"imersium-grade-thermally-stable-piping", 32}, {"ductile-and-electrically-conductive-wiring", 30}, {"imersium-grade-thermally-stable-shielding", 6}, {"imersium-grade-thermally-stable-bolts", 20}, },
-      ["kr-fuel-refinery"]                                = {{"corrosion-resistant-and-high-tensile-paneling", 1}, {"corrosion-resistant-and-load-bearing-framing", 1}, {"corrosion-resistant-and-high-tensile-piping", 3}, {"electrically-conductive-wiring", 6}, {"thermally-stable-shielding", 1}, {"high-tensile-rivets-bolts", 4}, },
+      ["kr-fuel-refinery"]                                = {{"corrosion-resistant-and-high-tensile-paneling", 1}, {"corrosion-resistant-and-load-bearing-framing", 1}, {"corrosion-resistant-and-high-tensile-piping", 3}, {"electrically-conductive-wiring", 6}, {"thermally-stable-shielding", 1}, {"high-tensile-bolts", 4}, },
 
       ["kr-planetary-teleporter"]                         = {{"imersium-enhanced-high-tensile-paneling", 4}, {"imersium-grade-load-bearing-framing", 4}, {"transdimensionally-sensitive-shafting", 4}, {"superconducting-wiring", 1}, {"antimatter-resistant-shielding", 2}, {"imersium-grade-thermally-stable-bolts", 8}, },
 
@@ -240,8 +240,8 @@ return function(advanced)
 
       ["biusart-lab"]                                     = {{"lightweight-and-very-high-tensile-framing", 2}, {"corrosion-resistant-and-load-bearing-piping", 2}, {"ductile-and-electrically-conductive-wiring", 8}, {"radiation-resistant-shielding", 2}, {"very-high-tensile-bolts", 3}, },
       ["kr-research-server"]                              = {{"high-tensile-paneling", 2}, {"heavy-load-bearing-framing", 2}, {"ductile-and-electrically-conductive-wiring", 12}, {"very-high-tensile-bolts", 4}, },
-      ["kr-quantum-computer"]                             = {{"lightweight-and-very-high-tensile-paneling", 14}, {"heavy-load-bearing-framing", 10}, {"superconducting-wiring", 50}, {"thermally-conductive-shielding", 8}, {"thermally-conductive-bolts", 15}, {"very-high-tensile-bolts", 6}, },
-      ["kr-singularity-lab"]                              = {{"lightweight-and-very-high-tensile-paneling", 8}, {"heavy-load-bearing-framing", 12}, {"superconducting-wiring", 72}, {"thermally-conductive-shielding", 9}, {"thermally-conductive-bolts", 20}, {"very-high-tensile-bolts", 6}, },
+      ["kr-quantum-computer"]                             = {{"lightweight-and-very-high-tensile-paneling", 14}, {"heavy-load-bearing-framing", 10}, {"superconducting-wiring", 50}, {"radiation-resistant-and-very-high-tensile-shielding", 8}, {"thermally-conductive-bolts", 15}, {"very-high-tensile-bolts", 6}, },
+      ["kr-singularity-lab"]                              = {{"lightweight-and-very-high-tensile-paneling", 8}, {"heavy-load-bearing-framing", 12}, {"superconducting-wiring", 72}, {"radiation-resistant-and-very-high-tensile-shielding", 9}, {"thermally-conductive-bolts", 20}, {"very-high-tensile-bolts", 6}, },
 
       ["kr-air-purifier"]                                 = {{"lightweight-paneling", 2}, {"corrosion-resistant-and-heavy-load-bearing-framing", 1}, {"very-high-tensile-gearing", 2}, {"lightweight-and-very-high-tensile-shafting", 1}, {"electrically-conductive-wiring", 2}, {"very-high-tensile-bolts", 4}, },
       ["pollution-filter"]                                = {{"lightweight-paneling", 1}, {"lightweight-framing", 1}, {"lightweight-bolts", 1}, },
@@ -269,7 +269,7 @@ return function(advanced)
       ["matter-stabilizer"]                               = {{"imersium-enhanced-high-tensile-paneling", 2}, {"imersium-grade-load-bearing-framing", 2}, {"superconducting-wiring", 2}, {"imersium-enhanced-high-tensile-bolts", 1}, },
 
       ["advanced-tech-card"]                              = {{"imersium-enhanced-high-tensile-gearing", 3}, },
-      ["logistic-science-pack"]                           = {{"load-bearing-gearing", 2}, },
+      ["logistic-science-pack"]                           = {{"basic-gearing", 2}, },
 
       ["kr-railgun-turret"]                               = {{"very-heavy-load-bearing-framing", 6}, {"ductile-gearing", 3}, {"superconducting-shafting", 3}, {"superconducting-wiring", 10}, {"lightweight-and-very-high-tensile-shielding", 4}, {"very-high-tensile-bolts", 12}, },
       ["kr-rocket-turret"]                                = {{"imersium-grade-load-bearing-framing", 6}, {"ductile-gearing", 2}, {"electrically-conductive-wiring", 6}, {"imersium-enhanced-high-tensile-shielding", 5}, {"imersium-enhanced-high-tensile-bolts", 10}, },

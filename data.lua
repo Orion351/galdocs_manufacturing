@@ -16,6 +16,23 @@ function table.merge(table1, table2)
   return new_table
 end
 
+function table.staple(table1, table2)
+  if table1 == nil and table2 == nil then return nil end
+  if table1 == nil then return table2 end
+  if table2 == nil then return table1 end
+  local new_table = {}
+  local i = 1
+  for _, v in pairs(table1) do
+    new_table[i] = v
+    i = i + 1
+  end
+  for _, v in pairs(table2) do
+    new_table[i] = v
+    i = i + 1
+  end
+  return new_table
+end
+
 function table.merge_subtables(table1, table2)
   if type(table2) == "table" and not next(table2) then return table1 end
   local new_table = {}
@@ -26,9 +43,12 @@ function table.merge_subtables(table1, table2)
 end
 
 function table.group_key_assign(table1, table2)
-  local new_table = table1
+  local new_table = {}
+  for k, v in pairs(table1) do
+    new_table[k] = v
+  end
   for k, v in pairs(table2) do
-    table1[k] = v
+    new_table[k] = v
   end
   return new_table
 end
@@ -46,6 +66,14 @@ function table.subtable_contains(check_table, value) -- Check to see if a subtab
     if table.contains(subtable, value) then subtable_contains = true end
   end
   return subtable_contains
+end
+
+function table.deduplicate_values(t)
+  local new_table = {}
+  for k, v in pairs(t) do
+    if not table.subtable_contains(t, v) then new_table[k] = v end
+  end
+  return new_table
 end
 
 function table.concat_values(table, joiner) -- Concatenate an entire table of strings; will break if one value isn't a string
