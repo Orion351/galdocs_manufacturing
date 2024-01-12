@@ -85,6 +85,8 @@ local MW_Minisembler_Tier  = MW_Data.MW_Minisembler_Tier
 local MW_Minisembler_Stage = MW_Data.MW_Minisembler_Stage
 local MW_Ore_Shape         = MW_Data.MW_Ore_Shape
 
+
+
 -- ****
 -- Data
 -- ****
@@ -327,7 +329,7 @@ MW_Data.ore_data = table.merge_subtables(MW_Data.ore_data, { -- Couple ores to o
 MW_Data.ore_data = table.merge_subtables(MW_Data.ore_data, { -- Set up crushing for Rare Metal Ore
   [MW_Resource.RARE_METALS] = {
     ore_crushing_result = {
-      {metal = MW_Resource.NIOBIUM,  shape = MW_Ore_Shape.PEBBLE, amount = 4},},
+      {metal = MW_Resource.NIOBIUM,  shape = MW_Ore_Shape.GRAVEL, amount = 1},},
     ore_crushing_ingredient = {metal = MW_Resource.RARE_METALS, shape = MW_Ore_Shape.ORE, amount = 1}
   },
 })
@@ -336,7 +338,7 @@ MW_Data.ore_data = table.merge_subtables(MW_Data.ore_data, { -- Set up crushing 
   [MW_Resource.RARE_METALS] = {
     enriched_crushing_result = {
       {metal = MW_Resource.OSMIUM,   shape = MW_Ore_Shape.PEBBLE, amount = 3},
-      {metal = MW_Resource.NIOBIUM,  shape = MW_Ore_Shape.PEBBLE, amount = 3},},
+      {metal = MW_Resource.NIOBIUM,  shape = MW_Ore_Shape.GRAVEL, amount = 1},},
     enriched_crushing_ingredient = {metal = MW_Resource.RARE_METALS, shape = MW_Ore_Shape.ENRICHED, amount = 1}
   },
 })

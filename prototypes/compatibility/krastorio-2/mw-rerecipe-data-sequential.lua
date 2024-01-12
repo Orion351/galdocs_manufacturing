@@ -25,9 +25,8 @@ return function(advanced)
       ["inserter"]                                        = {{"basic-fine-gearing", 1}, },
       ["long-handed-inserter"]                            = {{"heavy-load-bearing-framing", 1}, {"ductile-fine-gearing", 1}, {"heavy-load-bearing-shafting", 1}, {"high-tensile-bolts", 1}, },
       ["fast-inserter"]                                   = {{"heavy-load-bearing-framing", 1}, {"ductile-fine-gearing", 2}, {"high-tensile-bolts", 1}, },
-      ["stack-inserter"]                                  = {{"very-heavy-load-bearing-framing", 2}, {"ductile-fine-gearing", 2}, {"high-tensile-bolts", 1}, },
       ["filter-inserter"]                                 = {{"heavy-load-bearing-framing", 1}, {"ductile-fine-gearing", 1}, {"high-tensile-bolts", 1}, },
-      ["stack-filter-inserter"]                           = {{"very-heavy-load-bearing-framing", 2}, {"ductile-fine-gearing", 2}, {"high-tensile-bolts", 1}, },
+      ["stack-filter-inserter"]                           = {{"heavy-load-bearing-framing", 3}, {"heavy-load-bearing-shafting", 3}, {"high-tensile-fine-gearing", 8}, {"electrically-conductive-wiring", 5}, {"high-tensile-bolts", 4}, },
       ["kr-superior-inserter"]                            = {{"imersium-grade-load-bearing-framing", 1}, {"imersium-grade-thermally-stable-fine-gearing", 1}, {"imersium-enhanced-high-tensile-bolts", 1}, },
       ["kr-superior-long-inserter"]                       = {{"imersium-grade-load-bearing-framing", 2}, {"imersium-grade-thermally-stable-fine-gearing", 2}, {"imersium-grade-load-bearing-shafting", 1}, {"imersium-enhanced-high-tensile-bolts", 1}, },
       ["kr-superior-filter-inserter"]                     = {{"imersium-grade-load-bearing-framing", 1}, {"imersium-grade-thermally-stable-fine-gearing", 1}, {"imersium-enhanced-high-tensile-bolts", 1}, },
@@ -136,7 +135,6 @@ return function(advanced)
       ["big-battery-equipment"]                           = {{"corrosion-resistant-framing", 4}, {"electrically-conductive-wiring", 2}, {"high-tensile-rivets", 1}, },
       ["big-battery-mk2-equipment"]                       = {{"lightweight-and-high-tensile-framing", 3}, {"lightweight-and-high-tensile-rivets", 2}, },
 
-      ["energy-shield-mk2-equipment"]                     = {{"radiation-resistant-shielding", 1}, {"lightweight-and-high-tensile-bolts", 2}, },
       ["energy-shield-mk3-equipment"]                     = {{"superconducting-wiring", 4}, {"radiation-resistant-and-high-tensile-shielding", 1}, },
       ["energy-shield-mk4-equipment"]                     = {{"imersium-grade-thermally-stable-paneling", 2}, {"imersium-grade-thermally-stable-framing", 4}, {"imersium-enhanced-high-tensile-bolts", 2}, },
 
@@ -181,9 +179,8 @@ return function(advanced)
       ["inserter"]                                        = {{"basic-gearing", 1}, },
       ["long-handed-inserter"]                            = {{"heavy-load-bearing-framing", 1}, {"ductile-gearing", 1}, {"heavy-load-bearing-shafting", 1}, {"high-tensile-bolts", 1}, },
       ["fast-inserter"]                                   = {{"heavy-load-bearing-framing", 1}, {"ductile-gearing", 2}, {"high-tensile-bolts", 1}, },
-      ["stack-inserter"]                                  = {{"very-heavy-load-bearing-framing", 2}, {"ductile-gearing", 2}, {"high-tensile-bolts", 1}, },
       ["filter-inserter"]                                 = {{"heavy-load-bearing-framing", 1}, {"ductile-gearing", 1}, {"high-tensile-bolts", 1}, },
-      ["stack-filter-inserter"]                           = {{"very-heavy-load-bearing-framing", 2}, {"ductile-gearing", 2}, {"high-tensile-bolts", 1}, },
+      ["stack-filter-inserter"]                           = {{"heavy-load-bearing-framing", 3}, {"heavy-load-bearing-shafting", 3}, {"high-tensile-gearing", 8}, {"electrically-conductive-wiring", 5}, {"high-tensile-bolts", 4}, },
       ["kr-superior-inserter"]                            = {{"imersium-grade-load-bearing-framing", 1}, {"imersium-grade-thermally-stable-gearing", 1}, {"imersium-enhanced-high-tensile-bolts", 1}, },
       ["kr-superior-long-inserter"]                       = {{"imersium-grade-load-bearing-framing", 2}, {"imersium-grade-thermally-stable-gearing", 2}, {"imersium-grade-load-bearing-shafting", 1}, {"imersium-enhanced-high-tensile-bolts", 1}, },
       ["kr-superior-filter-inserter"]                     = {{"imersium-grade-load-bearing-framing", 1}, {"imersium-grade-thermally-stable-gearing", 1}, {"imersium-enhanced-high-tensile-bolts", 1}, },
@@ -291,7 +288,6 @@ return function(advanced)
       ["big-battery-equipment"]                           = {{"corrosion-resistant-framing", 4}, {"electrically-conductive-wiring", 2}, {"high-tensile-bolts", 1}, },
       ["big-battery-mk2-equipment"]                       = {{"lightweight-and-high-tensile-framing", 3}, {"lightweight-and-high-tensile-bolts", 2}, },
 
-      ["energy-shield-mk2-equipment"]                     = {{"radiation-resistant-shielding", 1}, {"lightweight-and-high-tensile-bolts", 2}, },
       ["energy-shield-mk3-equipment"]                     = {{"superconducting-wiring", 4}, {"radiation-resistant-and-high-tensile-shielding", 1}, },
       ["energy-shield-mk4-equipment"]                     = {{"imersium-grade-thermally-stable-paneling", 2}, {"imersium-grade-thermally-stable-framing", 4}, {"imersium-enhanced-high-tensile-bolts", 2}, },
 

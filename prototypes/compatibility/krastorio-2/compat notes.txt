@@ -5,7 +5,8 @@ Logistic: Annealed Copper, Niobium
 Chemical: Titanium, Lead
 Military: (none)
 Production: Enriched Ores -> Osmium (process Raw Rare Metals into Enriched Rare Metals, and then crush that in a crusher)
-Utility: Niobimersium
+Utility: (none)
+Production/Utility: Niobimersium
 Matter: Imersium (titanimersium)
 Optimization (space):
 Advacned: Stable Imersium

@@ -18,7 +18,7 @@ return function(advanced)
       ["inserter"]                    = {{"load-bearing-framing", 1}, {"basic-fine-gearing", 1}, {"load-bearing-shafting", 1}, {"basic-bolts", 1}, },
       ["long-handed-inserter"]        = {{"heavy-load-bearing-framing", 2}, {"ductile-fine-gearing", 1}, {"heavy-load-bearing-shafting", 1}, {"high-tensile-bolts", 1}, },
       ["fast-inserter"]               = {{"heavy-load-bearing-framing", 1}, {"ductile-fine-gearing", 1}, {"electrically-conductive-wiring", 1}, {"high-tensile-bolts", 1}, },
-      ["stack-inserter"]              = {{"heavy-load-bearing-framing", 3}, {"high-tensile-fine-gearing", 8}, {"heavy-load-bearing-shafting", 6}, {"electrically-conductive-wiring", 3}, {"very-high-tensile-bolts", 4}, },
+      ["stack-inserter"]              = {{"heavy-load-bearing-framing", 3}, {"high-tensile-fine-gearing", 8}, {"heavy-load-bearing-shafting", 6}, {"electrically-conductive-wiring", 3}, {"high-tensile-bolts", 4}, },
 
       ["small-electric-pole"]         = {{"electrically-conductive-wiring", 1}, },
       ["medium-electric-pole"]        = {{"load-bearing-girdering", 2}, {"electrically-conductive-wiring", 4}, {"high-tensile-wiring", 2}, {"basic-bolts", 2}, {"basic-rivets", 1}, },
@@ -58,7 +58,7 @@ return function(advanced)
       ["steam-engine"]                = {{"basic-large-paneling", 2}, {"basic-girdering", 1}, {"basic-gearing", 2}, {"corrosion-resistant-fine-piping", 3}, {"electrically-conductive-wiring", 4}, {"basic-rivets", 2}, },
 
       ["solar-panel"]                 = {{"load-bearing-girdering", 4}, {"electrically-conductive-wiring", 4}, {"high-tensile-rivets", 8}, },
-      ["accumulator"]                 = {{"load-bearing-girdering", 1}, {"electrically-conductive-wiring", 8}, {"corrosion-resistant-rivets", 1}, },
+      ["accumulator"]                 = {{"load-bearing-girdering", 1}, {"ductile-and-electrically-conductive-wiring", 8}, {"corrosion-resistant-rivets", 1}, },
 
       ["nuclear-reactor"]             = {{"very-high-tensile-large-paneling", 40}, {"corrosion-resistant-and-heavy-load-bearing-girdering", 60}, {"radiation-resistant-piping", 50}, {"thermally-conductive-shafting", 45}, {"electrically-conductive-wiring", 200}, {"radiation-resistant-shielding", 300}, {"thermally-stable-shielding", 100}, {"very-high-tensile-rivets", 100}, },
       ["heat-pipe"]                   = {{"thermally-conductive-shafting", 15}, {"thermally-stable-shielding", 20}, {"thermally-stable-rivets", 4}, },
@@ -102,13 +102,14 @@ return function(advanced)
       ["artillery-turret"]            = {{"ductile-large-paneling", 16}, {"heavy-load-bearing-girdering", 20}, {"very-high-tensile-gearing", 20}, {"electrically-conductive-wiring", 20}, {"high-tensile-shielding", 15}, {"very-high-tensile-rivets", 10}, },
       ["radar"]                       = {{"basic-large-paneling", 2}, {"load-bearing-girdering", 1}, {"basic-gearing", 1}, {"electrically-conductive-wiring", 1}, {"basic-rivets", 1}, },
 
-      ["solar-panel-equipment"]       = {{"high-tensile-framing", 4}, {"lightweight-framing", 4}, {"high-tensile-bolts", 4}, },
-      ["battery-equipment"]           = {{"high-tensile-framing", 8}, {"lightweight-framing", 4}, {"high-tensile-bolts", 8}, },
-      ["belt-immunity-equipment"]     = {{"high-tensile-framing", 8}, {"lightweight-framing", 4}, {"basic-fine-piping", 2}, {"high-tensile-bolts", 8}, },
+      ["solar-panel-equipment"]       = {{"high-tensile-framing", 4}, {"corrosion-resistant-framing", 4}, {"high-tensile-bolts", 4}, },
+      ["battery-equipment"]           = {{"high-tensile-framing", 8}, {"corrosion-resistant-framing", 4}, {"high-tensile-bolts", 8}, },
+      ["belt-immunity-equipment"]     = {{"high-tensile-framing", 8}, {"corrosion-resistant-framing", 4}, {"basic-fine-piping", 2}, {"high-tensile-bolts", 8}, },
       ["exoskeleton-equipment"]       = {{"high-tensile-framing", 8}, {"lightweight-framing", 15}, {"high-tensile-bolts", 10}, },
       ["personal-roboport-equipment"] = {{"lightweight-framing", 15}, {"ductile-fine-gearing", 30}, {"high-tensile-fine-gearing", 30}, {"high-tensile-bolts", 8}, },
-      ["night-vision-equipment"]      = {{"lightweight-framing", 10}, {"high-tensile-bolts", 10}, },
-      ["energy-shield-equipment"]     = {{"thermally-stable-paneling", 5}, {"lightweight-framing", 10}, {"radiation-resistant-shielding", 2}, {"high-tensile-bolts", 10}, },
+      ["night-vision-equipment"]      = {{"high-tensile-framing", 10}, {"high-tensile-bolts", 10}, },
+      ["energy-shield-equipment"]     = {{"thermally-stable-paneling", 5}, {"high-tensile-framing", 10}, {"corrosion-resistant-shielding", 2}, {"high-tensile-bolts", 10}, },
+      ["energy-shield-mk2-equipment"] = {{"thermally-stable-paneling", 5}, {"lightweight-framing", 10}, {"radiation-resistant-shielding", 2}, {"very-high-tensile-bolts", 10}, },
       ["discharge-defense-equipment"] = {{"high-tensile-framing", 8}, {"lightweight-framing", 15}, {"electrically-conductive-wiring", 10}, {"high-tensile-bolts", 10}, },
     }
     else return {
@@ -129,7 +130,7 @@ return function(advanced)
       ["inserter"]                    = {{"load-bearing-framing", 1}, {"basic-gearing", 1}, {"load-bearing-shafting", 1}, {"basic-bolts", 1}, },
       ["long-handed-inserter"]        = {{"heavy-load-bearing-framing", 2}, {"ductile-gearing", 1}, {"heavy-load-bearing-shafting", 1}, {"high-tensile-bolts", 1}, },
       ["fast-inserter"]               = {{"heavy-load-bearing-framing", 1}, {"ductile-gearing", 1}, {"electrically-conductive-wiring", 1}, {"high-tensile-bolts", 1}, },
-      ["stack-inserter"]              = {{"heavy-load-bearing-framing", 2}, {"high-tensile-gearing", 5}, {"heavy-load-bearing-shafting", 6}, {"electrically-conductive-wiring", 3}, {"very-high-tensile-bolts", 4}, },
+      ["stack-inserter"]              = {{"heavy-load-bearing-framing", 2}, {"high-tensile-gearing", 5}, {"heavy-load-bearing-shafting", 6}, {"electrically-conductive-wiring", 3}, {"high-tensile-bolts", 4}, },
 
       ["small-electric-pole"]         = {{"electrically-conductive-wiring", 1}, },
       ["medium-electric-pole"]        = {{"load-bearing-framing", 4}, {"electrically-conductive-wiring", 4}, {"high-tensile-wiring", 2}, {"basic-bolts", 2}, },
@@ -169,7 +170,7 @@ return function(advanced)
       ["steam-engine"]                = {{"basic-paneling", 3}, {"basic-framing", 2}, {"basic-gearing", 2}, {"corrosion-resistant-piping", 3}, {"electrically-conductive-wiring", 4}, {"basic-bolts", 2}, },
 
       ["solar-panel"]                 = {{"load-bearing-framing", 8}, {"electrically-conductive-wiring", 4}, {"high-tensile-bolts", 8}, },
-      ["accumulator"]                 = {{"load-bearing-framing", 1}, {"electrically-conductive-wiring", 8}, {"corrosion-resistant-bolts", 1}, },
+      ["accumulator"]                 = {{"load-bearing-framing", 1}, {"ductile-and-electrically-conductive-wiring", 8}, {"corrosion-resistant-bolts", 1}, },
 
       ["nuclear-reactor"]             = {{"very-high-tensile-paneling", 50}, {"corrosion-resistant-and-heavy-load-bearing-framing", 65}, {"radiation-resistant-piping", 55}, {"thermally-conductive-shafting", 55}, {"electrically-conductive-wiring", 200}, {"radiation-resistant-shielding", 300}, {"thermally-stable-shielding", 100}, {"very-high-tensile-bolts", 120}, },
       ["heat-pipe"]                   = {{"thermally-conductive-shafting", 7}, {"thermally-stable-shielding", 11}, {"thermally-stable-bolts", 2}, },
@@ -213,13 +214,14 @@ return function(advanced)
       ["artillery-turret"]            = {{"ductile-paneling", 24}, {"heavy-load-bearing-framing", 32}, {"very-high-tensile-gearing", 32}, {"electrically-conductive-wiring", 28}, {"high-tensile-shielding", 20}, {"very-high-tensile-bolts", 10}, },
       ["radar"]                       = {{"basic-paneling", 3}, {"load-bearing-framing", 2}, {"basic-gearing", 2}, {"electrically-conductive-wiring", 1}, {"basic-bolts", 1}, },
 
-      ["solar-panel-equipment"]       = {{"high-tensile-framing", 4}, {"lightweight-framing", 4}, {"high-tensile-bolts", 4}, },
-      ["battery-equipment"]           = {{"high-tensile-framing", 8}, {"lightweight-framing", 4}, {"high-tensile-bolts", 8}, },
-      ["belt-immunity-equipment"]     = {{"high-tensile-framing", 8}, {"lightweight-framing", 4}, {"basic-piping", 2}, {"high-tensile-bolts", 8}, },
+      ["solar-panel-equipment"]       = {{"high-tensile-framing", 4}, {"corrosion-resistant-framing", 4}, {"high-tensile-bolts", 4}, },
+      ["battery-equipment"]           = {{"high-tensile-framing", 8}, {"corrosion-resistant-framing", 4}, {"high-tensile-bolts", 8}, },
+      ["belt-immunity-equipment"]     = {{"high-tensile-framing", 8}, {"corrosion-resistant-framing", 4}, {"basic-piping", 2}, {"high-tensile-bolts", 8}, },
       ["exoskeleton-equipment"]       = {{"high-tensile-framing", 8}, {"lightweight-framing", 15}, {"high-tensile-bolts", 10}, },
       ["personal-roboport-equipment"] = {{"lightweight-framing", 15}, {"ductile-gearing", 30}, {"high-tensile-gearing", 30}, {"high-tensile-bolts", 8}, },
-      ["night-vision-equipment"]      = {{"lightweight-framing", 10}, {"high-tensile-bolts", 10}, },
-      ["energy-shield-equipment"]     = {{"thermally-stable-paneling", 5}, {"lightweight-framing", 10}, {"radiation-resistant-shielding", 2}, {"high-tensile-bolts", 10}, },
+      ["night-vision-equipment"]      = {{"high-tensile-framing", 10}, {"high-tensile-bolts", 10}, },
+      ["energy-shield-equipment"]     = {{"thermally-stable-paneling", 5}, {"high-tensile-framing", 10}, {"corrosion-resistant-shielding", 2}, {"high-tensile-bolts", 10}, },
+      ["energy-shield-mk2-equipment"] = {{"thermally-stable-paneling", 5}, {"lightweight-framing", 10}, {"radiation-resistant-shielding", 2}, {"very-high-tensile-bolts", 10}, },
       ["discharge-defense-equipment"] = {{"high-tensile-framing", 8}, {"lightweight-framing", 15}, {"electrically-conductive-wiring", 10}, {"high-tensile-bolts", 10}, },
     }
   end

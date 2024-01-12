@@ -34,39 +34,20 @@ local MW_Data = GM_global_mw_data.MW_Data
 -- Metalworking
 -- ************
 
-local mw_van_intermediates_to_replace
--- FIXME: This is duplicate code and will break if this changes without it's analogue in data-final-updates.lua changing as well
-if advanced then -- make list of vanilla items to remove and replace
-  mw_van_intermediates_to_replace = { -- list of item-names
-    ["iron-plate"]      = "iron-plate-stock",
-    ["copper-plate"]    = "copper-plate-stock",
-    ["steel-plate"]     = "steel-plate-stock",
-    ["iron-gear-wheel"] = "basic-fine-gearing-machined-part",
-    ["copper-cable"]    = "electrically-conductive-wiring-machined-part",
-    ["iron-stick"]      = "basic-framing-machined-part",
-    ["pipe"]            = "basic-fine-piping-machined-part"
-  }
-else
-  mw_van_intermediates_to_replace = { -- list of item-names
-    ["iron-plate"]      = "iron-plate-stock",
-    ["copper-plate"]    = "copper-plate-stock",
-    ["steel-plate"]     = "steel-plate-stock",
-    ["iron-gear-wheel"] = "basic-gearing-machined-part",
-    ["copper-cable"]    = "electrically-conductive-wiring-machined-part",
-    ["iron-stick"]      = "basic-framing-machined-part",
-    ["pipe"]            = "basic-piping-machined-part"
-  }
-end
+local mw_intermediates_to_replace = {}
+
+require("prototypes.passes.metalworking.mw-rerecipe-pull-list")
+
 
 -- For logging a csv, make the log argument: {"paneling", "large-paneling", "framing", "girdering", "fine-gearing", "gearing", "fine-piping", "piping", "shafting", "wiring", "shielding", "bolts", "rivets"}
-Re_recipe(mw_van_intermediates_to_replace, "prototypes.passes.metalworking.mw-rerecipe-data", "-machined-part", "-stock", {})
+Re_recipe(mw_intermediates_to_replace, "prototypes.passes.metalworking.mw-rerecipe-data", "-machined-part", "-stock", {})
 
 
 
 -- ********************************************************
 -- Cull Vanilla Metalworking Intermediates, EXCEPT the pipe
 -- ********************************************************
-for intermediate, _ in pairs(mw_van_intermediates_to_replace) do
+for intermediate, _ in pairs(mw_intermediates_to_replace) do
   if intermediate ~= "pipe" then data.raw.recipe[intermediate].hidden = true end
 end
 

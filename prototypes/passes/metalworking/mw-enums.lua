@@ -47,7 +47,7 @@ return {
 	MW_Metal_Type = {
 		ELEMENT          = "element",
 		ALLOY			       = "alloy",
-		TREATMENT        =	"treatment"
+		TREATMENT        = "treatment"
 	},
 
 	MW_Treatment_Type = {

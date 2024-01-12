@@ -1,4 +1,4 @@
--- Credit: Cin
+-- Credit/Blame: Cin
 local function table_contains(table, value_to_search)
   for _, value in pairs(table) do
       if value == value_to_search then

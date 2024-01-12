@@ -9,17 +9,6 @@
 
 
 
--- ******************
--- Compatibility Data
--- ******************
-
--- This is a good injection point for a companion mod's content.
-
--- Determine which supported overhaul set is augmenting GM
-local current_overhaul_data = require("prototypes.passes.metalworking.mw-overhauls")
-
-
-
 -- ****************
 -- Make Global Data
 -- ****************
@@ -27,16 +16,27 @@ local current_overhaul_data = require("prototypes.passes.metalworking.mw-overhau
 -- Initialize Global Data
 GM_global_mw_data = {}
 
+
+
+-- ******************
+-- Compatibility Data
+-- ******************
+
+-- This is a good injection point for a companion mod's content.
+
+-- Determine which supported overhaul set is augmenting GM
+GM_global_mw_data.current_overhaul_data = require("prototypes.passes.metalworking.mw-overhauls")
+
 -- Enums
 GM_global_mw_data.MW_Data = require("prototypes.passes.metalworking.mw-enums")
-if current_overhaul_data.passes and current_overhaul_data.passes.metalworking and current_overhaul_data.passes.metalworking.enums then
-  GM_global_mw_data.MW_Data = require("prototypes.compatibility." .. current_overhaul_data.dir_name .. ".mw-enums-augment")
+if GM_global_mw_data.current_overhaul_data.passes and GM_global_mw_data.current_overhaul_data.passes.metalworking and GM_global_mw_data.current_overhaul_data.passes.metalworking.enums then
+  GM_global_mw_data.MW_Data = require("prototypes.compatibility." .. GM_global_mw_data.current_overhaul_data.dir_name .. ".mw-enums-augment")
 end
 
 -- Data
 GM_global_mw_data.MW_Data = require("prototypes.passes.metalworking.mw-data")
-if current_overhaul_data.passes and current_overhaul_data.passes.metalworking and current_overhaul_data.passes.metalworking.data then
-  GM_global_mw_data.MW_Data = require("prototypes.compatibility." .. current_overhaul_data.dir_name .. ".mw-data-augment")
+if GM_global_mw_data.current_overhaul_data.passes and GM_global_mw_data.current_overhaul_data.passes.metalworking and GM_global_mw_data.current_overhaul_data.passes.metalworking.data then
+  GM_global_mw_data.MW_Data = require("prototypes.compatibility." .. GM_global_mw_data.current_overhaul_data.dir_name .. ".mw-data-augment")
 end
 
 
@@ -52,20 +52,20 @@ GM_global_mw_data.machined_part_recipes = {}
 
 -- Code
 GM_global_mw_data.MW_Data = require("prototypes.passes.metalworking.mw-code")
-if current_overhaul_data.passes and current_overhaul_data.passes.metalworking and current_overhaul_data.passes.metalworking.code then
-  GM_global_mw_data.MW_Data = require("prototypes.compatibility." .. current_overhaul_data.dir_name .. ".mw-code-augment")
+if GM_global_mw_data.current_overhaul_data.passes and GM_global_mw_data.current_overhaul_data.passes.metalworking and GM_global_mw_data.current_overhaul_data.passes.metalworking.code then
+  GM_global_mw_data.MW_Data = require("prototypes.compatibility." .. GM_global_mw_data.current_overhaul_data.dir_name .. ".mw-code-augment")
 end
 
 -- Technology
 GM_global_mw_data.MW_Data = require("prototypes.passes.metalworking.mw-technology")
-if current_overhaul_data.passes and current_overhaul_data.passes.metalworking and current_overhaul_data.passes.metalworking.technology then
-  GM_global_mw_data.MW_Data = require("prototypes.compatibility." .. current_overhaul_data.dir_name .. ".mw-technology-augment")
+if GM_global_mw_data.current_overhaul_data.passes and GM_global_mw_data.current_overhaul_data.passes.metalworking and GM_global_mw_data.current_overhaul_data.passes.metalworking.technology then
+  GM_global_mw_data.MW_Data = require("prototypes.compatibility." .. GM_global_mw_data.current_overhaul_data.dir_name .. ".mw-technology-augment")
 end
 
 -- Technology Processing
 GM_global_mw_data.MW_Data = require("prototypes.passes.metalworking.mw-technology-processing")
-if current_overhaul_data.passes and current_overhaul_data.passes.metalworking and current_overhaul_data.passes.metalworking.technology_processing then
-  GM_global_mw_data.MW_Data = require("prototypes.compatibility." .. current_overhaul_data.dir_name .. ".mw-technology-processing-augment")
+if GM_global_mw_data.current_overhaul_data.passes and GM_global_mw_data.current_overhaul_data.passes.metalworking and GM_global_mw_data.current_overhaul_data.passes.metalworking.technology_processing then
+  GM_global_mw_data.MW_Data = require("prototypes.compatibility." .. GM_global_mw_data.current_overhaul_data.dir_name .. ".mw-technology-processing-augment")
 end
 
 --[[

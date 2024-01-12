@@ -29,6 +29,10 @@ data.raw.technology["kr-enriched-ores"].unit = {
   time = 60
 }
 
+-- Manipulate Gravel and Pebble Recipes (CHANGE IN THE FUTURE DURING ELECTRONICS PASS)
+table.insert(data.raw.technology["gm-osmium-stock-processing"].effects, {type = "unlock-recipe", recipe="osmium-pebble-to-plate"})
+table.insert(data.raw.technology["gm-niobium-stock-processing"].effects, {type = "unlock-recipe", recipe="niobium-gravel-to-plate"})
+
 -- Update prerequisites
 -- Niobimersium
 table.insert(data.raw.technology["kr-imersite-solar-panel-equipment"].prerequisites, "gm-niobimersium-machined-part-processing")
@@ -54,5 +58,134 @@ data.raw.technology["kr-antimatter-reactor"].prerequisites        = table.swap_s
 
 -- Buh bye
 data.raw.technology[gm_imersium_stock_tech_name] = nil
+
+-- Manually rearrange tech-tree so that things fit where they should
+local temp_tech
+local new_effects
+
+-- Minisemblers
+data.raw.technology["gm-technology-minisemblers"].prerequisites = {"kr-automation-core"}
+data.raw.technology["gm-technology-minisemblers"].unit = {count = 10, time = 10, ingredients = {{"basic-tech-card", 1}}}
+
+-- Tech Cards
+-- Logistic Tech Card
+data.raw.technology["logistic-science-pack"].prerequisites = {"steel-machined-part-processing"}
+table.insert(data.raw.technology["logistic-science-pack"].prerequisites, "gm-galvanized-steel-machined-part-processing")
+table.insert(data.raw.technology["logistic-science-pack"].prerequisites, "gm-nickel-and-invar-machined-part-processing")
+
+-- Chemical Tech Card
+table.insert(data.raw.technology["chemical-science-pack"].prerequisites, "gm-niobium-machined-part-processing")
+table.insert(data.raw.technology["chemical-science-pack"].prerequisites, "gm-annealed-copper-machined-part-processing")
+
+-- Production Tech Card
+table.insert(data.raw.technology["production-science-pack"].prerequisites, "gm-titanium-machined-part-processing")
+table.insert(data.raw.technology["production-science-pack"].prerequisites, "gm-lead-machined-part-processing")
+
+-- Singularity Tech Card
+table.insert(data.raw.technology["kr-singularity-tech-card"].prerequisites, "gm-stable-imersium-machined-part-processing")
+
+
+-- kr-containers
+data.raw.technology["kr-containers"].prerequisites = table.swap_string(data.raw.technology["kr-containers"].prerequisites, "steel-machined-part-processing", "steel-processing")
+
+-- kr-shelter
+table.insert(data.raw.technology["kr-shelter"].prerequisites, "gm-galvanized-steel-machined-part-processing")
+
+-- fluid-handling
+table.insert(data.raw.technology["fluid-handling"].prerequisites, "gm-galvanized-steel-machined-part-processing")
+
+-- kr-fluids-chemistry
+table.insert(data.raw.technology["kr-fluids-chemistry"].prerequisites, "gm-nickel-and-invar-machined-part-processing")
+
+-- kr-mineral-water-gathering
+table.insert(data.raw.technology["kr-mineral-water-gathering"].prerequisites, "gm-annealed-copper-machined-part-processing")
+
+-- electric-energy-distribution-1
+table.insert(data.raw.technology["electric-energy-distribution-1"].prerequisites, "gm-annealed-copper-machined-part-processing")
+
+-- kr-gas-power-station
+table.insert(data.raw.technology["kr-gas-power-station"].prerequisites, "gm-annealed-copper-machined-part-processing")
+
+-- kr-portable-generator
+table.insert(data.raw.technology["kr-portable-generator"].prerequisites, "gm-titanium-machined-part-processing")
+
+-- kr-atmosphere-condensation
+table.insert(data.raw.technology["kr-atmosphere-condensation"].prerequisites, "gm-titanium-machined-part-processing")
+
+-- kr-advanced-lab
+table.insert(data.raw.technology["kr-advanced-lab"].prerequisites, "gm-lead-machined-part-processing")
+
+-- battery-mk2-equipment
+table.insert(data.raw.technology["battery-mk2-equipment"].prerequisites, "gm-titanium-machined-part-processing")
+
+-- kr-tesla-coil
+table.insert(data.raw.technology["kr-tesla-coil"].prerequisites, "gm-titanium-machined-part-processing")
+table.insert(data.raw.technology["kr-tesla-coil"].prerequisites, "gm-lead-machined-part-processing")
+
+-- kr-research-server
+table.insert(data.raw.technology["kr-research-server"].prerequisites, "gm-titanium-machined-part-processing")
+
+-- kr-electric-mining-drill-mk2
+table.insert(data.raw.technology["kr-electric-mining-drill-mk2"].prerequisites, "gm-titanium-machined-part-processing")
+
+-- kr-energy-shield-mk3-equipment
+table.insert(data.raw.technology["kr-energy-shield-mk3-equipment"].prerequisites, "gm-niobimersium-machined-part-processing")
+table.insert(data.raw.technology["kr-energy-shield-mk3-equipment"].prerequisites, "gm-osmium-machined-part-processing")
+
+table.insert(data.raw.technology["kr-energy-shield-mk3-equipment"].unit.ingredients, {"production-science-pack", 1})
+
+-- kr-energy-shield-mk4-equipment
+table.insert(data.raw.technology["kr-energy-shield-mk4-equipment"].prerequisites, "gm-stable-imersium-machined-part-processing")
+
+-- kr-personal-laser-defense-mk2-equipment
+table.insert(data.raw.technology["kr-personal-laser-defense-mk2-equipment"].prerequisites, "gm-niobimersium-machined-part-processing")
+
+table.insert(data.raw.technology["kr-personal-laser-defense-mk2-equipment"].unit.ingredients, {"production-science-pack", 1})
+
+-- kr-personal-laser-defense-mk3-equipment
+table.insert(data.raw.technology["kr-personal-laser-defense-mk3-equipment"].prerequisites, "gm-stable-imersium-machined-part-processing")
+
+-- kr-quarry-minerals-extraction
+table.insert(data.raw.technology["kr-quarry-minerals-extraction"].prerequisites, "gm-osmium-machined-part-processing")
+
+-- kr-railgun-turret
+table.insert(data.raw.technology["kr-railgun-turret"].prerequisites, "gm-niobimersium-machined-part-processing")
+
+-- logistics-3
+local new_ingredients = {}
+for _, ingredient in pairs(data.raw.technology["logistics-3"].unit.ingredients) do
+  if not ((ingredient.name and ingredient.name == "production-science-pack") or ingredient[1] == "production-science-pack") then
+    table.insert(new_ingredients, ingredient)
+  end
+  data.raw.technology["logistics-3"].unit.ingredients = new_ingredients
+end
+
+-- kr-logistic-4
+table.insert(data.raw.technology["kr-logistic-4"].prerequisites, "gm-osmium-machined-part-processing")
+
+-- kr-fusion-energy
+table.insert(data.raw.technology["kr-fusion-energy"].prerequisites, "gm-osmium-machined-part-processing")
+
+-- kr-energy-control-unit
+table.insert(data.raw.technology["kr-energy-control-unit"].prerequisites, "gm-imersium-machined-part-processing")
+
+-- kr-advanced-tech-card
+table.insert(data.raw.technology["kr-advanced-tech-card"].prerequisites, "gm-imersium-machined-part-processing")
+
+-- kr-electric-mining-drill-mk3
+table.insert(data.raw.technology["kr-electric-mining-drill-mk3"].prerequisites, "gm-stable-imersium-machined-part-processing")
+
+-- kr-superior-inserters
+table.insert(data.raw.technology["kr-superior-inserters"].prerequisites, "gm-stable-imersium-machined-part-processing")
+
+-- kr-logistic-5
+table.insert(data.raw.technology["kr-logistic-5"].prerequisites, "gm-stable-imersium-machined-part-processing")
+
+-- kr-advanced-tank
+table.insert(data.raw.technology["kr-advanced-tank"].prerequisites, "gm-stable-imersium-machined-part-processing")
+
+-- kr-superior-exoskeleton-equipment
+table.insert(data.raw.technology["kr-superior-exoskeleton-equipment"].prerequisites, "gm-stable-imersium-machined-part-processing")
+
 
 return MW_Data

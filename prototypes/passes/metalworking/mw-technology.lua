@@ -135,7 +135,7 @@ data:extend({ -- Make the technologies for the stocks and machined parts
     name = "gm-nickel-and-invar-stock-processing",
     icon_size = 256,
     icon = "__galdocs-manufacturing__/graphics/technology-icons/nickel-and-invar-processing.png",
-    prerequisites = {"steel-processing", "gm-galvanized-steel-machined-part-processing"},
+    prerequisites = {"steel-processing"},
     unit =
     {
       ingredients =

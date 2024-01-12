@@ -336,13 +336,37 @@ for ore, ore_data in pairs(MW_Data.ore_data) do -- Make pebble -> gravel and gra
   end
 end
 
+-- Matter Processing Recipes
+-- Parent Tech: kr-matter-processing
+-- Sibling Tech: kr-matter-coal-processing
+-- Update icons for Copper and Iron
+-- Remove Rare Metals (kr-rare-metals-processing)
+-- Make all the new ores into techs (titanium, nickel, lead, etc.)
+-- Recipe name structure example: matter-to-coal, coal-to-matter; category: matter-conversion, subgroup: matter-conversion, recipe order: z[name], recipe-group: intermediate-products
+-- Ratios: 10-ore to 5-matter; 7.5-matter to 10 plate
+
+
+-- Ore Enrichment / Filtration
+-- Parent tech: kr-enriched-ores
+-- omg rename the stupid filtration recipe names
+-- iron: dirty-water-filtration-1 becomes dirty-water-filtration-iron
+-- copper: dirty-water-filtration-2 becomes dirty-water-filtration-copper
+-- remove rare metals (dirty-water-filtration-3)
+-- Make new ores into things
+-- Redo the icons for iron and copper
+-- make new icons for the new metals
+-- FIXME : Add enriched-ore-to-plate recipe above
+-- Filtering osmium or niobium will only give pebbles / gravel, not enriched ores
+
+
+
 
 
 -- Stocks
 -- ******
 
 for ore, ore_data in pairs(MW_Data.ore_data) do -- Make gravel to plate and pebble to plate recipes
-  if ore_data.ore_type == MW_Data.MW_Metal_Type.ELEMENT then
+  if ore_data.ore_type == MW_Data.MW_Ore_Type.ELEMENT then
     -- Gravel to plate recipes
     local icons_data_recipe = { -- Make icon
       {
@@ -371,8 +395,9 @@ for ore, ore_data in pairs(MW_Data.ore_data) do -- Make gravel to plate and pebb
         type = "recipe",
         name = ore .. "-gravel-to-plate",
         icons = icons_data_recipe,
-        enabled = MW_Data.metal_data[ore].tech_stock == "starter",
-        ingredients = {{type = "item", name = ore .. "-pebble", amount = 1}},
+        -- enabled = MW_Data.metal_data[ore].tech_stock == "starter",
+        enabled = false,
+        ingredients = {{type = "item", name = ore .. "-gravel", amount = 1}},
         results = {{type = "item", name = ore .. "-plate-stock", amount = 1}},
         always_show_made_in = true,
         hide_from_player_crafting = false,
@@ -415,7 +440,8 @@ for ore, ore_data in pairs(MW_Data.ore_data) do -- Make gravel to plate and pebb
         type = "recipe",
         name = ore .. "-pebble-to-plate",
         icons = icons_data_recipe,
-        enabled = MW_Data.metal_data[ore].tech_stock == "starter",
+        -- enabled = MW_Data.metal_data[ore].tech_stock == "starter",
+        enabled = false,
         ingredients = {{type = "item", name = ore .. "-pebble", amount = GM_globals.pebble_to_gravel_ratio}},
         results = {{type = "item", name = ore .. "-plate-stock", amount = 1}},
         always_show_made_in = true,
@@ -500,5 +526,20 @@ for property, parts in pairs(MW_Data.property_machined_part_pairs) do -- Add glo
   end
 end
 
+
+
+-- Misc
+-- ****
+
+data.raw.item["kr-steel-pipe"].localised_name                  = {"gm.new-steel-pipe"}
+data.raw.item["kr-steel-pipe"].localised_description           = {"gm.new-steel-pipe-description"}
+
+data.raw.item["kr-steel-pipe-to-ground"].localised_name        = {"gm.new-steel-pipe-to-ground"}
+data.raw.item["kr-steel-pipe-to-ground"].localised_description = {"gm.new-steel-pipe-to-ground-description"}
+
+data.raw.item["kr-steel-pump"].localised_name                  = {"gm.new-steel-pump"}
+data.raw.item["kr-steel-pump"].localised_description           = {"gm.new-steel-pump-description"}
+
+data.raw.recipe["lithium-sulfur-battery"].result_count = 2
 
 return MW_Data

@@ -14,6 +14,7 @@ Date:
     - Ore-to-Alloy recipes can now use Productivity modules
     - Fixed alt-mode and module overlays for minisemblers
     - Galvanized Steel Plate now properly unlocks with its associated technology
+    - Tinkered with personal equipment recipes
 ---------------------------------------------------------------------------------------------------
 Version: 0.1.15
 Date: 2023-10-03

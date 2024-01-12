@@ -170,5 +170,30 @@ for _, unlock in pairs(data.raw.technology["steel-processing"].effects) do
 end
 data.raw.technology["steel-processing"].effects = new_effects
 
+-- Fix individual technologies
+-- robotics
+table.insert(data.raw.technology["robotics"].prerequisites, "gm-titanium-machined-part-processing")
+
+-- exoskeleton-equipment
+table.insert(data.raw.technology["exoskeleton-equipment"].prerequisites, "gm-titanium-machined-part-processing")
+
+-- uranium-processing
+table.insert(data.raw.technology["uranium-processing"].prerequisites, "gm-lead-machined-part-processing")
+table.insert(data.raw.technology["uranium-processing"].prerequisites, "gm-titanium-machined-part-processing")
+
+-- personal-laser-defense-equipment
+table.insert(data.raw.technology["personal-laser-defense-equipment"].prerequisites, "gm-titanium-machined-part-processing")
+
+-- energy-shield-mk2-equipment
+table.insert(data.raw.technology["energy-shield-mk2-equipment"].prerequisites, "gm-titanium-machined-part-processing")
+table.insert(data.raw.technology["energy-shield-mk2-equipment"].prerequisites, "gm-lead-machined-part-processing")
+
+-- discharge-defense-equipment
+table.insert(data.raw.technology["discharge-defense-equipment"].prerequisites, "gm-titanium-machined-part-processing")
+
+-- tank
+table.insert(data.raw.technology["tank"].prerequisites, "gm-titanium-machined-part-processing")
+
+
 
 return MW_Data

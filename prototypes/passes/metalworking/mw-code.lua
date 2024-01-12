@@ -1892,7 +1892,7 @@ end
 -- Minisemblers
 -- ============
 
-data:extend({ -- Make the minisemblers item group and technology
+data:extend({ -- Make the minisemblers item group
   { -- item subgroup
 	  type = "item-subgroup",
 	  name = "gm-minisemblers",

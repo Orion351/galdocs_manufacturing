@@ -4,7 +4,14 @@ local overhaul_modpack_data = {  -- Data for supported overhauls FIXME: Move to 
     dir_name = "krastorio-2",
     titles = {"Krastorio2", },
     passes = {
-      metalworking = {enums = true, data = true, code = true, technology = true, technology_processing = true, rerecipe_code = true, culling = false}
+      metalworking = {
+        -- data phase
+        enums = true, data = true, code = true, technology = true, technology_processing = true,
+        
+        -- data-final-fixes phase; some must be "sequential" or "replace"
+        replace_list = true, re_recipe = "sequental", pull_list = true, flat_replace = true, tech_final_fixes = true
+
+      }
     }
   }
 }

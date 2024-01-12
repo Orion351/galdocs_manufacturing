@@ -1,11 +1,3 @@
--- ******************
--- Difficulty Toggles
--- ******************
-
-local advanced = settings.startup["gm-advanced-mode"].value
-
-
-
 -- ****************
 -- Helper Functions
 -- ****************
@@ -70,7 +62,7 @@ function Set_up_swappable_ingredients(current, to_remove) -- Replaces ingredient
     else
       new_amount = ingredient[2]
     end
-    if to_remove[new_name] ~= nil then
+    if to_remove[new_name] ~= nil and to_remove[new_name] ~= "REMOVE" then
       table.insert(new_ingredients, {to_remove[new_name], new_amount})
     end
   end
@@ -99,7 +91,7 @@ function Re_recipe(intermediates_to_replace, pull_table_name, finished_part_name
   --   ["item-name-m"] = {{"ingredient-1-name", ingredient-1-amount}, {"ingredient-2-name", ingredient-2-amount} ... {"ingredient-n-name", ingredient-n-amount} }, 
   -- }
   local pull_table = require(pull_table_name)
-  local intermediates_to_add_table = pull_table(advanced) -- FIXME : Rename this
+  local intermediates_to_add_table = pull_table(GM_globals.advanced) -- FIXME : Rename this
 
   -- Append "-machined-part" onto the intermediate names; this keeps it consistent with their creation but also easy to type above
   for name, ingredients_to_add in pairs(intermediates_to_add_table) do
@@ -127,8 +119,8 @@ function Re_recipe(intermediates_to_replace, pull_table_name, finished_part_name
     -- fuss with ingredients
     current_ingredients = current_recipe.ingredients
     current_ingredients = Remove_ingredients(current_ingredients, intermediates_to_replace)
-    current_ingredients = Append_ingredients(current_ingredients, intermediates_to_add_table[name])
-    used_recipe_list = Keep_track_of_used_ingredients(used_recipe_list, intermediates_to_add_table[name])
+    current_ingredients = Append_ingredients(current_ingredients, ingredients)
+    used_recipe_list = Keep_track_of_used_ingredients(used_recipe_list, ingredients)
     data.raw.recipe[name].ingredients = current_ingredients
 
     -- get rekt normal vs. expensive
@@ -140,7 +132,7 @@ function Re_recipe(intermediates_to_replace, pull_table_name, finished_part_name
       local new_list = ""
       for _, mp_type in pairs(finished_part_list) do
         local got_hit = false
-        for __, ingredient_pair in pairs(intermediates_to_add_table[name]) do
+        for __, ingredient_pair in pairs(ingredients) do
           local i, j = string.find(ingredient_pair[1], mp_type, 1, true)
           if i ~= nil and not got_hit then
             got_hit = true
