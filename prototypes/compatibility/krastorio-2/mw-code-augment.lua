@@ -101,7 +101,7 @@ for ore, ore_data in pairs(MW_Data.ore_data) do -- Add Pebble and Gravel Items
   end
 end
 
-for ore, ore_data in pairs(MW_Data.ore_data) do -- Add Enriched Items
+for ore, ore_data in pairs(MW_Data.ore_data) do -- Add Enriched Items and Recipes
   if ore_data.shapes and table.contains(ore_data.shapes, MW_Data.MW_Ore_Shape.ENRICHED) and (ore ~= MW_Data.MW_Resource.RARE_METALS) then
     local icons_data_item = { -- Prepare icon data for item
       {
@@ -134,10 +134,10 @@ for ore, ore_data in pairs(MW_Data.ore_data) do -- Add Enriched Items
     end
 
     if (ore ~= MW_Data.MW_Resource.COPPER) and (ore ~= MW_Data.MW_Resource.IRON) then
-      data:extend({
+      data:extend({ -- Item
         {
           type = "item",
-          name = ore .. "-enriched",
+          name = "enriched-" .. ore .. "-ore",
           icons = icons_data_item,
           pictures = pictures_data,
           subgroup = "raw-resource",
@@ -149,6 +149,128 @@ for ore, ore_data in pairs(MW_Data.ore_data) do -- Add Enriched Items
     else
       data.raw.item["enriched-" .. ore].icons = icons_data_item
       data.raw.item["enriched-" .. ore].pictures = pictures_data
+    end
+
+    if ore_data.enriched_recipe and ore_data.enriched_recipe.new then
+      local recipe_tint_primary = {r = 1, g = 1, b = 1, a = 1}
+      if MW_Data.metal_data[ore] then
+        recipe_tint_primary = MW_Data.metal_data[ore].tint_oxidation
+      end
+
+      data:extend({ -- recipe for ore to enriched
+        {
+          type = "recipe",
+          name = "enriched-" .. ore,
+          icons = icons_data_item,
+          subgroup = "raw-material",
+          order = "e02[enriched-" .. ore .. "]",
+          category = "chemistry",
+          group = "intermediate-products",
+          results = {
+            {type = "fluid", name = "dirty-water", amount = 25},
+            {type = "item", name = "enriched-" .. ore .. "-ore", amount = 6}
+          },
+          ingredients = {
+            {type = "fluid", name = "water", amount = 25},
+            {type = "fluid", name = ore_data.enriched_recipe.purifier_name, amount = ore_data.enriched_recipe.purifier_amount},
+            {type = "item", name = ore .. "-ore", amount = 9}
+          },
+          energy_required = 3,
+          always_show_made_in = true,
+          always_show_products = true,
+          allow_productivity = true,
+          crafting_machine_tint = {primary = recipe_tint_primary},
+          localised_name = {"gm.ore-to-enriched-name", ore}
+        }
+      })
+
+      -- Build enriched-to-plate icon
+      local icons_enriched_to_plate_recipe = {}
+      
+      if (ore ~= MW_Data.MW_Resource.COPPER) and (ore ~= MW_Data.MW_Resource.IRON) then
+        icons_enriched_to_plate_recipe = {
+          {
+            icon = "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. ore .. "/" .. ore .. "-plate-stock-0000.png",
+            icon_size = 64
+          },
+          {
+            icon = "__galdocs-manufacturing__/graphics/icons/intermediates/ore/" .. ore .. "/" .. ore .. "-enriched-1.png",
+            icon_size = 64,
+            scale = 0.22,
+            shift = { -8, -8 }
+          }
+        }
+      end
+
+      data:extend({ -- enriched to plate recipe
+        {
+          type = "recipe",
+          name = "enriched-" .. ore .. "-plate",
+          icons = icons_enriched_to_plate_recipe,
+          order = "c[" .. ore .. "-plate]-b[enriched-".. ore .. "-plate]",
+          category = "smelting",
+          group = "intermediate-products",
+          result = ore .. "-plate-stock",
+          result_count = 5,
+          ingredients = {
+            {type = "item", name = "enriched-" .. ore .. "-ore", amount = 5}
+          },
+          energy_required = 16,
+          enabled = false,
+          always_show_made_in = true,
+          always_show_products = true,
+          allow_productivity = true,
+          crafting_machine_tint = {primary = recipe_tint_primary},
+        }
+      })
+      
+      local icons_dirty_water_filtration_recipe = {}
+      
+      if (ore ~= MW_Data.MW_Resource.COPPER) and (ore ~= MW_Data.MW_Resource.IRON) then
+        icons_dirty_water_filtration_recipe = {
+          {
+            icon = "__Krastorio2Assets__/icons/fluids/dirty-water.png",
+            icon_size = 64
+          },
+          {
+            icon = "__galdocs-manufacturing__/graphics/icons/intermediates/ore/" .. ore .. "/" .. ore .. "-ore-1.png",
+            icon_size = 64,
+            scale = 0.2,
+            shift = { 0, 4 }
+          }
+        }
+      end
+
+      data:extend({ -- dirty water filtration recipe
+        {
+          type = "recipe",
+          name = "dirty-water-filtration-" .. ore,
+          icons = icons_dirty_water_filtration_recipe,
+          order = "w011[dirty-water-filtration-" .. ore .. "]",
+          category = "fluid-filtration",
+          group = "intermediate-products",
+          results = {
+            {type = "fluid", name = "water", amount = 100},
+            {type = "item", name = "stone", probability  = 0.3, amount = 1},
+            {type = "item", name = ore .. "-ore", probability  = 0.1, amount = 1}
+          },
+          ingredients = {
+            {type = "fluid", name = "dirty-water", amount = 100}
+          },
+          subgroup = "raw-material",
+          energy_required = 2,
+          allow_as_intermediates = false,
+          enabled = false,
+          always_show_made_in = true,
+          always_show_products = true,
+          crafting_machine_tint = {
+            primary = {r = 0.49, g = 0.62, b  = 0.75, a = 0.6}, 
+            secondary = {r = 0.64, g = 0.83, b  = 0.93, a = 0.9}
+          },
+          localised_name = {"gm.dirty-water-filtration-name", "[item=" .. ore .. "-ore]"}
+        }
+      })
+
     end
   end
 end
@@ -191,6 +313,7 @@ for ore, ore_data in pairs(MW_Data.ore_data) do -- Make Mixed-Ore and Enriched-M
           results = crushing_results,
           always_show_made_in = true,
           hide_from_player_crafting = recipe_hide_from_player_crafting,
+          always_show_products = true,
           order = "b[" .. item_name .. "-crushing]",
           category = "crushing",
           subgroup = "K2-ore-sorting",
@@ -238,7 +361,7 @@ for ore, ore_data in pairs(MW_Data.ore_data) do -- Make Mixed-Ore and Enriched-M
           order = "b[" .. item_name .. "-crushing]",
           category = "crushing",
           subgroup = "K2-ore-sorting",
-          localised_name = {"gm.ore-crushing", {"gm." .. ore}},
+          localised_name = {"gm.enriched-ore-crushing", {"gm." .. ore}},
           gm_recipe_data = {type = "crushing", ore = ore}
         }
       })
@@ -336,6 +459,52 @@ for ore, ore_data in pairs(MW_Data.ore_data) do -- Make pebble -> gravel and gra
   end
 end
 
+for ore, ore_data in pairs(MW_Data.ore_data) do -- Make Matter recipes
+  if ore_data.matter_recipe and ore_data.matter_recipe.new then
+    if ore_data.ore_to_matter_recipe then
+      local icons_ore_to_matter_recipe = {}
+      
+      data:extend({ -- ore to matter recipe
+      {
+        type = "recipe",
+        name = "enriched-" .. ore,
+        icons = icons_data_item,
+        subgroup = "raw-material",
+        order = "e02[enriched-" .. ore .. "]",
+        category = "chemistry",
+        group = "intermediate-products",
+        results = {
+          {type = "fluid", name = "dirty-water", amount = 25},
+          {type = "item", name = "enriched-" .. ore .. "-ore", amount = 6}
+        },
+        ingredients = {
+          {type = "fluid", name = "water", amount = 25},
+          {type = "fluid", name = ore_data.enriched_recipe.purifier_name, amount = ore_data.enriched_recipe.purifier_amount},
+          {type = "item", name = ore .. "-ore", amount = 9}
+        },
+        energy_required = 3,
+        always_show_made_in = true,
+        always_show_products = true,
+        allow_productivity = true,
+        crafting_machine_tint = {primary = recipe_tint_primary},
+        localised_name = {"gm.ore-to-enriched-name", ore}
+      }
+    })
+    end
+  end
+end
+
+-- Add Automation Cores to Minisembler recipes
+for _, tier in pairs(MW_Data.MW_Minisembler_Tier) do -- make the minisembler entities overall
+  for minisembler, _ in pairs(MW_Data.minisemblers_recipe_parameters) do
+    table.insert(data.raw.recipe["gm-" .. minisembler .."-recipe"].ingredients, {type = "item", name = "automation-core", amount = 1})
+  end
+end
+
+
+
+
+
 -- Matter Processing Recipes
 -- Parent Tech: kr-matter-processing
 -- Sibling Tech: kr-matter-coal-processing
@@ -357,6 +526,7 @@ end
 -- make new icons for the new metals
 -- FIXME : Add enriched-ore-to-plate recipe above
 -- Filtering osmium or niobium will only give pebbles / gravel, not enriched ores
+-- enriched-iron-plate
 
 
 
@@ -543,3 +713,4 @@ data.raw.item["kr-steel-pump"].localised_description           = {"gm.new-steel-
 data.raw.recipe["lithium-sulfur-battery"].result_count = 2
 
 return MW_Data
+

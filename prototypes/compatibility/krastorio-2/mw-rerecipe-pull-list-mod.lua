@@ -11,7 +11,7 @@ return function(advanced)
 
       ["steel-plate"]                     = true,
       ["matter-to-steel-plate"]           = true,
-      
+
       ["rare-metals"]                     = true,
       ["rare-metals-2"]                   = true,
       ["matter-to-rare-metals"]           = true,
@@ -41,7 +41,7 @@ return function(advanced)
       ["iron-stick"]                      = true,
       ["kr-s-c-iron-stick"]               = true,
       ["kr-s-c-iron-stick-enriched"]      = true,
-      
+
       ["copper-cable"]                    = true,
       ["kr-s-c-copper-cable"]             = true,
       ["kr-s-c-copper-cable-enriched"]    = true,
@@ -58,7 +58,7 @@ return function(advanced)
 
       ["steel-plate"]                     = true,
       ["matter-to-steel-plate"]           = true,
-      
+
       ["rare-metals"]                     = true,
       ["rare-metals-2"]                   = true,
       ["matter-to-rare-metals"]           = true,
@@ -88,7 +88,7 @@ return function(advanced)
       ["iron-stick"]                      = true,
       ["kr-s-c-iron-stick"]               = true,
       ["kr-s-c-iron-stick-enriched"]      = true,
-      
+
       ["copper-cable"]                    = true,
       ["kr-s-c-copper-cable"]             = true,
       ["kr-s-c-copper-cable-enriched"]    = true,

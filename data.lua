@@ -211,3 +211,4 @@ GM_globals = table.merge(GM_globals, require("prototypes.global-variables"))
 
 require("prototypes.passes.metalworking.mw-pass")  -- Metalworking
 -- require("prototypes.passes.metalworking.sw-pass")  -- Stoneworking
+-- require("prototypes.playground") -- me screwing around with stuff; ignore this if you aren't me

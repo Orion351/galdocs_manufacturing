@@ -102,9 +102,35 @@ MW_Data.ore_data = table.group_key_assign(MW_Data.ore_data, { -- Initialize basi
   [MW_Resource.COKE]            = {original = false,  ore_in_name = false, add_to_starting_area = false, to_add = false, new_icon_art = false, new_patch_art = false,  new_debris_art = false, introduced = Mod_Names.K2},
 })
 
-MW_Data.ore_data = table.merge_subtables(MW_Data.ore_data, {
+MW_Data.ore_data = table.merge_subtables(MW_Data.ore_data, { -- i hate dumb names
   [MW_Resource.RARE_METALS]     = {has_dumb_name = "raw-rare-metals"},
   [MW_Resource.IMERSITE_POWDER] = {has_dumb_name = "imersite-powder"}
+})
+
+MW_Data.ore_data = table.merge_subtables(MW_Data.ore_data, { -- Couple ores to ore shapes
+  [MW_Resource.COPPER]      = {enriched_recipe = {new = false, enable = true                                                           }},
+  [MW_Resource.IRON]        = {enriched_recipe = {new = false, enable = true                                                           }},
+  [MW_Resource.LEAD]        = {enriched_recipe = {new = true,  enable = true,  purifier_name = "sulfuric-acid",     purifier_amount = 3}},
+  [MW_Resource.TITANIUM]    = {enriched_recipe = {new = true,  enable = true,  purifier_name = "hydrogen-chloride", purifier_amount = 3}},
+  [MW_Resource.ZINC]        = {enriched_recipe = {new = true,  enable = true,  purifier_name = "sulfuric-acid",     purifier_amount = 3}},
+  [MW_Resource.NICKEL]      = {enriched_recipe = {new = true,  enable = true,  purifier_name = "sulfuric-acid",     purifier_amount = 3}},
+  [MW_Resource.RARE_METALS] = {enriched_recipe = {new = false, enable = false                                                          }},
+
+  [MW_Resource.OSMIUM]      = {enriched_recipe = {new = true,  enable = true,  purifier_name = "hydrogen-chloride", purifier_amount = 3}},
+  [MW_Resource.NIOBIUM]     = {enriched_recipe = {new = true,  enable = true,  purifier_name = "hydrogen-chloride", purifier_amount = 3}},
+})
+
+MW_Data.ore_data = table.merge_subtables(MW_Data.ore_data, { -- Matter-to-Ore and Ore-to-Matter Recipes
+  [MW_Resource.COPPER]      = {matter_recipe = {new = false, ore_to_matter_recipe = true,  matter_to_ore_recipe = true,  ore_count = 10, matter_count = 5}},
+  [MW_Resource.IRON]        = {matter_recipe = {new = false, ore_to_matter_recipe = true,  matter_to_ore_recipe = true,  ore_count = 10, matter_count = 5}},
+  [MW_Resource.LEAD]        = {matter_recipe = {new = true,  ore_to_matter_recipe = true,  matter_to_ore_recipe = true,  ore_count = 10, matter_count = 5}},
+  [MW_Resource.TITANIUM]    = {matter_recipe = {new = true,  ore_to_matter_recipe = true,  matter_to_ore_recipe = true,  ore_count = 10, matter_count = 5}},
+  [MW_Resource.ZINC]        = {matter_recipe = {new = true,  ore_to_matter_recipe = true,  matter_to_ore_recipe = true,  ore_count = 10, matter_count = 5}},
+  [MW_Resource.NICKEL]      = {matter_recipe = {new = true,  ore_to_matter_recipe = true,  matter_to_ore_recipe = true,  ore_count = 10, matter_count = 5}},
+  [MW_Resource.RARE_METALS] = {matter_recipe = {new = false, ore_to_matter_recipe = false, matter_to_ore_recipe = false                                  }},
+
+  [MW_Resource.OSMIUM]      = {matter_recipe = {new = true,  ore_to_matter_recipe = true,  matter_to_ore_recipe = true,  ore_count = 10, matter_count = 5}},
+  [MW_Resource.NIOBIUM]     = {matter_recipe = {new = true,  ore_to_matter_recipe = true,  matter_to_ore_recipe = true,  ore_count = 10, matter_count = 5}},
 })
 
 MW_Data.smelting_data = { -- Set up the Smelting Recipes
@@ -195,6 +221,19 @@ MW_Data.metal_data = table.merge_subtables(MW_Data.metal_data, { -- Staple on gl
   [MW_Metal.NIOBIMERSIUM]      = {has_K2_glow_layer = true, K2_glow_tint = {r = 0.2,  g = 0.42, b = 0.64, a = 1.0} },   -- Hex: 336ba4  | 0.2,                0.4196078431372549, 0.6431372549019608
   [MW_Metal.STABLE_IMERSIUM]   = {has_K2_glow_layer = true, K2_glow_tint = {r = 0.51, g = 0.64, b = 0.2,  a = 1.0} },   -- Hex: 82a433  | 0.5098039215686274, 0.6431372549019608, 0.2
   [MW_Metal.RESONANT_IMERSIUM] = {has_K2_glow_layer = true, K2_glow_tint = {r = 0.21, g = 0.77, b = 0.46, a = 1.0} },   -- Hex: 36C476  | 0.2117647058823529, 0.7686274509803922, 0.4627450980392157
+})
+
+MW_Data.metal_data = table.merge_subtables(MW_Data.metal_data, { -- Matter-to-Plate recipes
+  [MW_Metal.COPPER]      = {matter_recipe = {new = false, matter_to_plate_recipe = true,  plate_count = 10, matter_count = 7.5}},
+  [MW_Metal.IRON]        = {matter_recipe = {new = false, matter_to_plate_recipe = true,  plate_count = 10, matter_count = 7.5}},
+  [MW_Metal.LEAD]        = {matter_recipe = {new = true,  matter_to_plate_recipe = true,  plate_count = 10, matter_count = 7.5}},
+  [MW_Metal.TITANIUM]    = {matter_recipe = {new = true,  matter_to_plate_recipe = true,  plate_count = 10, matter_count = 7.5}},
+  [MW_Metal.ZINC]        = {matter_recipe = {new = true,  matter_to_plate_recipe = true,  plate_count = 10, matter_count = 7.5}},
+  [MW_Metal.NICKEL]      = {matter_recipe = {new = true,  matter_to_plate_recipe = true,  plate_count = 10, matter_count = 7.5}},
+  [MW_Metal.RARE_METALS] = {matter_recipe = {new = false, matter_to_plate_recipe = false,                                   }},
+
+  [MW_Metal.OSMIUM]      = {matter_recipe = {new = true,  matter_to_plate_recipe = true,  plate_count = 10, matter_count = 7.5}},
+  [MW_Metal.NIOBIUM]     = {matter_recipe = {new = true,  matter_to_plate_recipe = true,  plate_count = 10, matter_count = 7.5}},
 })
 
 

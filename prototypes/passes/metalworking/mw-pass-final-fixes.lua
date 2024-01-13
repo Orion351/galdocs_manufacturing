@@ -2,6 +2,12 @@ local MW_Data = GM_global_mw_data.MW_Data
 local minisemblers = MW_Data.minisemblers_recipe_parameters
 
 
+-- TESTING SENSITIVE
+-- TESTING SENSITIVE
+-- TESTING SENSITIVE
+
+local we_be_testing = true
+
 -- *********
 -- Re-recipe
 -- *********
@@ -24,15 +30,32 @@ if GM_global_mw_data.current_overhaul_data.passes and GM_global_mw_data.current_
   GM_global_mw_data.mw_intermediates_to_replace_overhauled = stuff(GM_globals.advanced)
 end
 
+-- Get Intermediates to Pull
+-- *************************
+stuff = require("prototypes.passes.metalworking.mw-rerecipe-pull-list")
+GM_global_mw_data.pull_list = stuff(GM_globals.advanced)
+if GM_global_mw_data.current_overhaul_data.passes and GM_global_mw_data.current_overhaul_data.passes.metalworking and GM_global_mw_data.current_overhaul_data.passes.metalworking.pull_list then
+  stuff = require("prototypes.compatibility." .. GM_global_mw_data.current_overhaul_data.dir_name .. ".mw-rerecipe-pull-list-mod")
+  GM_global_mw_data.pull_list_mod = stuff(GM_globals.advanced)
+end
+
 -- Manual Re-recipe
 -- ****************
 if GM_global_mw_data.current_overhaul_data.passes and GM_global_mw_data.current_overhaul_data.passes.metalworking and GM_global_mw_data.current_overhaul_data.passes.metalworking.re_recipe then
   if GM_global_mw_data.current_overhaul_data.passes.metalworking.re_recipe == "replace" then
-    Re_recipe(GM_global_mw_data.mw_intermediates_to_replace_overhauled, "prototypes.compatibility." .. GM_global_mw_data.current_overhaul_data.dir_name .. ".mw-rerecipe-data-replace", "-machined-part", "-stock", {})
+    if mods["galdocs-testing"] and we_be_testing then
+      Re_recipe(GM_global_mw_data.pull_list_mod, "__galdocs-testing__/mw-rerecipe-data-replace", "-machined-part", "-stock", {})
+    else
+      Re_recipe(GM_global_mw_data.pull_list_mod, "prototypes.compatibility." .. GM_global_mw_data.current_overhaul_data.dir_name .. ".mw-rerecipe-data-replace", "-machined-part", "-stock", {})
+    end
   end
   if GM_global_mw_data.current_overhaul_data.passes.metalworking.re_recipe == "sequental" then
-    Re_recipe(GM_global_mw_data.mw_intermediates_to_replace, "prototypes.passes.metalworking.mw-rerecipe-data", "-machined-part", "-stock", {})
-    Re_recipe(GM_global_mw_data.mw_intermediates_to_replace_overhauled, "prototypes.compatibility." .. GM_global_mw_data.current_overhaul_data.dir_name .. ".mw-rerecipe-data-sequential", "-machined-part", "-stock", {})
+    Re_recipe(GM_global_mw_data.pull_list_mod, "prototypes.passes.metalworking.mw-rerecipe-data", "-machined-part", "-stock", {})
+    if mods["galdocs-testing"] and we_be_testing then
+      Re_recipe(GM_global_mw_data.pull_list_mod, "__galdocs-testing__/mw-rerecipe-data-sequential", "-machined-part", "-stock", {})
+    else
+      Re_recipe(GM_global_mw_data.pull_list_mod, "prototypes.compatibility." .. GM_global_mw_data.current_overhaul_data.dir_name .. ".mw-rerecipe-data-sequential", "-machined-part", "-stock", {})
+    end
   end
 else
   Re_recipe(GM_global_mw_data.mw_intermediates_to_replace, "prototypes.passes.metalworking.mw-rerecipe-data", "-machined-part", "-stock", {})
@@ -40,16 +63,16 @@ end
 
 -- Cull Unused non-GM intermediates
 -- ********************************
-stuff = require("prototypes.passes.metalworking.mw-rerecipe-pull-list")
-GM_global_mw_data.pull_list = stuff(GM_globals.advanced)
 if GM_global_mw_data.current_overhaul_data.passes and GM_global_mw_data.current_overhaul_data.passes.metalworking and GM_global_mw_data.current_overhaul_data.passes.metalworking.pull_list then
-  stuff = require("prototypes.compatibility." .. GM_global_mw_data.current_overhaul_data.dir_name .. ".mw-rerecipe-pull-list-mod")
-  GM_global_mw_data.pull_list = stuff(GM_globals.advanced)
-end
-
-for intermediate_recipe, _ in pairs(GM_global_mw_data.pull_list) do
-  data.raw.recipe[intermediate_recipe].hidden = true
-  data.raw.recipe[intermediate_recipe].enabled = false
+  for intermediate_recipe, _ in pairs(GM_global_mw_data.pull_list_mod) do
+    data.raw.recipe[intermediate_recipe].hidden = true
+    data.raw.recipe[intermediate_recipe].enabled = false
+  end
+else
+  for intermediate_recipe, _ in pairs(GM_global_mw_data.pull_list) do
+    data.raw.recipe[intermediate_recipe].hidden = true
+    data.raw.recipe[intermediate_recipe].enabled = false
+  end
 end
 
 -- Flat replace ingredients for everything
@@ -267,10 +290,10 @@ end
 
 
 
--- **************************
--- Tech Final Fixes (omg why)
--- **************************
+-- ****************************
+-- Compat Final Fixes (omg why)
+-- ****************************
 
-if GM_global_mw_data.current_overhaul_data.passes and GM_global_mw_data.current_overhaul_data.passes.metalworking and GM_global_mw_data.current_overhaul_data.passes.metalworking.tech_final_fixes then
-  require("prototypes.compatibility." .. GM_global_mw_data.current_overhaul_data.dir_name .. ".mw-tech-final-fixes")
+if GM_global_mw_data.current_overhaul_data.passes and GM_global_mw_data.current_overhaul_data.passes.metalworking and GM_global_mw_data.current_overhaul_data.passes.metalworking.compat_final_fixes then
+  require("prototypes.compatibility." .. GM_global_mw_data.current_overhaul_data.dir_name .. ".mw-compat-final-fixes")
 end

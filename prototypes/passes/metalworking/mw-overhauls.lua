@@ -9,7 +9,10 @@ local overhaul_modpack_data = {  -- Data for supported overhauls FIXME: Move to 
         enums = true, data = true, code = true, technology = true, technology_processing = true,
         
         -- data-final-fixes phase; some must be "sequential" or "replace"
-        replace_list = true, re_recipe = "sequental", pull_list = true, flat_replace = true, tech_final_fixes = true
+        replace_list = true, re_recipe = "sequental", pull_list = true, flat_replace = true, 
+        
+        -- OMG final fixes
+        compat_final_fixes = true
 
       }
     }

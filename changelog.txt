@@ -1,9 +1,9 @@
 ---------------------------------------------------------------------------------------------------
 Version: 0.1.16
-Date: 
+Date: 2024-01-13
   Changes:
+    - K2 compatibility Begun!
     - Added custom debris particles (working)
-    - Began K2 compatibility (NOT IMPLEMENTED YET)
     - Remelting recipes sent to a separate tab
     - Gun Turrets and Radar no longer require high-tensile parts
     - Updated Crafting Tab icons
@@ -15,6 +15,7 @@ Date:
     - Fixed alt-mode and module overlays for minisemblers
     - Galvanized Steel Plate now properly unlocks with its associated technology
     - Tinkered with personal equipment recipes
+    - Fixed a bunch of random Vanilla recipes and Technology orderings
 ---------------------------------------------------------------------------------------------------
 Version: 0.1.15
 Date: 2023-10-03
