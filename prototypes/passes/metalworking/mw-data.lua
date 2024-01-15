@@ -565,11 +565,11 @@ else
 end
 
 if advanced then -- Append special minisembler recipes
-  table.merge(MW_Data.minisemblers_recipe_parameters, {
+  MW_Data.minisemblers_recipe_parameters = table.group_key_assign(MW_Data.minisemblers_recipe_parameters, {
     [MW_Minisembler.ELECTROPLATER]  = {{"corrosion-resistant-large-paneling-machined-part", 2}, {"load-bearing-girdering-machined-part", 2}, {"corrosion-resistant-piping-machined-part", 2}, {"electrically-conductive-wiring-machined-part", 2}, {"basic-bolts-machined-part", 1}},
   })
 else
-  table.merge(MW_Data.minisemblers_recipe_parameters, {
+  MW_Data.minisemblers_recipe_parameters = table.group_key_assign(MW_Data.minisemblers_recipe_parameters, {
     [MW_Minisembler.ELECTROPLATER]  = {{"corrosion-resistant-paneling-machined-part", 2}, {"load-bearing-framing-machined-part", 2}, {"corrosion-resistant-piping-machined-part", 2}, {"electrically-conductive-wiring-machined-part", 2}, {"basic-bolts-machined-part", 1}},
   })
 end

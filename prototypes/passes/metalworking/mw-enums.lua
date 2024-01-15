@@ -132,7 +132,7 @@ return {
 	MW_Minisembler_Stage = {
 		MACHINING = "machining",
 		ASSAYING = "assaying",
-		TREATING  = "treating"
+		TREATING = "treating"
 	}
 }
 

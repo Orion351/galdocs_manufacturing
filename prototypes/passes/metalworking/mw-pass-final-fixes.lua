@@ -107,7 +107,7 @@ for _, recipe in pairs(data.raw.recipe) do
 
   -- get rekt normal vs. expensive
   data.raw.recipe[recipe.name].normal = nil
-  data.raw.recipe[recipe.name].expensive = false
+  data.raw.recipe[recipe.name].expensive = nil
 end
 
 

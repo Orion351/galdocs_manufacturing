@@ -243,7 +243,7 @@ for ore, ore_data in pairs(MW_Data.ore_data) do -- Make Matter recipes
             {"utility-science-pack", 1},
             {"matter-tech-card", 1},
           }},
-          localisation_name = {"gm.matter-tech-name", ore}
+          localisation_name = {"gm.matter-tech-name", {"gm." .. ore}}
         }
       })
     end
@@ -304,6 +304,8 @@ for ore, ore_data in pairs(MW_Data.ore_data) do -- Make Matter recipes
     end
   end
 end
+
+local a = 1
 
 
 -- Matter Processing Recipes

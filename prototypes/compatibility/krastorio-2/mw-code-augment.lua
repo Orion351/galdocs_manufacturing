@@ -712,5 +712,17 @@ data.raw.item["kr-steel-pump"].localised_description           = {"gm.new-steel-
 
 data.raw.recipe["lithium-sulfur-battery"].result_count = 2
 
+
+
+-- Ore to Plate Recipes (non-enriched) FIXME: This ought to be a part of the data properties?
+-- ********************
+
+for name, recipe in pairs(data.raw.recipe) do
+  if recipe.gm_recipe_data and recipe.gm_recipe_data.type and recipe.gm_recipe_data.type == "stocks" and recipe.gm_recipe_data.stock == MW_Data.MW_Stock.PLATE and MW_Data.metal_data[recipe.gm_recipe_data.metal].type == MW_Data.MW_Metal_Type.ELEMENT then
+    recipe.ingredients[1][2] = 2
+  end
+end
+
+
 return MW_Data
 

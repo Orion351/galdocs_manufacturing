@@ -187,7 +187,7 @@ local function resource_spawn(resource_parameters, autoplace_parameters) -- Put 
       name = resource_parameters.name .. "-ore",
       order = resource_parameters.order,
       base_density = autoplace_parameters.base_density,
-      has_starting_area_placement = true,
+      has_starting_area_placement = autoplace_parameters.has_starting_area_placement,
       regular_rq_factor_multiplier = autoplace_parameters.regular_rq_factor_multiplier,
       starting_rq_factor_multiplier = autoplace_parameters.starting_rq_factor_multiplier,
       candidate_spot_count = autoplace_parameters.candidate_spot_count,

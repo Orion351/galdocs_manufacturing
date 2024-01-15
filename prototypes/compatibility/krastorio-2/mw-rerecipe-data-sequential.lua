@@ -113,7 +113,7 @@ return function(advanced)
       ["matter-stabilizer"]                               = {{"imersium-enhanced-high-tensile-paneling", 4}, {"imersium-grade-load-bearing-framing", 4}, {"superconducting-wiring", 2}, {"imersium-enhanced-high-tensile-bolts", 2}, },
 
       ["advanced-tech-card"]                              = {{"imersium-enhanced-high-tensile-fine-gearing", 5}, },
-      ["logistic-science-pack"]                           = {{"basic-fine-gearing", 3}, },
+      ["logistic-science-pack"]                           = {{"ductile-fine-gearing", 3}, {"thermally-stable-shielding", 1}, {"corrosion-resistant-and-heavy-load-bearing-girdering", 2}, },
 
       ["kr-railgun-turret"]                               = {{"very-heavy-load-bearing-girdering", 4}, {"ductile-gearing", 2}, {"superconducting-shafting", 2}, {"superconducting-wiring", 10}, {"lightweight-and-very-high-tensile-shielding", 4}, {"very-high-tensile-bolts", 10}, },
       ["kr-rocket-turret"]                                = {{"imersium-grade-load-bearing-girdering", 6}, {"ductile-gearing", 2}, {"electrically-conductive-wiring", 4}, {"imersium-enhanced-high-tensile-shielding", 4}, {"imersium-enhanced-high-tensile-bolts", 8}, },
@@ -266,7 +266,7 @@ return function(advanced)
       ["matter-stabilizer"]                               = {{"imersium-enhanced-high-tensile-paneling", 2}, {"imersium-grade-load-bearing-framing", 2}, {"superconducting-wiring", 2}, {"imersium-enhanced-high-tensile-bolts", 1}, },
 
       ["advanced-tech-card"]                              = {{"imersium-enhanced-high-tensile-gearing", 3}, },
-      ["logistic-science-pack"]                           = {{"basic-gearing", 2}, },
+      ["logistic-science-pack"]                           = {{"ductile-gearing", 2}, {"thermally-stable-shielding", 1}, {"corrosion-resistant-and-heavy-load-bearing-framing", 2}, },
 
       ["kr-railgun-turret"]                               = {{"very-heavy-load-bearing-framing", 6}, {"ductile-gearing", 3}, {"superconducting-shafting", 3}, {"superconducting-wiring", 10}, {"lightweight-and-very-high-tensile-shielding", 4}, {"very-high-tensile-bolts", 12}, },
       ["kr-rocket-turret"]                                = {{"imersium-grade-load-bearing-framing", 6}, {"ductile-gearing", 2}, {"electrically-conductive-wiring", 6}, {"imersium-enhanced-high-tensile-shielding", 5}, {"imersium-enhanced-high-tensile-bolts", 10}, },
