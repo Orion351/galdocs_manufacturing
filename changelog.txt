@@ -1,4 +1,12 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.1.17
+Date: 2024-01-15
+  Changes:
+    - Begun putting out K2 compatibility fires
+    - Ore-to-plate recipes (not enriched!) reflect the K2 style: 2 ore = 1 plate
+    - Made Logistic Tech (green) require more fun things
+    - Electroplater exists again, yay
+---------------------------------------------------------------------------------------------------
 Version: 0.1.16
 Date: 2024-01-13
   Changes:
