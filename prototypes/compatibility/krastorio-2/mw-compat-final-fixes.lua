@@ -305,7 +305,12 @@ for ore, ore_data in pairs(MW_Data.ore_data) do -- Make Matter recipes
   end
 end
 
-local a = 1
+local reprototyped_furnaces = {"stone-furnace", "steel-furnace", "electric-furnace", "kr-advanced-furnace"}
+for _, reprototyped_furnace in pairs(reprototyped_furnaces) do
+  for _, new_smelting_category in pairs(MW_Data.new_smelting_categories) do
+    table.insert(data.raw["assembling-machine"][reprototyped_furnace].crafting_categories, new_smelting_category)
+  end
+end
 
 
 -- Matter Processing Recipes

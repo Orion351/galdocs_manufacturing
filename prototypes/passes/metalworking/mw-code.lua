@@ -360,6 +360,8 @@ data.raw.resource["copper-ore"].max_effect_alpha = GM_globals.show_ore_sPaRkLe
 -- Metals
 -- ======
 
+MW_Data.new_smelting_categories = {}
+
 data:extend({ -- add alloy recipe category
   {
     type = "recipe-category",
@@ -367,6 +369,8 @@ data:extend({ -- add alloy recipe category
     order = "a" .. "gm-alloy"
   }
 })
+table.insert(MW_Data.new_smelting_categories, "gm-alloys")
+
 
 data:extend({ -- Make plate smelting category so player can see recipes in inventory
   {
@@ -376,6 +380,7 @@ data:extend({ -- Make plate smelting category so player can see recipes in inven
   }
 })
 
+
 data:extend({ -- Make remelting category
   {
     type = "recipe-category",
@@ -383,6 +388,8 @@ data:extend({ -- Make remelting category
     order = "a" .. "gm-remelting"
   }
 })
+table.insert(MW_Data.new_smelting_categories, "gm-remelting")
+
 
 data:extend({ -- Make annealing category
   {
@@ -391,6 +398,7 @@ data:extend({ -- Make annealing category
     order = "a" .. "gm-annealing"
   }
 })
+table.insert(MW_Data.new_smelting_categories, "gm-annealing")
 
 local productivity_whitelist = {} -- Start the whitelist for productivity modules
 

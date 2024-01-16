@@ -2,6 +2,8 @@
 -- Global Helper Functions
 -- ***********************
 
+-- Table Functions
+-- ***************
 function table.merge(table1, table2)
   if table1 == nil and table2 == nil then return nil end
   if table1 == nil then return table2 end
@@ -113,6 +115,9 @@ function table.swap_string(t, string_to_add, string_to_drop) -- replace a string
   return new_table
 end
 
+-- Badge Functions (FIXME: Remove Non Property Badge Icons)
+-- ********************************************************
+
 function Build_badge_icon(material, shift) -- Builds a table with data for an 'icons' property in recipes, items, etc.
   -- Credit to Elusive for helping with badges
   -- local pixel_perfect_scale = GM_globals.badge_image_size / inventory_icon_size
@@ -187,6 +192,18 @@ function Localization_split(localization_list, entry_size, num_total_subtables, 
   return localization_list_pieces
 end
 
+-- Prototype Functions
+function Recipe_add_ingredients(recipe, ingredients)
+  local new_recipe = table.deepcopy(recipe)
+  if new_recipe.ingredients then
+
+  end
+  if new_recipe.normal and new_recipe.normal.ingredients then
+  end
+  if new_recipe.expensive and new_recipe.expensive.ingredients then
+  end
+  return new_recipe
+end
 
 
 -- ********

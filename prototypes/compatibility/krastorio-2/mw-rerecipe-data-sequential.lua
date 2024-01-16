@@ -36,8 +36,8 @@ return function(advanced)
 
       ["kr-tesla-coil"]                                   = {{"thermally-stable-large-paneling", 4}, {"very-heavy-load-bearing-girdering", 10}, {"thermally-stable-shafting", 1}, {"ductile-and-electrically-conductive-wiring", 100}, {"radiation-resistant-shielding", 10}, {"very-high-tensile-rivets", 4}, },
 
-      ["kr-steel-pipe"]                                   = {{"corrosion-resistant-and-high-tensile-fine-piping", 1}, {"high-tensile-rivets", 1}, },
-      ["kr-steel-pipe-to-ground"]                         = {{"corrosion-resistant-and-high-tensile-fine-piping", 15}, {"high-tensile-rivets", 10}, },
+      ["kr-steel-pipe"]                                   = {{"corrosion-resistant-and-high-tensile-piping", 1}, {"high-tensile-rivets", 1}, },
+      ["kr-steel-pipe-to-ground"]                         = {{"corrosion-resistant-and-high-tensile-piping", 15}, {"high-tensile-rivets", 10}, },
       ["kr-steel-pump"]                                   = {{"corrosion-resistant-and-load-bearing-framing", 1}, {"corrosion-resistant-and-high-tensile-fine-gearing", 3}, {"corrosion-resistant-and-load-bearing-fine-piping", 3}, {"high-tensile-rivets", 3}, },
       ["kr-fluid-storage-1"]                              = {{"corrosion-resistant-and-high-tensile-large-paneling", 5}, {"corrosion-resistant-and-load-bearing-girdering", 6}, {"corrosion-resistant-and-load-bearing-piping", 22}, {"corrosion-resistant-and-high-tensile-rivets", 8}, },
       ["kr-fluid-storage-2"]                              = {{"corrosion-resistant-and-high-tensile-large-paneling", 25}, {"corrosion-resistant-and-heavy-load-bearing-girdering", 18}, {"corrosion-resistant-and-load-bearing-piping", 36}, {"corrosion-resistant-and-high-tensile-rivets", 22}, },
