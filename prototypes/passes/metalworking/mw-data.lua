@@ -338,19 +338,19 @@ MW_Data.property_data = { -- Property data: which mod did this come from
 }
 
 MW_Data.property_data = { -- Staple on the ordering
-  [MW_Property.BASIC]                    = {order = "a "},
-  [MW_Property.LOAD_BEARING]             = {order = "c "},
-  [MW_Property.ELECTRICALLY_CONDUCTIVE]  = {order = "b "},
-  [MW_Property.HIGH_TENSILE]             = {order = "f "},
-  [MW_Property.CORROSION_RESISTANT]      = {order = "h "},
-  [MW_Property.LIGHTWEIGHT]              = {order = "m "},
-  [MW_Property.DUCTILE]                  = {order = "k "},
-  [MW_Property.THERMALLY_STABLE]         = {order = "j "},
-  [MW_Property.THERMALLY_CONDUCTIVE]     = {order = "l "},
-  [MW_Property.RADIATION_RESISTANT]      = {order = "i "},
-  [MW_Property.HEAVY_LOAD_BEARING]       = {order = "d "},
-  [MW_Property.VERY_HEAVY_LOAD_BEARING]  = {order = "e "},
-  [MW_Property.VERY_HIGH_TENSILE]        = {order = "g "},
+  [MW_Property.BASIC]                    = {order = "aa "},
+  [MW_Property.LOAD_BEARING]             = {order = "ca "},
+  [MW_Property.ELECTRICALLY_CONDUCTIVE]  = {order = "ba "},
+  [MW_Property.HIGH_TENSILE]             = {order = "da "},
+  [MW_Property.CORROSION_RESISTANT]      = {order = "ea "},
+  [MW_Property.LIGHTWEIGHT]              = {order = "ja "},
+  [MW_Property.DUCTILE]                  = {order = "ha "},
+  [MW_Property.THERMALLY_STABLE]         = {order = "ga "},
+  [MW_Property.THERMALLY_CONDUCTIVE]     = {order = "ia "},
+  [MW_Property.RADIATION_RESISTANT]      = {order = "fa "},
+  [MW_Property.HEAVY_LOAD_BEARING]       = {order = "cb "},
+  [MW_Property.VERY_HEAVY_LOAD_BEARING]  = {order = "cc "},
+  [MW_Property.VERY_HIGH_TENSILE]        = {order = "db "},
 }
 
 

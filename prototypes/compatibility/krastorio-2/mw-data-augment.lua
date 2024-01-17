@@ -102,6 +102,11 @@ MW_Data.ore_data = table.group_key_assign(MW_Data.ore_data, { -- Initialize basi
   [MW_Resource.COKE]            = {original = false,  ore_in_name = false, add_to_starting_area = false, to_add = false, new_icon_art = false, new_patch_art = false,  new_debris_art = false, introduced = Mod_Names.K2},
 })
 
+MW_Data.ore_data = table.merge_subtables(MW_Data.ore_data, { -- odering
+  [MW_Resource.OSMIUM]  = {order = "ia "},
+  [MW_Resource.NIOBIUM] = {order = "ka "},
+})
+
 MW_Data.ore_data = table.merge_subtables(MW_Data.ore_data, { -- i hate dumb names
   [MW_Resource.RARE_METALS]     = {has_dumb_name = "raw-rare-metals"},
   [MW_Resource.IMERSITE_POWDER] = {has_dumb_name = "imersite-powder"}
@@ -161,6 +166,16 @@ MW_Data.metal_data = table.group_key_assign(MW_Data.metal_data, { -- Staple on v
   [MW_Metal.NIOBIMERSIUM]      = {tint_metal = gamma_correct_rgb{r = 0.32,  g = 0.32,  b = 0.32,  a = 1.0}, tint_oxidation = gamma_correct_rgb{r = 0.206, g = 0.077, b = 0.057, a = 1.0}}, -- NI
   [MW_Metal.STABLE_IMERSIUM]   = {tint_metal = gamma_correct_rgb{r = 0.32,  g = 0.32,  b = 0.32,  a = 1.0}, tint_oxidation = gamma_correct_rgb{r = 0.206, g = 0.077, b = 0.057, a = 1.0}}, -- SI
   [MW_Metal.RESONANT_IMERSIUM] = {tint_metal = gamma_correct_rgb{r = 0.32,  g = 0.32,  b = 0.32,  a = 1.0}, tint_oxidation = gamma_correct_rgb{r = 0.206, g = 0.077, b = 0.057, a = 1.0}}, -- RI
+})
+
+MW_Data.metal_data = table.merge_subtables(MW_Data.metal_data, { -- Ordering
+  [MW_Metal.OSMIUM]            = {order = "ia "},
+  [MW_Metal.NIOBIUM]           = {order = "ka "},
+
+  [MW_Metal.IMERSIUM]          = {order = "k-im-b "},
+  [MW_Metal.NIOBIMERSIUM]      = {order = "k-im-a "},
+  [MW_Metal.STABLE_IMERSIUM]   = {order = "k-im-c "},
+  [MW_Metal.RESONANT_IMERSIUM] = {order = "k-im-d "},
 })
 
 -- FIXME : Actually tie these to technologies
@@ -300,6 +315,15 @@ MW_Data.property_data = table.group_key_assign(MW_Data.property_data, { -- Stapl
   [MW_Property.ANTIMATTER_RESISTANT]            = {introduced = Mod_Names.K2},
   [MW_Property.TRANSDIMENSIONALLY_SENSITIVE]    = {introduced = Mod_Names.K2},
   [MW_Property.IMERSIUM_GRADE_THERMALLY_STABLE] = {introduced = Mod_Names.K2},
+})
+
+MW_Data.property_data = table.merge_subtables(MW_Data.property_data, { -- Ordering
+  [MW_Property.IMERSIUM_ENHANCED_HIGH_TENSILE]  = {order = "dc "},
+  [MW_Property.IMERSIUM_GRADE_LOAD_BEARING]     = {order = "cd "},
+  [MW_Property.SUPERCONDUCTING]                 = {order = "bb "},
+  [MW_Property.ANTIMATTER_RESISTANT]            = {order = "ka "},
+  [MW_Property.TRANSDIMENSIONALLY_SENSITIVE]    = {order = "la "},
+  [MW_Property.IMERSIUM_GRADE_THERMALLY_STABLE] = {order = "gb "},
 })
 
 MW_Data.property_data = table.merge_subtables(MW_Data.property_data, { -- Staple on order data

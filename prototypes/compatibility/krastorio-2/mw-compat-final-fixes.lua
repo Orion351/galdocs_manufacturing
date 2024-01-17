@@ -98,7 +98,9 @@ table.insert(data.raw.technology["logistics"].prerequisites, "steel-machined-par
 table.insert(data.raw.technology["gate"].prerequisites, "steel-machined-part-processing")
 
 -- kr-nuclear-locomotive
-table.insert(data.raw.technology["kr-nuclear-locomotive"].prerequisites, "gm-osmium-machined-part-processing")
+if not krastorio.general.getSafeSettingValue("kr-rebalance-fuels") then
+  table.insert(data.raw.technology["kr-nuclear-locomotive"].prerequisites, "gm-osmium-machined-part-processing")
+end
 
 -- kr-enriched-ores
 new_effects = {}

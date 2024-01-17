@@ -627,7 +627,9 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
       GM_global_mw_data.stock_items[item_prototype[1].name] = item_prototype[1]
 
       local recipe_prototype = {}
-      if stock == MW_Data.MW_Stock.WAFER then
+      
+      -- *****
+      if stock == MW_Data.MW_Stock.WAFER then -- Wafers
         table.insert(productivity_whitelist, #productivity_whitelist, metal .. "-" .. stock .. "-stock")
 
         local recipe_hide_from_player_crafting = true
@@ -639,7 +641,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
           recipe_hide_from_player_crafting = false
         end
 
-        if (GM_globals.show_non_hand_craftables == "all") then
+        if (GM_globals.show_non_hand_craftables == "all" or GM_globals.show_non_hand_craftables == "all except remelting") then
           recipe_hide_from_player_crafting = false
         end
         
@@ -686,7 +688,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
         end
 
         recipe_hide_from_player_crafting = true
-        if (GM_globals.show_non_hand_craftables == "all") then
+        if (GM_globals.show_non_hand_craftables == "all" or GM_globals.show_non_hand_craftables == "all except remelting") then
           recipe_hide_from_player_crafting = false
         end
 
@@ -722,6 +724,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
         
       end
 
+      -- *****
       if stock ~= MW_Data.MW_Stock.PLATE and stock ~= MW_Data.MW_Stock.WAFER then -- If it's not a plate, then make the recipe as normal
         -- Work out the special cases that get to be in player crafting
         local recipe_category = ""
@@ -737,7 +740,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
           recipe_hide_from_player_crafting = false
         end
 
-        if (GM_globals.show_non_hand_craftables == "all") then
+        if (GM_globals.show_non_hand_craftables == "all" or GM_globals.show_non_hand_craftables == "all except remelting") then
           recipe_hide_from_player_crafting = false
         end
 
@@ -756,7 +759,8 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
             always_show_made_in = true,
             hide_from_player_crafting = recipe_hide_from_player_crafting,
             energy_required = 0.3,
-            order = "a[" .. metal .. "-" .. stock .. "-stock" .. "]",
+            order = MW_Data.metal_data[metal].order .. MW_Data.stock_data[stock].order,
+            -- order = "a[" .. metal .. "-" .. stock .. "-stock" .. "]",
             category = recipe_category,
             localised_name = {"gm.metal-stock-item-name", {"gm." .. metal}, {"gm." .. stock}},
             gm_recipe_data = {type = "stocks", metal = metal, stock = stock}
@@ -820,6 +824,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
 
       end
 
+      -- *****
       if stock == MW_Data.MW_Stock.PLATE and MW_Data.metal_data[metal].alloy_plate_recipe then -- If it is a plate, make the special-case alloy-from-plate recipes
         -- Only add the Steel plate recipe_difficulty to the productivity whitelist
         if metal == MW_Data.MW_Metal.STEEL then
@@ -876,6 +881,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
             category = "smelting",
             subgroup = "gm-plates",
             localised_name = {"gm.metal-stock-item-name", {"gm." .. metal}, {"gm." .. stock}},
+            order = MW_Data.metal_data[metal].order .. MW_Data.stock_data[stock].order,
             hide_from_player_crafting = false,
             gm_recipe_data = {type = "stocks", metal = metal, stock = stock, special = "alloy-plate-recipe"}
           }
@@ -885,6 +891,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
         table.insert(GM_global_mw_data.stock_recipes[item_prototype[1].name], {[recipe_prototype[1].name] = recipe_prototype[1]})
       end
 
+      -- *****
       if stock == MW_Data.MW_Stock.PLATE and MW_Data.metal_data[metal].alloy_ore_recipe then -- If it is a plate, make the special-case alloy-from-ore recipes
         -- Because this is a plate recipe, add it to the productivity whitelist -- except, it's an alloys, so ... don't. For now.
         table.insert(productivity_whitelist, #productivity_whitelist, metal .. "-" .. stock .. "-stock-from-ore")
@@ -938,6 +945,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
             result_count = output_count,
             category = "smelting",
             subgroup = "gm-plates",
+            order = MW_Data.metal_data[metal].order .. MW_Data.stock_data[stock].order,
             localised_name = {"gm.metal-stock-item-name", {"gm." .. metal}, {"gm." .. stock}},
             hide_from_player_crafting = false,
             gm_recipe_data = {type = "stocks", metal = metal, stock = stock, special = "alloy-ore-recipe"}
@@ -948,6 +956,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
         table.insert(GM_global_mw_data.stock_recipes[item_prototype[1].name], {[recipe_prototype[1].name] = recipe_prototype[1]})
       end
 
+      -- *****
       if stock == MW_Data.MW_Stock.PLATE and MW_Data.ore_data[metal] and MW_Data.ore_data[metal].ore_type == MW_Data.MW_Ore_Type.ELEMENT then -- If it is a plate, make the special-case elemental plate recipes that take ores instead of stocks.
         -- Because this is a plate recipe, add it to the productivity whitelist
         table.insert(productivity_whitelist, #productivity_whitelist, metal .. "-" .. stock .. "-stock")
@@ -984,6 +993,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
             result_count = MW_Data.stocks_recipe_data[stock].output,
             category = "smelting",
             subgroup = "gm-plates",
+            order = MW_Data.metal_data[metal].order .. MW_Data.stock_data[stock].order,
             localised_name = {"gm.metal-stock-item-name", {"gm." .. metal}, {"gm." .. stock}},
             hide_from_player_crafting = false,
             gm_recipe_data = {type = "stocks", metal = metal, stock = stock}
@@ -1169,7 +1179,8 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the treated [M
             hide_from_player_crafting = hide_from_player_crafting,
             energy_required = 0.3,
             category = recipe_category,
-            order = order_count .. "gm-stocks-" .. metal,
+            -- order = order_count .. "gm-stocks-" .. metal,
+            order = MW_Data.metal_data[metal].order .. MW_Data.stock_data[stock].order,
             localised_name = {"gm.metal-stock-item-name", {"gm." .. metal}, {"gm." .. stock}},
             gm_recipe_data = recipe_gm_recipe_data,
           }
@@ -1251,6 +1262,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the treated [M
             energy_required = 3.2,
             category = "gm-remelting",
             subgroup = "gm-remelting-" .. metal,
+            order = MW_Data.metal_data[metal].order .. MW_Data.stock_data[stock].order,
             localised_name = {"gm.metal-stock-remelting-recipe-name", {"gm." .. metal}, {"gm." .. MW_Data.MW_Stock.PLATE}},
             gm_recipe_data = {type = "remelting", metal = metal, stock = stock},
           }
@@ -1469,7 +1481,7 @@ for property, parts in pairs(MW_Data.property_machined_part_pairs) do -- Make th
           hide_from_player_crafting = false
         end
 
-        if (GM_globals.show_non_hand_craftables == "all") then
+        if (GM_globals.show_non_hand_craftables == "all" or GM_globals.show_non_hand_craftables == "all except remelting") then
           hide_from_player_crafting = false
         end
 
@@ -1494,6 +1506,7 @@ for property, parts in pairs(MW_Data.property_machined_part_pairs) do -- Make th
             },
             always_show_made_in = true,
             energy_required = 0.3,
+            order = MW_Data.property_data[property].order .. MW_Data.machined_part_data[part].order,
             localised_name = {"gm.metal-machined-part-recipe", {"gm." .. property}, {"gm." .. part}, {"gm." .. metal}, {"gm." .. precursor}},
             gm_recipe_data = {type = "machined-parts", property = property, part = part}
           }
@@ -1658,7 +1671,7 @@ for property_key, multi_properties in pairs(MW_Data.multi_property_with_key_pair
           end
 
           local recipe_hide_from_player_crafting = true
-          if GM_globals.show_non_hand_craftables == "all" then
+          if (GM_globals.show_non_hand_craftables == "all" or GM_globals.show_non_hand_craftables == "all except remelting") then
             recipe_hide_from_player_crafting = false
           end
 
@@ -1682,6 +1695,7 @@ for property_key, multi_properties in pairs(MW_Data.multi_property_with_key_pair
               },
               always_show_made_in = true,
               energy_required = 0.3,
+              order = MW_Data.property_data[MW_Data.multi_property_with_key_pairs[property_key][1]].order .. MW_Data.property_data[MW_Data.multi_property_with_key_pairs[property_key][2]].order .. MW_Data.machined_part_data[part].order,
               gm_recipe_data = {type = "machined-parts", properties = multi_properties, compound_property = property_key, part = part}
               -- localised_name = {"gm.metal-machined-part-recipe", {"gm." .. property}, {"gm." .. part}, {"gm." .. metal}, {"gm." .. machined_parts_precurors[part][1]}}
             }
@@ -1726,7 +1740,7 @@ for metal, metal_data in pairs(MW_Data.metal_data) do -- Make "Basic" property d
           end
 
           local recipe_hide_from_player_crafting = true
-          if GM_globals.show_non_hand_craftables == "all" then
+          if (GM_globals.show_non_hand_craftables == "all" or GM_globals.show_non_hand_craftables == "all except remelting") then
             recipe_hide_from_player_crafting = false
           end
 
@@ -1748,6 +1762,7 @@ for metal, metal_data in pairs(MW_Data.metal_data) do -- Make "Basic" property d
               icons = icons_data,
               always_show_made_in = true,
               energy_required = 0.3,
+              order = MW_Data.property_data[property].order .. MW_Data.machined_part_data[part].order,
               localised_name = {"gm.metal-machined-part-downgrade-recipe", {"gm.basic"}, {"gm." .. part}},
               gm_recipe_data = {type = "machined-parts", start_property = property, end_property = MW_Data.MW_Property.BASIC, part = part, special = "downgrade"}
             }
@@ -1799,7 +1814,7 @@ for property, property_downgrade_list in pairs(MW_Data.property_downgrades) do -
       end
 
       local recipe_hide_from_player_crafting = true
-      if GM_globals.show_non_hand_craftables == "all" then
+      if (GM_globals.show_non_hand_craftables == "all" or GM_globals.show_non_hand_craftables == "all except remelting") then
         recipe_hide_from_player_crafting = false
       end
 
@@ -1816,6 +1831,7 @@ for property, property_downgrade_list in pairs(MW_Data.property_downgrades) do -
           icons = icons_data,
           always_show_made_in = true,
           energy_required = 0.3,
+          order = MW_Data.property_data[next_property].order .. MW_Data.machined_part_data[part].order,
           localised_name = {"gm.metal-machined-part-downgrade-recipe", {"gm." .. previous_property}, {"gm." .. part}},
           gm_recipe_data = {type = "machined-parts", start_property = next_property, end_property = previous_property, part = part, special = "downgrade"}
         }
@@ -1866,7 +1882,7 @@ for property_key, multi_properties in pairs(MW_Data.multi_property_with_key_pair
         end
 
         local recipe_hide_from_player_crafting = true
-        if GM_globals.show_non_hand_craftables == "all" then
+        if (GM_globals.show_non_hand_craftables == "all" or GM_globals.show_non_hand_craftables == "all except remelting") then
           recipe_hide_from_player_crafting = false
         end
 
@@ -1883,6 +1899,7 @@ for property_key, multi_properties in pairs(MW_Data.multi_property_with_key_pair
             icons = icons_data,
             always_show_made_in = true,
             energy_required = 0.3,
+            order = MW_Data.property_data[multi_property].order .. MW_Data.machined_part_data[part].order,
             localised_name = {"gm.metal-machined-part-downgrade-recipe", {"gm." .. multi_property}, {"gm." .. part}},
             gm_recipe_data = {type = "machined-parts", start_compound_property = property_key, end_property = multi_property, part = part, special = "downgrade"}
           }

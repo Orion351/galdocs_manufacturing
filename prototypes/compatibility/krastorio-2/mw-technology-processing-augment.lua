@@ -86,7 +86,9 @@ table.insert(data.raw.technology["kr-singularity-tech-card"].prerequisites, "gm-
 
 
 -- kr-containers
-data.raw.technology["kr-containers"].prerequisites = table.swap_string(data.raw.technology["kr-containers"].prerequisites, "steel-machined-part-processing", "steel-processing")
+if krastorio.general.getSafeSettingValue("kr-containers") then
+  data.raw.technology["kr-containers"].prerequisites = table.swap_string(data.raw.technology["kr-containers"].prerequisites, "steel-machined-part-processing", "steel-processing")
+end
 
 -- kr-shelter
 table.insert(data.raw.technology["kr-shelter"].prerequisites, "gm-galvanized-steel-machined-part-processing")

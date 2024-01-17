@@ -24,7 +24,7 @@ data:extend({
     name = "gm-show-non-hand-craftable",
     setting_type = "startup",
     default_value = "starter",
-    allowed_values = {"none", "starter", "all"}
+    allowed_values = {"none", "starter", "all except remelting", "all"}
   },
   { -- Display detailed tooltips
     type = "bool-setting",

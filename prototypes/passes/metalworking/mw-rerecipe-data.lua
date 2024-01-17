@@ -61,7 +61,7 @@ return function(advanced)
       ["accumulator"]                 = {{"load-bearing-girdering", 1}, {"ductile-and-electrically-conductive-wiring", 8}, {"corrosion-resistant-rivets", 1}, },
 
       ["nuclear-reactor"]             = {{"very-high-tensile-large-paneling", 40}, {"corrosion-resistant-and-heavy-load-bearing-girdering", 60}, {"radiation-resistant-piping", 50}, {"thermally-conductive-shafting", 45}, {"electrically-conductive-wiring", 200}, {"radiation-resistant-shielding", 300}, {"thermally-stable-shielding", 100}, {"very-high-tensile-rivets", 100}, },
-      ["heat-pipe"]                   = {{"thermally-conductive-shafting", 15}, {"thermally-stable-shielding", 20}, {"thermally-stable-rivets", 4}, },
+      ["heat-pipe"]                   = {{"thermally-conductive-shafting", 15}, {"thermally-stable-shielding", 8}, {"thermally-stable-rivets", 4}, },
       ["heat-exchanger"]              = {{"corrosion-resistant-and-load-bearing-large-paneling", 3}, {"load-bearing-girdering", 2}, {"corrosion-resistant-fine-piping", 20}, {"thermally-conductive-shafting", 40}, {"thermally-stable-shielding", 40}, {"high-tensile-rivets", 10}, },
       ["steam-turbine"]               = {{"corrosion-resistant-and-load-bearing-large-paneling", 6}, {"load-bearing-girdering", 10}, {"ductile-gearing", 30}, {"corrosion-resistant-fine-piping", 30}, {"thermally-conductive-shafting", 30}, {"electrically-conductive-wiring", 10}, {"thermally-stable-shielding", 10}, {"high-tensile-rivets", 10}, },
 
@@ -173,7 +173,7 @@ return function(advanced)
       ["accumulator"]                 = {{"load-bearing-framing", 1}, {"ductile-and-electrically-conductive-wiring", 8}, {"corrosion-resistant-bolts", 1}, },
 
       ["nuclear-reactor"]             = {{"very-high-tensile-paneling", 50}, {"corrosion-resistant-and-heavy-load-bearing-framing", 65}, {"radiation-resistant-piping", 55}, {"thermally-conductive-shafting", 55}, {"electrically-conductive-wiring", 200}, {"radiation-resistant-shielding", 300}, {"thermally-stable-shielding", 100}, {"very-high-tensile-bolts", 120}, },
-      ["heat-pipe"]                   = {{"thermally-conductive-shafting", 7}, {"thermally-stable-shielding", 11}, {"thermally-stable-bolts", 2}, },
+      ["heat-pipe"]                   = {{"thermally-conductive-shafting", 7}, {"thermally-stable-shielding", 6}, {"thermally-stable-bolts", 2}, },
       ["heat-exchanger"]              = {{"corrosion-resistant-and-load-bearing-paneling", 3}, {"load-bearing-framing", 2}, {"corrosion-resistant-piping", 8}, {"thermally-conductive-shafting", 28}, {"thermally-stable-shielding", 18}, {"high-tensile-bolts", 8}, },
       ["steam-turbine"]               = {{"corrosion-resistant-and-load-bearing-paneling", 4}, {"load-bearing-framing", 7}, {"ductile-gearing", 18}, {"corrosion-resistant-piping", 18}, {"thermally-conductive-shafting", 18}, {"electrically-conductive-wiring", 8}, {"thermally-stable-shielding", 6}, {"high-tensile-bolts", 8}, },
 
