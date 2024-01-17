@@ -137,7 +137,7 @@ for ore, ore_data in pairs(MW_Data.ore_data) do -- Add Enriched Items and Recipe
       data:extend({ -- Item
         {
           type = "item",
-          name = "enriched-" .. ore .. "-ore",
+          name = "enriched-" .. ore,
           icons = icons_data_item,
           pictures = pictures_data,
           subgroup = "raw-resource",
@@ -151,7 +151,7 @@ for ore, ore_data in pairs(MW_Data.ore_data) do -- Add Enriched Items and Recipe
       data.raw.item["enriched-" .. ore].pictures = pictures_data
     end
 
-    if ore_data.enriched_recipe and ore_data.enriched_recipe.new then
+    if ore_data.enriched_recipe and (ore_data.enriched_recipe.new or ore_data.enriched_recipe.replace) then
       local recipe_tint_primary = {r = 1, g = 1, b = 1, a = 1}
       if MW_Data.metal_data[ore] then
         recipe_tint_primary = MW_Data.metal_data[ore].tint_oxidation
@@ -168,7 +168,7 @@ for ore, ore_data in pairs(MW_Data.ore_data) do -- Add Enriched Items and Recipe
           group = "intermediate-products",
           results = {
             {type = "fluid", name = "dirty-water", amount = 25},
-            {type = "item", name = "enriched-" .. ore .. "-ore", amount = 6}
+            {type = "item", name = "enriched-" .. ore, amount = 6}
           },
           ingredients = {
             {type = "fluid", name = "water", amount = 25},
@@ -186,21 +186,19 @@ for ore, ore_data in pairs(MW_Data.ore_data) do -- Add Enriched Items and Recipe
 
       -- Build enriched-to-plate icon
       local icons_enriched_to_plate_recipe = {}
-      
-      if (ore ~= MW_Data.MW_Resource.COPPER) and (ore ~= MW_Data.MW_Resource.IRON) then
-        icons_enriched_to_plate_recipe = {
-          {
-            icon = "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. ore .. "/" .. ore .. "-plate-stock-0000.png",
-            icon_size = 64
-          },
-          {
-            icon = "__galdocs-manufacturing__/graphics/icons/intermediates/ore/" .. ore .. "/" .. ore .. "-enriched-1.png",
-            icon_size = 64,
-            scale = 0.22,
-            shift = { -8, -8 }
-          }
+
+      icons_enriched_to_plate_recipe = {
+        {
+          icon = "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. ore .. "/" .. ore .. "-plate-stock-0000.png",
+          icon_size = 64
+        },
+        {
+          icon = "__galdocs-manufacturing__/graphics/icons/intermediates/ore/" .. ore .. "/" .. ore .. "-enriched-1.png",
+          icon_size = 64,
+          scale = 0.3,
+          shift = GM_globals.ingredient_badge_shift
         }
-      end
+      }
 
       data:extend({ -- enriched to plate recipe
         {
@@ -213,7 +211,7 @@ for ore, ore_data in pairs(MW_Data.ore_data) do -- Add Enriched Items and Recipe
           result = ore .. "-plate-stock",
           result_count = 5,
           ingredients = {
-            {type = "item", name = "enriched-" .. ore .. "-ore", amount = 5}
+            {type = "item", name = "enriched-" .. ore, amount = 5}
           },
           energy_required = 16,
           enabled = false,
@@ -223,23 +221,23 @@ for ore, ore_data in pairs(MW_Data.ore_data) do -- Add Enriched Items and Recipe
           crafting_machine_tint = {primary = recipe_tint_primary},
         }
       })
-      
+
       local icons_dirty_water_filtration_recipe = {}
-      
-      if (ore ~= MW_Data.MW_Resource.COPPER) and (ore ~= MW_Data.MW_Resource.IRON) then
-        icons_dirty_water_filtration_recipe = {
-          {
-            icon = "__Krastorio2Assets__/icons/fluids/dirty-water.png",
-            icon_size = 64
-          },
-          {
-            icon = "__galdocs-manufacturing__/graphics/icons/intermediates/ore/" .. ore .. "/" .. ore .. "-ore-1.png",
-            icon_size = 64,
-            scale = 0.2,
-            shift = { 0, 4 }
-          }
+
+
+      icons_dirty_water_filtration_recipe = {
+        {
+          icon = "__Krastorio2Assets__/icons/fluids/dirty-water.png",
+          icon_size = 64
+        },
+        {
+          icon = "__galdocs-manufacturing__/graphics/icons/intermediates/ore/" .. ore .. "/" .. ore .. "-ore-1.png",
+          icon_size = 64,
+          scale = 0.2,
+          shift = { 0, 4 }
         }
-      end
+      }
+
 
       data:extend({ -- dirty water filtration recipe
         {
@@ -271,6 +269,166 @@ for ore, ore_data in pairs(MW_Data.ore_data) do -- Add Enriched Items and Recipe
         }
       })
 
+    end
+  end
+end
+
+for ore, ore_data in pairs(MW_Data.ore_data) do -- Make Matter recipes
+  if ore_data.matter_recipe and (ore_data.matter_recipe.new or ore_data.matter_recipe.replace) then
+    local recipe_tint_primary = {r = 1, g = 1, b = 1, a = 1}
+    if MW_Data.metal_data[ore] then
+      recipe_tint_primary = MW_Data.metal_data[ore].tint_oxidation
+    end
+
+    if ore_data.matter_recipe.ore_to_matter_recipe then -- ore-to-matter
+      local icons_ore_to_matter_recipe = {
+        {
+          icon = "__Krastorio2Assets__/icons/arrows/arrow-i.png",
+          icon_size = 64
+        },        
+        {
+          icon = "__Krastorio2Assets__/icons/fluids/matter.png",
+          icon_size = 64,
+          scale = 0.28,
+          shift = { 8, -6 }
+        },
+        {
+          icon = "__galdocs-manufacturing__/graphics/icons/intermediates/ore/" .. ore .. "/" .. ore .. "-ore-1.png",
+          icon_size = 64,
+          icon_mipmpas = 1,
+          scale = 0.28,
+          shift = { -4, 8 }
+        }
+      }
+
+      data:extend({ -- ore to matter recipe
+        {
+          type = "recipe",
+          name = "matter-to-" .. ore .. "-ore",
+          icons = icons_ore_to_matter_recipe,
+          order = "z[matter-to-" .. ore .. "-ore]",
+          subgroup = "matter-deconversion",
+          category = "matter-deconversion",
+          
+          results = {
+            {type = "item", name = ore .. "-ore", amount = ore_data.matter_recipe.ore_count}
+          },
+          ingredients = {
+            {type = "fluid", name = "matter", amount = ore_data.matter_recipe.matter_count},
+          },
+          energy_required = 1,
+          enabled = false,
+          hide_from_player_crafting = true, -- FIXME
+          allow_as_intermediate = false,
+          always_show_made_in = true,
+          always_show_products = true,
+          show_amount_in_title = false,
+          crafting_machine_tint = {primary = recipe_tint_primary},
+          localised_name = {"gm.matter-to-ore-recipe-name", { "gm." .. ore }}
+        }
+      })
+    end
+
+    if ore_data.matter_recipe.matter_to_ore_recipe then -- matter-to-ore
+      local icons_matter_to_ore_recipe = {
+        {
+          icon = "__Krastorio2Assets__/icons/arrows/arrow-m.png",
+          icon_size = 64
+        },        
+        {
+          icon = "__galdocs-manufacturing__/graphics/icons/intermediates/ore/" .. ore .. "/" .. ore .. "-ore-1.png",
+          icon_size = 64,
+          icon_mipmpas = 1,
+          scale = 0.28,
+          shift = { -8, -6 }
+        },
+        {
+          icon = "__Krastorio2Assets__/icons/fluids/matter.png",
+          icon_size = 64,
+          scale = 0.28,
+          shift = { 4, 8 }
+        }
+      }
+
+      data:extend({ -- matter to ore recipe
+        {
+          type = "recipe",
+          name = ore .. "-ore-to-matter",
+          icons = icons_matter_to_ore_recipe,
+          order = "z[" .. ore .. "-ore-to-matter]",
+          subgroup = "matter-conversion",
+          category = "matter-conversion", 
+          results = {
+            {type = "fluid", name = "matter", amount = ore_data.matter_recipe.matter_count},
+          },
+          ingredients = {
+            {type = "item", name = ore .. "-ore", amount = ore_data.matter_recipe.ore_count}
+          },
+          energy_required = 1,
+          enabled = false,
+          hidden = false,
+          hide_from_player_crafting = true, -- FIXME
+          allow_as_intermediate = false,
+          always_show_made_in = true,
+          always_show_products = true,
+          show_amount_in_title = false,
+          crafting_machine_tint = {primary = recipe_tint_primary},
+          localised_name = {"gm.ore-to-matter-recipe-name", { "gm." .. ore }}
+        }
+      })
+    end
+
+    if MW_Data.metal_data[ore] and MW_Data.metal_data[ore].matter_recipe and MW_Data.metal_data[ore].matter_recipe.matter_to_plate_recipe then -- matter-to-plate
+      local icons_matter_to_plate_recipe = {
+        {
+          icon = "__Krastorio2Assets__/icons/arrows/arrow-i.png",
+          icon_size = 64
+        },        
+        {
+          icon = "__Krastorio2Assets__/icons/fluids/matter.png",
+          icon_size = 64,
+          scale = 0.28,
+          shift = { 8, -6 }
+        },
+        {
+          icon = "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. ore .. "/" .. ore .. "-plate-stock-0000.png",
+          icon_size = 64,
+          icon_mipmpas = 1,
+          scale = 0.28,
+          shift = { -4, 8 }
+        },
+      }
+
+      data:extend({ -- matter to plate recipe
+        {
+          type = "recipe",
+          name = "matter-to-" .. ore .. "-plate",
+          icons = icons_matter_to_plate_recipe,
+          order = "z[matter-to-" .. ore .. "-plate]",
+          subgroup = "matter-deconversion",
+          category = "matter-deconversion",
+          results = {
+            {type = "item", name = ore .. "-plate-stock", amount = MW_Data.metal_data[ore].matter_recipe.plate_count},
+            {type = "item", name = "matter-stabilizer", probability = 0.99, amount_max = 1, catalyst_amount = 1, amount = 1}
+          },
+          ingredients = {
+            {type = "fluid", name = "matter", amount = MW_Data.metal_data[ore].matter_recipe.matter_count},
+            {type = "item", name = "matter-stabilizer", amount = 1, catalyst_amouint = 1}
+          },
+          main_product = ore .. "-plate-stock",
+          expensive = false,
+          energy_required = 2,
+          enabled = false,
+          hidden = true,
+          hide_from_player_crafting = true, -- FIXME
+          allow_as_intermediate = false,
+          always_show_made_in = true,
+          always_show_products = true,
+          show_amount_in_title = false,
+          crafting_machine_tint = {primary = recipe_tint_primary},
+          localised_name = {"gm.matter-to-plate-recipe-name", { "gm." .. ore }}
+        }
+      })
     end
   end
 end
@@ -456,41 +614,6 @@ for ore, ore_data in pairs(MW_Data.ore_data) do -- Make pebble -> gravel and gra
     }
     
     data:extend(recipe_prototype)
-  end
-end
-
-for ore, ore_data in pairs(MW_Data.ore_data) do -- Make Matter recipes
-  if ore_data.matter_recipe and ore_data.matter_recipe.new then
-    if ore_data.ore_to_matter_recipe then
-      local icons_ore_to_matter_recipe = {}
-      
-      data:extend({ -- ore to matter recipe
-      {
-        type = "recipe",
-        name = "enriched-" .. ore,
-        icons = icons_data_item,
-        subgroup = "raw-material",
-        order = "e02[enriched-" .. ore .. "]",
-        category = "chemistry",
-        group = "intermediate-products",
-        results = {
-          {type = "fluid", name = "dirty-water", amount = 25},
-          {type = "item", name = "enriched-" .. ore .. "-ore", amount = 6}
-        },
-        ingredients = {
-          {type = "fluid", name = "water", amount = 25},
-          {type = "fluid", name = ore_data.enriched_recipe.purifier_name, amount = ore_data.enriched_recipe.purifier_amount},
-          {type = "item", name = ore .. "-ore", amount = 9}
-        },
-        energy_required = 3,
-        always_show_made_in = true,
-        always_show_products = true,
-        allow_productivity = true,
-        crafting_machine_tint = {primary = recipe_tint_primary},
-        localised_name = {"gm.ore-to-enriched-name", ore}
-      }
-    })
-    end
   end
 end
 
@@ -712,27 +835,27 @@ data.raw.recipe["lithium-sulfur-battery"].result_count = 2
 -- Redoing the Alloy Recipes
 local enriched_alloy_recipe
 
-local alloy_recipes = {"brass-plate-stock-from-ore", "invar-plate-stock-from-ore"}
-for _, recipe in pairs(alloy_recipes) do
+MW_Data.enriched_to_plate_alloy_recipes = {"brass-plate-stock-from-ore", "invar-plate-stock-from-ore"}
+for _, recipe in pairs(MW_Data.enriched_to_plate_alloy_recipes) do
   enriched_alloy_recipe = table.deepcopy(data.raw.recipe[recipe])
-
+  enriched_alloy_recipe.enabled = false
+  local new_ingredient = ""
+  local new_name = ""
   for _, ingredient in pairs(enriched_alloy_recipe.ingredients) do
-    if ingredient[1] ~= "iron-ore" and ingredient[1] ~= "copper-ore" then
-      ingredient[1] = "enriched-" .. ingredient[1]
-    else
-      if ingredient[1] == "copper-ore" then
-        ingredient[1] = "enriched-copper"
-      end
-      if ingredient[1] == "iron-ore" then
-        ingredient[1] = "enriched-iron"
-      end
+    new_ingredient = "enriched-" .. ingredient[1]
+    ingredient[1] = string.sub(new_ingredient, 1, #new_ingredient - 4)
+  end
+  new_name = string.sub(recipe, 1, #recipe - 4)
+  enriched_alloy_recipe.name = new_name .. "-enriched"
+  local new_icon_data = {}
+  for _, old_icon in pairs(enriched_alloy_recipe.icons) do
+    local i, j = string.find(old_icon.icon, "-ore-")
+    if i ~= nil then
+      old_icon.icon = string.sub(old_icon.icon, 1, i-1) .. "-enriched-" .. string.sub(old_icon.icon, j+3, #old_icon.icon)
     end
   end
-  enriched_alloy_recipe.name = "enriched-" .. recipe
   data:extend({enriched_alloy_recipe})
 end
-
-
 
 data.raw.recipe["brass-plate-stock-from-ore"].result_count = data.raw.recipe["brass-plate-stock-from-ore"].result_count / 2
 data.raw.recipe["invar-plate-stock-from-ore"].result_count = data.raw.recipe["invar-plate-stock-from-ore"].result_count / 2

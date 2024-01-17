@@ -2,11 +2,11 @@ return function(advanced)
   if advanced then
     return {
       ["iron-plate"]                      = true,
-      ["enriched-iron-plate"]             = true,
+      -- ["enriched-iron-plate"]             = true,  (already stamped down my own version)
       ["matter-to-iron-plate"]            = true,
 
       ["copper-plate"]                    = true,
-      ["enriched-copper-plate"]           = true,
+      -- ["enriched-copper-plate"]           = true,  (already stamped down my own version)
       ["matter-to-copper-plate"]          = true,
 
       ["steel-plate"]                     = true,
@@ -49,11 +49,11 @@ return function(advanced)
   else
     return {
       ["iron-plate"]                      = true,
-      ["enriched-iron-plate"]             = true,
+      -- ["enriched-iron-plate"]             = true,  (already stamped down my own version)
       ["matter-to-iron-plate"]            = true,
 
       ["copper-plate"]                    = true,
-      ["enriched-copper-plate"]           = true,
+      -- ["enriched-copper-plate"]           = true,  (already stamped down my own version)
       ["matter-to-copper-plate"]          = true,
 
       ["steel-plate"]                     = true,

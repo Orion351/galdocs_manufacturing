@@ -108,29 +108,28 @@ MW_Data.ore_data = table.merge_subtables(MW_Data.ore_data, { -- i hate dumb name
 })
 
 MW_Data.ore_data = table.merge_subtables(MW_Data.ore_data, { -- Couple ores to ore shapes
-  [MW_Resource.COPPER]      = {enriched_recipe = {new = false, enable = true                                                           }},
-  [MW_Resource.IRON]        = {enriched_recipe = {new = false, enable = true                                                           }},
-  [MW_Resource.LEAD]        = {enriched_recipe = {new = true,  enable = true,  purifier_name = "sulfuric-acid",     purifier_amount = 3}},
-  [MW_Resource.TITANIUM]    = {enriched_recipe = {new = true,  enable = true,  purifier_name = "hydrogen-chloride", purifier_amount = 3}},
-  [MW_Resource.ZINC]        = {enriched_recipe = {new = true,  enable = true,  purifier_name = "sulfuric-acid",     purifier_amount = 3}},
-  [MW_Resource.NICKEL]      = {enriched_recipe = {new = true,  enable = true,  purifier_name = "sulfuric-acid",     purifier_amount = 3}},
-  [MW_Resource.RARE_METALS] = {enriched_recipe = {new = false, enable = false                                                          }},
+  [MW_Resource.COPPER]      = {enriched_recipe = {new = false, enable = true,  replace = true,  purifier_name = "sulfuric-acid",     purifier_amount = 3}},
+  [MW_Resource.IRON]        = {enriched_recipe = {new = false, enable = true,  replace = true,  purifier_name = "sulfuric-acid",     purifier_amount = 3}},
+  [MW_Resource.LEAD]        = {enriched_recipe = {new = true,  enable = true,  replace = false, purifier_name = "sulfuric-acid",     purifier_amount = 3}},
+  [MW_Resource.TITANIUM]    = {enriched_recipe = {new = true,  enable = true,  replace = false, purifier_name = "hydrogen-chloride", purifier_amount = 3}},
+  [MW_Resource.ZINC]        = {enriched_recipe = {new = true,  enable = true,  replace = false, purifier_name = "sulfuric-acid",     purifier_amount = 3}},
+  [MW_Resource.NICKEL]      = {enriched_recipe = {new = true,  enable = true,  replace = false, purifier_name = "sulfuric-acid",     purifier_amount = 3}},
+  [MW_Resource.RARE_METALS] = {enriched_recipe = {new = false, enable = false, replace = false,                                                          }},
 
   [MW_Resource.OSMIUM]      = {enriched_recipe = {new = true,  enable = true,  purifier_name = "hydrogen-chloride", purifier_amount = 3}},
   [MW_Resource.NIOBIUM]     = {enriched_recipe = {new = true,  enable = true,  purifier_name = "hydrogen-chloride", purifier_amount = 3}},
 })
 
 MW_Data.ore_data = table.merge_subtables(MW_Data.ore_data, { -- Matter-to-Ore and Ore-to-Matter Recipes
-  [MW_Resource.COPPER]      = {matter_recipe = {new = false, ore_to_matter_recipe = true,  matter_to_ore_recipe = true,  ore_count = 10, matter_count = 5}},
-  [MW_Resource.IRON]        = {matter_recipe = {new = false, ore_to_matter_recipe = true,  matter_to_ore_recipe = true,  ore_count = 10, matter_count = 5}},
-  [MW_Resource.LEAD]        = {matter_recipe = {new = true,  ore_to_matter_recipe = true,  matter_to_ore_recipe = true,  ore_count = 10, matter_count = 5}},
-  [MW_Resource.TITANIUM]    = {matter_recipe = {new = true,  ore_to_matter_recipe = true,  matter_to_ore_recipe = true,  ore_count = 10, matter_count = 5}},
-  [MW_Resource.ZINC]        = {matter_recipe = {new = true,  ore_to_matter_recipe = true,  matter_to_ore_recipe = true,  ore_count = 10, matter_count = 5}},
-  [MW_Resource.NICKEL]      = {matter_recipe = {new = true,  ore_to_matter_recipe = true,  matter_to_ore_recipe = true,  ore_count = 10, matter_count = 5}},
-  [MW_Resource.RARE_METALS] = {matter_recipe = {new = false, ore_to_matter_recipe = false, matter_to_ore_recipe = false                                  }},
-
-  [MW_Resource.OSMIUM]      = {matter_recipe = {new = true,  ore_to_matter_recipe = true,  matter_to_ore_recipe = true,  ore_count = 10, matter_count = 5}},
-  [MW_Resource.NIOBIUM]     = {matter_recipe = {new = true,  ore_to_matter_recipe = true,  matter_to_ore_recipe = true,  ore_count = 10, matter_count = 5}},
+  [MW_Resource.COPPER]      = {matter_recipe = {new = false, replace = true,  ore_to_matter_recipe = true,  matter_to_ore_recipe = true,  ore_count = 10, matter_count = 5}},
+  [MW_Resource.IRON]        = {matter_recipe = {new = false, replace = true,  ore_to_matter_recipe = true,  matter_to_ore_recipe = true,  ore_count = 10, matter_count = 5}},
+  [MW_Resource.LEAD]        = {matter_recipe = {new = true,  replace = false, ore_to_matter_recipe = true,  matter_to_ore_recipe = true,  ore_count = 10, matter_count = 5}},
+  [MW_Resource.TITANIUM]    = {matter_recipe = {new = true,  replace = false, ore_to_matter_recipe = true,  matter_to_ore_recipe = true,  ore_count = 10, matter_count = 5}},
+  [MW_Resource.ZINC]        = {matter_recipe = {new = true,  replace = false, ore_to_matter_recipe = true,  matter_to_ore_recipe = true,  ore_count = 10, matter_count = 5}},
+  [MW_Resource.NICKEL]      = {matter_recipe = {new = true,  replace = false, ore_to_matter_recipe = true,  matter_to_ore_recipe = true,  ore_count = 10, matter_count = 5}},
+  [MW_Resource.RARE_METALS] = {matter_recipe = {new = false, replace = false, ore_to_matter_recipe = false, matter_to_ore_recipe = false,                                 }},
+  [MW_Resource.OSMIUM]      = {matter_recipe = {new = true,  replace = false, ore_to_matter_recipe = true,  matter_to_ore_recipe = true,  ore_count = 10, matter_count = 5}},
+  [MW_Resource.NIOBIUM]     = {matter_recipe = {new = true,  replace = false, ore_to_matter_recipe = true,  matter_to_ore_recipe = true,  ore_count = 10, matter_count = 5}},
 })
 
 MW_Data.smelting_data = { -- Set up the Smelting Recipes

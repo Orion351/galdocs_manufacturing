@@ -187,5 +187,7 @@ table.insert(data.raw.technology["kr-advanced-tank"].prerequisites, "gm-stable-i
 -- kr-superior-exoskeleton-equipment
 table.insert(data.raw.technology["kr-superior-exoskeleton-equipment"].prerequisites, "gm-stable-imersium-machined-part-processing")
 
+-- matter-to-rare-metals
+
 
 return MW_Data
