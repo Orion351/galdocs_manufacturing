@@ -425,6 +425,10 @@ MW_Data.metal_data = table.merge_subtables(MW_Data.metal_data, { -- Staple on th
   -- None
 })
 
+-- K2-ify the ore-to-plate alloy recipes
+MW_Data.metal_data[MW_Metal.BRASS].alloy_ore_recipe = {{name = MW_Resource.COPPER, shape = MW_Ore_Shape.ORE, amount = 6}, {name = MW_Resource.ZINC,   shape = MW_Ore_Shape.ORE, amount = 2}}
+MW_Data.metal_data[MW_Metal.INVAR].alloy_ore_recipe = {{name = MW_Resource.IRON,   shape = MW_Ore_Shape.ORE, amount = 6}, {name = MW_Resource.NICKEL, shape = MW_Ore_Shape.ORE, amount = 4}}
+
 MW_Data.metal_properties_pairs = table.group_key_assign(MW_Data.metal_properties_pairs, { -- [metal | list of properties] 
   [MW_Metal.RARE_METALS]       = {},
   
@@ -506,6 +510,11 @@ for property, property_downgrade_list in pairs(MW_Data.property_downgrades) do -
   end
 end
 
+
+
+-- Stock Coupliings
+-- ****************
+MW_Data.stocks_recipe_data[MW_Stock.PLATE].input = 2
 
 
 -- ***************

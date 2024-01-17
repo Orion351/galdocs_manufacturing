@@ -15,3 +15,19 @@ script.on_init(function()
       remote.call("freeplay", "set_created_items", created_items)
   end
 end)
+
+Mod_Names = {
+  VANILLA = "vanilla",
+  GM      = "galdocs-manufacturing",
+  K2      = "krastorio2",
+}
+
+-- Global Variables
+-- GM_globals = require("prototypes.settings-parser")
+-- GM_globals = table.merge(GM_globals, require("prototypes.global-variables"))
+
+-- GM_global_mw_data.current_overhaul_data = require("prototypes.passes.metalworking.mw-overhauls")
+
+if script.active_mods["krastorio2"] then
+  require("prototypes.compatibility." .. GM_global_mw_data.current_overhaul_data.dir_name .. ".control-augment")
+end

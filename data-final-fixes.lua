@@ -76,6 +76,33 @@ function Keep_track_of_used_ingredients(current_list, list_to_check)
   return current_list
 end
 
+function Swap_results(current_results, swap_list) 
+  -- swap_list must be a list of key value pairs of strings; key = old, value = new
+  -- current_results must be a list of ProductPrototypes
+  
+  -- Sanitize inputs
+  if swap_list == nil then return current_results end
+  if current_results == nil then return current_results end
+  local bad_swap_list = false
+  if type(swap_list) ~= "table" then bad_swap_list = true end
+  for k, v in pairs(swap_list) do
+    if type(k) ~= "string" or type(v) ~= "string" then bad_swap_list = true end
+  end
+  if bad_swap_list then return "bad swap list" end
+
+  -- do the thing
+  local new_results = {}
+  for i, result in pairs(current_results) do
+    table.insert(new_results, result)
+    for old, new in pairs(swap_list) do
+      if result.name == old then
+        new_results[i].name = new
+      end
+    end
+  end
+  return new_results
+end
+
 -- Arguments:
 --   Table: intermediates to remove and replace, formed like: { ["item-to-remove"] = "item-that-replaces-it", ... }
 --   String: pull_table (a .lua file that splits advanced and simple modes, formatted with the "csv to lua.py" file).

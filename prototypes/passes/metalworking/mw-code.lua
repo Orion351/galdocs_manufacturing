@@ -975,12 +975,13 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
             icons = icons_data_recipe,
             enabled = MW_Data.metal_data[metal].tech_stock == "starter",
             energy_required = 3.2,
-            ingredients = {{metal .. "-ore", 1}},
+            ingredients = {{metal .. "-ore", MW_Data.stocks_recipe_data[stock].input}},
             crafting_machine_tint = {
               primary = MW_Data.metal_data[metal].tint_metal,
               secondary = MW_Data.metal_data[metal].tint_oxidation
             },
             result = metal .. "-" .. stock .. "-stock",
+            result_count = MW_Data.stocks_recipe_data[stock].output,
             category = "smelting",
             subgroup = "gm-plates",
             localised_name = {"gm.metal-stock-item-name", {"gm." .. metal}, {"gm." .. stock}},

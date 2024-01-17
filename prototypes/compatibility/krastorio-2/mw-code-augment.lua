@@ -503,8 +503,6 @@ end
 
 
 
-
-
 -- Matter Processing Recipes
 -- Parent Tech: kr-matter-processing
 -- Sibling Tech: kr-matter-coal-processing
@@ -527,8 +525,6 @@ end
 -- FIXME : Add enriched-ore-to-plate recipe above
 -- Filtering osmium or niobium will only give pebbles / gravel, not enriched ores
 -- enriched-iron-plate
-
-
 
 
 
@@ -713,16 +709,42 @@ data.raw.item["kr-steel-pump"].localised_description           = {"gm.new-steel-
 data.raw.recipe["lithium-sulfur-battery"].result_count = 2
 
 
+-- Redoing the Alloy Recipes
+local enriched_alloy_recipe
+
+local alloy_recipes = {"brass-plate-stock-from-ore", "invar-plate-stock-from-ore"}
+for _, recipe in pairs(alloy_recipes) do
+  enriched_alloy_recipe = table.deepcopy(data.raw.recipe[recipe])
+
+  for _, ingredient in pairs(enriched_alloy_recipe.ingredients) do
+    if ingredient[1] ~= "iron-ore" and ingredient[1] ~= "copper-ore" then
+      ingredient[1] = "enriched-" .. ingredient[1]
+    else
+      if ingredient[1] == "copper-ore" then
+        ingredient[1] = "enriched-copper"
+      end
+      if ingredient[1] == "iron-ore" then
+        ingredient[1] = "enriched-iron"
+      end
+    end
+  end
+  enriched_alloy_recipe.name = "enriched-" .. recipe
+  data:extend({enriched_alloy_recipe})
+end
+
+
+
+data.raw.recipe["brass-plate-stock-from-ore"].result_count = data.raw.recipe["brass-plate-stock-from-ore"].result_count / 2
+data.raw.recipe["invar-plate-stock-from-ore"].result_count = data.raw.recipe["invar-plate-stock-from-ore"].result_count / 2
 
 -- Ore to Plate Recipes (non-enriched) FIXME: This ought to be a part of the data properties?
 -- ********************
 
-for name, recipe in pairs(data.raw.recipe) do
-  if recipe.gm_recipe_data and recipe.gm_recipe_data.type and recipe.gm_recipe_data.type == "stocks" and recipe.gm_recipe_data.stock == MW_Data.MW_Stock.PLATE and MW_Data.metal_data[recipe.gm_recipe_data.metal].type == MW_Data.MW_Metal_Type.ELEMENT then
-    recipe.ingredients[1][2] = 2
-  end
-end
-
+-- for name, recipe in pairs(data.raw.recipe) do
+--   if recipe.gm_recipe_data and recipe.gm_recipe_data.type and recipe.gm_recipe_data.type == "stocks" and recipe.gm_recipe_data.stock == MW_Data.MW_Stock.PLATE and MW_Data.metal_data[recipe.gm_recipe_data.metal].type == MW_Data.MW_Metal_Type.ELEMENT then
+--     recipe.ingredients[1][2] = 2
+--   end
+-- end
 
 
 

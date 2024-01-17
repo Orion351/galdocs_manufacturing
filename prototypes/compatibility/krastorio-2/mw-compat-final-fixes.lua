@@ -312,6 +312,28 @@ for _, reprototyped_furnace in pairs(reprototyped_furnaces) do
   end
 end
 
+-- Fix up the crash site stuff
+local crash_site_entities = {
+  {"assembling-machine", "kr-crash-site-assembling-machine-1-repaired"},
+  {"assembling-machine", "kr-crash-site-assembling-machine-2-repaired"},
+  {"container", "kr-crash-site-chest-1"},
+  {"container", "kr-crash-site-chest-2"},
+  {"electric-energy-interface", "kr-crash-site-generator"},
+  {"lab", "kr-crash-site-lab-repaired"},
+  {"simple-entity-with-owner", "kr-mineable-wreckage"},
+}
+
+local i_hate_copper_cable = {}
+for k, v in pairs(GM_global_mw_data.mw_intermediates_to_replace_overhauled) do
+  if v ~= "electrically-conductive-wiring-machined-part" then 
+    i_hate_copper_cable[k] = v
+  end
+end
+
+for _, entity in pairs(crash_site_entities) do
+  data.raw[entity[1]][entity[2]].minable.results = Swap_results(data.raw[entity[1]][entity[2]].minable.results, i_hate_copper_cable)
+end
+
 
 -- Matter Processing Recipes
 -- Parent Tech: kr-matter-processing

@@ -233,41 +233,6 @@ end
 
 
 
--- ****************************
--- Update the copper cable item
--- ****************************
-
--- Put the "copper-cable" item back in so that people can connect up the wires of power poles manually again.
--- This is kept separate for code clarity. It takes a bit longer. Meh.
-for _, recipe in pairs(data.raw.recipe) do
-  if recipe.ingredients ~= nil then
-    for _, ingredient in pairs(recipe.ingredients) do
-      if ingredient.name ~= nil then
-        if ingredient.name == "electrically-conductive-wiring-machined-part" then ingredient.name = "copper-cable" end
-      else
-        if ingredient[1] == "electrically-conductive-wiring-machined-part" then ingredient[1] = "copper-cable" end
-      end
-    end
-  end
-  if recipe.result ~= nil then
-    if recipe.result == "electrically-conductive-wiring-machined-part" then recipe.result = "copper-cable" end
-  end
-  if recipe.results ~= nil and recipe.results ~= {} then
-    for _, result in pairs(recipe.results) do
-      if result.name == "electrically-conductive-wiring-machined-part" then result.name = "copper-cable" end
-    end
-  end
-end
-
--- Make the 'copper-cable' essentially look like 'electrically-conductive-wiring-machined-part'
-local wire = data.raw.item["electrically-conductive-wiring-machined-part"]
-wire.name = "copper-cable"
-wire.wire_count = 1
-data:extend{wire}
-data.raw.item["electrically-conductive-wiring-machined-part"] = nil
-
-
-
 -- ***************
 -- Update Furnaces
 -- ***************
@@ -365,3 +330,38 @@ end
 if GM_global_mw_data.current_overhaul_data.passes and GM_global_mw_data.current_overhaul_data.passes.metalworking and GM_global_mw_data.current_overhaul_data.passes.metalworking.compat_final_fixes then
   require("prototypes.compatibility." .. GM_global_mw_data.current_overhaul_data.dir_name .. ".mw-compat-final-fixes")
 end
+
+
+
+-- ****************************
+-- Update the copper cable item
+-- ****************************
+
+-- Put the "copper-cable" item back in so that people can connect up the wires of power poles manually again.
+-- This is kept separate for code clarity. It takes a bit longer. Meh.
+for _, recipe in pairs(data.raw.recipe) do
+  if recipe.ingredients ~= nil then
+    for _, ingredient in pairs(recipe.ingredients) do
+      if ingredient.name ~= nil then
+        if ingredient.name == "electrically-conductive-wiring-machined-part" then ingredient.name = "copper-cable" end
+      else
+        if ingredient[1] == "electrically-conductive-wiring-machined-part" then ingredient[1] = "copper-cable" end
+      end
+    end
+  end
+  if recipe.result ~= nil then
+    if recipe.result == "electrically-conductive-wiring-machined-part" then recipe.result = "copper-cable" end
+  end
+  if recipe.results ~= nil and recipe.results ~= {} then
+    for _, result in pairs(recipe.results) do
+      if result.name == "electrically-conductive-wiring-machined-part" then result.name = "copper-cable" end
+    end
+  end
+end
+
+-- Make the 'copper-cable' essentially look like 'electrically-conductive-wiring-machined-part'
+local wire = data.raw.item["electrically-conductive-wiring-machined-part"]
+wire.name = "copper-cable"
+wire.wire_count = 1
+data:extend{wire}
+data.raw.item["electrically-conductive-wiring-machined-part"] = nil
