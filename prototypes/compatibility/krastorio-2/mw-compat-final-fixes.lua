@@ -14,8 +14,6 @@ local MW_Data = GM_global_mw_data.MW_Data
 -- ore-to-enriched recipes
 data.raw.recipe["enriched-copper"].icons = {{icon_size = 64, icon_mipmaps = 1, icon = "__galdocs-manufacturing__/graphics/icons/intermediates/ore/copper/copper-enriched-1.png"}}
 data.raw.recipe["enriched-iron"].icons = {{icon_size = 64, icon_mipmaps = 1, icon = "__galdocs-manufacturing__/graphics/icons/intermediates/ore/iron/iron-enriched-1.png"}}
-data.raw.recipe["enriched-rare-metals"].enabled = false
-data.raw.recipe["enriched-rare-metals"].hidden = true
 
 -- enriched-to-plate recipes
 -- data.raw.recipe["enriched-copper-plate"].icons = {
@@ -120,6 +118,7 @@ for ore, ore_data in pairs(MW_Data.ore_data) do
   end
 end
 
+table.insert(new_effects, {type = "unlock-recipe", recipe = "enriched-rare-metals"})
 data.raw.technology["kr-enriched-ores"].effects = new_effects
 
 for _, new_recipe in pairs(MW_Data.enriched_to_plate_alloy_recipes) do
