@@ -615,9 +615,11 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
           name = metal .. "-" .. stock .. "-stock",
           icons = icons_data_item,
           pictures = pictures_data,
+          stack_size = GM_globals.stock_stack_size,
+
           subgroup = "gm-stocks-" .. metal,
           order = "gm-stocks-" .. MW_Data.metal_data[metal].order .. MW_Data.stock_data[stock].order,
-          stack_size = GM_globals.stock_stack_size,
+
           localised_name = {"gm.metal-stock-item-name", {"gm." .. metal}, {"gm." .. stock}},
           localised_description = localized_description_item,
           gm_item_data = {type = "stocks", metal = metal, stock = stock}
@@ -660,7 +662,10 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
             always_show_made_in = true,
             hide_from_player_crafting = recipe_hide_from_player_crafting,
             energy_required = 3.2,
-            order = "a[" .. metal .. "-" .. stock .. "-stock" .. "]",
+            
+            subgroup = "gm-stocks-" .. metal,
+            order = MW_Data.metal_data[metal].order .. MW_Data.stock_data[stock].order,
+
             category = "smelting",
             localised_name = {"gm.metal-stock-item-name", {"gm." .. metal}, {"gm." .. stock}},
             gm_recipe_data = {type = "stocks", metal = metal, stock = stock}
@@ -711,7 +716,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
             always_show_made_in = true,
             hide_from_player_crafting = recipe_hide_from_player_crafting,
             energy_required = 3.2,
-            order = "b[" .. metal .. "-" .. stock .. "-remelting-stock" .. "]",
+            order = MW_Data.metal_data[metal].order .. MW_Data.stock_data[stock].order,
             category = "gm-remelting",
             subgroup = "gm-remelting-" .. metal,
             localised_name = {"gm.metal-stock-remelting-recipe-name", {"gm." .. metal}, {"gm." .. MW_Data.MW_Stock.PLATE}},
@@ -759,9 +764,11 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
             always_show_made_in = true,
             hide_from_player_crafting = recipe_hide_from_player_crafting,
             energy_required = 0.3,
-            order = MW_Data.metal_data[metal].order .. MW_Data.stock_data[stock].order,
-            -- order = "a[" .. metal .. "-" .. stock .. "-stock" .. "]",
             category = recipe_category,
+
+            subgroup = "gm-stocks-" .. metal,
+            order = "gm_stocks" .. MW_Data.metal_data[metal].order .. MW_Data.stock_data[stock].order,
+
             localised_name = {"gm.metal-stock-item-name", {"gm." .. metal}, {"gm." .. stock}},
             gm_recipe_data = {type = "stocks", metal = metal, stock = stock}
           }
@@ -811,9 +818,11 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
           always_show_made_in = true,
           hide_from_player_crafting = recipe_hide_from_player_crafting,
           energy_required = 3.2,
-          order = "b[" .. metal .. "-" .. stock .. "-remelting-stock" .. "]",
           category = "gm-remelting",
+          
+          order = MW_Data.metal_data[metal].order .. MW_Data.stock_data[stock].order,
           subgroup = "gm-remelting-" .. metal,
+
           localised_name = {"gm.metal-stock-remelting-recipe-name", {"gm." .. metal}, {"gm." .. MW_Data.MW_Stock.PLATE}},
           gm_recipe_data = {type = "remelting", metal = metal, stock = stock}
         }
@@ -878,8 +887,10 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
             },
             result = metal .. "-" .. stock .. "-stock",
             result_count = output_count,
+
             category = "smelting",
-            subgroup = "gm-plates",
+            subgroup = "gm-stocks-" .. metal,
+
             localised_name = {"gm.metal-stock-item-name", {"gm." .. metal}, {"gm." .. stock}},
             order = MW_Data.metal_data[metal].order .. MW_Data.stock_data[stock].order,
             hide_from_player_crafting = false,
@@ -944,10 +955,12 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
             result = metal .. "-" .. stock .. "-stock",
             result_count = output_count,
             category = "smelting",
-            subgroup = "gm-plates",
-            order = MW_Data.metal_data[metal].order .. MW_Data.stock_data[stock].order,
-            localised_name = {"gm.metal-stock-item-name", {"gm." .. metal}, {"gm." .. stock}},
             hide_from_player_crafting = false,
+            
+            subgroup = "gm-stocks-" .. metal,
+            order = MW_Data.metal_data[metal].order .. MW_Data.stock_data[stock].order,
+
+            localised_name = {"gm.metal-stock-item-name", {"gm." .. metal}, {"gm." .. stock}},
             gm_recipe_data = {type = "stocks", metal = metal, stock = stock, special = "alloy-ore-recipe"}
           }
         }
@@ -992,8 +1005,10 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
             result = metal .. "-" .. stock .. "-stock",
             result_count = MW_Data.stocks_recipe_data[stock].output,
             category = "smelting",
-            subgroup = "gm-plates",
+            
+            subgroup = "gm-stocks-" .. metal,
             order = MW_Data.metal_data[metal].order .. MW_Data.stock_data[stock].order,
+            
             localised_name = {"gm.metal-stock-item-name", {"gm." .. metal}, {"gm." .. stock}},
             hide_from_player_crafting = false,
             gm_recipe_data = {type = "stocks", metal = metal, stock = stock}
@@ -1122,9 +1137,11 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the treated [M
           name = metal .. "-" .. stock .. "-stock",
           icons = icons_data_item,
           pictures = pictures_data,
-          subgroup = "gm-stocks-" .. metal,
-          order = order_count .. "gm-stocks-" .. metal,
           stack_size = GM_globals.stock_stack_size,
+
+          order = "gm-stocks-" .. MW_Data.metal_data[metal].order .. MW_Data.stock_data[stock].order,
+          subgroup = "gm-stocks-" .. metal,
+          
           localised_name = {"gm.metal-stock-item-name", {"gm." .. metal}, {"gm." .. stock}},
           localised_description = localized_description_item,
           gm_item_data = {type = "stocks", metal = metal, stock = stock, special = "treatment"}
@@ -1179,8 +1196,10 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the treated [M
             hide_from_player_crafting = hide_from_player_crafting,
             energy_required = 0.3,
             category = recipe_category,
-            -- order = order_count .. "gm-stocks-" .. metal,
+            
             order = MW_Data.metal_data[metal].order .. MW_Data.stock_data[stock].order,
+            subgroup = "gm-stocks-" .. metal,
+
             localised_name = {"gm.metal-stock-item-name", {"gm." .. metal}, {"gm." .. stock}},
             gm_recipe_data = recipe_gm_recipe_data,
           }
@@ -1260,9 +1279,11 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the treated [M
             always_show_made_in = true,
             hide_from_player_crafting = hide_from_player_crafting,
             energy_required = 3.2,
+
             category = "gm-remelting",
             subgroup = "gm-remelting-" .. metal,
             order = MW_Data.metal_data[metal].order .. MW_Data.stock_data[stock].order,
+
             localised_name = {"gm.metal-stock-remelting-recipe-name", {"gm." .. metal}, {"gm." .. MW_Data.MW_Stock.PLATE}},
             gm_recipe_data = {type = "remelting", metal = metal, stock = stock},
           }
@@ -1308,7 +1329,7 @@ for property, parts in pairs(MW_Data.property_machined_part_pairs) do -- Make [P
         type = "item-subgroup",
         name = "gm-machined-parts-" .. property,
         group = "gm-intermediates",
-        order = "b" .. "gm-intermediates-machined-parts" .. order_count,
+        order = "c" .. "-gm-intermediates-machined-parts" .. MW_Data.property_data[property].order,
         localised_name = {"gm.machined-parts-subgroup-property", {"gm." .. property}}
       }
     })
@@ -1320,7 +1341,7 @@ for property, parts in pairs(MW_Data.property_machined_part_pairs) do -- Make [P
           type = "item-subgroup",
           name = "gm-machined-parts-basic-" .. part,
           group = "gm-intermediates",
-          order = "b" .. "gm-intermediates-machined-parts" .. order_count,
+          order = "b" .. "-gm-intermediates-machined-parts" .. MW_Data.machined_part_data[part].order,
           localised_name = {"gm.machined-parts-subgroup-property", {"", {"gm.basic"}, "-", {"gm." .. part}}}
         }
       })
@@ -1416,8 +1437,10 @@ for property, parts in pairs(MW_Data.property_machined_part_pairs) do -- Make th
         type = "item",
         name = property .. "-" .. part .. "-machined-part",
         icons = icons_data_item,
+
         subgroup = item_subgroup,
-        order = order_count .. "gm-machined-parts-" .. part,
+        order = MW_Data.property_data[property].order .. MW_Data.machined_part_data[part].order,
+
         stack_size = GM_globals.machined_part_stack_size,
         localised_name = {"gm.metal-machined-part-item", {"gm." .. property}, {"gm." .. part}},
         localised_description = localized_description_item,
@@ -1506,7 +1529,10 @@ for property, parts in pairs(MW_Data.property_machined_part_pairs) do -- Make th
             },
             always_show_made_in = true,
             energy_required = 0.3,
+
+            subgroup = item_subgroup,
             order = MW_Data.property_data[property].order .. MW_Data.machined_part_data[part].order,
+
             localised_name = {"gm.metal-machined-part-recipe", {"gm." .. property}, {"gm." .. part}, {"gm." .. metal}, {"gm." .. precursor}},
             gm_recipe_data = {type = "machined-parts", property = property, part = part}
           }
@@ -1526,7 +1552,7 @@ for property_key, multi_properties in pairs(MW_Data.multi_property_with_key_pair
       type = "item-subgroup",
       name = "gm-machined-parts-" .. property_key,
       group = "gm-intermediates",
-      order = "b" .. "gm-intermediates-machined-parts" .. order_count,
+      order = "d" .. "gm-intermediates-machined-parts" .. MW_Data.property_data[MW_Data.multi_property_with_key_pairs[property_key][1]].order .. MW_Data.property_data[MW_Data.multi_property_with_key_pairs[property_key][2]].order,
       localised_name = {"gm.machined-parts-subgroup-property", {"gm." .. property_key}}
     }
   })
@@ -1623,8 +1649,10 @@ for property_key, multi_properties in pairs(MW_Data.multi_property_with_key_pair
               type = "item",
               name = property_key .. "-" .. part .. "-machined-part",
               icons = icons_data_item,
+
               subgroup = "gm-machined-parts-" .. property_key,
-              order = order_count .. "gm-machined-parts-" .. part,
+              order = "gm-machined-parts-" .. MW_Data.property_data[MW_Data.multi_property_with_key_pairs[property_key][1]].order .. MW_Data.property_data[MW_Data.multi_property_with_key_pairs[property_key][2]].order .. MW_Data.machined_part_data[part].order,
+              
               stack_size = GM_globals.machined_part_stack_size,
               localised_name = {"gm.metal-machined-part-item", item_name, {"gm." .. part}},
               localised_description = localized_description_item,
@@ -1695,7 +1723,10 @@ for property_key, multi_properties in pairs(MW_Data.multi_property_with_key_pair
               },
               always_show_made_in = true,
               energy_required = 0.3,
+
+              subgroup = "gm-machined-parts-" .. property_key,
               order = MW_Data.property_data[MW_Data.multi_property_with_key_pairs[property_key][1]].order .. MW_Data.property_data[MW_Data.multi_property_with_key_pairs[property_key][2]].order .. MW_Data.machined_part_data[part].order,
+
               gm_recipe_data = {type = "machined-parts", properties = multi_properties, compound_property = property_key, part = part}
               -- localised_name = {"gm.metal-machined-part-recipe", {"gm." .. property}, {"gm." .. part}, {"gm." .. metal}, {"gm." .. machined_parts_precurors[part][1]}}
             }
@@ -1762,7 +1793,10 @@ for metal, metal_data in pairs(MW_Data.metal_data) do -- Make "Basic" property d
               icons = icons_data,
               always_show_made_in = true,
               energy_required = 0.3,
-              order = MW_Data.property_data[property].order .. MW_Data.machined_part_data[part].order,
+
+              order = MW_Data.property_data[MW_Data.MW_Property.BASIC].order .. MW_Data.machined_part_data[part].order .. " z",
+              subgroup = "gm-machined-parts-basic-" .. part,
+
               localised_name = {"gm.metal-machined-part-downgrade-recipe", {"gm.basic"}, {"gm." .. part}},
               gm_recipe_data = {type = "machined-parts", start_property = property, end_property = MW_Data.MW_Property.BASIC, part = part, special = "downgrade"}
             }
@@ -1831,7 +1865,10 @@ for property, property_downgrade_list in pairs(MW_Data.property_downgrades) do -
           icons = icons_data,
           always_show_made_in = true,
           energy_required = 0.3,
-          order = MW_Data.property_data[next_property].order .. MW_Data.machined_part_data[part].order,
+
+          order = MW_Data.property_data[previous_property].order .. MW_Data.machined_part_data[part].order .. " z",
+          subgroup = "gm-machined-parts-" .. previous_property,
+
           localised_name = {"gm.metal-machined-part-downgrade-recipe", {"gm." .. previous_property}, {"gm." .. part}},
           gm_recipe_data = {type = "machined-parts", start_property = next_property, end_property = previous_property, part = part, special = "downgrade"}
         }
@@ -1899,7 +1936,10 @@ for property_key, multi_properties in pairs(MW_Data.multi_property_with_key_pair
             icons = icons_data,
             always_show_made_in = true,
             energy_required = 0.3,
-            order = MW_Data.property_data[multi_property].order .. MW_Data.machined_part_data[part].order,
+
+            subgroup = "gm-machined-parts-" .. multi_property,
+            order = MW_Data.property_data[multi_property].order .. MW_Data.machined_part_data[part].order .. " z",
+
             localised_name = {"gm.metal-machined-part-downgrade-recipe", {"gm." .. multi_property}, {"gm." .. part}},
             gm_recipe_data = {type = "machined-parts", start_compound_property = property_key, end_property = multi_property, part = part, special = "downgrade"}
           }

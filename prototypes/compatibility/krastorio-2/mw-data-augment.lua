@@ -169,13 +169,13 @@ MW_Data.metal_data = table.group_key_assign(MW_Data.metal_data, { -- Staple on v
 })
 
 MW_Data.metal_data = table.merge_subtables(MW_Data.metal_data, { -- Ordering
-  [MW_Metal.OSMIUM]            = {order = "ia "},
-  [MW_Metal.NIOBIUM]           = {order = "ka "},
+  [MW_Metal.OSMIUM]            = {order = "la "},
+  [MW_Metal.NIOBIUM]           = {order = "lb "},
 
-  [MW_Metal.IMERSIUM]          = {order = "k-im-b "},
-  [MW_Metal.NIOBIMERSIUM]      = {order = "k-im-a "},
-  [MW_Metal.STABLE_IMERSIUM]   = {order = "k-im-c "},
-  [MW_Metal.RESONANT_IMERSIUM] = {order = "k-im-d "},
+  [MW_Metal.IMERSIUM]          = {order = "mb "},
+  [MW_Metal.NIOBIMERSIUM]      = {order = "ma "},
+  [MW_Metal.STABLE_IMERSIUM]   = {order = "mc "},
+  [MW_Metal.RESONANT_IMERSIUM] = {order = "md "},
 })
 
 -- FIXME : Actually tie these to technologies
@@ -324,15 +324,6 @@ MW_Data.property_data = table.merge_subtables(MW_Data.property_data, { -- Orderi
   [MW_Property.ANTIMATTER_RESISTANT]            = {order = "ka "},
   [MW_Property.TRANSDIMENSIONALLY_SENSITIVE]    = {order = "la "},
   [MW_Property.IMERSIUM_GRADE_THERMALLY_STABLE] = {order = "gb "},
-})
-
-MW_Data.property_data = table.merge_subtables(MW_Data.property_data, { -- Staple on order data
-  [MW_Property.IMERSIUM_ENHANCED_HIGH_TENSILE]  = {order = "ga"},
-  [MW_Property.IMERSIUM_GRADE_LOAD_BEARING]     = {order = "ea"},
-  [MW_Property.SUPERCONDUCTING]                 = {order = "ba"},
-  [MW_Property.ANTIMATTER_RESISTANT]            = {order = "za"},
-  [MW_Property.TRANSDIMENSIONALLY_SENSITIVE]    = {order = "zb"},
-  [MW_Property.IMERSIUM_GRADE_THERMALLY_STABLE] = {order = "ja"},
 })
 
 MW_Data.property_data = table.merge_subtables(MW_Data.property_data, { -- Staple on glow data

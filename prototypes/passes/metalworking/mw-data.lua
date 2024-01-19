@@ -186,18 +186,18 @@ MW_Data.metal_data = table.merge_subtables(MW_Data.metal_data, { -- Staple on th
   [MW_Metal.ANNEALED_COPPER]  = {introduced = Mod_Names.GM},
 })
 
-MW_Data.metal_data = table.merge_subtables(MW_Data.metal_data, { -- Staple on the ordering
-  [MW_Metal.IRON]             = {order = "a "},
-  [MW_Metal.COPPER]           = {order = "b "},
-  [MW_Metal.LEAD]             = {order = "j "},
-  [MW_Metal.TITANIUM]         = {order = "k "},
-  [MW_Metal.ZINC]             = {order = "c "},
-  [MW_Metal.NICKEL]           = {order = "f "},
-  [MW_Metal.STEEL]            = {order = "e "},
-  [MW_Metal.BRASS]            = {order = "d "},
-  [MW_Metal.INVAR]            = {order = "g "},
-  [MW_Metal.GALVANIZED_STEEL] = {order = "h "},
-  [MW_Metal.ANNEALED_COPPER]  = {order = "i "},
+MW_Data.metal_data = table.merge_subtables(MW_Data.metal_data, { -- Ordering
+  [MW_Metal.IRON]             = {order = "aa "},
+  [MW_Metal.COPPER]           = {order = "ba "},
+  [MW_Metal.LEAD]             = {order = "ja "},
+  [MW_Metal.TITANIUM]         = {order = "ka "},
+  [MW_Metal.ZINC]             = {order = "ca "},
+  [MW_Metal.NICKEL]           = {order = "fa "},
+  [MW_Metal.STEEL]            = {order = "ea "},
+  [MW_Metal.BRASS]            = {order = "da "},
+  [MW_Metal.INVAR]            = {order = "ga "},
+  [MW_Metal.GALVANIZED_STEEL] = {order = "ha "},
+  [MW_Metal.ANNEALED_COPPER]  = {order = "ia "},
 })
 
 
@@ -229,27 +229,27 @@ else
   }
 end
 
-if advanced then -- Staple on the ordering
+if advanced then -- Ordering
   MW_Data.stock_data = {
-    [MW_Stock.PLATE]          = {order = "a "},
-    [MW_Stock.ANGLE]          = {order = "h "},
-    [MW_Stock.FINE_GEAR]      = {order = "f "},
-    [MW_Stock.FINE_PIPE]      = {order = "d "},
-    [MW_Stock.SHEET]          = {order = "b "},
-    [MW_Stock.PIPE]           = {order = "c "},
-    [MW_Stock.GIRDER]         = {order = "g "},
-    [MW_Stock.GEAR]           = {order = "e "},
-    [MW_Stock.SQUARE]         = {order = "i "},
-    [MW_Stock.WIRE]           = {order = "j "},
-    [MW_Stock.PLATING_BILLET] = {order = "k "},
-    [MW_Stock.WAFER]          = {order = "l "},
+    [MW_Stock.PLATE]          = {order = "aa "},
+    [MW_Stock.ANGLE]          = {order = "ha "},
+    [MW_Stock.FINE_GEAR]      = {order = "fa "},
+    [MW_Stock.FINE_PIPE]      = {order = "da "},
+    [MW_Stock.SHEET]          = {order = "ba "},
+    [MW_Stock.PIPE]           = {order = "ca "},
+    [MW_Stock.GIRDER]         = {order = "ga "},
+    [MW_Stock.GEAR]           = {order = "ea "},
+    [MW_Stock.SQUARE]         = {order = "ia "},
+    [MW_Stock.WIRE]           = {order = "ja "},
+    [MW_Stock.PLATING_BILLET] = {order = "ka "},
+    [MW_Stock.WAFER]          = {order = "la "},
   }
 else
   MW_Data.stock_data = {
-    [MW_Stock.PLATE]          = {order = "a "},
-    [MW_Stock.SQUARE]         = {order = "b "},
-    [MW_Stock.WIRE]           = {order = "c "},
-    [MW_Stock.PLATING_BILLET] = {order = "d "},
+    [MW_Stock.PLATE]          = {order = "aa "},
+    [MW_Stock.SQUARE]         = {order = "ba "},
+    [MW_Stock.WIRE]           = {order = "ca "},
+    [MW_Stock.PLATING_BILLET] = {order = "da "},
   }
 end
 
@@ -287,32 +287,32 @@ else
   }
 end
 
-if advanced then --  Staple on the ordering
+if advanced then -- Ordering
   MW_Data.machined_part_data = {
-    [MW_Machined_Part.PANELING]        = {order = "b "},
-    [MW_Machined_Part.LARGE_PANELING]  = {order = "a "},
-    [MW_Machined_Part.FRAMING]         = {order = "i "},
-    [MW_Machined_Part.GIRDERING]       = {order = "h "},
-    [MW_Machined_Part.GEARING]         = {order = "d "},
-    [MW_Machined_Part.FINE_GEARING]    = {order = "e "},
-    [MW_Machined_Part.PIPING]          = {order = "f "},
-    [MW_Machined_Part.FINE_PIPING]     = {order = "g "},
-    [MW_Machined_Part.WIRING]          = {order = "j "},
-    [MW_Machined_Part.SHIELDING]       = {order = "c "},
-    [MW_Machined_Part.SHAFTING]        = {order = "k "},
-    [MW_Machined_Part.BOLTS]           = {order = "l "},
-    [MW_Machined_Part.RIVETS]          = {order = "m "},
+    [MW_Machined_Part.PANELING]        = {order = "ba "},
+    [MW_Machined_Part.LARGE_PANELING]  = {order = "aa "},
+    [MW_Machined_Part.FRAMING]         = {order = "ia "},
+    [MW_Machined_Part.GIRDERING]       = {order = "ha "},
+    [MW_Machined_Part.GEARING]         = {order = "da "},
+    [MW_Machined_Part.FINE_GEARING]    = {order = "ea "},
+    [MW_Machined_Part.PIPING]          = {order = "fa "},
+    [MW_Machined_Part.FINE_PIPING]     = {order = "ga "},
+    [MW_Machined_Part.WIRING]          = {order = "ja "},
+    [MW_Machined_Part.SHIELDING]       = {order = "ca "},
+    [MW_Machined_Part.SHAFTING]        = {order = "ka "},
+    [MW_Machined_Part.BOLTS]           = {order = "la "},
+    [MW_Machined_Part.RIVETS]          = {order = "ma "},
   }
 else
   MW_Data.machined_part_data = {
-    [MW_Machined_Part.PANELING]        = {order = "a "},
-    [MW_Machined_Part.FRAMING]         = {order = "e "},
-    [MW_Machined_Part.GEARING]         = {order = "c "},
-    [MW_Machined_Part.PIPING]          = {order = "d "},
-    [MW_Machined_Part.SHIELDING]       = {order = "b "},
-    [MW_Machined_Part.WIRING]          = {order = "f "},
-    [MW_Machined_Part.SHAFTING]        = {order = "g "},
-    [MW_Machined_Part.BOLTS]           = {order = "h "},
+    [MW_Machined_Part.PANELING]        = {order = "aa "},
+    [MW_Machined_Part.FRAMING]         = {order = "ea "},
+    [MW_Machined_Part.GEARING]         = {order = "ca "},
+    [MW_Machined_Part.PIPING]          = {order = "da "},
+    [MW_Machined_Part.SHIELDING]       = {order = "ba "},
+    [MW_Machined_Part.WIRING]          = {order = "fa "},
+    [MW_Machined_Part.SHAFTING]        = {order = "ga "},
+    [MW_Machined_Part.BOLTS]           = {order = "ha "},
   }
 end
 

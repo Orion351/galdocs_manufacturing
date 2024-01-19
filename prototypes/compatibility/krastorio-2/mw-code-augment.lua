@@ -205,9 +205,12 @@ for ore, ore_data in pairs(MW_Data.ore_data) do -- Add Enriched Items and Recipe
           type = "recipe",
           name = "enriched-" .. ore .. "-plate",
           icons = icons_enriched_to_plate_recipe,
-          order = "c[" .. ore .. "-plate]-b[enriched-".. ore .. "-plate]",
           category = "smelting",
+
           group = "intermediate-products",
+          order = "c-gm-stocks-" .. MW_Data.metal_data[ore].order .. MW_Data.MW_Stock.PLATE,
+          subgroup = "gm-stocks-" .. ore,
+
           result = ore .. "-plate-stock",
           result_count = 5,
           ingredients = {
@@ -626,31 +629,6 @@ end
 
 
 
--- Matter Processing Recipes
--- Parent Tech: kr-matter-processing
--- Sibling Tech: kr-matter-coal-processing
--- Update icons for Copper and Iron
--- Remove Rare Metals (kr-rare-metals-processing)
--- Make all the new ores into techs (titanium, nickel, lead, etc.)
--- Recipe name structure example: matter-to-coal, coal-to-matter; category: matter-conversion, subgroup: matter-conversion, recipe order: z[name], recipe-group: intermediate-products
--- Ratios: 10-ore to 5-matter; 7.5-matter to 10 plate
-
-
--- Ore Enrichment / Filtration
--- Parent tech: kr-enriched-ores
--- omg rename the stupid filtration recipe names
--- iron: dirty-water-filtration-1 becomes dirty-water-filtration-iron
--- copper: dirty-water-filtration-2 becomes dirty-water-filtration-copper
--- remove rare metals (dirty-water-filtration-3)
--- Make new ores into things
--- Redo the icons for iron and copper
--- make new icons for the new metals
--- FIXME : Add enriched-ore-to-plate recipe above
--- Filtering osmium or niobium will only give pebbles / gravel, not enriched ores
--- enriched-iron-plate
-
-
-
 -- Stocks
 -- ******
 
@@ -679,7 +657,7 @@ for ore, ore_data in pairs(MW_Data.ore_data) do -- Make gravel to plate and pebb
       table.insert(icons_data_recipe, Build_badge_icon(ore, GM_globals.property_badge_shift))
     end
 
-    local recipe_prototype = { -- recipe
+    local recipe_prototype = { -- Gravel to plate recipe
       {
         type = "recipe",
         name = ore .. "-gravel-to-plate",
@@ -691,8 +669,10 @@ for ore, ore_data in pairs(MW_Data.ore_data) do -- Make gravel to plate and pebb
         always_show_made_in = true,
         hide_from_player_crafting = false,
         energy_required = 3.2,
+        
         order = order_count .. "gm-stocks-" .. ore .. "-gravel",
-        subgroup = "gm-plates",
+        subgroup = "gm-stocks-" .. ore,
+        
         category = "smelting", -- FIXME
         localised_name = {"gm.gravel-to-plate-recipe-name", {"gm." .. ore}},
         gm_recipe_data = {type = "ore-processing", metal = ore}
@@ -724,7 +704,7 @@ for ore, ore_data in pairs(MW_Data.ore_data) do -- Make gravel to plate and pebb
       table.insert(icons_data_recipe, Build_badge_icon(ore, GM_globals.property_badge_shift))
     end
 
-    recipe_prototype = { -- recipe
+    recipe_prototype = { -- Pebble to plate recipe
       {
         type = "recipe",
         name = ore .. "-pebble-to-plate",
@@ -736,8 +716,10 @@ for ore, ore_data in pairs(MW_Data.ore_data) do -- Make gravel to plate and pebb
         always_show_made_in = true,
         hide_from_player_crafting = false,
         energy_required = 3.2,
+        
         order = order_count .. "gm-stocks-" .. ore .. "-pebble",
-        subgroup = "gm-plates",
+        subgroup = "gm-stocks-" .. ore,
+        
         category = "smelting", -- FIXME
         localised_name = {"gm.pebble-to-plate-recipe-name", {"gm." .. ore}},
         gm_recipe_data = {type = "ore-processing", metal = ore}
