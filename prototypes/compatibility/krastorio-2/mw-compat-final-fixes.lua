@@ -215,14 +215,20 @@ for _, entity in pairs(crash_site_entities) do
   data.raw[entity[1]][entity[2]].minable.results = Swap_results(data.raw[entity[1]][entity[2]].minable.results, i_hate_copper_cable)
 end
 
+-- Pull LDS from a few of the OG recipes that no longer need as much
+local lds_recipes = {
+  "fusion-reactor-equipment",
+  "advanced-exoskeleton-equipment",
+  "imersite-night-vision-equipment",
+}
 
--- Matter Processing Recipes
--- Parent Tech: kr-matter-processing
--- Sibling Tech: kr-matter-coal-processing
--- Update icons for Copper and Iron
--- Remove Rare Metals (kr-rare-metals-processing)
--- Make all the new ores into techs (titanium, nickel, lead, etc.)
--- Recipe name structure example: matter-to-coal, coal-to-matter; category: matter-conversion, subgroup: matter-conversion, recipe order: z[name], recipe-group: intermediate-products
--- Ratios: 10-ore to 5-matter; 7.5-matter to 10 plate
-
-local a = 1
+for _, recipe in pairs(lds_recipes) do
+  for _, ingredient in pairs(data.raw.recipe[recipe].ingredients) do
+    if ingredient.name and ingredient.name == "low-density-structure" then
+      ingredient.amount = ingredient.amount / 2
+    end
+    if not ingredient.name and ingredient[1] == "low-density-structure" then
+      ingredient[2] = ingredient[2] / 2
+    end
+  end
+end

@@ -169,6 +169,8 @@ MW_Data.metal_data = table.group_key_assign(MW_Data.metal_data, { -- Staple on v
 })
 
 MW_Data.metal_data = table.merge_subtables(MW_Data.metal_data, { -- Ordering
+  [MW_Metal.RARE_METALS]       = {order = "na"},
+
   [MW_Metal.OSMIUM]            = {order = "la "},
   [MW_Metal.NIOBIUM]           = {order = "lb "},
 
@@ -201,18 +203,6 @@ MW_Data.metal_data = table.merge_subtables(MW_Data.metal_data, { -- Staple on mo
   [MW_Metal.NIOBIMERSIUM]      = {introduced = Mod_Names.K2},
   [MW_Metal.STABLE_IMERSIUM]   = {introduced = Mod_Names.K2},
   [MW_Metal.RESONANT_IMERSIUM] = {introduced = Mod_Names.K2},
-})
-
-MW_Data.metal_data = table.merge_subtables(MW_Data.metal_data, { -- Staple on order data
-  [MW_Metal.RARE_METALS]       = {order = "za"},
-
-  [MW_Metal.OSMIUM]            = {order = "zb"},
-  [MW_Metal.NIOBIUM]           = {order = "zc"},
-
-  [MW_Metal.IMERSIUM]          = {order = "zd"},
-  [MW_Metal.NIOBIMERSIUM]      = {order = "zf"},
-  [MW_Metal.STABLE_IMERSIUM]   = {order = "zg"},
-  [MW_Metal.RESONANT_IMERSIUM] = {order = "ze"},
 })
 
 MW_Data.metal_data = table.merge_subtables(MW_Data.metal_data, { -- Staple on glow data

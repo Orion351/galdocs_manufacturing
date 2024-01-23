@@ -117,6 +117,7 @@ return function(advanced)
       ["imersite-solar-panel-equipment"]                  = {{"lightweight-and-high-tensile-framing", 1}, {"superconducting-wiring", 1}, {"lightweight-bolts", 1}, },
 
       ["nuclear-reactor-equipment"]                       = {{"radiation-resistant-paneling", 6}, {"lightweight-and-very-high-tensile-framing", 26}, {"high-tensile-fine-gearing", 6}, {"corrosion-resistant-and-high-tensile-fine-piping", 6}, {"lightweight-and-very-high-tensile-shafting", 10}, {"electrically-conductive-wiring", 30}, {"radiation-resistant-shielding", 12}, {"lightweight-and-very-high-tensile-bolts", 10}, },
+      ["fusion-reactor-equipment"]                        = {{"radiation-resistant-and-high-tensile-paneling", 6}, {"corrosion-resistant-and-very-high-tensile-framing", 10}, {"radiation-resistant-and-high-tensile-fine-gearing", 6}, {"corrosion-resistant-and-high-tensile-fine-piping", 6}, {"radiation-resistant-and-very-high-tensile-shafting", 10}, {"superconducting-wiring", 24}, {"radiation-resistant-and-high-tensile-shielding", 12}, {"lightweight-and-very-high-tensile-bolts", 10}, },
       ["antimatter-reactor-equipment"]                    = {{"antimatter-resistant-paneling", 12}, {"imersium-grade-thermally-stable-framing", 24}, {"imersium-enhanced-high-tensile-fine-gearing", 18}, {"antimatter-resistant-fine-piping", 12}, {"imersium-grade-thermally-stable-shafting", 4}, {"superconducting-wiring", 40}, {"antimatter-resistant-shielding", 12}, {"imersium-enhanced-high-tensile-bolts", 20}, },
 
       ["battery-mk2-equipment"]                           = {{"lightweight-and-high-tensile-framing", 2}, {"lightweight-and-high-tensile-rivets", 2}, },
@@ -127,20 +128,22 @@ return function(advanced)
       ["energy-shield-mk4-equipment"]                     = {{"imersium-grade-thermally-stable-paneling", 2}, {"imersium-grade-thermally-stable-framing", 4}, {"imersium-enhanced-high-tensile-bolts", 2}, },
 
       ["personal-submachine-laser-defense-mk1-equipment"] = {{"lightweight-framing", 2}, {"electrically-conductive-wiring", 1}, {"high-tensile-bolts", 1}, },
-      ["personal-submachine-laser-defense-mk2-equipment"] = {{"superconducting-wiring", 6}, {"lightweight-and-high-tensile-bolts", 2}, },
+      ["personal-submachine-laser-defense-mk2-equipment"] = {{"radiation-resistant-and-high-tensile-framing", 2}, {"superconducting-wiring", 6}, {"lightweight-and-high-tensile-bolts", 2}, },
       ["personal-submachine-laser-defense-mk3-equipment"] = {{"lightweight-and-very-high-tensile-framing", 2}, {"superconducting-wiring", 2}, {"imersium-grade-thermally-stable-shielding", 1}, {"imersium-enhanced-high-tensile-bolts", 2}, },
       ["personal-submachine-laser-defense-mk4-equipment"] = {{"imersium-enhanced-high-tensile-framing", 1}, },
       ["personal-laser-defense-equipment"]                = {{"lightweight-framing", 4}, {"electrically-conductive-wiring", 4}, {"high-tensile-bolts", 3}, },
-      ["personal-laser-defense-mk2-equipment"]            = {{"superconducting-wiring", 6}, {"lightweight-and-high-tensile-bolts", 2}, },
+      ["personal-laser-defense-mk2-equipment"]            = {{"radiation-resistant-and-high-tensile-framing", 2}, {"superconducting-wiring", 6}, {"lightweight-and-high-tensile-bolts", 2}, },
       ["personal-laser-defense-mk3-equipment"]            = {{"lightweight-and-very-high-tensile-framing", 2}, {"imersium-grade-thermally-stable-shielding", 1}, {"imersium-enhanced-high-tensile-bolts", 2}, },
       ["personal-laser-defense-mk4-equipment"]            = {{"imersium-enhanced-high-tensile-framing", 1}, {"superconducting-wiring", 2}, },
 
-      ["advanced-exoskeleton-equipment"]                  = {{"lightweight-and-high-tensile-bolts", 1}, },
+      ["advanced-exoskeleton-equipment"]                  = {{"radiation-resistant-and-high-tensile-framing", 2}, {"lightweight-and-high-tensile-bolts", 1}, },
       ["superior-exoskeleton-equipment"]                  = {{"imersium-enhanced-high-tensile-paneling", 2}, {"imersium-enhanced-high-tensile-framing", 4}, {"imersium-grade-thermally-stable-fine-gearing", 2}, {"imersium-grade-thermally-stable-shafting", 4}, {"superconducting-wiring", 2}, {"imersium-enhanced-high-tensile-bolts", 4}, },
 
       ["additional-engine"]                               = {{"lightweight-and-high-tensile-paneling", 1}, {"lightweight-and-high-tensile-framing", 1}, {"very-high-tensile-fine-gearing", 2}, {"thermally-stable-shafting", 2}, {"electrically-conductive-wiring", 2}, {"very-high-tensile-bolts", 4}, },
       ["advanced-additional-engine"]                      = {{"lightweight-and-very-high-tensile-paneling", 1}, {"lightweight-and-very-high-tensile-framing", 1}, {"lightweight-and-very-high-tensile-fine-gearing", 2}, {"electrically-conductive-wiring", 4}, {"lightweight-and-very-high-tensile-bolts", 2}, },
       ["vehicle-roboport"]                                = {{"lightweight-and-high-tensile-paneling", 1}, {"lightweight-and-high-tensile-framing", 1}, {"electrically-conductive-wiring", 5}, {"very-high-tensile-bolts", 5}, },
+
+      ["imersite-night-vision-equipment"]              = {{"radiation-resistant-and-high-tensile-framing", 10}, {"lightweight-and-high-tensile-bolts", 10}, },
     }
     
     -- kr-containers
@@ -303,6 +306,7 @@ return function(advanced)
         ["imersite-solar-panel-equipment"]                  = {{"lightweight-and-high-tensile-framing", 1}, {"superconducting-wiring", 1}, {"lightweight-bolts", 1}, },
 
         ["nuclear-reactor-equipment"]                       = {{"radiation-resistant-paneling", 6}, {"lightweight-and-very-high-tensile-framing", 20}, {"high-tensile-gearing", 6}, {"corrosion-resistant-and-high-tensile-piping", 6}, {"lightweight-and-very-high-tensile-shafting", 8}, {"electrically-conductive-wiring", 26}, {"radiation-resistant-shielding", 8}, {"lightweight-and-very-high-tensile-bolts", 8}, },
+        ["fusion-reactor-equipment"]                        = {{"radiation-resistant-and-high-tensile-paneling", 6}, {"corrosion-resistant-and-very-high-tensile-framing", 10}, {"radiation-resistant-and-high-tensile-gearing", 6}, {"corrosion-resistant-and-high-tensile-piping", 6}, {"radiation-resistant-and-very-high-tensile-shafting", 10}, {"superconducting-wiring", 24}, {"radiation-resistant-and-high-tensile-shielding", 12}, {"lightweight-and-very-high-tensile-bolts", 10}, },
         ["antimatter-reactor-equipment"]                    = {{"antimatter-resistant-paneling", 8}, {"imersium-grade-thermally-stable-framing", 18}, {"imersium-enhanced-high-tensile-gearing", 10}, {"antimatter-resistant-piping", 12}, {"imersium-grade-thermally-stable-shafting", 4}, {"superconducting-wiring", 30}, {"antimatter-resistant-shielding", 10}, {"imersium-enhanced-high-tensile-bolts", 20}, },
 
         ["battery-mk2-equipment"]                           = {{"lightweight-and-high-tensile-framing", 2}, {"lightweight-and-high-tensile-bolts", 2}, },
@@ -313,20 +317,22 @@ return function(advanced)
         ["energy-shield-mk4-equipment"]                     = {{"imersium-grade-thermally-stable-paneling", 2}, {"imersium-grade-thermally-stable-framing", 4}, {"imersium-enhanced-high-tensile-bolts", 2}, },
 
         ["personal-submachine-laser-defense-mk1-equipment"] = {{"lightweight-framing", 2}, {"electrically-conductive-wiring", 1}, {"high-tensile-bolts", 1}, },
-        ["personal-submachine-laser-defense-mk2-equipment"] = {{"superconducting-wiring", 6}, {"lightweight-and-high-tensile-bolts", 2}, },
+        ["personal-submachine-laser-defense-mk2-equipment"] = {{"radiation-resistant-and-high-tensile-framing", 2}, {"superconducting-wiring", 6}, {"lightweight-and-high-tensile-bolts", 2}, },
         ["personal-submachine-laser-defense-mk3-equipment"] = {{"lightweight-and-very-high-tensile-framing", 2}, {"superconducting-wiring", 2}, {"imersium-grade-thermally-stable-shielding", 1}, {"imersium-enhanced-high-tensile-bolts", 2}, },
         ["personal-submachine-laser-defense-mk4-equipment"] = {{"imersium-enhanced-high-tensile-framing", 1}, },
         ["personal-laser-defense-equipment"]                = {{"lightweight-framing", 4}, {"electrically-conductive-wiring", 4}, {"high-tensile-bolts", 3}, },
-        ["personal-laser-defense-mk2-equipment"]            = {{"superconducting-wiring", 6}, {"lightweight-and-high-tensile-bolts", 2}, },
+        ["personal-laser-defense-mk2-equipment"]            = {{"radiation-resistant-and-high-tensile-framing", 2}, {"superconducting-wiring", 6}, {"lightweight-and-high-tensile-bolts", 2}, },
         ["personal-laser-defense-mk3-equipment"]            = {{"lightweight-and-very-high-tensile-framing", 2}, {"imersium-grade-thermally-stable-shielding", 1}, {"imersium-enhanced-high-tensile-bolts", 2}, },
         ["personal-laser-defense-mk4-equipment"]            = {{"imersium-enhanced-high-tensile-framing", 1}, {"superconducting-wiring", 2}, },
 
-        ["advanced-exoskeleton-equipment"]                  = {{"lightweight-and-high-tensile-bolts", 1}, },
+        ["advanced-exoskeleton-equipment"]                  = {{"radiation-resistant-and-high-tensile-framing", 2}, {"lightweight-and-high-tensile-bolts", 1}, },
         ["superior-exoskeleton-equipment"]                  = {{"imersium-enhanced-high-tensile-paneling", 2}, {"imersium-enhanced-high-tensile-framing", 4}, {"imersium-grade-thermally-stable-gearing", 2}, {"imersium-grade-thermally-stable-shafting", 4}, {"superconducting-wiring", 2}, {"imersium-enhanced-high-tensile-bolts", 4}, },
 
         ["additional-engine"]                               = {{"lightweight-and-high-tensile-paneling", 1}, {"lightweight-and-high-tensile-framing", 1}, {"very-high-tensile-gearing", 2}, {"thermally-stable-shafting", 2}, {"electrically-conductive-wiring", 2}, {"very-high-tensile-bolts", 4}, },
         ["advanced-additional-engine"]                      = {{"lightweight-and-very-high-tensile-paneling", 1}, {"lightweight-and-very-high-tensile-framing", 1}, {"lightweight-and-very-high-tensile-gearing", 2}, {"electrically-conductive-wiring", 4}, {"lightweight-and-very-high-tensile-bolts", 2}, },
         ["vehicle-roboport"]                                = {{"lightweight-and-high-tensile-paneling", 1}, {"lightweight-and-high-tensile-framing", 1}, {"electrically-conductive-wiring", 5}, {"very-high-tensile-bolts", 5}, },
+        
+        ["imersite-night-vision-equipment"]              = {{"radiation-resistant-and-high-tensile-framing", 10}, {"lightweight-and-high-tensile-bolts", 10}, },
       }
 
     -- kr-containers

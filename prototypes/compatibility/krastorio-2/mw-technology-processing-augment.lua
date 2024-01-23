@@ -189,7 +189,36 @@ table.insert(data.raw.technology["kr-advanced-tank"].prerequisites, "gm-stable-i
 -- kr-superior-exoskeleton-equipment
 table.insert(data.raw.technology["kr-superior-exoskeleton-equipment"].prerequisites, "gm-stable-imersium-machined-part-processing")
 
--- matter-to-rare-metals
-
+-- kr-automation
+local kr_automation_recipes_to_remove = {
+  "kr-s-c-copper-cable",
+  "kr-s-c-copper-cable-enriched",
+  "kr-s-c-iron-stick",
+  "kr-s-c-iron-stick-enriched",
+  "kr-s-c-iron-gear-wheel",
+  "kr-s-c-iron-gear-wheel-enriched",
+  "kr-s-c-iron-beam",
+  "kr-s-c-iron-beam-enriched",
+  "kr-s-c-steel-beam",
+  "kr-s-c-steel-gear-wheel",
+  "kr-s-c-imersium-beam",
+  "kr-s-c-imersium-gear-wheel",
+}
+local new_effects = {}
+local old_effects = table.deepcopy(data.raw.technology["kr-automation"].effects)
+if old_effects then
+  for _, effect in pairs(old_effects) do
+    local chuck_this = false
+    for _, to_remove in pairs(kr_automation_recipes_to_remove) do
+      if effect.type == "unlock-recipe" and effect.recipe and effect.recipe == to_remove then
+        chuck_this = true
+      end
+    end
+    if not chuck_this then 
+      table.insert(new_effects, effect)
+    end
+  end
+end
+data.raw.technology["kr-automation"].effects = new_effects
 
 return MW_Data
