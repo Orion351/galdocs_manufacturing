@@ -365,3 +365,5 @@ wire.name = "copper-cable"
 wire.wire_count = 1
 data:extend{wire}
 data.raw.item["electrically-conductive-wiring-machined-part"] = nil
+
+local a = 1

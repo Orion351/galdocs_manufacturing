@@ -1,18 +1,18 @@
 data:extend({
-  { -- Badges setting
-    type = "string-setting",
-    name = "gm-show-badges",
-    setting_type = "startup",
-    default_value = "none",
-    allowed_values = {"none", "recipes", "all"}
-  },
-  { -- Badge Scale
-    type = "string-setting",
-    name = "gm-show-badges-scale",
-    setting_type = "startup",
-    default_value = "average",
-    allowed_values = {"tiny", "small", "average", "big", "why"}
-  },
+  -- { -- Badges setting
+  --   type = "string-setting",
+  --   name = "gm-show-badges",
+  --   setting_type = "startup",
+  --   default_value = "none",
+  --   allowed_values = {"none", "recipes", "all"}
+  -- },
+  -- { -- Badge Scale
+  --   type = "string-setting",
+  --   name = "gm-show-badges-scale",
+  --   setting_type = "startup",
+  --   default_value = "average",
+  --   allowed_values = {"tiny", "small", "average", "big", "why"}
+  -- },
   { -- Advanced mode setting
     type = "bool-setting",
     name = "gm-advanced-mode",
@@ -38,13 +38,24 @@ data:extend({
     setting_type = "startup",
     default_value = true
   },
-  { -- Display detailed tooltips
+  { -- delete culled recipes
     type = "bool-setting",
     name = "gm-debug-delete-culled-recipes",
     setting_type = "startup",
     default_value = false
   },
 })
+if mods["icon-badges"] then
+  data:extend({
+    { -- Show minisembler badges
+      type = "string-setting",
+      name = "gm-show-minisembler-badges",
+      setting_type = "startup",
+      default_value = "none",
+      allowed_values = {"none", "item", "recipe", "all"}
+    }
+  })
+end
 
 -- For compatibility with other mods, make settings HIDDEN rather than existant or not so as not to bloat the main options menu.
 

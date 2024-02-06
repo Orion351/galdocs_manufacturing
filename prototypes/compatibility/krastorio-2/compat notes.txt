@@ -1,3 +1,6 @@
+This file is the summation of the notes I took when working out how to pair Material Properties to Products available at each tech level.
+
+-- Levels, with materials unlocked at that level
 Start: Copper, Iron, Zinc, Brass
 Basic: Crusher (needed for processing raw rare metals)
 Automation: Nickel/Invar, Steel/Galvanized Steel
@@ -271,18 +274,3 @@ Pull List Additions:
   Imersium Plate
   Imersium Beam
   Imersium Gear Wheel
-
-One-off Pull List?
-  Steel Chest
-
-Replacement Rules (Advanced)
-  Notes:
-    Small components (Framing, Bolts, Paneling, Fine Gearing, Fine Piping)
-    Large components (Girdering, Rivets, Large Paneling, Gearing, Piping)
-  Q1: Entity? (has placeable_result?)
-    Yes: Is it 1x1 or 2x1? (check hitbox, collsionbox, whatever)
-      Yes: Small Components
-      No: Large Components
-    No: Small Components
-  Q2: 
-      

@@ -113,16 +113,22 @@ MW_Data.ore_data = table.merge_subtables(MW_Data.ore_data, { -- Staple on the ma
 })
 
 MW_Data.ore_data = table.merge_subtables(MW_Data.ore_data, { -- Staple on the map tints
-[MW_Resource.COPPER]   = {shapes = {MW_Ore_Shape.ORE}},
-[MW_Resource.IRON]     = {shapes = {MW_Ore_Shape.ORE}},
-[MW_Resource.LEAD]     = {shapes = {MW_Ore_Shape.ORE}},
-[MW_Resource.TITANIUM] = {shapes = {MW_Ore_Shape.ORE}},
-[MW_Resource.ZINC]     = {shapes = {MW_Ore_Shape.ORE}},
-[MW_Resource.NICKEL]   = {shapes = {MW_Ore_Shape.ORE}},
+  [MW_Resource.COPPER]   = {shapes = {MW_Ore_Shape.ORE}},
+  [MW_Resource.IRON]     = {shapes = {MW_Ore_Shape.ORE}},
+  [MW_Resource.LEAD]     = {shapes = {MW_Ore_Shape.ORE}},
+  [MW_Resource.TITANIUM] = {shapes = {MW_Ore_Shape.ORE}},
+  [MW_Resource.ZINC]     = {shapes = {MW_Ore_Shape.ORE}},
+  [MW_Resource.NICKEL]   = {shapes = {MW_Ore_Shape.ORE}},
 })
 
-
-
+MW_Data.ore_data = table.merge_subtables(MW_Data.ore_data, { -- Icon Badges data
+  [MW_Resource.COPPER]   = {ib_data = {ib_let_badge = "Cu"}},
+  [MW_Resource.IRON]     = {ib_data = {ib_let_badge = "Fe"}},
+  [MW_Resource.LEAD]     = {ib_data = {ib_let_badge = "Pb"}},
+  [MW_Resource.TITANIUM] = {ib_data = {ib_let_badge = "Ti"}},
+  [MW_Resource.ZINC]     = {ib_data = {ib_let_badge = "Zn"}},
+  [MW_Resource.NICKEL]   = {ib_data = {ib_let_badge = "Ni"}},
+})
 
 
 -- Metal Data
@@ -200,7 +206,19 @@ MW_Data.metal_data = table.merge_subtables(MW_Data.metal_data, { -- Ordering
   [MW_Metal.ANNEALED_COPPER]  = {order = "ia "},
 })
 
-
+MW_Data.metal_data = table.merge_subtables(MW_Data.metal_data, { -- Icon Badges Data
+  [MW_Metal.COPPER]           = {ib_data = {ib_let_badge = "Cu"}},
+  [MW_Metal.IRON]             = {ib_data = {ib_let_badge = "Fe"}},
+  [MW_Metal.LEAD]             = {ib_data = {ib_let_badge = "Pb"}},
+  [MW_Metal.TITANIUM]         = {ib_data = {ib_let_badge = "Ti"}},
+  [MW_Metal.ZINC]             = {ib_data = {ib_let_badge = "Zn"}},
+  [MW_Metal.NICKEL]           = {ib_data = {ib_let_badge = "Ni"}},
+  [MW_Metal.STEEL]            = {ib_data = {ib_let_badge = "ST"}},
+  [MW_Metal.BRASS]            = {ib_data = {ib_let_badge = "BRS"}},
+  [MW_Metal.INVAR]            = {ib_data = {ib_let_badge = "IV"}},
+  [MW_Metal.GALVANIZED_STEEL] = {ib_data = {ib_let_badge = "ST", ib_let_invert = true}},
+  [MW_Metal.ANNEALED_COPPER]  = {ib_data = {ib_let_badge = "Cu", ib_let_invert = true}},
+})
 
 -- Stock Data
 -- **********
@@ -230,7 +248,7 @@ else
 end
 
 if advanced then -- Ordering
-  MW_Data.stock_data = {
+  MW_Data.stock_data = table.merge_subtables(MW_Data.stock_data, {
     [MW_Stock.PLATE]          = {order = "aa "},
     [MW_Stock.ANGLE]          = {order = "ha "},
     [MW_Stock.FINE_GEAR]      = {order = "fa "},
@@ -243,14 +261,14 @@ if advanced then -- Ordering
     [MW_Stock.WIRE]           = {order = "ja "},
     [MW_Stock.PLATING_BILLET] = {order = "ka "},
     [MW_Stock.WAFER]          = {order = "la "},
-  }
+  })
 else
-  MW_Data.stock_data = {
+  MW_Data.stock_data = table.merge_subtables(MW_Data.stock_data, {
     [MW_Stock.PLATE]          = {order = "aa "},
     [MW_Stock.SQUARE]         = {order = "ba "},
     [MW_Stock.WIRE]           = {order = "ca "},
     [MW_Stock.PLATING_BILLET] = {order = "da "},
-  }
+  })
 end
 
 
@@ -288,7 +306,7 @@ else
 end
 
 if advanced then -- Ordering
-  MW_Data.machined_part_data = {
+  MW_Data.machined_part_data = table.merge_subtables(MW_Data.machined_part_data, {
     [MW_Machined_Part.PANELING]        = {order = "ba "},
     [MW_Machined_Part.LARGE_PANELING]  = {order = "aa "},
     [MW_Machined_Part.FRAMING]         = {order = "ia "},
@@ -302,9 +320,9 @@ if advanced then -- Ordering
     [MW_Machined_Part.SHAFTING]        = {order = "ka "},
     [MW_Machined_Part.BOLTS]           = {order = "la "},
     [MW_Machined_Part.RIVETS]          = {order = "ma "},
-  }
+  })
 else
-  MW_Data.machined_part_data = {
+  MW_Data.machined_part_data = table.merge_subtables(MW_Data.machined_part_data, {
     [MW_Machined_Part.PANELING]        = {order = "aa "},
     [MW_Machined_Part.FRAMING]         = {order = "ea "},
     [MW_Machined_Part.GEARING]         = {order = "ca "},
@@ -313,7 +331,7 @@ else
     [MW_Machined_Part.WIRING]          = {order = "fa "},
     [MW_Machined_Part.SHAFTING]        = {order = "ga "},
     [MW_Machined_Part.BOLTS]           = {order = "ha "},
-  }
+  })
 end
 
 
@@ -337,7 +355,7 @@ MW_Data.property_data = { -- Property data: which mod did this come from
   [MW_Property.VERY_HIGH_TENSILE]        = {introduced = Mod_Names.GM},
 }
 
-MW_Data.property_data = { -- Staple on the ordering
+MW_Data.property_data = table.merge_subtables(MW_Data.property_data, { -- Ordering
   [MW_Property.BASIC]                    = {order = "aa "},
   [MW_Property.LOAD_BEARING]             = {order = "ca "},
   [MW_Property.ELECTRICALLY_CONDUCTIVE]  = {order = "ba "},
@@ -351,7 +369,23 @@ MW_Data.property_data = { -- Staple on the ordering
   [MW_Property.HEAVY_LOAD_BEARING]       = {order = "cb "},
   [MW_Property.VERY_HEAVY_LOAD_BEARING]  = {order = "cc "},
   [MW_Property.VERY_HIGH_TENSILE]        = {order = "db "},
-}
+})
+
+MW_Data.property_data = table.merge_subtables(MW_Data.property_data, { -- Icon Badges Data
+  [MW_Property.BASIC]                    = {ib_data = {}},
+  [MW_Property.LOAD_BEARING]             = {ib_data = {}},
+  [MW_Property.ELECTRICALLY_CONDUCTIVE]  = {ib_data = {}},
+  [MW_Property.HIGH_TENSILE]             = {ib_data = {}},
+  [MW_Property.CORROSION_RESISTANT]      = {ib_data = {}},
+  [MW_Property.LIGHTWEIGHT]              = {ib_data = {}},
+  [MW_Property.DUCTILE]                  = {ib_data = {}},
+  [MW_Property.THERMALLY_STABLE]         = {ib_data = {}},
+  [MW_Property.THERMALLY_CONDUCTIVE]     = {ib_data = {}},
+  [MW_Property.RADIATION_RESISTANT]      = {ib_data = {}},
+  [MW_Property.HEAVY_LOAD_BEARING]       = {ib_data = {}},
+  [MW_Property.VERY_HEAVY_LOAD_BEARING]  = {ib_data = {}},
+  [MW_Property.VERY_HIGH_TENSILE]        = {ib_data = {}},
+})
 
 
 
@@ -405,6 +439,23 @@ MW_Data.minisembler_data = table.merge_subtables(MW_Data.minisembler_data, { -- 
   [MW_Minisembler.METAL_ASSAYER]  = {introduced = Mod_Names.GM},
   [MW_Minisembler.ELECTROPLATER]  = {introduced = Mod_Names.GM},
 })
+
+MW_Data.minisembler_data = table.merge_subtables(MW_Data.minisembler_data, { -- Icon Badges Data
+  [MW_Minisembler.WELDER]         = {ib_data = {ib_let_badge = "W"}},
+  [MW_Minisembler.DRILL_PRESS]    = {ib_data = {ib_let_badge = "D"}},
+  [MW_Minisembler.GRINDER]        = {ib_data = {ib_let_badge = "G"}},
+  [MW_Minisembler.METAL_BANDSAW]  = {ib_data = {ib_let_badge = "MB"}},
+  [MW_Minisembler.METAL_EXTRUDER] = {ib_data = {ib_let_badge = "ME"}},
+  [MW_Minisembler.MILL]           = {ib_data = {ib_let_badge = "M"}},
+  [MW_Minisembler.METAL_LATHE]    = {ib_data = {ib_let_badge = "ML"}},
+  [MW_Minisembler.THREADER]       = {ib_data = {ib_let_badge = "T"}},
+  [MW_Minisembler.SPOOLER]        = {ib_data = {ib_let_badge = "S"}},
+  [MW_Minisembler.ROLLER]         = {ib_data = {ib_let_badge = "R"}},
+  [MW_Minisembler.BENDER]         = {ib_data = {ib_let_badge = "B"}},
+  [MW_Minisembler.METAL_ASSAYER]  = {ib_data = {ib_let_badge = "A"}},
+  [MW_Minisembler.ELECTROPLATER]  = {ib_data = {ib_let_badge = "E"}},
+})
+
 
 MW_Data.minisembler_entity_data = { -- General worldspace entity data used by minisemblers. FIXME : This should live in a 'meta' file because it will apply to all phases, not just metalworking
   ["2x1"] = {collision_box = {{-0.29, -0.9}, {0.29, 0.9}}, selection_box = {{-0.5, -1}, {0.5, 1}}, fluid_box = {}}

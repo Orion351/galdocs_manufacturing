@@ -9,6 +9,7 @@
   },
 	"dependencies": ["base >= 1.1",
 		"? Krastorio2 > 1.0",
+		"(?) icon-badges >= 1.0.5",
 		"(?) galdocs-testing"
 	]
 }

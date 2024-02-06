@@ -18,5 +18,9 @@ global_variables.ingredient_badge_shift = {10, -10}
 global_variables.badge_image_size = 64
 global_variables.badge_inventory_text_scale_match = .3125
 
+global_variables.property_badge_space = 10
+global_variables.remelting_badge_corner = "right-top"
+
+global_variables.minisembler_stack_size = 50
 
 return global_variables

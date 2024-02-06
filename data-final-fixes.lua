@@ -182,6 +182,6 @@ end
 -- **************
 
 require("prototypes.passes.metalworking.mw-pass-final-fixes")
-
+-- other material passes will go here
 
 local a = 1
