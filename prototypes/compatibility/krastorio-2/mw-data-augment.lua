@@ -102,7 +102,7 @@ MW_Data.ore_data = table.group_key_assign(MW_Data.ore_data, { -- Initialize basi
   [MW_Resource.COKE]            = {original = false,  ore_in_name = false, add_to_starting_area = false, to_add = false, new_icon_art = false, new_patch_art = false,  new_debris_art = false, introduced = Mod_Names.K2},
 })
 
-MW_Data.ore_data = table.merge_subtables(MW_Data.ore_data, { -- odering
+MW_Data.ore_data = table.merge_subtables(MW_Data.ore_data, { -- ordering
   [MW_Resource.OSMIUM]  = {order = "ia "},
   [MW_Resource.NIOBIUM] = {order = "ka "},
 })
@@ -136,6 +136,8 @@ MW_Data.ore_data = table.merge_subtables(MW_Data.ore_data, { -- Matter-to-Ore an
   [MW_Resource.OSMIUM]      = {matter_recipe = {new = true,  replace = false, ore_to_matter_recipe = true,  matter_to_ore_recipe = true,  ore_count = 10, matter_count = 5}},
   [MW_Resource.NIOBIUM]     = {matter_recipe = {new = true,  replace = false, ore_to_matter_recipe = true,  matter_to_ore_recipe = true,  ore_count = 10, matter_count = 5}},
 })
+
+
 
 MW_Data.smelting_data = { -- Set up the Smelting Recipes
   [MW_Ore_Shape.ORE]    = {input_count = 1,  output_shape = MW_Data.MW_Stock.PLATE, output_count = 1},

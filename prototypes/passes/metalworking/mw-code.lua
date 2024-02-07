@@ -111,6 +111,11 @@ for resource, resource_data in pairs(MW_Data.ore_data) do -- Ore Items
       table.insert(pictures_data, {layers = single_picture})
     end
 
+    local ib_data = {}
+    ib_data.ib_let_badge  = resource_data.ib_data.ib_let_badge
+    ib_data.ib_let_invert = resource_data.ib_data.ib_let_invert
+    ib_data.ib_let_corner = resource_data.ib_data.ib_let_corner
+
     if resource_data.to_add then -- Add in new ore items
       data:extend({
         {
@@ -127,12 +132,9 @@ for resource, resource_data in pairs(MW_Data.ore_data) do -- Ore Items
           stack_size = 50,
 
           localised_name = {"gm.ore-item-name", {"gm." .. resource}},
-
-          ib_let_badge  = resource_data.ib_data.ib_let_badge,
-          ib_let_invert = resource_data.ib_data.ib_let_invert,
-          ib_let_corner = resource_data.ib_data.ib_let_corner,
         },
       })
+      Build_badge(data.raw.item[resource .. "-ore"], ib_data)
     end
 
     if resource_data.original and resource_data.new_icon_art then -- Replace original ore itme icons
@@ -605,6 +607,11 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
         table.insert(pictures_data, {layers = single_picture})
       end
 
+      local ib_data = {}
+      ib_data.ib_let_badge  = MW_Data.metal_data[metal].ib_data.ib_let_badge
+      ib_data.ib_let_invert = MW_Data.metal_data[metal].ib_data.ib_let_invert
+      ib_data.ib_let_corner = MW_Data.metal_data[metal].ib_data.ib_let_corner
+
       local item_prototype = { -- item
         {
           type = "item",
@@ -622,13 +629,10 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
           localised_description = localized_description_item,
 
           gm_item_data = {type = "stocks", metal = metal, stock = stock},
-
-          ib_let_badge  = MW_Data.metal_data[metal].ib_data.ib_let_badge,
-          ib_let_invert = MW_Data.metal_data[metal].ib_data.ib_let_invert,
-          ib_let_corner = MW_Data.metal_data[metal].ib_data.ib_let_corner,
         }
       }
       data:extend(item_prototype)
+      Build_badge(data.raw.item[metal .. "-" .. stock .. "-stock"], ib_data)
       GM_global_mw_data.stock_items[item_prototype[1].name] = item_prototype[1]
 
       local recipe_prototype = {}
@@ -808,7 +812,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
         }
         
         -- Function from Icon Badges: ib-lib.lua
-        GM_Build_img_badge_icon(icons_data_recipe, 
+        Build_img_badge_icon(icons_data_recipe, 
         {"__galdocs-manufacturing__/graphics/icons/intermediates/stocks/sdf/sdf-" .. stock .. "-stock.png",
         "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. metal .. "/" .. metal .. "-" .. stock .. "-stock-0000.png"},
         64, 0.3, 0, GM_globals.remelting_badge_corner, 0)
@@ -817,6 +821,11 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
         if (GM_globals.show_non_hand_craftables == "all") then
           recipe_hide_from_player_crafting = false
         end
+
+        local ib_data = {}
+        ib_data.ib_let_badge  = MW_Data.metal_data[metal].ib_data.ib_let_badge
+        ib_data.ib_let_invert = MW_Data.metal_data[metal].ib_data.ib_let_invert
+        ib_data.ib_let_corner = MW_Data.metal_data[metal].ib_data.ib_let_corner
 
         recipe_prototype = { -- remelting recipe
         {
@@ -851,13 +860,10 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
           localised_name = {"gm.metal-stock-remelting-recipe-name", {"gm." .. metal}, {"gm." .. MW_Data.MW_Stock.PLATE}},
 
           gm_recipe_data = {type = "remelting", metal = metal, stock = stock},
-
-          ib_let_badge  = MW_Data.metal_data[metal].ib_data.ib_let_badge,
-          ib_let_invert = MW_Data.metal_data[metal].ib_data.ib_let_invert,
-          ib_let_corner = MW_Data.metal_data[metal].ib_data.ib_let_corner,
         }
       }
       data:extend(recipe_prototype)
+      Build_badge(data.raw.recipe[metal .. "-" .. stock .. "-remelting-stock"], ib_data)
       if not GM_global_mw_data.stock_recipes[item_prototype[1].name] then GM_global_mw_data.stock_recipes[item_prototype[1].name] = {} end
       table.insert(GM_global_mw_data.stock_recipes[item_prototype[1].name], {[recipe_prototype[1].name] = recipe_prototype[1]})
 
@@ -895,10 +901,15 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
         }
 
         -- Function from Icon Badges: ib-lib.lua
-        GM_Build_img_badge_icon(icons_data_recipe, 
+        Build_img_badge_icon(icons_data_recipe, 
         {"__galdocs-manufacturing__/graphics/icons/intermediates/stocks/sdf/sdf-plate-stock.png",
         "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. icon_badge_metal .. "/" .. icon_badge_metal .. "-plate-stock-0000.png"},
         64, 0.3, 0, GM_globals.remelting_badge_corner, 0)
+
+        local ib_data = {}
+        ib_data.ib_let_badge  = MW_Data.metal_data[metal].ib_data.ib_let_badge
+        ib_data.ib_let_invert = MW_Data.metal_data[metal].ib_data.ib_let_invert
+        ib_data.ib_let_corner = MW_Data.metal_data[metal].ib_data.ib_let_corner
 
         recipe_prototype = {
           { -- recipe
@@ -912,7 +923,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
             ingredients = ingredient_list,
             result = metal .. "-" .. stock .. "-stock",
             result_count = output_count,
-            
+
             crafting_machine_tint = {
               primary = MW_Data.metal_data[metal].tint_metal,
               secondary = MW_Data.metal_data[metal].tint_oxidation
@@ -927,15 +938,12 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
             subgroup = "gm-stocks-" .. metal,
 
             localised_name = {"gm.metal-stock-item-name", {"gm." .. metal}, {"gm." .. stock}},
-            
-            gm_recipe_data = {type = "stocks", metal = metal, stock = stock, special = "alloy-plate-recipe"},
 
-            ib_let_badge  = MW_Data.metal_data[metal].ib_data.ib_let_badge,
-            ib_let_invert = MW_Data.metal_data[metal].ib_data.ib_let_invert,
-            ib_let_corner = MW_Data.metal_data[metal].ib_data.ib_let_corner,
+            gm_recipe_data = {type = "stocks", metal = metal, stock = stock, special = "alloy-plate-recipe"},
           }
         }
         data:extend(recipe_prototype)
+        Build_badge(data.raw.recipe[metal .. "-" .. stock .. "-stock-from-plate"], ib_data)
         if not GM_global_mw_data.stock_recipes[item_prototype[1].name] then GM_global_mw_data.stock_recipes[item_prototype[1].name] = {} end
         table.insert(GM_global_mw_data.stock_recipes[item_prototype[1].name], {[recipe_prototype[1].name] = recipe_prototype[1]})
       end
@@ -970,10 +978,15 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
         }
 
         -- Function from Icon Badges: ib-lib.lua
-        GM_Build_img_badge_icon(icons_data_recipe, 
+        Build_img_badge_icon(icons_data_recipe, 
         {"__galdocs-manufacturing__/graphics/icons/intermediates/ore/" .. icon_badge_metal .. "/" .. icon_badge_metal .. "-ore-shadow.png",
         "__galdocs-manufacturing__/graphics/icons/intermediates/ore/" .. icon_badge_metal .. "/" .. icon_badge_metal .. "-ore-1.png"},
         64, 0.3, 0, GM_globals.remelting_badge_corner, 0)
+
+        local ib_data = {}
+        ib_data.ib_let_badge  = MW_Data.metal_data[metal].ib_data.ib_let_badge
+        ib_data.ib_let_invert = MW_Data.metal_data[metal].ib_data.ib_let_invert
+        ib_data.ib_let_corner = MW_Data.metal_data[metal].ib_data.ib_let_corner
 
         recipe_prototype = {
           { -- recipe
@@ -1004,13 +1017,10 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
             localised_name = {"gm.metal-stock-item-name", {"gm." .. metal}, {"gm." .. stock}},
 
             gm_recipe_data = {type = "stocks", metal = metal, stock = stock, special = "alloy-ore-recipe"},
-
-            ib_let_badge  = MW_Data.metal_data[metal].ib_data.ib_let_badge,
-            ib_let_invert = MW_Data.metal_data[metal].ib_data.ib_let_invert,
-            ib_let_corner = MW_Data.metal_data[metal].ib_data.ib_let_corner,
           }
         }
         data:extend(recipe_prototype)
+        Build_badge(data.raw.recipe[metal .. "-" .. stock .. "-stock-from-ore"], ib_data)
         if not GM_global_mw_data.stock_recipes[item_prototype[1].name] then GM_global_mw_data.stock_recipes[item_prototype[1].name] = {} end
         table.insert(GM_global_mw_data.stock_recipes[item_prototype[1].name], {[recipe_prototype[1].name] = recipe_prototype[1]})
       end
@@ -1028,10 +1038,15 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
         }
 
         -- Function from Icon Badges: ib-lib.lua
-        GM_Build_img_badge_icon(icons_data_recipe, 
+        Build_img_badge_icon(icons_data_recipe, 
         {"__galdocs-manufacturing__/graphics/icons/intermediates/ore/" .. metal .. "/" .. metal .. "-ore-shadow.png",
         "__galdocs-manufacturing__/graphics/icons/intermediates/ore/" .. metal .. "/" .. metal .. "-ore-1.png"},
         64, 0.3, 0, GM_globals.remelting_badge_corner, 0)
+
+        local ib_data = {}
+        ib_data.ib_let_badge  = MW_Data.metal_data[metal].ib_data.ib_let_badge
+        ib_data.ib_let_invert = MW_Data.metal_data[metal].ib_data.ib_let_invert
+        ib_data.ib_let_corner = MW_Data.metal_data[metal].ib_data.ib_let_corner
 
         recipe_prototype = {
           { -- recipe
@@ -1061,13 +1076,10 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
             localised_name = {"gm.metal-stock-item-name", {"gm." .. metal}, {"gm." .. stock}},
 
             gm_recipe_data = {type = "stocks", metal = metal, stock = stock},
-
-            ib_let_badge  = MW_Data.metal_data[metal].ib_data.ib_let_badge,
-            ib_let_invert = MW_Data.metal_data[metal].ib_data.ib_let_invert,
-            ib_let_corner = MW_Data.metal_data[metal].ib_data.ib_let_corner,
           }
         }
         data:extend(recipe_prototype)
+        Build_badge(data.raw.recipe[metal .. "-" .. stock .. "-stock"], ib_data)
         if not GM_global_mw_data.stock_recipes[item_prototype[1].name] then GM_global_mw_data.stock_recipes[item_prototype[1].name] = {} end
         table.insert(GM_global_mw_data.stock_recipes[item_prototype[1].name], {[recipe_prototype[1].name] = recipe_prototype[1]})
       end
@@ -1177,6 +1189,11 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the treated [M
           table.insert(pictures_data, {layers = single_picture})
         end
 
+        local ib_data = {}
+        ib_data.ib_let_badge  = MW_Data.metal_data[metal].ib_data.ib_let_badge
+        ib_data.ib_let_invert = MW_Data.metal_data[metal].ib_data.ib_let_invert
+        ib_data.ib_let_corner = MW_Data.metal_data[metal].ib_data.ib_let_corner
+
         local item_prototype = { -- item
           {
             type = "item",
@@ -1194,13 +1211,10 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the treated [M
             localised_description = localized_description_item,
 
             gm_item_data = {type = "stocks", metal = metal, stock = stock, special = "treatment"},
-
-            ib_let_badge  = MW_Data.metal_data[metal].ib_data.ib_let_badge,
-            ib_let_invert = MW_Data.metal_data[metal].ib_data.ib_let_invert,
-            ib_let_corner = MW_Data.metal_data[metal].ib_data.ib_let_corner,
           }
         }
         data:extend(item_prototype)
+        Build_badge(data.raw.item[metal .. "-" .. stock .. "-stock"], ib_data)
         GM_global_mw_data.stock_items[item_prototype[1].name] = item_prototype[1]
 
         local hide_from_player_crafting = true
@@ -1304,10 +1318,15 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the treated [M
         }
 
         -- Function from Icon Badges: ib-lib.lua
-        GM_Build_img_badge_icon(icons_data_recipe, 
+        Build_img_badge_icon(icons_data_recipe, 
         {"__galdocs-manufacturing__/graphics/icons/intermediates/stocks/sdf/sdf-" .. stock .. "-stock.png",
         "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. metal .. "/" .. metal .. "-" .. stock .. "-stock-0000.png"},
         64, 0.3, 0, GM_globals.remelting_badge_corner, 0)
+
+        local ib_data = {}
+        ib_data.ib_let_badge  = MW_Data.metal_data[result_metal].ib_data.ib_let_badge
+        ib_data.ib_let_invert = MW_Data.metal_data[result_metal].ib_data.ib_let_invert
+        ib_data.ib_let_corner = MW_Data.metal_data[result_metal].ib_data.ib_let_corner
 
         recipe_prototype = { -- remelting recipe
           {
@@ -1339,13 +1358,10 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the treated [M
             localised_name = {"gm.metal-stock-remelting-recipe-name", {"gm." .. metal}, {"gm." .. MW_Data.MW_Stock.PLATE}},
 
             gm_recipe_data = {type = "remelting", metal = metal, stock = stock},
-
-            ib_let_badge  = MW_Data.metal_data[result_metal].ib_data.ib_let_badge,
-            ib_let_invert = MW_Data.metal_data[result_metal].ib_data.ib_let_invert,
-            ib_let_corner = MW_Data.metal_data[result_metal].ib_data.ib_let_corner,
           }
         }
         data:extend(recipe_prototype)
+        Build_badge(data.raw.recipe[metal .. "-" .. stock .. "-remelting-stock"], ib_data)
         if not GM_global_mw_data.stock_recipes[item_prototype[1].name] then GM_global_mw_data.stock_recipes[item_prototype[1].name] = {} end
         table.insert(GM_global_mw_data.stock_recipes[item_prototype[1].name], {[recipe_prototype[1].name] = recipe_prototype[1]})
       end
@@ -1432,15 +1448,6 @@ for property, parts in pairs(MW_Data.property_machined_part_pairs) do -- Make th
       }
     }
 
-    -- if GM_globals.ib_show_badges == "all" then
-    --   table.insert(icons_data_item, {
-    --     scale = GM_globals.property_badge_scale,
-    --     icon = "__galdocs-manufacturing__/graphics/badges/" .. property .. ".png",
-    --     shift = GM_globals.property_badge_shift,
-    --     icon_size = 64
-    --   })
-    -- end
-
     -- Tooltip
     -- *******
     -- We need two lists:
@@ -1490,6 +1497,12 @@ for property, parts in pairs(MW_Data.property_machined_part_pairs) do -- Make th
       item_subgroup = "gm-machined-parts-" .. property
     end
 
+    local ib_data = {}
+    ib_data.ib_img_paths  = {"__galdocs-manufacturing__/graphics/badges/" .. GM_globals.ib_mipmaps .. "/" .. GM_globals.ib_mipmaps .. "-" .. property .. ".png"}
+    ib_data.ib_img_size   = GM_globals.badge_image_size
+    ib_data.ib_img_scale  = GM_globals.property_image_scale
+    ib_data.ib_img_space  = GM_globals.property_badge_space
+
     local item_prototype = { -- item
       {
         type = "item",
@@ -1506,16 +1519,10 @@ for property, parts in pairs(MW_Data.property_machined_part_pairs) do -- Make th
         localised_description = localized_description_item,
         
         gm_item_data = {type = "machined-parts", property = property, part = part},
-
-        ib_img_paths  = {"__galdocs-manufacturing__/graphics/badges/" .. GM_globals.ib_mipmaps .. "/" .. GM_globals.ib_mipmaps .. "-" .. property .. ".png"},
-        -- ib_img_corner = MW_Data.property_data[property].ib_data.img_corner,
-        ib_img_size   = 64,
-        ib_img_scale  = .2,
-        -- ib_img_mips   = GM_globals.ib_mipmapNums,
-        ib_img_space  = GM_globals.property_badge_space,
       }
     }
     data:extend(item_prototype)
+    Build_badge(data.raw.item[property .. "-" .. part .. "-machined-part"], ib_data)
     GM_global_mw_data.machined_part_items[item_prototype[1].name] = item_prototype[1]
 
     for metal, metal_properties in pairs(MW_Data.metal_properties_pairs) do
@@ -1527,29 +1534,13 @@ for property, parts in pairs(MW_Data.property_machined_part_pairs) do -- Make th
           {
             icon = "__galdocs-manufacturing__/graphics/icons/intermediates/machined-parts/" .. property .. "/" .. property .. "-" .. part .. ".png",
             icon_size = 64,
-          },
-          -- {
-          --   scale = 0.3,
-          --   icon = "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. metal .. "/" .. metal .. "-plate-stock-0000.png",
-          --   shift = GM_globals.ingredient_badge_shift,
-          --   icon_size = 64
-          -- }
+          }
         }
 
-        GM_Build_img_badge_icon(icons_data_recipe, 
+        Build_img_badge_icon(icons_data_recipe, 
         {"__galdocs-manufacturing__/graphics/icons/intermediates/stocks/sdf/sdf-plate-stock.png",
         "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. metal .. "/" .. metal .. "-plate-stock-0000.png"},
         64, 0.3, 0, GM_globals.remelting_badge_corner, 0)
-
-        -- if GM_globals.ib_show_badges == "recipes" or GM_globals.ib_show_badges == "all" then
-        --   table.insert(icons_data_recipe, {
-        --     scale = GM_globals.property_badge_scale,
-        --     icon = "__galdocs-manufacturing__/graphics/badges/" .. property .. ".png",
-        --     shift = GM_globals.property_badge_shift,
-        --     icon_size = 64
-        --   })
-        --   table.insert(icons_data_recipe, Build_badge_icon(metal, GM_globals.ingredient_badge_shift))
-        -- end
 
         -- Un-hide and put in '-player-crafting' set the recipes intended to be useable at the beginning of the game
         local recipe_category = "gm-" .. MW_Data.machined_parts_recipe_data[part].made_in
@@ -1582,7 +1573,13 @@ for property, parts in pairs(MW_Data.property_machined_part_pairs) do -- Make th
           hide_from_player_crafting = false
         end
 
-        -- Build recipe data
+        local ib_data = {}
+        ib_data.ib_img_paths  = {"__galdocs-manufacturing__/graphics/badges/" .. GM_globals.ib_mipmaps .. "/" .. GM_globals.ib_mipmaps .. "-" .. property .. ".png"}
+        ib_data.ib_img_size   = GM_globals.badge_image_size
+        ib_data.ib_img_scale  = GM_globals.property_image_scale
+        ib_data.ib_img_space  = GM_globals.property_badge_space
+
+        -- Build recipe prototype
         local recipe_prototype = { -- recipe
           {
             type = "recipe",
@@ -1616,16 +1613,10 @@ for property, parts in pairs(MW_Data.property_machined_part_pairs) do -- Make th
             localised_name = {"gm.metal-machined-part-recipe", {"gm." .. property}, {"gm." .. part}, {"gm." .. metal}, {"gm." .. precursor}},
 
             gm_recipe_data = {type = "machined-parts", property = property, part = part},
-
-            ib_img_paths  = {"__galdocs-manufacturing__/graphics/badges/" .. GM_globals.ib_mipmaps .. "/" .. GM_globals.ib_mipmaps .. "-" .. property .. ".png"},
-            -- ib_img_corner = MW_Data.property_data[property].ib_data.img_corner,
-            ib_img_size   = 64,
-            ib_img_scale  = .2,
-            -- ib_img_mips   = GM_globals.ib_mipmapNums,
-            ib_img_space  = GM_globals.property_badge_space,
           }
         }
         data:extend(recipe_prototype)
+        Build_badge(data.raw.recipe[property .. "-" .. part .. "-from-" .. metal .. "-" .. precursor], ib_data)
         if not GM_global_mw_data.machined_part_recipes[item_prototype[1].name] then GM_global_mw_data.machined_part_recipes[item_prototype[1].name] = {} end
         table.insert(GM_global_mw_data.machined_part_recipes[item_prototype[1].name], {[recipe_prototype[1].name] = recipe_prototype[1]})
       end
@@ -1720,22 +1711,11 @@ for property_key, multi_properties in pairs(MW_Data.multi_property_with_key_pair
             table.insert(badge_paths, "__galdocs-manufacturing__/graphics/badges/" .. multi_property .. ".png")
           end
 
-          -- if GM_globals.ib_show_badges == "all" then
-          --   local current_badge_shift = GM_globals.property_badge_shift
-          --   for _, multi_property in pairs(multi_properties) do
-          --     table.insert(icons_data_item, {
-          --       scale = GM_globals.property_badge_scale,
-          --       icon = "__galdocs-manufacturing__/graphics/badges/" .. multi_property .. ".png",
-          --       shift = current_badge_shift,
-          --       icon_size = 64
-          --     })
-
-          --     current_badge_shift = {
-          --       current_badge_shift[1] + GM_globals.property_badge_stride[1],
-          --       current_badge_shift[2] + GM_globals.property_badge_stride[2]
-          --     }
-          --   end
-          -- end
+          local ib_data = {}
+          ib_data.ib_img_paths  = badge_paths
+          ib_data.ib_img_size   = GM_globals.badge_image_size
+          ib_data.ib_img_scale  = GM_globals.property_image_scale
+          ib_data.ib_img_space  = GM_globals.property_badge_space
 
           local item_prototype = { -- item
             {
@@ -1753,17 +1733,11 @@ for property_key, multi_properties in pairs(MW_Data.multi_property_with_key_pair
               localised_description = localized_description_item,
 
               gm_item_data = {type = "machined-parts", properties = multi_properties, compound_property = property_key, part = part},
-
-              ib_img_paths  = badge_paths,
-              -- ib_img_corner = MW_Data.property_data[property].ib_data.img_corner,
-              ib_img_size   = 64,
-              ib_img_scale  = .2,
-              -- ib_img_mips   = GM_globals.ib_mipmapNums,
-              ib_img_space  = GM_globals.property_badge_space,
             }
           }
 
           data:extend(item_prototype)
+          Build_badge(data.raw.item[property_key .. "-" .. part .. "-machined-part"], ib_data)
           GM_global_mw_data.machined_part_items[item_prototype[1].name] = item_prototype[1]
 
           -- Make recipe icon
@@ -1772,45 +1746,23 @@ for property_key, multi_properties in pairs(MW_Data.multi_property_with_key_pair
               icon = "__galdocs-manufacturing__/graphics/icons/intermediates/machined-parts/" .. property_key .. "/" .. property_key .. "-" .. part .. ".png",
               icon_size = 64,
             },
-            -- {
-            --   scale = 0.3,
-            --   icon = "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. metal .. "/" .. metal .. "-plate-stock-0000.png",
-            --   shift = GM_globals.ingredient_badge_shift,
-            --   icon_size = 64
-            -- }
           }
 
-          GM_Build_img_badge_icon(icons_data_recipe, 
+          Build_img_badge_icon(icons_data_recipe, 
           {"__galdocs-manufacturing__/graphics/icons/intermediates/stocks/sdf/sdf-plate-stock.png",
           "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. metal .. "/" .. metal .. "-plate-stock-0000.png"},
           64, 0.3, 0, GM_globals.remelting_badge_corner, 0)
-
-          -- if GM_globals.ib_show_badges == "recipes" or GM_globals.ib_show_badges == "all" then
-          --   table.insert(icons_data_recipe, Build_badge_icon(metal, GM_globals.ingredient_badge_shift))
-          -- end
-
-          -- Add multi-property badges
-          -- if GM_globals.ib_show_badges == "recipes" or GM_globals.ib_show_badges == "all" then
-          --   local current_badge_shift = GM_globals.property_badge_shift
-          --   for _, multi_property in pairs(multi_properties) do
-          --     table.insert(icons_data_item, {
-          --       scale = GM_globals.property_badge_scale,
-          --       icon = "__galdocs-manufacturing__/graphics/badges/" .. multi_property .. ".png",
-          --       shift = current_badge_shift,
-          --       icon_size = 64
-          --     })
-
-          --     current_badge_shift = {
-          --       current_badge_shift[1] + GM_globals.property_badge_stride[1],
-          --       current_badge_shift[2] + GM_globals.property_badge_stride[2]
-          --     }
-          --   end
-          -- end
 
           local recipe_hide_from_player_crafting = true
           if (GM_globals.show_non_hand_craftables == "all" or GM_globals.show_non_hand_craftables == "all except remelting") then
             recipe_hide_from_player_crafting = false
           end
+
+          local ib_data = {}
+          ib_data.ib_img_paths  = badge_paths
+          ib_data.ib_img_size   = GM_globals.badge_image_size
+          ib_data.ib_img_scale  = GM_globals.property_image_scale
+          ib_data.ib_img_space  = GM_globals.property_badge_space
 
           local recipe_prototype = {
             { -- recipe
@@ -1846,17 +1798,11 @@ for property_key, multi_properties in pairs(MW_Data.multi_property_with_key_pair
               -- localised_name = {"gm.metal-machined-part-recipe", {"gm." .. property}, {"gm." .. part}, {"gm." .. metal}, {"gm." .. machined_parts_precurors[part][1]}}
 
               gm_recipe_data = {type = "machined-parts", properties = multi_properties, compound_property = property_key, part = part},
-
-              ib_img_paths  = badge_paths,
-              -- ib_img_corner = MW_Data.property_data[property].ib_data.img_corner,
-              ib_img_size   = 64,
-              ib_img_scale  = .2,
-              -- ib_img_mips   = GM_globals.ib_mipmapNums,
-              ib_img_space  = GM_globals.property_badge_space,
             }
           }
           -- if, by some miracle, one needs a multi-property machined part to be available to the player at the start of the game, the (il)logic for that would go here.
           data:extend(recipe_prototype)
+          Build_badge(data.raw.recipe[property_key .. "-" .. part .. "-from-" .. metal .. "-" .. MW_Data.machined_parts_recipe_data[part].precursor], ib_data)
           if not GM_global_mw_data.machined_part_recipes[item_prototype[1].name] then GM_global_mw_data.machined_part_recipes[item_prototype[1].name] = {} end
           table.insert(GM_global_mw_data.machined_part_recipes[item_prototype[1].name], {[recipe_prototype[1].name] = recipe_prototype[1]})
         end
@@ -1877,28 +1823,12 @@ for metal, metal_data in pairs(MW_Data.metal_data) do -- Make "Basic" property d
               icon = "__galdocs-manufacturing__/graphics/icons/intermediates/machined-parts/basic/basic-" .. part .. ".png",
               icon_size = 64
             },
-            -- {
-            --   scale = 0.3,
-            --   icon = "__galdocs-manufacturing__/graphics/icons/intermediates/machined-parts/" .. property .. "/" .. property .. "-" .. part .. ".png",
-            --   shift = GM_globals.ingredient_badge_shift,
-            --   icon_size = 64
-            -- }
           }
 
-          GM_Build_img_badge_icon(icons_data, 
+          Build_img_badge_icon(icons_data, 
           {"__galdocs-manufacturing__/graphics/icons/intermediates/machined-parts/sdf/sdf-".. part .. ".png",
           "__galdocs-manufacturing__/graphics/icons/intermediates/machined-parts/" .. property .. "/" .. property .. "-".. part .. ".png"},
           64, 0.3, 0, GM_globals.remelting_badge_corner, 0)
-
-          -- if GM_globals.ib_show_badges == "all" then
-          --   table.insert(icons_data, {
-          --     scale = GM_globals.property_badge_scale,
-          --     icon = "__galdocs-manufacturing__/graphics/badges/basic.png",
-          --     shift = GM_globals.property_badge_shift,
-          --     icon_size = 64
-          --   }
-          -- )
-          -- end
 
           local recipe_hide_from_player_crafting = true
           if (GM_globals.show_non_hand_craftables == "all" or GM_globals.show_non_hand_craftables == "all except remelting") then
@@ -1909,6 +1839,12 @@ for metal, metal_data in pairs(MW_Data.metal_data) do -- Make "Basic" property d
           if metal_data.tech_machined_part == "starter" then
             recipe_enabled = true
           end
+
+          local ib_data = {}
+          ib_data.ib_img_paths  = {"__galdocs-manufacturing__/graphics/badges/basic.png"}
+          ib_data.ib_img_size   = GM_globals.badge_image_size
+          ib_data.ib_img_scale  = GM_globals.property_image_scale
+          ib_data.ib_img_space  = GM_globals.property_badge_space
 
           local recipe_prototype = {
             {
@@ -1935,17 +1871,11 @@ for metal, metal_data in pairs(MW_Data.metal_data) do -- Make "Basic" property d
               localised_name = {"gm.metal-machined-part-downgrade-recipe", {"gm.basic"}, {"gm." .. part}},
 
               gm_recipe_data = {type = "machined-parts", start_property = property, end_property = MW_Data.MW_Property.BASIC, part = part, special = "downgrade"},
-
-              ib_img_paths  = {"__galdocs-manufacturing__/graphics/badges/basic.png"},
-              -- ib_img_corner = MW_Data.property_data[property].ib_data.img_corner,
-              ib_img_size   = 64,
-              ib_img_scale  = .2,
-              -- ib_img_mips   = GM_globals.ib_mipmapNums,
-              ib_img_space  = GM_globals.property_badge_space,
             }
           }
 
           data:extend(recipe_prototype)
+          Build_badge(data.raw.recipe[property .. "-" .. part .. "-downgrade-to-basic-" .. part], ib_data)
           if not GM_global_mw_data.machined_part_recipes["basic-" .. part .. "-machined-part"] then GM_global_mw_data.machined_part_recipes["basic-" .. part .. "-machined-part"] = {} end
           table.insert(GM_global_mw_data.machined_part_recipes["basic-" .. part .. "-machined-part"], {[recipe_prototype[1].name] = recipe_prototype[1]})
         end
@@ -1973,33 +1903,23 @@ for property, property_downgrade_list in pairs(MW_Data.property_downgrades) do -
           icon = "__galdocs-manufacturing__/graphics/icons/intermediates/machined-parts/" .. previous_property .. "/" .. previous_property .. "-" .. part .. ".png",
           icon_size = 64
         },
-        -- {
-        --   scale = 0.3,
-        --   icon = "__galdocs-manufacturing__/graphics/icons/intermediates/machined-parts/" .. next_property .. "/" .. next_property .. "-" .. part .. ".png",
-        --   shift = GM_globals.ingredient_badge_shift,
-        --   icon_size = 64
-        -- }
       }
 
-      GM_Build_img_badge_icon(icons_data, 
+      Build_img_badge_icon(icons_data, 
       {"__galdocs-manufacturing__/graphics/icons/intermediates/machined-parts/sdf/sdf-".. part .. ".png",
       "__galdocs-manufacturing__/graphics/icons/intermediates/machined-parts/" .. next_property .. "/" .. next_property .. "-".. part .. ".png"},
       64, 0.3, 0, GM_globals.remelting_badge_corner, 0)
-
-      -- if GM_globals.ib_show_badges == "all" then
-      --   table.insert(icons_data, {
-      --     scale = GM_globals.property_badge_scale,
-      --     icon = "__galdocs-manufacturing__/graphics/badges/" .. previous_property .. ".png",
-      --     shift = GM_globals.property_badge_shift,
-      --     icon_size = 64
-      --   }
-      -- )
-      -- end
 
       local recipe_hide_from_player_crafting = true
       if (GM_globals.show_non_hand_craftables == "all" or GM_globals.show_non_hand_craftables == "all except remelting") then
         recipe_hide_from_player_crafting = false
       end
+
+      local ib_data = {}
+      ib_data.ib_img_paths  = {"__galdocs-manufacturing__/graphics/badges/" .. previous_property .. ".png"}
+      ib_data.ib_img_size   = GM_globals.badge_image_size
+      ib_data.ib_img_scale  = GM_globals.property_image_scale
+      ib_data.ib_img_space  = GM_globals.property_badge_space
 
       local recipe_prototype = {
         {
@@ -2026,17 +1946,11 @@ for property, property_downgrade_list in pairs(MW_Data.property_downgrades) do -
           localised_name = {"gm.metal-machined-part-downgrade-recipe", {"gm." .. previous_property}, {"gm." .. part}},
 
           gm_recipe_data = {type = "machined-parts", start_property = next_property, end_property = previous_property, part = part, special = "downgrade"},
-
-          ib_img_paths  = {"__galdocs-manufacturing__/graphics/badges/" .. previous_property .. ".png"},
-          -- ib_img_corner = MW_Data.property_data[property].ib_data.img_corner,
-          ib_img_size   = 64,
-          ib_img_scale  = .2,
-          -- ib_img_mips   = GM_globals.ib_mipmapNums,
-          ib_img_space  = GM_globals.property_badge_space,
         }
       }
 
       data:extend(recipe_prototype)
+      Build_badge(data.raw.recipe[next_property .. "-" .. part .. "-downgrade-to-" .. previous_property .. "-" .. part], ib_data)
       if not GM_global_mw_data.machined_part_recipes[previous_property .. "-" .. part .. "-machined-part"] then GM_global_mw_data.machined_part_recipes[previous_property .. "-" .. part .. "-machined-part"] = {} end
       table.insert(GM_global_mw_data.machined_part_recipes[previous_property .. "-" .. part .. "-machined-part"], {[recipe_prototype[1].name] = recipe_prototype[1]})
     end
@@ -2055,41 +1969,24 @@ for property_key, multi_properties in pairs(MW_Data.multi_property_with_key_pair
             icon = "__galdocs-manufacturing__/graphics/icons/intermediates/machined-parts/" .. multi_property .. "/" .. multi_property .. "-" .. part .. ".png",
             icon_size = 64
           },
-          -- {
-          --   scale = 0.3,
-          --   icon = "__galdocs-manufacturing__/graphics/icons/intermediates/machined-parts/" .. property_key .. "/" .. property_key .. "-" .. part .. ".png",
-          --   shift = GM_globals.ingredient_badge_shift,
-          --   icon_size = 64
-          -- }
+
         }
 
-        GM_Build_img_badge_icon(icons_data, 
+        Build_img_badge_icon(icons_data, 
         {"__galdocs-manufacturing__/graphics/icons/intermediates/machined-parts/sdf/sdf-".. part .. ".png",
         "__galdocs-manufacturing__/graphics/icons/intermediates/machined-parts/" .. property_key .. "/" .. property_key .. "-".. part .. ".png"},
         64, 0.3, 0, GM_globals.remelting_badge_corner, 0)
-
-        -- Add multi-property badges
-        -- if GM_globals.ib_show_badges == "recipes" or GM_globals.ib_show_badges == "all" then
-        --   local current_badge_shift = GM_globals.property_badge_shift
-        --   for _, multi_property in pairs(multi_properties) do
-        --     table.insert(icons_data, {
-        --       scale = GM_globals.property_badge_scale,
-        --       icon = "__galdocs-manufacturing__/graphics/badges/" .. multi_property .. ".png",
-        --       shift = current_badge_shift,
-        --       icon_size = 64
-        --     })
-
-        --     current_badge_shift = {
-        --       current_badge_shift[1] + GM_globals.property_badge_stride[1],
-        --       current_badge_shift[2] + GM_globals.property_badge_stride[2]
-        --     }
-        --   end
-        -- end
 
         local recipe_hide_from_player_crafting = true
         if (GM_globals.show_non_hand_craftables == "all" or GM_globals.show_non_hand_craftables == "all except remelting") then
           recipe_hide_from_player_crafting = false
         end
+
+        local ib_data = {}
+        ib_data.ib_img_paths = {"__galdocs-manufacturing__/graphics/badges/" .. multi_property .. ".png"}
+        ib_data.ib_img_size  = GM_globals.badge_image_size
+        ib_data.ib_img_scale = GM_globals.property_image_scale
+        ib_data.ib_img_space = GM_globals.property_badge_space
 
         local recipe_prototype = {
           {
@@ -2116,16 +2013,10 @@ for property_key, multi_properties in pairs(MW_Data.multi_property_with_key_pair
             localised_name = {"gm.metal-machined-part-downgrade-recipe", {"gm." .. multi_property}, {"gm." .. part}},
 
             gm_recipe_data = {type = "machined-parts", start_compound_property = property_key, end_property = multi_property, part = part, special = "downgrade"},
-
-            ib_img_paths  = {"__galdocs-manufacturing__/graphics/badges/" .. multi_property .. ".png"},
-            -- ib_img_corner = MW_Data.property_data[property].ib_data.img_corner,
-            ib_img_size   = 64,
-            ib_img_scale  = .2,
-            -- ib_img_mips   = GM_globals.ib_mipmapNums,
-            ib_img_space  = GM_globals.property_badge_space,
           }
         }
         data:extend(recipe_prototype)
+        Build_badge(data.raw.recipe[property_key .. "-" .. part .. "-downgrade-to-" .. multi_property .. "-" .. part], ib_data)
         if not GM_global_mw_data.machined_part_recipes[multi_property .. "-" .. part .. "-machined-part"] then GM_global_mw_data.machined_part_recipes[multi_property .. "-" .. part .. "-machined-part"] = {} end
         table.insert(GM_global_mw_data.machined_part_recipes[multi_property .. "-" .. part .. "-machined-part"], {[recipe_prototype[1].name] = recipe_prototype[1]})
 
@@ -2636,11 +2527,11 @@ for _, tier in pairs(MW_Data.MW_Minisembler_Tier) do -- make the minisembler ent
         icon_size = 64,
         icon_mipmaps = 4,
       }}
-    if mods["icon-badges"] and 
-      (settings.startup["ib-active"].value == false or settings.startup["ib-show-badges"].value == "Only Belts") and 
-      (GM_globals.gm_show_minisembler_badges == "all" or GM_globals.gm_show_minisembler_badges == "item") then
-      GM_Build_letter_badge_icon(item_icons, MW_Data.minisembler_data[minisembler].ib_data.ib_let_badge, "", "left-top")
-    end
+    -- if mods["icon-badges"] and 
+    --   (settings.startup["ib-active"].value == false or settings.startup["ib-show-badges"].value == "Only Belts") and 
+    --   (GM_globals.gm_show_minisembler_badges == "all" or GM_globals.gm_show_minisembler_badges == "item") then
+    --   GM_Build_letter_badge_icon(item_icons, MW_Data.minisembler_data[minisembler].ib_data.ib_let_badge, "", "left-top")
+    -- end
 
     local recipe_icons = {{
         icon = "__galdocs-manufacturing__/graphics/icons/minisemblers/" .. minisembler .. "-icon.png",
@@ -2648,11 +2539,11 @@ for _, tier in pairs(MW_Data.MW_Minisembler_Tier) do -- make the minisembler ent
         icon_mipmaps = 4
       }}
 
-    if mods["icon-badges"] and 
-      (settings.startup["ib-active"].value == false or settings.startup["ib-show-badges"].value == "Only Belts") and 
-      (GM_globals.gm_show_minisembler_badges == "all" or GM_globals.gm_show_minisembler_badges == "item") then
-      GM_Build_letter_badge_icon(recipe_icons, MW_Data.minisembler_data[minisembler].ib_data.ib_let_badge, "", "left-top")
-    end
+    -- if mods["icon-badges"] and 
+    --   (settings.startup["ib-active"].value == false or settings.startup["ib-show-badges"].value == "Only Belts") and 
+    --   (GM_globals.gm_show_minisembler_badges == "all" or GM_globals.gm_show_minisembler_badges == "item") then
+    --   GM_Build_letter_badge_icon(recipe_icons, MW_Data.minisembler_data[minisembler].ib_data.ib_let_badge, "", "left-top")
+    -- end
 
     data:extend({ -- make the minisembler recipe categories, items, recipes and entities
       { -- recipe category

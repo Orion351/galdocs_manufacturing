@@ -16,6 +16,7 @@ global_variables.property_badge_shift = {-10, -10}
 global_variables.property_badge_stride = {10, 0}
 global_variables.ingredient_badge_shift = {10, -10}
 global_variables.badge_image_size = 64
+global_variables.property_image_scale = 0.2
 global_variables.badge_inventory_text_scale_match = .3125
 
 global_variables.property_badge_space = 10
