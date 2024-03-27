@@ -78,10 +78,10 @@ for minisembler, minisembler_data in pairs(parsed_data) do
     tier[minisembler]["frame-count"] = minisembler_data["hr"]["h"]["hr-" .. minisembler .. "-h-" .. layer]["sprite_count"]
     tier[minisembler]["line-length"] = 0
 
-    tier[minisembler]["hr"]["west"][layer]["shift-x"] = minisembler_data["hr"]["h"]["hr-" .. minisembler .. "-h-" .. layer].shift.x
-    tier[minisembler]["hr"]["west"][layer]["shift-y"] = minisembler_data["hr"]["h"]["hr-" .. minisembler .. "-h-" .. layer].shift.y
-    tier[minisembler]["hr"]["north"][layer]["shift-x"] = minisembler_data["hr"]["v"]["hr-" .. minisembler .. "-v-" .. layer].shift.x
-    tier[minisembler]["hr"]["north"][layer]["shift-y"] = minisembler_data["hr"]["v"]["hr-" .. minisembler .. "-v-" .. layer].shift.y
+    tier[minisembler]["hr"]["west"][layer]["shift-x"]  = tier[minisembler]["hr"]["west"][layer]["shift-x"]  + minisembler_data["hr"]["h"]["hr-" .. minisembler .. "-h-" .. layer].shift.x
+    tier[minisembler]["hr"]["west"][layer]["shift-y"]  = tier[minisembler]["hr"]["west"][layer]["shift-y"]  + minisembler_data["hr"]["h"]["hr-" .. minisembler .. "-h-" .. layer].shift.y
+    tier[minisembler]["hr"]["north"][layer]["shift-x"] = tier[minisembler]["hr"]["north"][layer]["shift-x"] + minisembler_data["hr"]["v"]["hr-" .. minisembler .. "-v-" .. layer].shift.x
+    tier[minisembler]["hr"]["north"][layer]["shift-y"] = tier[minisembler]["hr"]["north"][layer]["shift-y"] + minisembler_data["hr"]["v"]["hr-" .. minisembler .. "-v-" .. layer].shift.y
 
     tier[minisembler]["hr"]["west"][layer]["width"] = minisembler_data["hr"]["h"]["hr-" .. minisembler .. "-h-" .. layer].width
     tier[minisembler]["hr"]["west"][layer]["height"] = minisembler_data["hr"]["h"]["hr-" .. minisembler .. "-h-" .. layer].height
@@ -94,10 +94,10 @@ for minisembler, minisembler_data in pairs(parsed_data) do
     tier[minisembler]["hr"]["west"][layer]["line-length"] = minisembler_data["hr"]["h"]["hr-" .. minisembler .. "-h-" .. layer]["line_length"]
     tier[minisembler]["hr"]["north"][layer]["line-length"] = minisembler_data["hr"]["v"]["hr-" .. minisembler .. "-v-" .. layer]["line_length"]
 
-    tier[minisembler]["normal"]["west"][layer]["shift-x"] = minisembler_data["normal"]["h"][minisembler .. "-h-" .. layer].shift.x
-    tier[minisembler]["normal"]["west"][layer]["shift-y"] = minisembler_data["normal"]["h"][minisembler .. "-h-" .. layer].shift.y
-    tier[minisembler]["normal"]["north"][layer]["shift-x"] = minisembler_data["normal"]["v"][minisembler .. "-v-" .. layer].shift.x
-    tier[minisembler]["normal"]["north"][layer]["shift-y"] = minisembler_data["normal"]["v"][minisembler .. "-v-" .. layer].shift.y
+    tier[minisembler]["normal"]["west"][layer]["shift-x"]  = tier[minisembler]["normal"]["west"][layer]["shift-x"]  + minisembler_data["normal"]["h"][minisembler .. "-h-" .. layer].shift.x
+    tier[minisembler]["normal"]["west"][layer]["shift-y"]  = tier[minisembler]["normal"]["west"][layer]["shift-y"]  + minisembler_data["normal"]["h"][minisembler .. "-h-" .. layer].shift.y
+    tier[minisembler]["normal"]["north"][layer]["shift-x"] = tier[minisembler]["normal"]["north"][layer]["shift-x"] + minisembler_data["normal"]["v"][minisembler .. "-v-" .. layer].shift.x
+    tier[minisembler]["normal"]["north"][layer]["shift-y"] = tier[minisembler]["normal"]["north"][layer]["shift-y"] + minisembler_data["normal"]["v"][minisembler .. "-v-" .. layer].shift.y
 
     tier[minisembler]["normal"]["west"][layer]["width"] = minisembler_data["normal"]["h"][minisembler .. "-h-" .. layer].width
     tier[minisembler]["normal"]["west"][layer]["height"] = minisembler_data["normal"]["h"][minisembler .. "-h-" .. layer].height
@@ -111,4 +111,5 @@ for minisembler, minisembler_data in pairs(parsed_data) do
     tier[minisembler]["normal"]["north"][layer]["line-length"] = minisembler_data["normal"]["v"][minisembler .. "-v-" .. layer]["line_length"]
   end
 end
+
 local a = 1

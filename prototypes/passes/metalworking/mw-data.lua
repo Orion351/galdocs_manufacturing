@@ -455,542 +455,518 @@ MW_Data.minisembler_entity_data = { -- General worldspace entity data used by mi
   ["2x1"] = {collision_box = {{-0.29, -0.9}, {0.29, 0.9}}, selection_box = {{-0.5, -1}, {0.5, 1}}, fluid_box = {}}
 }
 
-local x_off, y_off = 0, 0
-local x_off_h, x_off_v = 0, 0
-local y_off_h, y_off_v = 0, 0
-local v_size, h_size = 0, 0
+local x_off_h, y_off_h = 0, -30/64
+local x_off_v_290, y_off_v_290 = 0, -10/64
+local x_off_v_340, y_off_v_340 = 0, -20/64
+
+-- 290: Bender, Metal Bandsaw, Drill Press, Electroplater, Grinder, Lathe, Metal Assayer, Mill, Roller, Welder
+-- 340: Metal Extruder, Spooler, Threader, 
 
 MW_Data.minisemblers_rendering_data = { -- Set up the minisembler rendering data
   [MW_Minisembler_Tier.ELECTRIC] = {
     [MW_Minisembler.BENDER] = {
-      ["frame-count"] = 29,
-      ["line-length"] = 6,
       ["hr"] = {
         ["west"] = {
-          ["base"]      = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5},
-          ["idle"]      = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5},
-          ["sparks"]    = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5},
-          ["workpiece"] = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5},
-          ["oxidation"] = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5},
-          ["shadow"]    = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5}
+          ["base"]      = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h},
+          ["idle"]      = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h},
+          ["sparks"]    = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h},
+          ["workpiece"] = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h},
+          ["oxidation"] = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h},
+          ["shadow"]    = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h},
         },
         ["north"] = {
-          ["base"]      = {["shift-x"] = x_off_v, ["shift-y"] = y_off_v, ["width"] = v_size, ["height"] = v_size, ["scale"] = .5},
-          ["idle"]      = {["shift-x"] = x_off_v, ["shift-y"] = y_off_v, ["width"] = v_size, ["height"] = v_size, ["scale"] = .5},
-          ["sparks"]    = {["shift-x"] = x_off_v, ["shift-y"] = y_off_v, ["width"] = v_size, ["height"] = v_size, ["scale"] = .5},
-          ["workpiece"] = {["shift-x"] = x_off_v, ["shift-y"] = y_off_v, ["width"] = v_size, ["height"] = v_size, ["scale"] = .5},
-          ["oxidation"] = {["shift-x"] = x_off_v, ["shift-y"] = y_off_v, ["width"] = v_size, ["height"] = v_size, ["scale"] = .5},
-          ["shadow"]    = {["shift-x"] = x_off_v, ["shift-y"] = y_off_v, ["width"] = v_size, ["height"] = v_size, ["scale"] = .5}
+          ["base"]      = {["shift-x"] = x_off_v_290, ["shift-y"] = y_off_v_290},
+          ["idle"]      = {["shift-x"] = x_off_v_290, ["shift-y"] = y_off_v_290},
+          ["sparks"]    = {["shift-x"] = x_off_v_290, ["shift-y"] = y_off_v_290},
+          ["workpiece"] = {["shift-x"] = x_off_v_290, ["shift-y"] = y_off_v_290},
+          ["oxidation"] = {["shift-x"] = x_off_v_290, ["shift-y"] = y_off_v_290},
+          ["shadow"]    = {["shift-x"] = x_off_v_290, ["shift-y"] = y_off_v_290},
         },
       },
       ["normal"] = {
         ["west"] = {   
-          ["base"]      = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1},
-          ["idle"]      = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1},
-          ["sparks"]    = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1},
-          ["workpiece"] = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1},
-          ["oxidation"] = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1},
-          ["shadow"]    = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1}
+          ["base"]      = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2},
+          ["idle"]      = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2},
+          ["sparks"]    = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2},
+          ["workpiece"] = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2},
+          ["oxidation"] = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2},
+          ["shadow"]    = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2},
         },
         ["north"] = {
-          ["base"]      = {["shift-x"] = x_off_v/2, ["shift-y"] = y_off_v/2, ["width"] = v_size/2, ["height"] = v_size/2, ["scale"] = 1},
-          ["idle"]      = {["shift-x"] = x_off_v/2, ["shift-y"] = y_off_v/2, ["width"] = v_size/2, ["height"] = v_size/2, ["scale"] = 1},
-          ["sparks"]    = {["shift-x"] = x_off_v/2, ["shift-y"] = y_off_v/2, ["width"] = v_size/2, ["height"] = v_size/2, ["scale"] = 1},
-          ["workpiece"] = {["shift-x"] = x_off_v/2, ["shift-y"] = y_off_v/2, ["width"] = v_size/2, ["height"] = v_size/2, ["scale"] = 1},
-          ["oxidation"] = {["shift-x"] = x_off_v/2, ["shift-y"] = y_off_v/2, ["width"] = v_size/2, ["height"] = v_size/2, ["scale"] = 1},
-          ["shadow"]    = {["shift-x"] = x_off_v/2, ["shift-y"] = y_off_v/2, ["width"] = v_size/2, ["height"] = v_size/2, ["scale"] = 1}
+          ["base"]      = {["shift-x"] = x_off_v_290/2, ["shift-y"] = y_off_v_290/2},
+          ["idle"]      = {["shift-x"] = x_off_v_290/2, ["shift-y"] = y_off_v_290/2},
+          ["sparks"]    = {["shift-x"] = x_off_v_290/2, ["shift-y"] = y_off_v_290/2},
+          ["workpiece"] = {["shift-x"] = x_off_v_290/2, ["shift-y"] = y_off_v_290/2},
+          ["oxidation"] = {["shift-x"] = x_off_v_290/2, ["shift-y"] = y_off_v_290/2},
+          ["shadow"]    = {["shift-x"] = x_off_v_290/2, ["shift-y"] = y_off_v_290/2},
         }
       }
     },
 
     [MW_Minisembler.DRILL_PRESS] = {
-      ["frame-count"] = 31,
-      ["line-length"] = 6,
       ["hr"] = {
         ["west"] = {
-          ["base"]      = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5},
-          ["idle"]      = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5},
-          ["sparks"]    = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5},
-          ["workpiece"] = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5},
-          ["oxidation"] = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5},
-          ["shadow"]    = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5}
+          ["base"]      = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h},
+          ["idle"]      = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h},
+          ["sparks"]    = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h},
+          ["workpiece"] = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h},
+          ["oxidation"] = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h},
+          ["shadow"]    = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h},
         },
         ["north"] = {
-          ["base"]      = {["shift-x"] = x_off_v, ["shift-y"] = y_off_v, ["width"] = v_size, ["height"] = v_size, ["scale"] = .5},
-          ["idle"]      = {["shift-x"] = x_off_v, ["shift-y"] = y_off_v, ["width"] = v_size, ["height"] = v_size, ["scale"] = .5},
-          ["sparks"]    = {["shift-x"] = x_off_v, ["shift-y"] = y_off_v, ["width"] = v_size, ["height"] = v_size, ["scale"] = .5},
-          ["workpiece"] = {["shift-x"] = x_off_v, ["shift-y"] = y_off_v, ["width"] = v_size, ["height"] = v_size, ["scale"] = .5},
-          ["oxidation"] = {["shift-x"] = x_off_v, ["shift-y"] = y_off_v, ["width"] = v_size, ["height"] = v_size, ["scale"] = .5},
-          ["shadow"]    = {["shift-x"] = x_off_v, ["shift-y"] = y_off_v, ["width"] = v_size, ["height"] = v_size, ["scale"] = .5}
+          ["base"]      = {["shift-x"] = x_off_v_290, ["shift-y"] = y_off_v_290},
+          ["idle"]      = {["shift-x"] = x_off_v_290, ["shift-y"] = y_off_v_290},
+          ["sparks"]    = {["shift-x"] = x_off_v_290, ["shift-y"] = y_off_v_290},
+          ["workpiece"] = {["shift-x"] = x_off_v_290, ["shift-y"] = y_off_v_290},
+          ["oxidation"] = {["shift-x"] = x_off_v_290, ["shift-y"] = y_off_v_290},
+          ["shadow"]    = {["shift-x"] = x_off_v_290, ["shift-y"] = y_off_v_290},
         },
       },
       ["normal"] = {
         ["west"] = {   
-          ["base"]      = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1},
-          ["idle"]      = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1},
-          ["sparks"]    = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1},
-          ["workpiece"] = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1},
-          ["oxidation"] = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1},
-          ["shadow"]    = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1}
+          ["base"]      = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2},
+          ["idle"]      = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2},
+          ["sparks"]    = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2},
+          ["workpiece"] = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2},
+          ["oxidation"] = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2},
+          ["shadow"]    = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2},
         },
         ["north"] = {
-          ["base"]      = {["shift-x"] = x_off_v/2, ["shift-y"] = y_off_v/2, ["width"] = v_size/2, ["height"] = v_size/2, ["scale"] = 1},
-          ["idle"]      = {["shift-x"] = x_off_v/2, ["shift-y"] = y_off_v/2, ["width"] = v_size/2, ["height"] = v_size/2, ["scale"] = 1},
-          ["sparks"]    = {["shift-x"] = x_off_v/2, ["shift-y"] = y_off_v/2, ["width"] = v_size/2, ["height"] = v_size/2, ["scale"] = 1},
-          ["workpiece"] = {["shift-x"] = x_off_v/2, ["shift-y"] = y_off_v/2, ["width"] = v_size/2, ["height"] = v_size/2, ["scale"] = 1},
-          ["oxidation"] = {["shift-x"] = x_off_v/2, ["shift-y"] = y_off_v/2, ["width"] = v_size/2, ["height"] = v_size/2, ["scale"] = 1},
-          ["shadow"]    = {["shift-x"] = x_off_v/2, ["shift-y"] = y_off_v/2, ["width"] = v_size/2, ["height"] = v_size/2, ["scale"] = 1}
+          ["base"]      = {["shift-x"] = x_off_v_290/2, ["shift-y"] = y_off_v_290/2},
+          ["idle"]      = {["shift-x"] = x_off_v_290/2, ["shift-y"] = y_off_v_290/2},
+          ["sparks"]    = {["shift-x"] = x_off_v_290/2, ["shift-y"] = y_off_v_290/2},
+          ["workpiece"] = {["shift-x"] = x_off_v_290/2, ["shift-y"] = y_off_v_290/2},
+          ["oxidation"] = {["shift-x"] = x_off_v_290/2, ["shift-y"] = y_off_v_290/2},
+          ["shadow"]    = {["shift-x"] = x_off_v_290/2, ["shift-y"] = y_off_v_290/2},
         }
       }
     },
 
     [MW_Minisembler.ELECTROPLATER] = {
-      ["frame-count"] = 25,
-      ["line-length"] = 5,
       ["hr"] = {
         ["west"] = {
-          ["base"]      = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5},
-          ["idle"]      = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5},
-          ["sparks"]    = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5},
-          ["workpiece"] = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5},
-          ["oxidation"] = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5},
-          ["shadow"]    = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5}
+          ["base"]      = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h},
+          ["idle"]      = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h},
+          ["sparks"]    = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h},
+          ["workpiece"] = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h},
+          ["oxidation"] = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h},
+          ["shadow"]    = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h},
         },
         ["north"] = {
-          ["base"]      = {["shift-x"] = x_off_v, ["shift-y"] = y_off_v, ["width"] = v_size, ["height"] = v_size, ["scale"] = .5},
-          ["idle"]      = {["shift-x"] = x_off_v, ["shift-y"] = y_off_v, ["width"] = v_size, ["height"] = v_size, ["scale"] = .5},
-          ["sparks"]    = {["shift-x"] = x_off_v, ["shift-y"] = y_off_v, ["width"] = v_size, ["height"] = v_size, ["scale"] = .5},
-          ["workpiece"] = {["shift-x"] = x_off_v, ["shift-y"] = y_off_v, ["width"] = v_size, ["height"] = v_size, ["scale"] = .5},
-          ["oxidation"] = {["shift-x"] = x_off_v, ["shift-y"] = y_off_v, ["width"] = v_size, ["height"] = v_size, ["scale"] = .5},
-          ["shadow"]    = {["shift-x"] = x_off_v, ["shift-y"] = y_off_v, ["width"] = v_size, ["height"] = v_size, ["scale"] = .5}
+          ["base"]      = {["shift-x"] = x_off_v_290, ["shift-y"] = y_off_v_290},
+          ["idle"]      = {["shift-x"] = x_off_v_290, ["shift-y"] = y_off_v_290},
+          ["sparks"]    = {["shift-x"] = x_off_v_290, ["shift-y"] = y_off_v_290},
+          ["workpiece"] = {["shift-x"] = x_off_v_290, ["shift-y"] = y_off_v_290},
+          ["oxidation"] = {["shift-x"] = x_off_v_290, ["shift-y"] = y_off_v_290},
+          ["shadow"]    = {["shift-x"] = x_off_v_290, ["shift-y"] = y_off_v_290},
         },
       },
       ["normal"] = {
         ["west"] = {   
-          ["base"]      = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1},
-          ["idle"]      = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1},
-          ["sparks"]    = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1},
-          ["workpiece"] = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1},
-          ["oxidation"] = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1},
-          ["shadow"]    = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1}
+          ["base"]      = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2},
+          ["idle"]      = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2},
+          ["sparks"]    = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2},
+          ["workpiece"] = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2},
+          ["oxidation"] = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2},
+          ["shadow"]    = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2},
         },
         ["north"] = {
-          ["base"]      = {["shift-x"] = x_off_v/2, ["shift-y"] = y_off_v/2, ["width"] = v_size/2, ["height"] = v_size/2, ["scale"] = 1},
-          ["idle"]      = {["shift-x"] = x_off_v/2, ["shift-y"] = y_off_v/2, ["width"] = v_size/2, ["height"] = v_size/2, ["scale"] = 1},
-          ["sparks"]    = {["shift-x"] = x_off_v/2, ["shift-y"] = y_off_v/2, ["width"] = v_size/2, ["height"] = v_size/2, ["scale"] = 1},
-          ["workpiece"] = {["shift-x"] = x_off_v/2, ["shift-y"] = y_off_v/2, ["width"] = v_size/2, ["height"] = v_size/2, ["scale"] = 1},
-          ["oxidation"] = {["shift-x"] = x_off_v/2, ["shift-y"] = y_off_v/2, ["width"] = v_size/2, ["height"] = v_size/2, ["scale"] = 1},
-          ["shadow"]    = {["shift-x"] = x_off_v/2, ["shift-y"] = y_off_v/2, ["width"] = v_size/2, ["height"] = v_size/2, ["scale"] = 1}
+          ["base"]      = {["shift-x"] = x_off_v_290/2, ["shift-y"] = y_off_v_290/2},
+          ["idle"]      = {["shift-x"] = x_off_v_290/2, ["shift-y"] = y_off_v_290/2},
+          ["sparks"]    = {["shift-x"] = x_off_v_290/2, ["shift-y"] = y_off_v_290/2},
+          ["workpiece"] = {["shift-x"] = x_off_v_290/2, ["shift-y"] = y_off_v_290/2},
+          ["oxidation"] = {["shift-x"] = x_off_v_290/2, ["shift-y"] = y_off_v_290/2},
+          ["shadow"]    = {["shift-x"] = x_off_v_290/2, ["shift-y"] = y_off_v_290/2},
         }
       }
     },
 
     [MW_Minisembler.GRINDER] = {
-      ["frame-count"] = 31,
-      ["line-length"] = 6,
       ["hr"] = {
         ["west"] = {
-          ["base"]      = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5},
-          ["idle"]      = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5},
-          ["sparks"]    = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5},
-          ["workpiece"] = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5},
-          ["oxidation"] = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5},
-          ["shadow"]    = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5}
+          ["base"]      = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h},
+          ["idle"]      = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h},
+          ["sparks"]    = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h},
+          ["workpiece"] = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h},
+          ["oxidation"] = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h},
+          ["shadow"]    = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h},
         },
         ["north"] = {
-          ["base"]      = {["shift-x"] = x_off_v, ["shift-y"] = y_off_v, ["width"] = v_size, ["height"] = v_size, ["scale"] = .5},
-          ["idle"]      = {["shift-x"] = x_off_v, ["shift-y"] = y_off_v, ["width"] = v_size, ["height"] = v_size, ["scale"] = .5},
-          ["sparks"]    = {["shift-x"] = x_off_v, ["shift-y"] = y_off_v, ["width"] = v_size, ["height"] = v_size, ["scale"] = .5},
-          ["workpiece"] = {["shift-x"] = x_off_v, ["shift-y"] = y_off_v, ["width"] = v_size, ["height"] = v_size, ["scale"] = .5},
-          ["oxidation"] = {["shift-x"] = x_off_v, ["shift-y"] = y_off_v, ["width"] = v_size, ["height"] = v_size, ["scale"] = .5},
-          ["shadow"]    = {["shift-x"] = x_off_v, ["shift-y"] = y_off_v, ["width"] = v_size, ["height"] = v_size, ["scale"] = .5}
+          ["base"]      = {["shift-x"] = x_off_v_290, ["shift-y"] = y_off_v_290},
+          ["idle"]      = {["shift-x"] = x_off_v_290, ["shift-y"] = y_off_v_290},
+          ["sparks"]    = {["shift-x"] = x_off_v_290, ["shift-y"] = y_off_v_290},
+          ["workpiece"] = {["shift-x"] = x_off_v_290, ["shift-y"] = y_off_v_290},
+          ["oxidation"] = {["shift-x"] = x_off_v_290, ["shift-y"] = y_off_v_290},
+          ["shadow"]    = {["shift-x"] = x_off_v_290, ["shift-y"] = y_off_v_290},
         },
       },
       ["normal"] = {
         ["west"] = {   
-          ["base"]      = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1},
-          ["idle"]      = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1},
-          ["sparks"]    = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1},
-          ["workpiece"] = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1},
-          ["oxidation"] = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1},
-          ["shadow"]    = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1}
+          ["base"]      = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2},
+          ["idle"]      = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2},
+          ["sparks"]    = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2},
+          ["workpiece"] = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2},
+          ["oxidation"] = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2},
+          ["shadow"]    = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2},
         },
         ["north"] = {
-          ["base"]      = {["shift-x"] = x_off_v/2, ["shift-y"] = y_off_v/2, ["width"] = v_size/2, ["height"] = v_size/2, ["scale"] = 1},
-          ["idle"]      = {["shift-x"] = x_off_v/2, ["shift-y"] = y_off_v/2, ["width"] = v_size/2, ["height"] = v_size/2, ["scale"] = 1},
-          ["sparks"]    = {["shift-x"] = x_off_v/2, ["shift-y"] = y_off_v/2, ["width"] = v_size/2, ["height"] = v_size/2, ["scale"] = 1},
-          ["workpiece"] = {["shift-x"] = x_off_v/2, ["shift-y"] = y_off_v/2, ["width"] = v_size/2, ["height"] = v_size/2, ["scale"] = 1},
-          ["oxidation"] = {["shift-x"] = x_off_v/2, ["shift-y"] = y_off_v/2, ["width"] = v_size/2, ["height"] = v_size/2, ["scale"] = 1},
-          ["shadow"]    = {["shift-x"] = x_off_v/2, ["shift-y"] = y_off_v/2, ["width"] = v_size/2, ["height"] = v_size/2, ["scale"] = 1}
+          ["base"]      = {["shift-x"] = x_off_v_290/2, ["shift-y"] = y_off_v_290/2},
+          ["idle"]      = {["shift-x"] = x_off_v_290/2, ["shift-y"] = y_off_v_290/2},
+          ["sparks"]    = {["shift-x"] = x_off_v_290/2, ["shift-y"] = y_off_v_290/2},
+          ["workpiece"] = {["shift-x"] = x_off_v_290/2, ["shift-y"] = y_off_v_290/2},
+          ["oxidation"] = {["shift-x"] = x_off_v_290/2, ["shift-y"] = y_off_v_290/2},
+          ["shadow"]    = {["shift-x"] = x_off_v_290/2, ["shift-y"] = y_off_v_290/2},
         }
       }
     },
 
     [MW_Minisembler.METAL_ASSAYER] = {
-      ["frame-count"] = 25,
-      ["line-length"] = 5,
       ["hr"] = {
         ["west"] = {
-          ["base"]      = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5},
-          ["idle"]      = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5},
-          ["sparks"]    = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5},
-          ["workpiece"] = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5},
-          ["oxidation"] = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5},
-          ["shadow"]    = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5}
+          ["base"]      = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h},
+          ["idle"]      = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h},
+          ["sparks"]    = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h},
+          ["workpiece"] = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h},
+          ["oxidation"] = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h},
+          ["shadow"]    = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h},
         },
         ["north"] = {
-          ["base"]      = {["shift-x"] = x_off_v, ["shift-y"] = y_off_v, ["width"] = v_size, ["height"] = v_size, ["scale"] = .5},
-          ["idle"]      = {["shift-x"] = x_off_v, ["shift-y"] = y_off_v, ["width"] = v_size, ["height"] = v_size, ["scale"] = .5},
-          ["sparks"]    = {["shift-x"] = x_off_v, ["shift-y"] = y_off_v, ["width"] = v_size, ["height"] = v_size, ["scale"] = .5},
-          ["workpiece"] = {["shift-x"] = x_off_v, ["shift-y"] = y_off_v, ["width"] = v_size, ["height"] = v_size, ["scale"] = .5},
-          ["oxidation"] = {["shift-x"] = x_off_v, ["shift-y"] = y_off_v, ["width"] = v_size, ["height"] = v_size, ["scale"] = .5},
-          ["shadow"]    = {["shift-x"] = x_off_v, ["shift-y"] = y_off_v, ["width"] = v_size, ["height"] = v_size, ["scale"] = .5}
+          ["base"]      = {["shift-x"] = x_off_v_290, ["shift-y"] = y_off_v_290},
+          ["idle"]      = {["shift-x"] = x_off_v_290, ["shift-y"] = y_off_v_290},
+          ["sparks"]    = {["shift-x"] = x_off_v_290, ["shift-y"] = y_off_v_290},
+          ["workpiece"] = {["shift-x"] = x_off_v_290, ["shift-y"] = y_off_v_290},
+          ["oxidation"] = {["shift-x"] = x_off_v_290, ["shift-y"] = y_off_v_290},
+          ["shadow"]    = {["shift-x"] = x_off_v_290, ["shift-y"] = y_off_v_290},
         },
       },
       ["normal"] = {
         ["west"] = {   
-          ["base"]      = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1},
-          ["idle"]      = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1},
-          ["sparks"]    = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1},
-          ["workpiece"] = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1},
-          ["oxidation"] = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1},
-          ["shadow"]    = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1}
+          ["base"]      = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2},
+          ["idle"]      = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2},
+          ["sparks"]    = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2},
+          ["workpiece"] = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2},
+          ["oxidation"] = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2},
+          ["shadow"]    = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2},
         },
         ["north"] = {
-          ["base"]      = {["shift-x"] = x_off_v/2, ["shift-y"] = y_off_v/2, ["width"] = v_size/2, ["height"] = v_size/2, ["scale"] = 1},
-          ["idle"]      = {["shift-x"] = x_off_v/2, ["shift-y"] = y_off_v/2, ["width"] = v_size/2, ["height"] = v_size/2, ["scale"] = 1},
-          ["sparks"]    = {["shift-x"] = x_off_v/2, ["shift-y"] = y_off_v/2, ["width"] = v_size/2, ["height"] = v_size/2, ["scale"] = 1},
-          ["workpiece"] = {["shift-x"] = x_off_v/2, ["shift-y"] = y_off_v/2, ["width"] = v_size/2, ["height"] = v_size/2, ["scale"] = 1},
-          ["oxidation"] = {["shift-x"] = x_off_v/2, ["shift-y"] = y_off_v/2, ["width"] = v_size/2, ["height"] = v_size/2, ["scale"] = 1},
-          ["shadow"]    = {["shift-x"] = x_off_v/2, ["shift-y"] = y_off_v/2, ["width"] = v_size/2, ["height"] = v_size/2, ["scale"] = 1}
+          ["base"]      = {["shift-x"] = x_off_v_290/2, ["shift-y"] = y_off_v_290/2},
+          ["idle"]      = {["shift-x"] = x_off_v_290/2, ["shift-y"] = y_off_v_290/2},
+          ["sparks"]    = {["shift-x"] = x_off_v_290/2, ["shift-y"] = y_off_v_290/2},
+          ["workpiece"] = {["shift-x"] = x_off_v_290/2, ["shift-y"] = y_off_v_290/2},
+          ["oxidation"] = {["shift-x"] = x_off_v_290/2, ["shift-y"] = y_off_v_290/2},
+          ["shadow"]    = {["shift-x"] = x_off_v_290/2, ["shift-y"] = y_off_v_290/2},
         }
       }
     },
 
     [MW_Minisembler.METAL_BANDSAW] = {
-      ["frame-count"] = 24,
-      ["line-length"] = 5,
       ["hr"] = {
         ["west"] = {
-          ["base"]      = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5},
-          ["idle"]      = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5},
-          ["sparks"]    = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5},
-          ["workpiece"] = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5},
-          ["oxidation"] = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5},
-          ["shadow"]    = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5}
+          ["base"]      = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h},
+          ["idle"]      = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h},
+          ["sparks"]    = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h},
+          ["workpiece"] = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h},
+          ["oxidation"] = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h},
+          ["shadow"]    = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h},
         },
         ["north"] = {
-          ["base"]      = {["shift-x"] = x_off_v, ["shift-y"] = y_off_v, ["width"] = v_size, ["height"] = v_size, ["scale"] = .5},
-          ["idle"]      = {["shift-x"] = x_off_v, ["shift-y"] = y_off_v, ["width"] = v_size, ["height"] = v_size, ["scale"] = .5},
-          ["sparks"]    = {["shift-x"] = x_off_v, ["shift-y"] = y_off_v, ["width"] = v_size, ["height"] = v_size, ["scale"] = .5},
-          ["workpiece"] = {["shift-x"] = x_off_v, ["shift-y"] = y_off_v, ["width"] = v_size, ["height"] = v_size, ["scale"] = .5},
-          ["oxidation"] = {["shift-x"] = x_off_v, ["shift-y"] = y_off_v, ["width"] = v_size, ["height"] = v_size, ["scale"] = .5},
-          ["shadow"]    = {["shift-x"] = x_off_v, ["shift-y"] = y_off_v, ["width"] = v_size, ["height"] = v_size, ["scale"] = .5}
+          ["base"]      = {["shift-x"] = x_off_v_290, ["shift-y"] = y_off_v_290},
+          ["idle"]      = {["shift-x"] = x_off_v_290, ["shift-y"] = y_off_v_290},
+          ["sparks"]    = {["shift-x"] = x_off_v_290, ["shift-y"] = y_off_v_290},
+          ["workpiece"] = {["shift-x"] = x_off_v_290, ["shift-y"] = y_off_v_290},
+          ["oxidation"] = {["shift-x"] = x_off_v_290, ["shift-y"] = y_off_v_290},
+          ["shadow"]    = {["shift-x"] = x_off_v_290, ["shift-y"] = y_off_v_290},
         },
       },
       ["normal"] = {
         ["west"] = {   
-          ["base"]      = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1},
-          ["idle"]      = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1},
-          ["sparks"]    = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1},
-          ["workpiece"] = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1},
-          ["oxidation"] = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1},
-          ["shadow"]    = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1}
+          ["base"]      = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2},
+          ["idle"]      = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2},
+          ["sparks"]    = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2},
+          ["workpiece"] = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2},
+          ["oxidation"] = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2},
+          ["shadow"]    = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2},
         },
         ["north"] = {
-          ["base"]      = {["shift-x"] = x_off_v/2, ["shift-y"] = y_off_v/2, ["width"] = v_size/2, ["height"] = v_size/2, ["scale"] = 1},
-          ["idle"]      = {["shift-x"] = x_off_v/2, ["shift-y"] = y_off_v/2, ["width"] = v_size/2, ["height"] = v_size/2, ["scale"] = 1},
-          ["sparks"]    = {["shift-x"] = x_off_v/2, ["shift-y"] = y_off_v/2, ["width"] = v_size/2, ["height"] = v_size/2, ["scale"] = 1},
-          ["workpiece"] = {["shift-x"] = x_off_v/2, ["shift-y"] = y_off_v/2, ["width"] = v_size/2, ["height"] = v_size/2, ["scale"] = 1},
-          ["oxidation"] = {["shift-x"] = x_off_v/2, ["shift-y"] = y_off_v/2, ["width"] = v_size/2, ["height"] = v_size/2, ["scale"] = 1},
-          ["shadow"]    = {["shift-x"] = x_off_v/2, ["shift-y"] = y_off_v/2, ["width"] = v_size/2, ["height"] = v_size/2, ["scale"] = 1}
+          ["base"]      = {["shift-x"] = x_off_v_290/2, ["shift-y"] = y_off_v_290/2},
+          ["idle"]      = {["shift-x"] = x_off_v_290/2, ["shift-y"] = y_off_v_290/2},
+          ["sparks"]    = {["shift-x"] = x_off_v_290/2, ["shift-y"] = y_off_v_290/2},
+          ["workpiece"] = {["shift-x"] = x_off_v_290/2, ["shift-y"] = y_off_v_290/2},
+          ["oxidation"] = {["shift-x"] = x_off_v_290/2, ["shift-y"] = y_off_v_290/2},
+          ["shadow"]    = {["shift-x"] = x_off_v_290/2, ["shift-y"] = y_off_v_290/2},
         }
       }
     },
 
     [MW_Minisembler.METAL_EXTRUDER] = {
-      ["frame-count"] = 36,
-      ["line-length"] = 6,
       ["hr"] = {
         ["west"] = {
-          ["base"]      = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5},
-          ["idle"]      = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5},
-          ["sparks"]    = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5},
-          ["workpiece"] = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5},
-          ["oxidation"] = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5},
-          ["shadow"]    = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5}
+          ["base"]      = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h},
+          ["idle"]      = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h},
+          ["sparks"]    = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h},
+          ["workpiece"] = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h},
+          ["oxidation"] = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h},
+          ["shadow"]    = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h},
         },
         ["north"] = {
-          ["base"]      = {["shift-x"] = x_off_v, ["shift-y"] = y_off_v, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5},
-          ["idle"]      = {["shift-x"] = x_off_v, ["shift-y"] = y_off_v, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5},
-          ["sparks"]    = {["shift-x"] = x_off_v, ["shift-y"] = y_off_v, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5},
-          ["workpiece"] = {["shift-x"] = x_off_v, ["shift-y"] = y_off_v, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5},
-          ["oxidation"] = {["shift-x"] = x_off_v, ["shift-y"] = y_off_v, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5},
-          ["shadow"]    = {["shift-x"] = x_off_v, ["shift-y"] = y_off_v, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5}
+          ["base"]      = {["shift-x"] = x_off_v_340, ["shift-y"] = y_off_v_340},
+          ["idle"]      = {["shift-x"] = x_off_v_340, ["shift-y"] = y_off_v_340},
+          ["sparks"]    = {["shift-x"] = x_off_v_340, ["shift-y"] = y_off_v_340},
+          ["workpiece"] = {["shift-x"] = x_off_v_340, ["shift-y"] = y_off_v_340},
+          ["oxidation"] = {["shift-x"] = x_off_v_340, ["shift-y"] = y_off_v_340},
+          ["shadow"]    = {["shift-x"] = x_off_v_340, ["shift-y"] = y_off_v_340},
         },
       },
       ["normal"] = {
         ["west"] = {   
-          ["base"]      = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1},
-          ["idle"]      = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1},
-          ["sparks"]    = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1},
-          ["workpiece"] = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1},
-          ["oxidation"] = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1},
-          ["shadow"]    = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1}
+          ["base"]      = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2},
+          ["idle"]      = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2},
+          ["sparks"]    = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2},
+          ["workpiece"] = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2},
+          ["oxidation"] = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2},
+          ["shadow"]    = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2},
         },
         ["north"] = {
-          ["base"]      = {["shift-x"] = x_off_v/2, ["shift-y"] = y_off_v/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1},
-          ["idle"]      = {["shift-x"] = x_off_v/2, ["shift-y"] = y_off_v/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1},
-          ["sparks"]    = {["shift-x"] = x_off_v/2, ["shift-y"] = y_off_v/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1},
-          ["workpiece"] = {["shift-x"] = x_off_v/2, ["shift-y"] = y_off_v/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1},
-          ["oxidation"] = {["shift-x"] = x_off_v/2, ["shift-y"] = y_off_v/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1},
-          ["shadow"]    = {["shift-x"] = x_off_v/2, ["shift-y"] = y_off_v/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1}
+          ["base"]      = {["shift-x"] = x_off_v_340/2, ["shift-y"] = y_off_v_340/2},
+          ["idle"]      = {["shift-x"] = x_off_v_340/2, ["shift-y"] = y_off_v_340/2},
+          ["sparks"]    = {["shift-x"] = x_off_v_340/2, ["shift-y"] = y_off_v_340/2},
+          ["workpiece"] = {["shift-x"] = x_off_v_340/2, ["shift-y"] = y_off_v_340/2},
+          ["oxidation"] = {["shift-x"] = x_off_v_340/2, ["shift-y"] = y_off_v_340/2},
+          ["shadow"]    = {["shift-x"] = x_off_v_340/2, ["shift-y"] = y_off_v_340/2},
         }
       }
     },
 
     [MW_Minisembler.METAL_LATHE] = {
-      ["frame-count"] = 24,
-      ["line-length"] = 5,
       ["hr"] = {
         ["west"] = {
-          ["base"]      = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5},
-          ["idle"]      = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5},
-          ["sparks"]    = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5},
-          ["workpiece"] = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5},
-          ["oxidation"] = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5},
-          ["shadow"]    = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5}
+          ["base"]      = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h},
+          ["idle"]      = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h},
+          ["sparks"]    = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h},
+          ["workpiece"] = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h},
+          ["oxidation"] = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h},
+          ["shadow"]    = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h},
         },
         ["north"] = {
-          ["base"]      = {["shift-x"] = x_off_v, ["shift-y"] = y_off_v, ["width"] = v_size, ["height"] = v_size, ["scale"] = .5},
-          ["idle"]      = {["shift-x"] = x_off_v, ["shift-y"] = y_off_v, ["width"] = v_size, ["height"] = v_size, ["scale"] = .5},
-          ["sparks"]    = {["shift-x"] = x_off_v, ["shift-y"] = y_off_v, ["width"] = v_size, ["height"] = v_size, ["scale"] = .5},
-          ["workpiece"] = {["shift-x"] = x_off_v, ["shift-y"] = y_off_v, ["width"] = v_size, ["height"] = v_size, ["scale"] = .5},
-          ["oxidation"] = {["shift-x"] = x_off_v, ["shift-y"] = y_off_v, ["width"] = v_size, ["height"] = v_size, ["scale"] = .5},
-          ["shadow"]    = {["shift-x"] = x_off_v, ["shift-y"] = y_off_v, ["width"] = v_size, ["height"] = v_size, ["scale"] = .5}
+          ["base"]      = {["shift-x"] = x_off_v_290, ["shift-y"] = y_off_v_290},
+          ["idle"]      = {["shift-x"] = x_off_v_290, ["shift-y"] = y_off_v_290},
+          ["sparks"]    = {["shift-x"] = x_off_v_290, ["shift-y"] = y_off_v_290},
+          ["workpiece"] = {["shift-x"] = x_off_v_290, ["shift-y"] = y_off_v_290},
+          ["oxidation"] = {["shift-x"] = x_off_v_290, ["shift-y"] = y_off_v_290},
+          ["shadow"]    = {["shift-x"] = x_off_v_290, ["shift-y"] = y_off_v_290},
         },
       },
       ["normal"] = {
         ["west"] = {   
-          ["base"]      = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1},
-          ["idle"]      = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1},
-          ["sparks"]    = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1},
-          ["workpiece"] = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1},
-          ["oxidation"] = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1},
-          ["shadow"]    = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1}
+          ["base"]      = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2},
+          ["idle"]      = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2},
+          ["sparks"]    = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2},
+          ["workpiece"] = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2},
+          ["oxidation"] = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2},
+          ["shadow"]    = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2},
         },
         ["north"] = {
-          ["base"]      = {["shift-x"] = x_off_v/2, ["shift-y"] = y_off_v/2, ["width"] = v_size/2, ["height"] = v_size/2, ["scale"] = 1},
-          ["idle"]      = {["shift-x"] = x_off_v/2, ["shift-y"] = y_off_v/2, ["width"] = v_size/2, ["height"] = v_size/2, ["scale"] = 1},
-          ["sparks"]    = {["shift-x"] = x_off_v/2, ["shift-y"] = y_off_v/2, ["width"] = v_size/2, ["height"] = v_size/2, ["scale"] = 1},
-          ["workpiece"] = {["shift-x"] = x_off_v/2, ["shift-y"] = y_off_v/2, ["width"] = v_size/2, ["height"] = v_size/2, ["scale"] = 1},
-          ["oxidation"] = {["shift-x"] = x_off_v/2, ["shift-y"] = y_off_v/2, ["width"] = v_size/2, ["height"] = v_size/2, ["scale"] = 1},
-          ["shadow"]    = {["shift-x"] = x_off_v/2, ["shift-y"] = y_off_v/2, ["width"] = v_size/2, ["height"] = v_size/2, ["scale"] = 1}
+          ["base"]      = {["shift-x"] = x_off_v_290/2, ["shift-y"] = y_off_v_290/2},
+          ["idle"]      = {["shift-x"] = x_off_v_290/2, ["shift-y"] = y_off_v_290/2},
+          ["sparks"]    = {["shift-x"] = x_off_v_290/2, ["shift-y"] = y_off_v_290/2},
+          ["workpiece"] = {["shift-x"] = x_off_v_290/2, ["shift-y"] = y_off_v_290/2},
+          ["oxidation"] = {["shift-x"] = x_off_v_290/2, ["shift-y"] = y_off_v_290/2},
+          ["shadow"]    = {["shift-x"] = x_off_v_290/2, ["shift-y"] = y_off_v_290/2},
         }
       }
     },
 
     [MW_Minisembler.MILL] = {
-      ["frame-count"] = 36,
-      ["line-length"] = 6,
       ["hr"] = {
         ["west"] = {
-          ["base"]      = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5},
-          ["idle"]      = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5},
-          ["sparks"]    = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5},
-          ["workpiece"] = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5},
-          ["oxidation"] = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5},
-          ["shadow"]    = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5}
+          ["base"]      = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h},
+          ["idle"]      = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h},
+          ["sparks"]    = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h},
+          ["workpiece"] = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h},
+          ["oxidation"] = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h},
+          ["shadow"]    = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h},
         },
         ["north"] = {
-          ["base"]      = {["shift-x"] = x_off_v, ["shift-y"] = y_off_v, ["width"] = v_size, ["height"] = v_size, ["scale"] = .5},
-          ["idle"]      = {["shift-x"] = x_off_v, ["shift-y"] = y_off_v, ["width"] = v_size, ["height"] = v_size, ["scale"] = .5},
-          ["sparks"]    = {["shift-x"] = x_off_v, ["shift-y"] = y_off_v, ["width"] = v_size, ["height"] = v_size, ["scale"] = .5},
-          ["workpiece"] = {["shift-x"] = x_off_v, ["shift-y"] = y_off_v, ["width"] = v_size, ["height"] = v_size, ["scale"] = .5},
-          ["oxidation"] = {["shift-x"] = x_off_v, ["shift-y"] = y_off_v, ["width"] = v_size, ["height"] = v_size, ["scale"] = .5},
-          ["shadow"]    = {["shift-x"] = x_off_v, ["shift-y"] = y_off_v, ["width"] = v_size, ["height"] = v_size, ["scale"] = .5}
+          ["base"]      = {["shift-x"] = x_off_v_290, ["shift-y"] = y_off_v_290},
+          ["idle"]      = {["shift-x"] = x_off_v_290, ["shift-y"] = y_off_v_290},
+          ["sparks"]    = {["shift-x"] = x_off_v_290, ["shift-y"] = y_off_v_290},
+          ["workpiece"] = {["shift-x"] = x_off_v_290, ["shift-y"] = y_off_v_290},
+          ["oxidation"] = {["shift-x"] = x_off_v_290, ["shift-y"] = y_off_v_290},
+          ["shadow"]    = {["shift-x"] = x_off_v_290, ["shift-y"] = y_off_v_290},
         },
       },
       ["normal"] = {
         ["west"] = {   
-          ["base"]      = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1},
-          ["idle"]      = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1},
-          ["sparks"]    = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1},
-          ["workpiece"] = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1},
-          ["oxidation"] = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1},
-          ["shadow"]    = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1}
+          ["base"]      = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2},
+          ["idle"]      = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2},
+          ["sparks"]    = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2},
+          ["workpiece"] = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2},
+          ["oxidation"] = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2},
+          ["shadow"]    = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2},
         },
         ["north"] = {
-          ["base"]      = {["shift-x"] = x_off_v/2, ["shift-y"] = y_off_v/2, ["width"] = v_size/2, ["height"] = v_size/2, ["scale"] = 1},
-          ["idle"]      = {["shift-x"] = x_off_v/2, ["shift-y"] = y_off_v/2, ["width"] = v_size/2, ["height"] = v_size/2, ["scale"] = 1},
-          ["sparks"]    = {["shift-x"] = x_off_v/2, ["shift-y"] = y_off_v/2, ["width"] = v_size/2, ["height"] = v_size/2, ["scale"] = 1},
-          ["workpiece"] = {["shift-x"] = x_off_v/2, ["shift-y"] = y_off_v/2, ["width"] = v_size/2, ["height"] = v_size/2, ["scale"] = 1},
-          ["oxidation"] = {["shift-x"] = x_off_v/2, ["shift-y"] = y_off_v/2, ["width"] = v_size/2, ["height"] = v_size/2, ["scale"] = 1},
-          ["shadow"]    = {["shift-x"] = x_off_v/2, ["shift-y"] = y_off_v/2, ["width"] = v_size/2, ["height"] = v_size/2, ["scale"] = 1}
+          ["base"]      = {["shift-x"] = x_off_v_290/2, ["shift-y"] = y_off_v_290/2},
+          ["idle"]      = {["shift-x"] = x_off_v_290/2, ["shift-y"] = y_off_v_290/2},
+          ["sparks"]    = {["shift-x"] = x_off_v_290/2, ["shift-y"] = y_off_v_290/2},
+          ["workpiece"] = {["shift-x"] = x_off_v_290/2, ["shift-y"] = y_off_v_290/2},
+          ["oxidation"] = {["shift-x"] = x_off_v_290/2, ["shift-y"] = y_off_v_290/2},
+          ["shadow"]    = {["shift-x"] = x_off_v_290/2, ["shift-y"] = y_off_v_290/2},
         }
       }
     },
 
     [MW_Minisembler.ROLLER] = {
-      ["frame-count"] = 24,
-      ["line-length"] = 5,
       ["hr"] = {
         ["west"] = {
-          ["base"]      = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5},
-          ["idle"]      = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5},
-          ["sparks"]    = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5},
-          ["workpiece"] = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5},
-          ["oxidation"] = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5},
-          ["shadow"]    = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5}
+          ["base"]      = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h},
+          ["idle"]      = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h},
+          ["sparks"]    = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h},
+          ["workpiece"] = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h},
+          ["oxidation"] = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h},
+          ["shadow"]    = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h},
         },
         ["north"] = {
-          ["base"]      = {["shift-x"] = x_off_v, ["shift-y"] = y_off_v, ["width"] = v_size, ["height"] = v_size, ["scale"] = .5},
-          ["idle"]      = {["shift-x"] = x_off_v, ["shift-y"] = y_off_v, ["width"] = v_size, ["height"] = v_size, ["scale"] = .5},
-          ["sparks"]    = {["shift-x"] = x_off_v, ["shift-y"] = y_off_v, ["width"] = v_size, ["height"] = v_size, ["scale"] = .5},
-          ["workpiece"] = {["shift-x"] = x_off_v, ["shift-y"] = y_off_v, ["width"] = v_size, ["height"] = v_size, ["scale"] = .5},
-          ["oxidation"] = {["shift-x"] = x_off_v, ["shift-y"] = y_off_v, ["width"] = v_size, ["height"] = v_size, ["scale"] = .5},
-          ["shadow"]    = {["shift-x"] = x_off_v, ["shift-y"] = y_off_v, ["width"] = v_size, ["height"] = v_size, ["scale"] = .5}
+          ["base"]      = {["shift-x"] = x_off_v_290, ["shift-y"] = y_off_v_290},
+          ["idle"]      = {["shift-x"] = x_off_v_290, ["shift-y"] = y_off_v_290},
+          ["sparks"]    = {["shift-x"] = x_off_v_290, ["shift-y"] = y_off_v_290},
+          ["workpiece"] = {["shift-x"] = x_off_v_290, ["shift-y"] = y_off_v_290},
+          ["oxidation"] = {["shift-x"] = x_off_v_290, ["shift-y"] = y_off_v_290},
+          ["shadow"]    = {["shift-x"] = x_off_v_290, ["shift-y"] = y_off_v_290},
         },
       },
       ["normal"] = {
         ["west"] = {   
-          ["base"]      = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1},
-          ["idle"]      = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1},
-          ["sparks"]    = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1},
-          ["workpiece"] = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1},
-          ["oxidation"] = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1},
-          ["shadow"]    = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1}
+          ["base"]      = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2},
+          ["idle"]      = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2},
+          ["sparks"]    = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2},
+          ["workpiece"] = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2},
+          ["oxidation"] = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2},
+          ["shadow"]    = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2},
         },
         ["north"] = {
-          ["base"]      = {["shift-x"] = x_off_v/2, ["shift-y"] = y_off_v/2, ["width"] = v_size/2, ["height"] = v_size/2, ["scale"] = 1},
-          ["idle"]      = {["shift-x"] = x_off_v/2, ["shift-y"] = y_off_v/2, ["width"] = v_size/2, ["height"] = v_size/2, ["scale"] = 1},
-          ["sparks"]    = {["shift-x"] = x_off_v/2, ["shift-y"] = y_off_v/2, ["width"] = v_size/2, ["height"] = v_size/2, ["scale"] = 1},
-          ["workpiece"] = {["shift-x"] = x_off_v/2, ["shift-y"] = y_off_v/2, ["width"] = v_size/2, ["height"] = v_size/2, ["scale"] = 1},
-          ["oxidation"] = {["shift-x"] = x_off_v/2, ["shift-y"] = y_off_v/2, ["width"] = v_size/2, ["height"] = v_size/2, ["scale"] = 1},
-          ["shadow"]    = {["shift-x"] = x_off_v/2, ["shift-y"] = y_off_v/2, ["width"] = v_size/2, ["height"] = v_size/2, ["scale"] = 1}
+          ["base"]      = {["shift-x"] = x_off_v_290/2, ["shift-y"] = y_off_v_290/2},
+          ["idle"]      = {["shift-x"] = x_off_v_290/2, ["shift-y"] = y_off_v_290/2},
+          ["sparks"]    = {["shift-x"] = x_off_v_290/2, ["shift-y"] = y_off_v_290/2},
+          ["workpiece"] = {["shift-x"] = x_off_v_290/2, ["shift-y"] = y_off_v_290/2},
+          ["oxidation"] = {["shift-x"] = x_off_v_290/2, ["shift-y"] = y_off_v_290/2},
+          ["shadow"]    = {["shift-x"] = x_off_v_290/2, ["shift-y"] = y_off_v_290/2},
         }
       }
     },
 
     [MW_Minisembler.SPOOLER] = {
-      ["frame-count"] = 25,
-      ["line-length"] = 5,
       ["hr"] = {
         ["west"] = {
-          ["base"]      = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5},
-          ["idle"]      = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5},
-          ["sparks"]    = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5},
-          ["workpiece"] = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5},
-          ["oxidation"] = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5},
-          ["shadow"]    = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5}
+          ["base"]      = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h},
+          ["idle"]      = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h},
+          ["sparks"]    = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h},
+          ["workpiece"] = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h},
+          ["oxidation"] = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h},
+          ["shadow"]    = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h},
         },
         ["north"] = {
-          ["base"]      = {["shift-x"] = x_off_v, ["shift-y"] = y_off_v, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5},
-          ["idle"]      = {["shift-x"] = x_off_v, ["shift-y"] = y_off_v, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5},
-          ["sparks"]    = {["shift-x"] = x_off_v, ["shift-y"] = y_off_v, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5},
-          ["workpiece"] = {["shift-x"] = x_off_v, ["shift-y"] = y_off_v, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5},
-          ["oxidation"] = {["shift-x"] = x_off_v, ["shift-y"] = y_off_v, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5},
-          ["shadow"]    = {["shift-x"] = x_off_v, ["shift-y"] = y_off_v, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5}
+          ["base"]      = {["shift-x"] = x_off_v_340, ["shift-y"] = y_off_v_340},
+          ["idle"]      = {["shift-x"] = x_off_v_340, ["shift-y"] = y_off_v_340},
+          ["sparks"]    = {["shift-x"] = x_off_v_340, ["shift-y"] = y_off_v_340},
+          ["workpiece"] = {["shift-x"] = x_off_v_340, ["shift-y"] = y_off_v_340},
+          ["oxidation"] = {["shift-x"] = x_off_v_340, ["shift-y"] = y_off_v_340},
+          ["shadow"]    = {["shift-x"] = x_off_v_340, ["shift-y"] = y_off_v_340},
         },
       },
       ["normal"] = {
         ["west"] = {   
-          ["base"]      = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1},
-          ["idle"]      = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1},
-          ["sparks"]    = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1},
-          ["workpiece"] = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1},
-          ["oxidation"] = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1},
-          ["shadow"]    = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1}
+          ["base"]      = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2},
+          ["idle"]      = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2},
+          ["sparks"]    = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2},
+          ["workpiece"] = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2},
+          ["oxidation"] = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2},
+          ["shadow"]    = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2},
         },
         ["north"] = {
-          ["base"]      = {["shift-x"] = x_off_v/2, ["shift-y"] = y_off_v/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1},
-          ["idle"]      = {["shift-x"] = x_off_v/2, ["shift-y"] = y_off_v/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1},
-          ["sparks"]    = {["shift-x"] = x_off_v/2, ["shift-y"] = y_off_v/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1},
-          ["workpiece"] = {["shift-x"] = x_off_v/2, ["shift-y"] = y_off_v/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1},
-          ["oxidation"] = {["shift-x"] = x_off_v/2, ["shift-y"] = y_off_v/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1},
-          ["shadow"]    = {["shift-x"] = x_off_v/2, ["shift-y"] = y_off_v/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1}
+          ["base"]      = {["shift-x"] = x_off_v_340/2, ["shift-y"] = y_off_v_340/2},
+          ["idle"]      = {["shift-x"] = x_off_v_340/2, ["shift-y"] = y_off_v_340/2},
+          ["sparks"]    = {["shift-x"] = x_off_v_340/2, ["shift-y"] = y_off_v_340/2},
+          ["workpiece"] = {["shift-x"] = x_off_v_340/2, ["shift-y"] = y_off_v_340/2},
+          ["oxidation"] = {["shift-x"] = x_off_v_340/2, ["shift-y"] = y_off_v_340/2},
+          ["shadow"]    = {["shift-x"] = x_off_v_340/2, ["shift-y"] = y_off_v_340/2},
         }
       }
     },
 
     [MW_Minisembler.THREADER] = {
-      ["frame-count"] = 24,
-      ["line-length"] = 5,
       ["hr"] = {
         ["west"] = {
-          ["base"]      = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5},
-          ["idle"]      = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5},
-          ["sparks"]    = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5},
-          ["workpiece"] = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5},
-          ["oxidation"] = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5},
-          ["shadow"]    = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5}
+          ["base"]      = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h},
+          ["idle"]      = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h},
+          ["sparks"]    = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h},
+          ["workpiece"] = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h},
+          ["oxidation"] = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h},
+          ["shadow"]    = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h},
         },
         ["north"] = {
-          ["base"]      = {["shift-x"] = x_off_v, ["shift-y"] = y_off_v, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5},
-          ["idle"]      = {["shift-x"] = x_off_v, ["shift-y"] = y_off_v, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5},
-          ["sparks"]    = {["shift-x"] = x_off_v, ["shift-y"] = y_off_v, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5},
-          ["workpiece"] = {["shift-x"] = x_off_v, ["shift-y"] = y_off_v, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5},
-          ["oxidation"] = {["shift-x"] = x_off_v, ["shift-y"] = y_off_v, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5},
-          ["shadow"]    = {["shift-x"] = x_off_v, ["shift-y"] = y_off_v, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5}
+          ["base"]      = {["shift-x"] = x_off_v_340, ["shift-y"] = y_off_v_340},
+          ["idle"]      = {["shift-x"] = x_off_v_340, ["shift-y"] = y_off_v_340},
+          ["sparks"]    = {["shift-x"] = x_off_v_340, ["shift-y"] = y_off_v_340},
+          ["workpiece"] = {["shift-x"] = x_off_v_340, ["shift-y"] = y_off_v_340},
+          ["oxidation"] = {["shift-x"] = x_off_v_340, ["shift-y"] = y_off_v_340},
+          ["shadow"]    = {["shift-x"] = x_off_v_340, ["shift-y"] = y_off_v_340},
         },
       },
       ["normal"] = {
         ["west"] = {   
-          ["base"]      = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1},
-          ["idle"]      = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1},
-          ["sparks"]    = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1},
-          ["workpiece"] = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1},
-          ["oxidation"] = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1},
-          ["shadow"]    = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1}
+          ["base"]      = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2},
+          ["idle"]      = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2},
+          ["sparks"]    = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2},
+          ["workpiece"] = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2},
+          ["oxidation"] = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2},
+          ["shadow"]    = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2},
         },
         ["north"] = {
-          ["base"]      = {["shift-x"] = x_off_v/2, ["shift-y"] = y_off_v/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1},
-          ["idle"]      = {["shift-x"] = x_off_v/2, ["shift-y"] = y_off_v/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1},
-          ["sparks"]    = {["shift-x"] = x_off_v/2, ["shift-y"] = y_off_v/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1},
-          ["workpiece"] = {["shift-x"] = x_off_v/2, ["shift-y"] = y_off_v/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1},
-          ["oxidation"] = {["shift-x"] = x_off_v/2, ["shift-y"] = y_off_v/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1},
-          ["shadow"]    = {["shift-x"] = x_off_v/2, ["shift-y"] = y_off_v/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1}
+          ["base"]      = {["shift-x"] = x_off_v_340/2, ["shift-y"] = y_off_v_340/2},
+          ["idle"]      = {["shift-x"] = x_off_v_340/2, ["shift-y"] = y_off_v_340/2},
+          ["sparks"]    = {["shift-x"] = x_off_v_340/2, ["shift-y"] = y_off_v_340/2},
+          ["workpiece"] = {["shift-x"] = x_off_v_340/2, ["shift-y"] = y_off_v_340/2},
+          ["oxidation"] = {["shift-x"] = x_off_v_340/2, ["shift-y"] = y_off_v_340/2},
+          ["shadow"]    = {["shift-x"] = x_off_v_340/2, ["shift-y"] = y_off_v_340/2},
         }
       }
     },
 
     [MW_Minisembler.WELDER] = {
-      ["frame-count"] = 24,
-      ["line-length"] = 5,
       ["hr"] = {
         ["west"] = {
-          ["base"]      = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5},
-          ["idle"]      = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5},
-          ["sparks"]    = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5},
-          ["workpiece"] = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5},
-          ["oxidation"] = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5},
-          ["shadow"]    = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h, ["width"] = h_size, ["height"] = h_size, ["scale"] = .5}
+          ["base"]      = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h},
+          ["idle"]      = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h},
+          ["sparks"]    = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h},
+          ["workpiece"] = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h},
+          ["oxidation"] = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h},
+          ["shadow"]    = {["shift-x"] = x_off_h, ["shift-y"] = y_off_h},
         },
         ["north"] = {
-          ["base"]      = {["shift-x"] = x_off_v, ["shift-y"] = y_off_v, ["width"] = v_size, ["height"] = v_size, ["scale"] = .5},
-          ["idle"]      = {["shift-x"] = x_off_v, ["shift-y"] = y_off_v, ["width"] = v_size, ["height"] = v_size, ["scale"] = .5},
-          ["sparks"]    = {["shift-x"] = x_off_v, ["shift-y"] = y_off_v, ["width"] = v_size, ["height"] = v_size, ["scale"] = .5},
-          ["workpiece"] = {["shift-x"] = x_off_v, ["shift-y"] = y_off_v, ["width"] = v_size, ["height"] = v_size, ["scale"] = .5},
-          ["oxidation"] = {["shift-x"] = x_off_v, ["shift-y"] = y_off_v, ["width"] = v_size, ["height"] = v_size, ["scale"] = .5},
-          ["shadow"]    = {["shift-x"] = x_off_v, ["shift-y"] = y_off_v, ["width"] = v_size, ["height"] = v_size, ["scale"] = .5}
+          ["base"]      = {["shift-x"] = x_off_v_290, ["shift-y"] = y_off_v_290},
+          ["idle"]      = {["shift-x"] = x_off_v_290, ["shift-y"] = y_off_v_290},
+          ["sparks"]    = {["shift-x"] = x_off_v_290, ["shift-y"] = y_off_v_290},
+          ["workpiece"] = {["shift-x"] = x_off_v_290, ["shift-y"] = y_off_v_290},
+          ["oxidation"] = {["shift-x"] = x_off_v_290, ["shift-y"] = y_off_v_290},
+          ["shadow"]    = {["shift-x"] = x_off_v_290, ["shift-y"] = y_off_v_290},
         },
       },
       ["normal"] = {
         ["west"] = {   
-          ["base"]      = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1},
-          ["idle"]      = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1},
-          ["sparks"]    = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1},
-          ["workpiece"] = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1},
-          ["oxidation"] = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1},
-          ["shadow"]    = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1}
+          ["base"]      = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2},
+          ["idle"]      = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2},
+          ["sparks"]    = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2},
+          ["workpiece"] = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2},
+          ["oxidation"] = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2},
+          ["shadow"]    = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2},
         },
         ["north"] = {
-          ["base"]      = {["shift-x"] = x_off_v/2, ["shift-y"] = y_off_v/2, ["width"] = v_size/2, ["height"] = v_size/2, ["scale"] = 1},
-          ["idle"]      = {["shift-x"] = x_off_v/2, ["shift-y"] = y_off_v/2, ["width"] = v_size/2, ["height"] = v_size/2, ["scale"] = 1},
-          ["sparks"]    = {["shift-x"] = x_off_v/2, ["shift-y"] = y_off_v/2, ["width"] = v_size/2, ["height"] = v_size/2, ["scale"] = 1},
-          ["workpiece"] = {["shift-x"] = x_off_v/2, ["shift-y"] = y_off_v/2, ["width"] = v_size/2, ["height"] = v_size/2, ["scale"] = 1},
-          ["oxidation"] = {["shift-x"] = x_off_v/2, ["shift-y"] = y_off_v/2, ["width"] = v_size/2, ["height"] = v_size/2, ["scale"] = 1},
-          ["shadow"]    = {["shift-x"] = x_off_v/2, ["shift-y"] = y_off_v/2, ["width"] = v_size/2, ["height"] = v_size/2, ["scale"] = 1}
+          ["base"]      = {["shift-x"] = x_off_v_290/2, ["shift-y"] = y_off_v_290/2},
+          ["idle"]      = {["shift-x"] = x_off_v_290/2, ["shift-y"] = y_off_v_290/2},
+          ["sparks"]    = {["shift-x"] = x_off_v_290/2, ["shift-y"] = y_off_v_290/2},
+          ["workpiece"] = {["shift-x"] = x_off_v_290/2, ["shift-y"] = y_off_v_290/2},
+          ["oxidation"] = {["shift-x"] = x_off_v_290/2, ["shift-y"] = y_off_v_290/2},
+          ["shadow"]    = {["shift-x"] = x_off_v_290/2, ["shift-y"] = y_off_v_290/2},
         }
       }
     },
@@ -1324,3 +1300,4 @@ end
 -- ***************
 
 return MW_Data
+
