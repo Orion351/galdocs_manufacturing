@@ -52,7 +52,6 @@ end
 
 
 
-
 -- **********
 -- Prototypes
 -- **********
@@ -695,9 +694,9 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
             icon_size = 64,
           },
         }
-
+        
         -- Function from Icon Badges: ib-lib.lua
-        GM_Build_img_badge_icon(icons_data_recipe, {"__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. metal .. "/" .. metal .. "-" .. stock .. "-stock-0000.png"}, 64, 0.3, 0, GM_globals.remelting_badge_corner, 0)
+        Build_img_badge_icon(icons_data_recipe, {"__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. metal .. "/" .. metal .. "-" .. stock .. "-stock-0000.png"}, 64, GM_globals.stock_badge_scale, 0, GM_globals.remelting_badge_corner, 0)
 
         recipe_hide_from_player_crafting = true
         if (GM_globals.show_non_hand_craftables == "all" or GM_globals.show_non_hand_craftables == "all except remelting") then
@@ -815,7 +814,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
         Build_img_badge_icon(icons_data_recipe, 
         {"__galdocs-manufacturing__/graphics/icons/intermediates/stocks/sdf/sdf-" .. stock .. "-stock.png",
         "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. metal .. "/" .. metal .. "-" .. stock .. "-stock-0000.png"},
-        64, 0.3, 0, GM_globals.remelting_badge_corner, 0)
+        64, GM_globals.stock_badge_scale, 0, GM_globals.remelting_badge_corner, 0)
 
         recipe_hide_from_player_crafting = true
         if (GM_globals.show_non_hand_craftables == "all") then
@@ -904,7 +903,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
         Build_img_badge_icon(icons_data_recipe, 
         {"__galdocs-manufacturing__/graphics/icons/intermediates/stocks/sdf/sdf-plate-stock.png",
         "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. icon_badge_metal .. "/" .. icon_badge_metal .. "-plate-stock-0000.png"},
-        64, 0.3, 0, GM_globals.remelting_badge_corner, 0)
+        64, GM_globals.stock_badge_scale, 0, GM_globals.remelting_badge_corner, 0)
 
         local ib_data = {}
         ib_data.ib_let_badge  = MW_Data.metal_data[metal].ib_data.ib_let_badge
@@ -981,7 +980,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
         Build_img_badge_icon(icons_data_recipe, 
         {"__galdocs-manufacturing__/graphics/icons/intermediates/ore/" .. icon_badge_metal .. "/" .. icon_badge_metal .. "-ore-shadow.png",
         "__galdocs-manufacturing__/graphics/icons/intermediates/ore/" .. icon_badge_metal .. "/" .. icon_badge_metal .. "-ore-1.png"},
-        64, 0.3, 0, GM_globals.remelting_badge_corner, 0)
+        64, GM_globals.stock_badge_scale, 0, GM_globals.remelting_badge_corner, 0)
 
         local ib_data = {}
         ib_data.ib_let_badge  = MW_Data.metal_data[metal].ib_data.ib_let_badge
@@ -1041,7 +1040,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
         Build_img_badge_icon(icons_data_recipe, 
         {"__galdocs-manufacturing__/graphics/icons/intermediates/ore/" .. metal .. "/" .. metal .. "-ore-shadow.png",
         "__galdocs-manufacturing__/graphics/icons/intermediates/ore/" .. metal .. "/" .. metal .. "-ore-1.png"},
-        64, 0.3, 0, GM_globals.remelting_badge_corner, 0)
+        64, GM_globals.stock_badge_scale, 0, GM_globals.remelting_badge_corner, 0)
 
         local ib_data = {}
         ib_data.ib_let_badge  = MW_Data.metal_data[metal].ib_data.ib_let_badge
@@ -1057,7 +1056,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
 
             icons = icons_data_recipe,
 
-            ingredients = {{metal .. "-ore", MW_Data.stocks_recipe_data[stock].input}},
+            ingredients = {{type = "item", name = metal .. "-ore", MW_Data.stocks_recipe_data[stock].input, amount = 1}},
             crafting_machine_tint = {
               primary = MW_Data.metal_data[metal].tint_metal,
               secondary = MW_Data.metal_data[metal].tint_oxidation
@@ -1314,14 +1313,13 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the treated [M
             icon = main_remelting_icon,
             icon_size = 64,
           },
-
         }
 
         -- Function from Icon Badges: ib-lib.lua
         Build_img_badge_icon(icons_data_recipe, 
         {"__galdocs-manufacturing__/graphics/icons/intermediates/stocks/sdf/sdf-" .. stock .. "-stock.png",
         "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. metal .. "/" .. metal .. "-" .. stock .. "-stock-0000.png"},
-        64, 0.3, 0, GM_globals.remelting_badge_corner, 0)
+        64, GM_globals.stock_badge_scale, 0, GM_globals.remelting_badge_corner, 0)
 
         local ib_data = {}
         ib_data.ib_let_badge  = MW_Data.metal_data[result_metal].ib_data.ib_let_badge
@@ -1540,7 +1538,7 @@ for property, parts in pairs(MW_Data.property_machined_part_pairs) do -- Make th
         Build_img_badge_icon(icons_data_recipe, 
         {"__galdocs-manufacturing__/graphics/icons/intermediates/stocks/sdf/sdf-plate-stock.png",
         "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. metal .. "/" .. metal .. "-plate-stock-0000.png"},
-        64, 0.3, 0, GM_globals.remelting_badge_corner, 0)
+        64, GM_globals.stock_badge_scale, 0, GM_globals.remelting_badge_corner, 0)
 
         -- Un-hide and put in '-player-crafting' set the recipes intended to be useable at the beginning of the game
         local recipe_category = "gm-" .. MW_Data.machined_parts_recipe_data[part].made_in
@@ -1708,7 +1706,7 @@ for property_key, multi_properties in pairs(MW_Data.multi_property_with_key_pair
           -- Add multi-property badges
           local badge_paths = {}
           for _, multi_property in pairs(multi_properties) do
-            table.insert(badge_paths, "__galdocs-manufacturing__/graphics/badges/" .. multi_property .. ".png")
+            table.insert(badge_paths, "__galdocs-manufacturing__/graphics/badges/" .. GM_globals.ib_mipmaps .. "/" .. GM_globals.ib_mipmaps .. "-" .. multi_property .. ".png")
           end
 
           local ib_data = {}
@@ -1751,14 +1749,14 @@ for property_key, multi_properties in pairs(MW_Data.multi_property_with_key_pair
           Build_img_badge_icon(icons_data_recipe, 
           {"__galdocs-manufacturing__/graphics/icons/intermediates/stocks/sdf/sdf-plate-stock.png",
           "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. metal .. "/" .. metal .. "-plate-stock-0000.png"},
-          64, 0.3, 0, GM_globals.remelting_badge_corner, 0)
+          64, GM_globals.stock_badge_scale, 0, GM_globals.remelting_badge_corner, 0)
 
           local recipe_hide_from_player_crafting = true
           if (GM_globals.show_non_hand_craftables == "all" or GM_globals.show_non_hand_craftables == "all except remelting") then
             recipe_hide_from_player_crafting = false
           end
 
-          local ib_data = {}
+          ib_data = {}
           ib_data.ib_img_paths  = badge_paths
           ib_data.ib_img_size   = GM_globals.badge_image_size
           ib_data.ib_img_scale  = GM_globals.property_image_scale
@@ -1828,7 +1826,7 @@ for metal, metal_data in pairs(MW_Data.metal_data) do -- Make "Basic" property d
           Build_img_badge_icon(icons_data, 
           {"__galdocs-manufacturing__/graphics/icons/intermediates/machined-parts/sdf/sdf-".. part .. ".png",
           "__galdocs-manufacturing__/graphics/icons/intermediates/machined-parts/" .. property .. "/" .. property .. "-".. part .. ".png"},
-          64, 0.3, 0, GM_globals.remelting_badge_corner, 0)
+          64, GM_globals.stock_badge_scale, 0, GM_globals.remelting_badge_corner, 0)
 
           local recipe_hide_from_player_crafting = true
           if (GM_globals.show_non_hand_craftables == "all" or GM_globals.show_non_hand_craftables == "all except remelting") then
@@ -1908,7 +1906,7 @@ for property, property_downgrade_list in pairs(MW_Data.property_downgrades) do -
       Build_img_badge_icon(icons_data, 
       {"__galdocs-manufacturing__/graphics/icons/intermediates/machined-parts/sdf/sdf-".. part .. ".png",
       "__galdocs-manufacturing__/graphics/icons/intermediates/machined-parts/" .. next_property .. "/" .. next_property .. "-".. part .. ".png"},
-      64, 0.3, 0, GM_globals.remelting_badge_corner, 0)
+      64, GM_globals.stock_badge_scale, 0, GM_globals.remelting_badge_corner, 0)
 
       local recipe_hide_from_player_crafting = true
       if (GM_globals.show_non_hand_craftables == "all" or GM_globals.show_non_hand_craftables == "all except remelting") then
@@ -1975,7 +1973,7 @@ for property_key, multi_properties in pairs(MW_Data.multi_property_with_key_pair
         Build_img_badge_icon(icons_data, 
         {"__galdocs-manufacturing__/graphics/icons/intermediates/machined-parts/sdf/sdf-".. part .. ".png",
         "__galdocs-manufacturing__/graphics/icons/intermediates/machined-parts/" .. property_key .. "/" .. property_key .. "-".. part .. ".png"},
-        64, 0.3, 0, GM_globals.remelting_badge_corner, 0)
+        64, GM_globals.stock_badge_scale, 0, GM_globals.remelting_badge_corner, 0)
 
         local recipe_hide_from_player_crafting = true
         if (GM_globals.show_non_hand_craftables == "all" or GM_globals.show_non_hand_craftables == "all except remelting") then
@@ -2074,7 +2072,7 @@ for _, tier in pairs(MW_Data.MW_Minisembler_Tier) do -- make the minisembler ent
           filename = current_normal_filename,
           priority = "high",
           frame_count = MW_Data.minisemblers_rendering_data[tier][minisembler]["frame-count"],
-          line_length = MW_Data.minisemblers_rendering_data[tier][minisembler]["line-length"],
+          line_length = MW_Data.minisemblers_rendering_data[tier][minisembler]["normal"][direction_name][layer_name]["line-length"] or MW_Data.minisemblers_rendering_data[tier][minisembler]["line-length"],
           width = MW_Data.minisemblers_rendering_data[tier][minisembler]["normal"][direction_name][layer_name]["width"],
           height = MW_Data.minisemblers_rendering_data[tier][minisembler]["normal"][direction_name][layer_name]["height"],
           draw_as_shadow = layer_name == "shadow",
@@ -2084,7 +2082,7 @@ for _, tier in pairs(MW_Data.MW_Minisembler_Tier) do -- make the minisembler ent
             filename = current_hr_filename,
             priority = "high",
             frame_count = MW_Data.minisemblers_rendering_data[tier][minisembler]["frame-count"],
-            line_length = MW_Data.minisemblers_rendering_data[tier][minisembler]["line-length"],
+            line_length = MW_Data.minisemblers_rendering_data[tier][minisembler]["hr"][direction_name][layer_name]["line-length"] or MW_Data.minisemblers_rendering_data[tier][minisembler]["line-length"],
             width = MW_Data.minisemblers_rendering_data[tier][minisembler]["hr"][direction_name][layer_name]["width"],
             height = MW_Data.minisemblers_rendering_data[tier][minisembler]["hr"][direction_name][layer_name]["height"],
             draw_as_shadow = layer_name == "shadow",
@@ -2106,16 +2104,18 @@ for _, tier in pairs(MW_Data.MW_Minisembler_Tier) do -- make the minisembler ent
       end
     end
     local current_animation = direction_set
-
-    direction_set["north"]["layers"][2]["filename"] = "__galdocs-manufacturing__/graphics/entity/minisemblers/" .. minisembler .. "/" .. minisembler .. "-v-idle.png"
-    direction_set["north"]["layers"][2]["hr_version"]["filename"] = "__galdocs-manufacturing__/graphics/entity/minisemblers/" .. minisembler .. "/hr-" .. minisembler .. "-v-idle.png"
-    direction_set["south"]["layers"][2]["filename"] = "__galdocs-manufacturing__/graphics/entity/minisemblers/" .. minisembler .. "/" .. minisembler .. "-v-idle.png"
-    direction_set["south"]["layers"][2]["hr_version"]["filename"] = "__galdocs-manufacturing__/graphics/entity/minisemblers/" .. minisembler .. "/hr-" .. minisembler .. "-v-idle.png"
-    direction_set["east"]["layers"][2]["filename"] = "__galdocs-manufacturing__/graphics/entity/minisemblers/" .. minisembler .. "/" .. minisembler .. "-h-idle.png"
-    direction_set["east"]["layers"][2]["hr_version"]["filename"] = "__galdocs-manufacturing__/graphics/entity/minisemblers/" .. minisembler .. "/hr-" .. minisembler .. "-h-idle.png"
-    direction_set["west"]["layers"][2]["filename"] = "__galdocs-manufacturing__/graphics/entity/minisemblers/" .. minisembler .. "/" .. minisembler .. "-h-idle.png"
-    direction_set["west"]["layers"][2]["hr_version"]["filename"] = "__galdocs-manufacturing__/graphics/entity/minisemblers/" .. minisembler .. "/hr-" .. minisembler .. "-h-idle.png"
-    local current_idle_animation = direction_set
+    local idle_direction_set = table.deepcopy(direction_set)
+    
+    idle_direction_set["north"]["layers"][2]["filename"] = "__galdocs-manufacturing__/graphics/entity/minisemblers/" .. minisembler .. "/" .. minisembler .. "-v-idle.png"
+    idle_direction_set["north"]["layers"][2]["hr_version"]["filename"] = "__galdocs-manufacturing__/graphics/entity/minisemblers/" .. minisembler .. "/hr-" .. minisembler .. "-v-idle.png"
+    idle_direction_set["south"]["layers"][2]["filename"] = "__galdocs-manufacturing__/graphics/entity/minisemblers/" .. minisembler .. "/" .. minisembler .. "-v-idle.png"
+    idle_direction_set["south"]["layers"][2]["hr_version"]["filename"] = "__galdocs-manufacturing__/graphics/entity/minisemblers/" .. minisembler .. "/hr-" .. minisembler .. "-v-idle.png"
+    idle_direction_set["east"]["layers"][2]["filename"] = "__galdocs-manufacturing__/graphics/entity/minisemblers/" .. minisembler .. "/" .. minisembler .. "-h-idle.png"
+    idle_direction_set["east"]["layers"][2]["hr_version"]["filename"] = "__galdocs-manufacturing__/graphics/entity/minisemblers/" .. minisembler .. "/hr-" .. minisembler .. "-h-idle.png"
+    idle_direction_set["west"]["layers"][2]["filename"] = "__galdocs-manufacturing__/graphics/entity/minisemblers/" .. minisembler .. "/" .. minisembler .. "-h-idle.png"
+    idle_direction_set["west"]["layers"][2]["hr_version"]["filename"] = "__galdocs-manufacturing__/graphics/entity/minisemblers/" .. minisembler .. "/hr-" .. minisembler .. "-h-idle.png"
+    local current_idle_animation = idle_direction_set
+    
 
     local layer_set_2 = {}
     for layer_name, recipe_tint in pairs(working_visualization_layer_tint_pairs) do
@@ -2132,7 +2132,7 @@ for _, tier in pairs(MW_Data.MW_Minisembler_Tier) do -- make the minisembler ent
           filename = current_normal_filename,
           priority = "high",
           frame_count = MW_Data.minisemblers_rendering_data[tier][minisembler]["frame-count"],
-          line_length = MW_Data.minisemblers_rendering_data[tier][minisembler]["line-length"],
+          line_length = MW_Data.minisemblers_rendering_data[tier][minisembler]["normal"][direction_name][layer_name]["line-length"] or MW_Data.minisemblers_rendering_data[tier][minisembler]["line-length"],
           width = MW_Data.minisemblers_rendering_data[tier][minisembler]["normal"][direction_name][layer_name]["width"],
           height = MW_Data.minisemblers_rendering_data[tier][minisembler]["normal"][direction_name][layer_name]["height"],
           draw_as_glow = layer_name == "sparks",
@@ -2142,7 +2142,7 @@ for _, tier in pairs(MW_Data.MW_Minisembler_Tier) do -- make the minisembler ent
             filename = current_hr_filename,
             priority = "high",
             frame_count = MW_Data.minisemblers_rendering_data[tier][minisembler]["frame-count"],
-            line_length = MW_Data.minisemblers_rendering_data[tier][minisembler]["line-length"],
+            line_length = MW_Data.minisemblers_rendering_data[tier][minisembler]["hr"][direction_name][layer_name]["line-length"] or MW_Data.minisemblers_rendering_data[tier][minisembler]["line-length"],
             width = MW_Data.minisemblers_rendering_data[tier][minisembler]["hr"][direction_name][layer_name]["width"],
             height = MW_Data.minisemblers_rendering_data[tier][minisembler]["hr"][direction_name][layer_name]["height"],
             draw_as_glow = layer_name == "sparks",
@@ -2521,17 +2521,14 @@ for _, tier in pairs(MW_Data.MW_Minisembler_Tier) do -- make the minisembler ent
     end
 
     -- FIXME : The minisemblers look very similar right now. Until they are differentiated, have an option to badge them. This will go away once they are all distinct, art-wise.
-    -- MAYHEM
     local item_icons = {{
         icon = "__galdocs-manufacturing__/graphics/icons/minisemblers/".. minisembler .. "-icon.png", -- FIXME make dang nabbit icons future me
         icon_size = 64,
         icon_mipmaps = 4,
       }}
-    -- if mods["icon-badges"] and 
-    --   (settings.startup["ib-active"].value == false or settings.startup["ib-show-badges"].value == "Only Belts") and 
-    --   (GM_globals.gm_show_minisembler_badges == "all" or GM_globals.gm_show_minisembler_badges == "item") then
-    --   GM_Build_letter_badge_icon(item_icons, MW_Data.minisembler_data[minisembler].ib_data.ib_let_badge, "", "left-top")
-    -- end
+    if (GM_globals.gm_show_minisembler_badges == "all" or GM_globals.gm_show_minisembler_badges == "item") then
+      Build_letter_badge_icon(item_icons, MW_Data.minisembler_data[minisembler].ib_data.ib_let_badge, "", "left-top")
+    end
 
     local recipe_icons = {{
         icon = "__galdocs-manufacturing__/graphics/icons/minisemblers/" .. minisembler .. "-icon.png",
@@ -2539,11 +2536,9 @@ for _, tier in pairs(MW_Data.MW_Minisembler_Tier) do -- make the minisembler ent
         icon_mipmaps = 4
       }}
 
-    -- if mods["icon-badges"] and 
-    --   (settings.startup["ib-active"].value == false or settings.startup["ib-show-badges"].value == "Only Belts") and 
-    --   (GM_globals.gm_show_minisembler_badges == "all" or GM_globals.gm_show_minisembler_badges == "item") then
-    --   GM_Build_letter_badge_icon(recipe_icons, MW_Data.minisembler_data[minisembler].ib_data.ib_let_badge, "", "left-top")
-    -- end
+      if (GM_globals.gm_show_minisembler_badges == "all" or GM_globals.gm_show_minisembler_badges == "recipe") then
+        Build_letter_badge_icon(recipe_icons, MW_Data.minisembler_data[minisembler].ib_data.ib_let_badge, "", "left-top")
+      end
 
     data:extend({ -- make the minisembler recipe categories, items, recipes and entities
       { -- recipe category
@@ -2632,6 +2627,7 @@ for _, tier in pairs(MW_Data.MW_Minisembler_Tier) do -- make the minisembler ent
         alert_icon_shift = util.by_pixel(0, -12),
         scale_entity_info_icon = true,
         entity_info_icon_shift = {0, -.5}, -- util.by_pixel(0, -8),
+        always_draw_idle_animation = false,
 
         -- Graphical layers
         animation = current_animation,
@@ -2690,9 +2686,9 @@ for _, tier in pairs(MW_Data.MW_Minisembler_Tier) do -- make the minisembler ent
   end
 end
 
-
-
 return MW_Data
+
+-- for /R %%i IN (*) DO (xcopy %%i "../../working" /Y)
 
 --[[
 -- are you serious right now

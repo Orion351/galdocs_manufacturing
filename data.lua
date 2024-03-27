@@ -200,14 +200,6 @@ require("prototypes.lib.compatibility-library-tools")
 
 
 
--- *******************
--- Icon badges library
--- *******************
-
--- require("__icon-badges__.ib-lib")
-require("prototypes.lib.ib_lib")
-
-
 -- ********
 -- Mod Data
 -- ********

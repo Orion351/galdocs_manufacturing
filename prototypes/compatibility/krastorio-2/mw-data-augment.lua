@@ -107,12 +107,17 @@ MW_Data.ore_data = table.merge_subtables(MW_Data.ore_data, { -- ordering
   [MW_Resource.NIOBIUM] = {order = "ka "},
 })
 
+MW_Data.ore_data = table.merge_subtables(MW_Data.ore_data, { -- ordering
+  [MW_Resource.OSMIUM]  = {order = "ia "},
+  [MW_Resource.NIOBIUM] = {order = "ka "},
+})
+
 MW_Data.ore_data = table.merge_subtables(MW_Data.ore_data, { -- i hate dumb names
   [MW_Resource.RARE_METALS]     = {has_dumb_name = "raw-rare-metals"},
   [MW_Resource.IMERSITE_POWDER] = {has_dumb_name = "imersite-powder"}
 })
 
-MW_Data.ore_data = table.merge_subtables(MW_Data.ore_data, { -- Couple ores to ore shapes
+MW_Data.ore_data = table.merge_subtables(MW_Data.ore_data, { -- Enriched Recipes
   [MW_Resource.COPPER]      = {enriched_recipe = {new = false, enable = true,  replace = true,  purifier_name = "sulfuric-acid",     purifier_amount = 3}},
   [MW_Resource.IRON]        = {enriched_recipe = {new = false, enable = true,  replace = true,  purifier_name = "sulfuric-acid",     purifier_amount = 3}},
   [MW_Resource.LEAD]        = {enriched_recipe = {new = true,  enable = true,  replace = false, purifier_name = "sulfuric-acid",     purifier_amount = 3}},
@@ -135,6 +140,14 @@ MW_Data.ore_data = table.merge_subtables(MW_Data.ore_data, { -- Matter-to-Ore an
   [MW_Resource.RARE_METALS] = {matter_recipe = {new = false, replace = false, ore_to_matter_recipe = false, matter_to_ore_recipe = false,                                 }},
   [MW_Resource.OSMIUM]      = {matter_recipe = {new = true,  replace = false, ore_to_matter_recipe = true,  matter_to_ore_recipe = true,  ore_count = 10, matter_count = 5}},
   [MW_Resource.NIOBIUM]     = {matter_recipe = {new = true,  replace = false, ore_to_matter_recipe = true,  matter_to_ore_recipe = true,  ore_count = 10, matter_count = 5}},
+})
+
+MW_Data.ore_data = table.merge_subtables(MW_Data.ore_data, { -- Icon Badges data
+  [MW_Resource.RARE_METALS]     = {ib_data = {ib_let_badge = "RM"}},
+  [MW_Resource.OSMIUM]          = {ib_data = {ib_let_badge = "Os"}},
+  [MW_Resource.NIOBIUM]         = {ib_data = {ib_let_badge = "Nb"}},
+  [MW_Resource.IMERSITE_POWDER] = {ib_data = {ib_let_badge = "Im"}},
+  [MW_Resource.COKE]            = {ib_data = {ib_let_badge = "CK"}},
 })
 
 
@@ -180,6 +193,18 @@ MW_Data.metal_data = table.merge_subtables(MW_Data.metal_data, { -- Ordering
   [MW_Metal.NIOBIMERSIUM]      = {order = "ma "},
   [MW_Metal.STABLE_IMERSIUM]   = {order = "mc "},
   [MW_Metal.RESONANT_IMERSIUM] = {order = "md "},
+})
+
+MW_Data.metal_data = table.merge_subtables(MW_Data.metal_data, { -- Icon Badges data
+  [MW_Metal.RARE_METALS]       = {ib_data = {ib_let_badge = "RM"}},
+
+  [MW_Metal.OSMIUM]            = {ib_data = {ib_let_badge = "Os"}},
+  [MW_Metal.NIOBIUM]           = {ib_data = {ib_let_badge = "Nb"}},
+
+  [MW_Metal.IMERSIUM]          = {ib_data = {ib_let_badge = "IM"}},
+  [MW_Metal.NIOBIMERSIUM]      = {ib_data = {ib_let_badge = "NI"}},
+  [MW_Metal.STABLE_IMERSIUM]   = {ib_data = {ib_let_badge = "SI"}},
+  [MW_Metal.RESONANT_IMERSIUM] = {ib_data = {ib_let_badge = "RI"}},
 })
 
 -- FIXME : Actually tie these to technologies
@@ -318,6 +343,15 @@ MW_Data.property_data = table.merge_subtables(MW_Data.property_data, { -- Orderi
   [MW_Property.IMERSIUM_GRADE_THERMALLY_STABLE] = {order = "gb "},
 })
 
+MW_Data.property_data = table.merge_subtables(MW_Data.property_data, { -- Icon Badges data
+  [MW_Property.IMERSIUM_ENHANCED_HIGH_TENSILE]  = {ib_data = {}},
+  [MW_Property.IMERSIUM_GRADE_LOAD_BEARING]     = {ib_data = {}},
+  [MW_Property.SUPERCONDUCTING]                 = {ib_data = {}},
+  [MW_Property.ANTIMATTER_RESISTANT]            = {ib_data = {}},
+  [MW_Property.TRANSDIMENSIONALLY_SENSITIVE]    = {ib_data = {}},
+  [MW_Property.IMERSIUM_GRADE_THERMALLY_STABLE] = {ib_data = {}},
+})
+
 MW_Data.property_data = table.merge_subtables(MW_Data.property_data, { -- Staple on glow data
   [MW_Property.IMERSIUM_ENHANCED_HIGH_TENSILE]  = {has_K2_glow_layer = true, K2_glow_tint = { r = 0.75, g = 0.3,  b = 1.0,  a = 1.0 } },   -- hex: c154ff = 0.7568627450980392, 0.32941176470588235, 1
   [MW_Property.IMERSIUM_GRADE_LOAD_BEARING]     = {has_K2_glow_layer = true, K2_glow_tint = { r = 0.3,  g = 0.6,  b = 0.8,  a = 1.0 } },   -- hex: 74BBDA = 0.4549019607843137, 0.7333333333333333,  0.8549019607843137
@@ -350,7 +384,7 @@ MW_Data.minisembler_data = table.merge_subtables(MW_Data.minisembler_data, { -- 
 -- Ore Couplings
 -- *************
 
-MW_Data.ore_data = table.merge_subtables(MW_Data.ore_data, { -- Couple ores to ore shapes
+MW_Data.ore_data = table.merge_subtables(MW_Data.ore_data, { -- Couple ores to ore types
   [MW_Resource.RARE_METALS]     = {ore_type = MW_Data.MW_Ore_Type.MIXED   },
   [MW_Resource.OSMIUM]          = {ore_type = MW_Data.MW_Ore_Type.ELEMENT },
   [MW_Resource.NIOBIUM]         = {ore_type = MW_Data.MW_Ore_Type.ELEMENT },

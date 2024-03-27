@@ -1,7 +1,6 @@
 -- Get global data
 local MW_Data = GM_global_mw_data.MW_Data
 
-
 -- Items
 -- *****
 
@@ -9,37 +8,7 @@ local MW_Data = GM_global_mw_data.MW_Data
 
 -- Recipes
 -- *******
-
--- FIXME : item badge stuff msut be done here
--- ore-to-enriched recipes
-data.raw.recipe["enriched-copper"].icons = {{icon_size = 64, icon_mipmaps = 1, icon = "__galdocs-manufacturing__/graphics/icons/intermediates/ore/copper/copper-enriched-1.png"}}
-data.raw.recipe["enriched-iron"].icons = {{icon_size = 64, icon_mipmaps = 1, icon = "__galdocs-manufacturing__/graphics/icons/intermediates/ore/iron/iron-enriched-1.png"}}
-
 -- enriched-to-plate recipes
--- data.raw.recipe["enriched-copper-plate"].icons = {
---   {
---     icon = "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/copper/copper-plate-stock-0000.png",
---     icon_size = 64
---   },
---   {
---     icon = "__galdocs-manufacturing__/graphics/icons/intermediates/ore/copper/copper-enriched-1.png",
---     icon_size = 64,
---     scale = 0.22,
---     shift = { -8, -8 }
---   }
--- }
--- data.raw.recipe["enriched-iron-plate"].icons = {
---   {
---     icon = "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/iron/iron-plate-stock-0000.png",
---     icon_size = 64
---   },
---   {
---     icon = "__galdocs-manufacturing__/graphics/icons/intermediates/ore/iron/iron-enriched-1.png",
---     icon_size = 64,
---     scale = 0.22,
---     shift = { -8, -8 }
---   }
--- }
 data.raw.recipe["rare-metals-2"].enabled = false
 data.raw.recipe["rare-metals-2"].hidden = true
 
@@ -68,6 +37,8 @@ data.raw.recipe["dirty-water-filtration-2"].icons = {
     shift = { 0, 4 }
   }
 }
+
+
 data.raw.recipe["dirty-water-filtration-3"].enabled = false
 data.raw.recipe["dirty-water-filtration-3"].hidden = true
 
@@ -232,3 +203,6 @@ for _, recipe in pairs(lds_recipes) do
     end
   end
 end
+
+require("prototypes.compatibility.krastorio-2.mw-compat-final-fixes-badges")
+require("prototypes.compatibility.krastorio-2.icon_badges")
