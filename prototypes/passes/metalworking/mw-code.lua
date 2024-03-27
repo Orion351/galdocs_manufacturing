@@ -2047,13 +2047,14 @@ end
 
 local animation_directions = {"north", "west"}
 local animation_layers = {"shadow", "base"}
+local idle_layers = {"shadow", "idle"}
 local working_visualization_layer_tint_pairs = {["workpiece"] = "primary", ["oxidation"] = "secondary", ["sparks"] = "none"}
 order_count = 0
 for _, tier in pairs(MW_Data.MW_Minisembler_Tier) do -- make the minisembler entities overall
+  local direction_set = {}
   for minisembler, _ in pairs(MW_Data.minisemblers_recipe_parameters) do
     local current_normal_filename
     local current_hr_filename
-    local direction_set = {}
     for _, direction_name in pairs(animation_directions) do -- build current_animation, FIXME: Name the minisembler looping table more gooder
       local layer_set = {}
 
@@ -2104,17 +2105,70 @@ for _, tier in pairs(MW_Data.MW_Minisembler_Tier) do -- make the minisembler ent
       end
     end
     local current_animation = direction_set
-    local idle_direction_set = table.deepcopy(direction_set)
     
-    idle_direction_set["north"]["layers"][2]["filename"] = "__galdocs-manufacturing__/graphics/entity/minisemblers/" .. minisembler .. "/" .. minisembler .. "-v-idle.png"
-    idle_direction_set["north"]["layers"][2]["hr_version"]["filename"] = "__galdocs-manufacturing__/graphics/entity/minisemblers/" .. minisembler .. "/hr-" .. minisembler .. "-v-idle.png"
-    idle_direction_set["south"]["layers"][2]["filename"] = "__galdocs-manufacturing__/graphics/entity/minisemblers/" .. minisembler .. "/" .. minisembler .. "-v-idle.png"
-    idle_direction_set["south"]["layers"][2]["hr_version"]["filename"] = "__galdocs-manufacturing__/graphics/entity/minisemblers/" .. minisembler .. "/hr-" .. minisembler .. "-v-idle.png"
-    idle_direction_set["east"]["layers"][2]["filename"] = "__galdocs-manufacturing__/graphics/entity/minisemblers/" .. minisembler .. "/" .. minisembler .. "-h-idle.png"
-    idle_direction_set["east"]["layers"][2]["hr_version"]["filename"] = "__galdocs-manufacturing__/graphics/entity/minisemblers/" .. minisembler .. "/hr-" .. minisembler .. "-h-idle.png"
-    idle_direction_set["west"]["layers"][2]["filename"] = "__galdocs-manufacturing__/graphics/entity/minisemblers/" .. minisembler .. "/" .. minisembler .. "-h-idle.png"
-    idle_direction_set["west"]["layers"][2]["hr_version"]["filename"] = "__galdocs-manufacturing__/graphics/entity/minisemblers/" .. minisembler .. "/hr-" .. minisembler .. "-h-idle.png"
-    local current_idle_animation = idle_direction_set
+    direction_set = {}
+    for _, direction_name in pairs(animation_directions) do -- build current_animation, FIXME: Name the minisembler looping table more gooder
+      local layer_set = {}
+
+      for layer_number, layer_name in pairs(idle_layers) do
+
+        -- Set normal and hr filenames
+        if direction_name == "north" then
+          current_normal_filename = "__galdocs-manufacturing__/graphics/entity/minisemblers/" .. minisembler .. "/" .. minisembler .. "-v-" .. layer_name .. ".png"
+          current_hr_filename = "__galdocs-manufacturing__/graphics/entity/minisemblers/" .. minisembler .. "/hr-" .. minisembler .. "-v-" .. layer_name .. ".png"
+        else
+          current_normal_filename = "__galdocs-manufacturing__/graphics/entity/minisemblers/" .. minisembler .. "/" .. minisembler .. "-h-" .. layer_name .. ".png"
+          current_hr_filename = "__galdocs-manufacturing__/graphics/entity/minisemblers/" .. minisembler .. "/hr-" .. minisembler .. "-h-" .. layer_name .. ".png"
+        end
+
+        local layer = {
+          filename = current_normal_filename,
+          priority = "high",
+          frame_count = MW_Data.minisemblers_rendering_data[tier][minisembler]["frame-count"],
+          line_length = MW_Data.minisemblers_rendering_data[tier][minisembler]["normal"][direction_name][layer_name]["line-length"] or MW_Data.minisemblers_rendering_data[tier][minisembler]["line-length"],
+          width = MW_Data.minisemblers_rendering_data[tier][minisembler]["normal"][direction_name][layer_name]["width"],
+          height = MW_Data.minisemblers_rendering_data[tier][minisembler]["normal"][direction_name][layer_name]["height"],
+          draw_as_shadow = layer_name == "shadow",
+          shift = {MW_Data.minisemblers_rendering_data[tier][minisembler]["normal"][direction_name][layer_name]["shift-x"], MW_Data.minisemblers_rendering_data[tier][minisembler]["normal"][direction_name][layer_name]["shift-y"]},
+          hr_version =
+          {
+            filename = current_hr_filename,
+            priority = "high",
+            frame_count = MW_Data.minisemblers_rendering_data[tier][minisembler]["frame-count"],
+            line_length = MW_Data.minisemblers_rendering_data[tier][minisembler]["hr"][direction_name][layer_name]["line-length"] or MW_Data.minisemblers_rendering_data[tier][minisembler]["line-length"],
+            width = MW_Data.minisemblers_rendering_data[tier][minisembler]["hr"][direction_name][layer_name]["width"],
+            height = MW_Data.minisemblers_rendering_data[tier][minisembler]["hr"][direction_name][layer_name]["height"],
+            draw_as_shadow = layer_name == "shadow",
+            shift = {MW_Data.minisemblers_rendering_data[tier][minisembler]["hr"][direction_name][layer_name]["shift-x"], MW_Data.minisemblers_rendering_data[tier][minisembler]["hr"][direction_name][layer_name]["shift-y"]},
+            scale = MW_Data.minisemblers_rendering_data[tier][minisembler]["hr"][direction_name][layer_name]["scale"]
+          }
+        }
+
+        -- if layer_name == "base" then current_idle_animation = layer end
+        table.insert(layer_set, layer_number, layer)
+      end
+
+      if (direction_name == "north") then
+        direction_set["north"] = {layers = layer_set}
+        direction_set["south"] = {layers = layer_set}
+      else
+        direction_set["east"] = {layers = layer_set}
+        direction_set["west"] = {layers = layer_set}
+      end
+    end
+    local current_idle_animation = direction_set
+    
+
+    -- local idle_direction_set = table.deepcopy(direction_set)
+    -- idle_direction_set["north"]["layers"][2]["filename"] = "__galdocs-manufacturing__/graphics/entity/minisemblers/" .. minisembler .. "/" .. minisembler .. "-v-idle.png"
+    -- idle_direction_set["north"]["layers"][2]["hr_version"]["filename"] = "__galdocs-manufacturing__/graphics/entity/minisemblers/" .. minisembler .. "/hr-" .. minisembler .. "-v-idle.png"
+    -- idle_direction_set["south"]["layers"][2]["filename"] = "__galdocs-manufacturing__/graphics/entity/minisemblers/" .. minisembler .. "/" .. minisembler .. "-v-idle.png"
+    -- idle_direction_set["south"]["layers"][2]["hr_version"]["filename"] = "__galdocs-manufacturing__/graphics/entity/minisemblers/" .. minisembler .. "/hr-" .. minisembler .. "-v-idle.png"
+    -- idle_direction_set["east"]["layers"][2]["filename"] = "__galdocs-manufacturing__/graphics/entity/minisemblers/" .. minisembler .. "/" .. minisembler .. "-h-idle.png"
+    -- idle_direction_set["east"]["layers"][2]["hr_version"]["filename"] = "__galdocs-manufacturing__/graphics/entity/minisemblers/" .. minisembler .. "/hr-" .. minisembler .. "-h-idle.png"
+    -- idle_direction_set["west"]["layers"][2]["filename"] = "__galdocs-manufacturing__/graphics/entity/minisemblers/" .. minisembler .. "/" .. minisembler .. "-h-idle.png"
+    -- idle_direction_set["west"]["layers"][2]["hr_version"]["filename"] = "__galdocs-manufacturing__/graphics/entity/minisemblers/" .. minisembler .. "/hr-" .. minisembler .. "-h-idle.png"
+    -- local current_idle_animation = idle_direction_set
     
 
     local layer_set_2 = {}
