@@ -458,211 +458,10 @@ MW_Data.minisembler_entity_data = { -- General worldspace entity data used by mi
 local x_off, y_off = 0, 0
 local x_off_h, x_off_v = 0, 0
 local y_off_h, y_off_v = 0, 0
-local v_size, h_size = 290, 340
+local v_size, h_size = 0, 0
 
 MW_Data.minisemblers_rendering_data = { -- Set up the minisembler rendering data
   [MW_Minisembler_Tier.ELECTRIC] = {
-
-    -- metal-lathe
---[[
-    [MW_Minisembler.METAL_LATHE] = {
-      ["frame-count"] = 24,
-      ["line-length"] = 5,
-      ["hr"] = {
-        ["north"] = {
-          ["base"]      = {["shift-x"] = 10,  ["shift-y"] = -1,  ["width"] = 102, ["height"] = 128, ["scale"] = .5},
-          ["sparks"]    = {["shift-x"] = 9,   ["shift-y"] = 0,   ["width"] = 102, ["height"] = 128, ["scale"] = .5},
-          ["workpiece"] = {["shift-x"] = 10,  ["shift-y"] = -1,  ["width"] = 102, ["height"] = 128, ["scale"] = .5},
-          ["oxidation"] = {["shift-x"] = 10,  ["shift-y"] = -1,  ["width"] = 102, ["height"] = 128, ["scale"] = .5},
-          ["shadow"]    = {["shift-x"] = 18,  ["shift-y"] = 13,  ["width"] = 128, ["height"] = 84,  ["scale"] = .5}
-        },
-        ["west"] = {
-          ["base"]      = {["shift-x"] = 0,   ["shift-y"] = -10, ["width"] = 128, ["height"] = 104, ["scale"] = .5},
-          ["sparks"]    = {["shift-x"] = 0,   ["shift-y"] = -9,  ["width"] = 128, ["height"] = 104, ["scale"] = .5},
-          ["workpiece"] = {["shift-x"] = 0,   ["shift-y"] = -10, ["width"] = 128, ["height"] = 104, ["scale"] = .5},
-          ["oxidation"] = {["shift-x"] = 0,   ["shift-y"] = -10, ["width"] = 128, ["height"] = 104, ["scale"] = .5},
-          ["shadow"]    = {["shift-x"] = 24.5,["shift-y"] = 5,   ["width"] = 128, ["height"] = 40,  ["scale"] = .87}
-        }
-      },
-      ["normal"] = {
-        ["north"] = {
-          ["base"]      = {["shift-x"] = 10,  ["shift-y"] = -1,  ["width"] = 51,  ["height"] = 64,  ["scale"] = 1},
-          ["sparks"]    = {["shift-x"] = 9,   ["shift-y"] = 0,   ["width"] = 51,  ["height"] = 64,  ["scale"] = 1},
-          ["workpiece"] = {["shift-x"] = 10,  ["shift-y"] = -1,  ["width"] = 51,  ["height"] = 64,  ["scale"] = 1},
-          ["oxidation"] = {["shift-x"] = 10,  ["shift-y"] = -1,  ["width"] = 51,  ["height"] = 64,  ["scale"] = 1},
-          ["shadow"]    = {["shift-x"] = 18,  ["shift-y"] = 13,  ["width"] = 64,  ["height"] = 42,  ["scale"] = 1}
-        },
-        ["west"] = {
-          ["base"]      = {["shift-x"] = 0,   ["shift-y"] = -10, ["width"] = 64,  ["height"] = 52,  ["scale"] = 1},
-          ["sparks"]    = {["shift-x"] = 0,   ["shift-y"] = -9,  ["width"] = 64,  ["height"] = 52,  ["scale"] = 1},
-          ["workpiece"] = {["shift-x"] = 0,   ["shift-y"] = -10, ["width"] = 64,  ["height"] = 52,  ["scale"] = 1},
-          ["oxidation"] = {["shift-x"] = 0,   ["shift-y"] = -10, ["width"] = 64,  ["height"] = 52,  ["scale"] = 1},
-          ["shadow"]    = {["shift-x"] = 24.5,["shift-y"] = 5,   ["width"] = 64,  ["height"] = 20,  ["scale"] = 1.74}
-        }
-      }
-    },
-
-
-    -- metal-bandsaw
-    -- Re-render for color consistency
-
-    [MW_Minisembler.METAL_BANDSAW] = {
-      ["frame-count"] = 24,
-      ["line-length"] = 5,
-      ["hr"] = {
-        ["north"] = {
-          ["base"]      = {["shift-x"] = -1,  ["shift-y"] = 0,   ["width"] = 84,  ["height"] = 128, ["scale"] = .5},
-          ["sparks"]    = {["shift-x"] = 0,   ["shift-y"] = 7,   ["width"] = 84,  ["height"] = 128, ["scale"] = .5},
-          ["workpiece"] = {["shift-x"] = 0,   ["shift-y"] = -1,  ["width"] = 72,  ["height"] = 78,  ["scale"] = .5},
-          ["oxidation"] = {["shift-x"] = 0,   ["shift-y"] = -1,  ["width"] = 72,  ["height"] = 78,  ["scale"] = .5},
-          ["shadow"]    = {["shift-x"] = 16,  ["shift-y"] = 15,  ["width"] = 160, ["height"] = 88,  ["scale"] = .5}
-        },
-        ["west"] = {
-          ["base"]      = {["shift-x"] = 0,   ["shift-y"] = -13, ["width"] = 128, ["height"] = 128, ["scale"] = .5},
-          ["sparks"]    = {["shift-x"] = -13, ["shift-y"] = -3,  ["width"] = 128, ["height"] = 128, ["scale"] = .5},
-          ["workpiece"] = {["shift-x"] = 0,   ["shift-y"] = -13, ["width"] = 128, ["height"] = 128, ["scale"] = .5},
-          ["oxidation"] = {["shift-x"] = 0,   ["shift-y"] = -13, ["width"] = 128, ["height"] = 128, ["scale"] = .5},
-          ["shadow"]    = {["shift-x"] = 16,  ["shift-y"] = 3,   ["width"] = 184, ["height"] = 78,  ["scale"] = .5}
-        }
-      },
-      ["normal"] = {
-        ["north"] = {
-          ["base"]      = {["shift-x"] = -1,  ["shift-y"] = 0,   ["width"] = 42,  ["height"] = 64,  ["scale"] = 1},
-          ["sparks"]    = {["shift-x"] = 0,   ["shift-y"] = 7,   ["width"] = 42,  ["height"] = 64,  ["scale"] = 1},
-          ["workpiece"] = {["shift-x"] = 0,   ["shift-y"] = -1,  ["width"] = 36,  ["height"] = 39,  ["scale"] = 1},
-          ["oxidation"] = {["shift-x"] = 0,   ["shift-y"] = -1,  ["width"] = 36,  ["height"] = 39,  ["scale"] = 1},
-          ["shadow"]    = {["shift-x"] = 16,  ["shift-y"] = 15,  ["width"] = 80,  ["height"] = 44,  ["scale"] = 1}
-        },
-        ["west"] = {
-          ["base"]      = {["shift-x"] = 0,   ["shift-y"] = -13, ["width"] = 64,  ["height"] = 64,  ["scale"] = 1},
-          ["sparks"]    = {["shift-x"] = -13, ["shift-y"] = -3,  ["width"] = 64,  ["height"] = 64,  ["scale"] = 1},
-          ["workpiece"] = {["shift-x"] = 0,   ["shift-y"] = -13, ["width"] = 64,  ["height"] = 64,  ["scale"] = 1},
-          ["oxidation"] = {["shift-x"] = 0,   ["shift-y"] = -13, ["width"] = 64,  ["height"] = 64,  ["scale"] = 1},
-          ["shadow"]    = {["shift-x"] = 16,  ["shift-y"] = 3,   ["width"] = 92,  ["height"] = 39,  ["scale"] = 1}
-        },
-      }
-    },
---]]
-
---[[
-    [MW_Minisembler.METAL_BANDSAW] = {
-      ["frame-count"] = 24,
-      ["line-length"] = 5,
-      ["hr"] = {
-        ["north"] = {
-          ["base"]      = {["shift-x"] = 0,   ["shift-y"] = 0,   ["width"] = 0,   ["height"] = 0,   ["scale"] = .5},
-          ["sparks"]    = {["shift-x"] = 0,   ["shift-y"] = 0,   ["width"] = 0,   ["height"] = 0,   ["scale"] = .5},
-          ["workpiece"] = {["shift-x"] = 0,   ["shift-y"] = 0,   ["width"] = 0,   ["height"] = 0,   ["scale"] = .5},
-          ["oxidation"] = {["shift-x"] = 0,   ["shift-y"] = 0,   ["width"] = 0,   ["height"] = 0,   ["scale"] = .5},
-          ["shadow"]    = {["shift-x"] = 0,   ["shift-y"] = 0,   ["width"] = 0,   ["height"] = 0,   ["scale"] = .5}
-        },
-        ["west"] = {
-          ["base"]      = {["shift-x"] = 0,   ["shift-y"] = 0,   ["width"] = 0,   ["height"] = 0,   ["scale"] = .5},
-          ["sparks"]    = {["shift-x"] = 0,   ["shift-y"] = 0,   ["width"] = 0,   ["height"] = 0,   ["scale"] = .5},
-          ["workpiece"] = {["shift-x"] = 0,   ["shift-y"] = 0,   ["width"] = 0,   ["height"] = 0,   ["scale"] = .5},
-          ["oxidation"] = {["shift-x"] = 0,   ["shift-y"] = 0,   ["width"] = 0,   ["height"] = 0,   ["scale"] = .5},
-          ["shadow"]    = {["shift-x"] = 0,   ["shift-y"] = 0,   ["width"] = 0,   ["height"] = 0,   ["scale"] = .5}
-        }
-      },
-      ["normal"] = {
-        ["north"] = {
-          ["base"]      = {["shift-x"] = 0,   ["shift-y"] = 0,   ["width"] = 0,   ["height"] = 0,   ["scale"] = 1},
-          ["sparks"]    = {["shift-x"] = 0,   ["shift-y"] = 0,   ["width"] = 0,   ["height"] = 0,   ["scale"] = 1},
-          ["workpiece"] = {["shift-x"] = 0,   ["shift-y"] = 0,   ["width"] = 0,   ["height"] = 0,   ["scale"] = 1},
-          ["oxidation"] = {["shift-x"] = 0,   ["shift-y"] = 0,   ["width"] = 0,   ["height"] = 0,   ["scale"] = 1},
-          ["shadow"]    = {["shift-x"] = 0,   ["shift-y"] = 0,   ["width"] = 0,   ["height"] = 0,   ["scale"] = 1}
-        },
-        ["west"] = {
-          ["base"]      = {["shift-x"] = 0,   ["shift-y"] = 0,   ["width"] = 0,   ["height"] = 0,   ["scale"] = 1},
-          ["sparks"]    = {["shift-x"] = 0,   ["shift-y"] = 0,   ["width"] = 0,   ["height"] = 0,   ["scale"] = 1},
-          ["workpiece"] = {["shift-x"] = 0,   ["shift-y"] = 0,   ["width"] = 0,   ["height"] = 0,   ["scale"] = 1},
-          ["oxidation"] = {["shift-x"] = 0,   ["shift-y"] = 0,   ["width"] = 0,   ["height"] = 0,   ["scale"] = 1},
-          ["shadow"]    = {["shift-x"] = 0,   ["shift-y"] = 0,   ["width"] = 0,   ["height"] = 0,   ["scale"] = 1}
-        },
-      }
-    },
---]]
-
---[[
-    -- welder
-    -- A bit desaturated
-    [MW_Minisembler.WELDER] = {
-      ["frame-count"] = 24,
-      ["line-length"] = 5,
-      ["hr"] = {
-        ["west"] = {
-          ["base"]      = {["shift-x"] = 0,   ["shift-y"] = -7,  ["width"] = 128, ["height"] = 128, ["scale"] = .5},
-          ["sparks"]    = {["shift-x"] = 0,   ["shift-y"] = -13, ["width"] = 72,  ["height"] = 72,  ["scale"] = .5},
-          ["workpiece"] = {["shift-x"] = 0,   ["shift-y"] = -7,  ["width"] = 128, ["height"] = 128, ["scale"] = .5},
-          ["oxidation"] = {["shift-x"] = 0,   ["shift-y"] = -7,  ["width"] = 128, ["height"] = 128, ["scale"] = .5},
-          ["shadow"]    = {["shift-x"] = 16,  ["shift-y"] = 9,   ["width"] = 194, ["height"] = 88,  ["scale"] = .5}
-        },
-        ["north"] = {
-          ["base"]      = {["shift-x"] = -1,  ["shift-y"] = -8,  ["width"] = 100, ["height"] = 170, ["scale"] = .5},
-          ["sparks"]    = {["shift-x"] = 0,   ["shift-y"] = -17, ["width"] = 88,  ["height"] = 88,  ["scale"] = .5},
-          ["workpiece"] = {["shift-x"] = 0,   ["shift-y"] = -17, ["width"] = 88,  ["height"] = 88,  ["scale"] = .5},
-          ["oxidation"] = {["shift-x"] = 0,   ["shift-y"] = -17, ["width"] = 88,  ["height"] = 88,  ["scale"] = .5},
-          ["shadow"]    = {["shift-x"] = 22,  ["shift-y"] = 8,   ["width"] = 194, ["height"] = 110, ["scale"] = .5}
-        }
-      },
-      ["normal"] = {
-        ["west"] = {
-          ["base"]      = {["shift-x"] = 0,   ["shift-y"] = -7,  ["width"] = 64,  ["height"] = 64,  ["scale"] = 1},
-          ["sparks"]    = {["shift-x"] = 0,   ["shift-y"] = -13, ["width"] = 36,  ["height"] = 36,  ["scale"] = 1},
-          ["workpiece"] = {["shift-x"] = 0,   ["shift-y"] = -7,  ["width"] = 64,  ["height"] = 64,  ["scale"] = 1},
-          ["oxidation"] = {["shift-x"] = 0,   ["shift-y"] = -7,  ["width"] = 64,  ["height"] = 64 , ["scale"] = 1},
-          ["shadow"]    = {["shift-x"] = 16,  ["shift-y"] = 9,   ["width"] = 97,  ["height"] = 44,  ["scale"] = 1}
-        },
-        ["north"] = {
-          ["base"]      = {["shift-x"] = -1,  ["shift-y"] = -8,  ["width"] = 50,  ["height"] = 85,  ["scale"] = 1},
-          ["sparks"]    = {["shift-x"] = 0,   ["shift-y"] = -17, ["width"] = 44,  ["height"] = 44,  ["scale"] = 1},
-          ["workpiece"] = {["shift-x"] = 0,   ["shift-y"] = -17, ["width"] = 44,  ["height"] = 44,  ["scale"] = 1},
-          ["oxidation"] = {["shift-x"] = 0,   ["shift-y"] = -17, ["width"] = 44,  ["height"] = 44,  ["scale"] = 1},
-          ["shadow"]    = {["shift-x"] = 22,  ["shift-y"] = 8,   ["width"] = 97,  ["height"] = 55,  ["scale"] = 1}
-        },
-      }
-    },
-
-    -- roller
-    -- Notes to self: Sparks need to be shiny, oxidation is visible in the shadow in vertical, need to animate another plate being prepped in loader, fix oxidation in vertical
-    [MW_Minisembler.ROLLER] = {
-      ["frame-count"] = 24,
-      ["line-length"] = 5,
-      ["hr"] = {
-        ["west"] = {
-          ["base"]      = {["shift-x"] = 0,   ["shift-y"] = -7,  ["width"] = 128, ["height"] = 96,  ["scale"] = .5},
-          ["sparks"]    = {["shift-x"] = 0,   ["shift-y"] = -10, ["width"] = 128, ["height"] = 96,  ["scale"] = .5},
-          ["workpiece"] = {["shift-x"] = 0,   ["shift-y"] = -17, ["width"] = 128, ["height"] = 96,  ["scale"] = .5},
-          ["oxidation"] = {["shift-x"] = 0,   ["shift-y"] = -17, ["width"] = 128, ["height"] = 96,  ["scale"] = .5},
-          ["shadow"]    = {["shift-x"] = 9,   ["shift-y"] = 2,   ["width"] = 164, ["height"] = 60,  ["scale"] = .5}
-        },
-        ["north"] = {
-          ["base"]      = {["shift-x"] = 0,   ["shift-y"] = 0,   ["width"] = 84,  ["height"] = 128, ["scale"] = .5},
-          ["sparks"]    = {["shift-x"] = 0,   ["shift-y"] = -11, ["width"] = 88,  ["height"] = 88,  ["scale"] = .5},
-          ["workpiece"] = {["shift-x"] = 0,   ["shift-y"] = -11, ["width"] = 50,  ["height"] = 88,  ["scale"] = .5},
-          ["oxidation"] = {["shift-x"] = 0,   ["shift-y"] = -11, ["width"] = 50,  ["height"] = 88,  ["scale"] = .5},
-          ["shadow"]    = {["shift-x"] = 13,  ["shift-y"] = 10,  ["width"] = 132, ["height"] = 94,  ["scale"] = .5}
-        },
-      },
-      ["normal"] = {
-        ["west"] = {   
-          ["base"]      = {["shift-x"] = 0,   ["shift-y"] = -3.5,["width"] = 64,  ["height"] = 48,  ["scale"] = 1},
-          ["sparks"]    = {["shift-x"] = 0,   ["shift-y"] = -5,  ["width"] = 64,  ["height"] = 48,  ["scale"] = 1},
-          ["workpiece"] = {["shift-x"] = 0,   ["shift-y"] = -8.5,["width"] = 64,  ["height"] = 48,  ["scale"] = 1},
-          ["oxidation"] = {["shift-x"] = 0,   ["shift-y"] = -8.5,["width"] = 64,  ["height"] = 48,  ["scale"] = 1},
-          ["shadow"]    = {["shift-x"] = 4.5, ["shift-y"] = 1,   ["width"] = 82,  ["height"] = 30,  ["scale"] = 1}
-        },
-        ["north"] = {
-          ["base"]      = {["shift-x"] = 0,   ["shift-y"] = 0,   ["width"] = 42,  ["height"] = 64,  ["scale"] = 1},
-          ["sparks"]    = {["shift-x"] = 0,   ["shift-y"] = -5.5,["width"] = 44,  ["height"] = 44,  ["scale"] = 1},
-          ["workpiece"] = {["shift-x"] = 0,   ["shift-y"] = -5.5,["width"] = 25,  ["height"] = 44,  ["scale"] = 1},
-          ["oxidation"] = {["shift-x"] = 0,   ["shift-y"] = -5.5,["width"] = 25,  ["height"] = 44,  ["scale"] = 1},
-          ["shadow"]    = {["shift-x"] = 6.5, ["shift-y"] = 5,   ["width"] = 66,  ["height"] = 47,  ["scale"] = 1}
-        }
-      }
-    },
---]]
-
     [MW_Minisembler.BENDER] = {
       ["frame-count"] = 29,
       ["line-length"] = 6,
@@ -684,28 +483,6 @@ MW_Data.minisemblers_rendering_data = { -- Set up the minisembler rendering data
           ["shadow"]    = {["shift-x"] = x_off_v, ["shift-y"] = y_off_v, ["width"] = v_size, ["height"] = v_size, ["scale"] = .5}
         },
       },
---[[
-    [MW_Minisembler.BENDER] = {
-      ["frame-count"] = 29,
-      ["line-length"] = 6,
-      ["hr"] = {
-        ["west"] = {
-          ["base"]      = {["shift-x"] = 0, ["shift-y"] = 0, ["width"] = 139, ["height"] = 134, ["scale"] = .5, ["line-length"] = 5},
-          ["sparks"]    = {["shift-x"] = 0, ["shift-y"] = 0, ["width"] = 119, ["height"] = 77, ["scale"] = .5, ["line-length"] = 5},
-          ["workpiece"] = {["shift-x"] = 0, ["shift-y"] = 0, ["width"] = 113, ["height"] = 86, ["scale"] = .5, ["line-length"] = 5},
-          ["oxidation"] = {["shift-x"] = 0, ["shift-y"] = 0, ["width"] = 111, ["height"] = 81, ["scale"] = .5, ["line-length"] = 5},
-          ["shadow"]    = {["shift-x"] = 0, ["shift-y"] = 0, ["width"] = 193, ["height"] = 61, ["scale"] = .5, ["line-length"] = 3}
-        },
-        ["north"] = {
-          ["base"]      = {["shift-x"] = 0, ["shift-y"] = 0, ["width"] = 80, ["height"] = 134, ["scale"] = .5, ["line-length"] = 7},
-          ["sparks"]    = {["shift-x"] = 0, ["shift-y"] = 0, ["width"] = 34, ["height"] = 107, ["scale"] = .5, ["line-length"] = 10},
-          ["workpiece"] = {["shift-x"] = 0, ["shift-y"] = 0, ["width"] = 46, ["height"] = 109, ["scale"] = .5, ["line-length"] = 8},
-          ["oxidation"] = {["shift-x"] = 0, ["shift-y"] = 0, ["width"] = 42, ["height"] = 107, ["scale"] = .5, ["line-length"] = 8},
-          ["shadow"]    = {["shift-x"] = 0, ["shift-y"] = 0, ["width"] = 155, ["height"] = 78, ["scale"] = .5, ["line-length"] = 4}
-        },
-      },
---]]
-
       ["normal"] = {
         ["west"] = {   
           ["base"]      = {["shift-x"] = x_off_h/2, ["shift-y"] = y_off_h/2, ["width"] = h_size/2, ["height"] = h_size/2, ["scale"] = 1},
@@ -1220,16 +997,9 @@ MW_Data.minisemblers_rendering_data = { -- Set up the minisembler rendering data
   }
 }
 
+require("prototypes.passes.metalworking.mw-minisembler-rendering-parser")
 
-local asdf = require("prototypes.drill-press")
-local offset_h = {x = 0, y = 0}
-local offset_v = {x = 0, y = 0}
 
-MW_Data.minisemblers_rendering_data["electric"]["drill-press"].hr.west.base["shift-x"] = -1 * asdf["h_base"].shift.x + offset_h.x
-MW_Data.minisemblers_rendering_data["electric"]["drill-press"].hr.west.base["shift-y"] = -1 * asdf["h_base"].shift.y + offset_h.y
-MW_Data.minisemblers_rendering_data["electric"]["drill-press"].hr.west.base["width"] = asdf["h_base"].width
-MW_Data.minisemblers_rendering_data["electric"]["drill-press"].hr.west.base["height"] = asdf["h_base"].height
-MW_Data.minisemblers_rendering_data["electric"]["drill-press"].hr.west.base["line-length"] = asdf["h_base"]["line_length"]
 
 -- ****************************
 -- Settings Dependent Couplings
