@@ -41,7 +41,7 @@ local MW_Data = GM_global_mw_data.MW_Data
 
 GM_global_mw_data.ore_to_matter_corner = "left-bottom"
 GM_global_mw_data.matter_to_ore_corner = "right-bottom"
-GM_global_mw_data.matter_to_plate_corner = "right-bottom" 
+GM_global_mw_data.matter_to_plate_corner = "right-bottom"
 
 
 
@@ -86,7 +86,7 @@ for ore, ore_data in pairs(MW_Data.ore_data) do -- Add Pebble and Gravel Items
         table.insert(pictures_data, {layers = single_picture})
       end
 
-      local ib_data = {}
+      local ib_data = {} -- Prepare badge data for the items
       ib_data.ib_let_badge  = ore_data.ib_data.ib_let_badge
       ib_data.ib_let_invert = ore_data.ib_data.ib_let_invert
       ib_data.ib_let_corner = ore_data.ib_data.ib_let_corner
@@ -108,7 +108,8 @@ for ore, ore_data in pairs(MW_Data.ore_data) do -- Add Pebble and Gravel Items
           localised_name = {"gm." .. shape .. "-item-name", {"gm." .. ore}}
         },
       })
-      Build_badge(data.raw.item[ore .. "-" .. shape], ib_data)
+      GM_globals.GM_Badge_list["item"][ore .. "-" .. shape] = ib_data
+      -- Build_badge(data.raw.item[ore .. "-" .. shape], ib_data)
     end
   end
 end
@@ -135,7 +136,7 @@ for ore, ore_data in pairs(MW_Data.ore_data) do -- Add Enriched Items and Recipe
       table.insert(pictures_data, {layers = single_picture})
     end
 
-    local ib_data = {}
+    local ib_data = {} -- Prepare badge data for the items
     ib_data.ib_let_badge  = ore_data.ib_data.ib_let_badge
     ib_data.ib_let_invert = ore_data.ib_data.ib_let_invert
     ib_data.ib_let_corner = ore_data.ib_data.ib_let_corner
@@ -162,7 +163,8 @@ for ore, ore_data in pairs(MW_Data.ore_data) do -- Add Enriched Items and Recipe
       data.raw.item["enriched-" .. ore].icons = icons_data_item
       data.raw.item["enriched-" .. ore].pictures = pictures_data
     end
-    Build_badge(data.raw.item["enriched-" .. ore], ib_data)
+    GM_globals.GM_Badge_list["item"]["enriched-" .. ore] = ib_data
+    -- Build_badge(data.raw.item["enriched-" .. ore], ib_data)
 
     if ore_data.enriched_recipe and (ore_data.enriched_recipe.new or ore_data.enriched_recipe.replace) then
       local recipe_tint_primary = {r = 1, g = 1, b = 1, a = 1}
@@ -300,9 +302,13 @@ for ore, ore_data in pairs(MW_Data.ore_data) do -- Add Enriched Items and Recipe
       })
 
     end
-    Build_badge(data.raw.recipe["enriched-" .. ore], ib_data)
-    Build_badge(data.raw.recipe["enriched-" .. ore .. "-plate"], ib_data)
-    Build_badge(data.raw.recipe["dirty-water-filtration-" .. ore], ib_data)
+    -- Build_badge(data.raw.recipe["enriched-" .. ore], ib_data)
+    -- Build_badge(data.raw.recipe["enriched-" .. ore .. "-plate"], ib_data)
+    -- Build_badge(data.raw.recipe["dirty-water-filtration-" .. ore], ib_data)
+    GM_globals.GM_Badge_list["recipe"]["enriched-" .. ore] = ib_data
+    GM_globals.GM_Badge_list["recipe"]["enriched-" .. ore .. "-plate"] = ib_data
+    GM_globals.GM_Badge_list["recipe"]["dirty-water-filtration-" .. ore] = ib_data
+
   end
 end
 
@@ -334,7 +340,7 @@ for ore, ore_data in pairs(MW_Data.ore_data) do -- Make Matter recipes
         }
       }
 
-      local ib_data = {}
+      local ib_data = {} -- Prepare badge data for the items
       ib_data.ib_let_badge  = ore_data.ib_data.ib_let_badge
       ib_data.ib_let_invert = ore_data.ib_data.ib_let_invert
       ib_data.ib_let_corner = GM_global_mw_data.matter_to_ore_corner
@@ -372,7 +378,8 @@ for ore, ore_data in pairs(MW_Data.ore_data) do -- Make Matter recipes
           localised_name = {"gm.matter-to-ore-recipe-name", { "gm." .. ore }}
         }
       })
-      Build_badge(data.raw.recipe["matter-to-" .. ore .. "-ore"], ib_data)
+      GM_globals.GM_Badge_list["recipe"]["matter-to-" .. ore .. "-ore"] = ib_data
+      -- Build_badge(data.raw.recipe["matter-to-" .. ore .. "-ore"], ib_data)
     end
 
     if ore_data.matter_recipe.ore_to_matter_recipe then -- ore-to-matter
@@ -396,7 +403,7 @@ for ore, ore_data in pairs(MW_Data.ore_data) do -- Make Matter recipes
         }
       }
 
-      local ib_data = {}
+      local ib_data = {} -- Prepare badge data for the items
       ib_data.ib_let_badge  = ore_data.ib_data.ib_let_badge
       ib_data.ib_let_invert = ore_data.ib_data.ib_let_invert
       ib_data.ib_let_corner = GM_global_mw_data.ore_to_matter_corner
@@ -436,7 +443,8 @@ for ore, ore_data in pairs(MW_Data.ore_data) do -- Make Matter recipes
           localised_name = {"gm.ore-to-matter-recipe-name", { "gm." .. ore }}
         }
       })
-      Build_badge(data.raw.recipe[ore .. "-ore-to-matter"], ib_data)
+      GM_globals.GM_Badge_list["recipe"][ore .. "-ore-to-matter"] = ib_data
+      -- Build_badge(data.raw.recipe[ore .. "-ore-to-matter"], ib_data)
     end
 
     if MW_Data.metal_data[ore] and MW_Data.metal_data[ore].matter_recipe and MW_Data.metal_data[ore].matter_recipe.matter_to_plate_recipe then -- matter-to-plate
@@ -460,7 +468,7 @@ for ore, ore_data in pairs(MW_Data.ore_data) do -- Make Matter recipes
         },
       }
 
-      local ib_data = {}
+      local ib_data = {} -- Prepare badge data for the items
       ib_data.ib_let_badge  = ore_data.ib_data.ib_let_badge
       ib_data.ib_let_invert = ore_data.ib_data.ib_let_invert
       ib_data.ib_let_corner = GM_global_mw_data.matter_to_plate_corner
@@ -505,7 +513,8 @@ for ore, ore_data in pairs(MW_Data.ore_data) do -- Make Matter recipes
           localised_name = {"gm.matter-to-plate-recipe-name", { "gm." .. ore }}
         }
       })
-      Build_badge(data.raw.recipe["matter-to-" .. ore .. "-plate"], ib_data)
+      GM_globals.GM_Badge_list["recipe"]["matter-to-" .. ore .. "-plate"] = ib_data
+      -- Build_badge(data.raw.recipe["matter-to-" .. ore .. "-plate"], ib_data)
     end
   end
 end
@@ -536,6 +545,11 @@ for ore, ore_data in pairs(MW_Data.ore_data) do -- Make Mixed-Ore and Enriched-M
         recipe_hide_from_player_crafting = false
       end
 
+      local ib_data = {} -- Prepare badge data for the items
+      ib_data.ib_let_badge  = ore_data.ib_data.ib_let_badge
+      ib_data.ib_let_invert = ore_data.ib_data.ib_let_invert
+      ib_data.ib_let_corner = ore_data.ib_data.ib_let_corner
+
       data:extend({
         {
           type = "recipe",
@@ -557,11 +571,8 @@ for ore, ore_data in pairs(MW_Data.ore_data) do -- Make Mixed-Ore and Enriched-M
         }
       })
 
-      local ib_data = {}
-      ib_data.ib_let_badge  = ore_data.ib_data.ib_let_badge
-      ib_data.ib_let_invert = ore_data.ib_data.ib_let_invert
-      ib_data.ib_let_corner = ore_data.ib_data.ib_let_corner
-      Build_badge(data.raw.recipe[item_name .. "-crushing"], ib_data)
+      GM_globals.GM_Badge_list["recipe"][item_name .. "-crushing"] = ib_data
+      -- Build_badge(data.raw.recipe[item_name .. "-crushing"], ib_data)
     end
 
     if ore_data.ore_type == MW_Data.MW_Ore_Type.MIXED and ore_data.enriched_crushing_result then -- Enriched-Mixed-Ore Processing
@@ -587,6 +598,11 @@ for ore, ore_data in pairs(MW_Data.ore_data) do -- Make Mixed-Ore and Enriched-M
         recipe_hide_from_player_crafting = false
       end
 
+      local ib_data = {} -- Prepare badge data for the items
+      ib_data.ib_let_badge  = ore_data.ib_data.ib_let_badge
+      ib_data.ib_let_invert = ore_data.ib_data.ib_let_invert
+      ib_data.ib_let_corner = ore_data.ib_data.ib_let_corner
+
       data:extend({
         {
           type = "recipe",
@@ -607,11 +623,8 @@ for ore, ore_data in pairs(MW_Data.ore_data) do -- Make Mixed-Ore and Enriched-M
         }
       })
 
-      local ib_data = {}
-      ib_data.ib_let_badge  = ore_data.ib_data.ib_let_badge
-      ib_data.ib_let_invert = ore_data.ib_data.ib_let_invert
-      ib_data.ib_let_corner = ore_data.ib_data.ib_let_corner
-      Build_badge(data.raw.recipe[item_name .. "-crushing"], ib_data)
+      GM_globals.GM_Badge_list["recipe"][item_name .. "-crushing"] = ib_data
+      -- Build_badge(data.raw.recipe[item_name .. "-crushing"], ib_data)
     end
   end
 end
@@ -630,6 +643,11 @@ for ore, ore_data in pairs(MW_Data.ore_data) do -- Make pebble -> gravel and gra
     {"__galdocs-manufacturing__/graphics/icons/intermediates/ore/" .. ore .. "/" .. ore .. "-pebble-shadow.png",
     "__galdocs-manufacturing__/graphics/icons/intermediates/ore/" .. ore .. "/" .. ore .. "-pebble-1.png"},
     64, GM_globals.stock_badge_scale, 0, GM_globals.remelting_badge_corner, 0)
+
+    local ib_data = {} -- Prepare badge data for the items
+    ib_data.ib_let_badge  = ore_data.ib_data.ib_let_badge
+    ib_data.ib_let_invert = ore_data.ib_data.ib_let_invert
+    ib_data.ib_let_corner = ore_data.ib_data.ib_let_corner
 
     local recipe_prototype = { -- recipe
       {
@@ -657,12 +675,9 @@ for ore, ore_data in pairs(MW_Data.ore_data) do -- Make pebble -> gravel and gra
       }
     }
     data:extend(recipe_prototype)
-
-    local ib_data = {}
-    ib_data.ib_let_badge  = ore_data.ib_data.ib_let_badge
-    ib_data.ib_let_invert = ore_data.ib_data.ib_let_invert
-    ib_data.ib_let_corner = ore_data.ib_data.ib_let_corner
-    Build_badge(data.raw.recipe[ore .. "-pebble-to-gravel"], ib_data)
+    
+    GM_globals.GM_Badge_list["recipe"][ore .. "-pebble-to-gravel"] = ib_data
+    -- Build_badge(data.raw.recipe[ore .. "-pebble-to-gravel"], ib_data)
   end
 
   if ore_data.gravel_to_pebble_input then -- Gravel To Pebble
@@ -678,6 +693,11 @@ for ore, ore_data in pairs(MW_Data.ore_data) do -- Make pebble -> gravel and gra
     {"__galdocs-manufacturing__/graphics/icons/intermediates/ore/" .. ore .. "/" .. ore .. "-gravel-shadow.png",
     "__galdocs-manufacturing__/graphics/icons/intermediates/ore/" .. ore .. "/" .. ore .. "-gravel-1.png"},
     64, GM_globals.stock_badge_scale, 0, GM_globals.remelting_badge_corner, 0)
+
+    local ib_data = {} -- Prepare badge data for the items
+    ib_data.ib_let_badge  = ore_data.ib_data.ib_let_badge
+    ib_data.ib_let_invert = ore_data.ib_data.ib_let_invert
+    ib_data.ib_let_corner = ore_data.ib_data.ib_let_corner
 
     local recipe_prototype = { -- recipe
       {
@@ -705,12 +725,9 @@ for ore, ore_data in pairs(MW_Data.ore_data) do -- Make pebble -> gravel and gra
       }
     }
     data:extend(recipe_prototype)
-        
-    local ib_data = {}
-    ib_data.ib_let_badge  = ore_data.ib_data.ib_let_badge
-    ib_data.ib_let_invert = ore_data.ib_data.ib_let_invert
-    ib_data.ib_let_corner = ore_data.ib_data.ib_let_corner
-    Build_badge(data.raw.recipe[ore .. "-gravel-to-pebble"], ib_data)
+    
+    GM_globals.GM_Badge_list["recipe"][ore .. "-gravel-to-pebble"] = ib_data
+    -- Build_badge(data.raw.recipe[ore .. "-gravel-to-pebble"], ib_data)
   end
 end
 
@@ -742,6 +759,11 @@ for ore, ore_data in pairs(MW_Data.ore_data) do -- Make gravel to plate and pebb
     "__galdocs-manufacturing__/graphics/icons/intermediates/ore/" .. ore .. "/" .. ore .. "-gravel-1.png"},
     64, GM_globals.stock_badge_scale, 0, GM_globals.remelting_badge_corner, 0)
 
+    local ib_data = {} -- Prepare badge data for the items
+    ib_data.ib_let_badge  = ore_data.ib_data.ib_let_badge
+    ib_data.ib_let_invert = ore_data.ib_data.ib_let_invert
+    ib_data.ib_let_corner = ore_data.ib_data.ib_let_corner
+
     local recipe_prototype = { -- Gravel to plate recipe
       {
         type = "recipe",
@@ -766,11 +788,8 @@ for ore, ore_data in pairs(MW_Data.ore_data) do -- Make gravel to plate and pebb
 
     data:extend(recipe_prototype)
 
-    local ib_data = {}
-    ib_data.ib_let_badge  = ore_data.ib_data.ib_let_badge
-    ib_data.ib_let_invert = ore_data.ib_data.ib_let_invert
-    ib_data.ib_let_corner = ore_data.ib_data.ib_let_corner
-    Build_badge(data.raw.recipe[ore .. "-gravel-to-plate"], ib_data)
+    GM_globals.GM_Badge_list["recipe"][ore .. "-gravel-to-plate"] = ib_data
+    -- Build_badge(data.raw.recipe[ore .. "-gravel-to-plate"], ib_data)
     
     -- Pebble to plate recipes
     icons_data_recipe = { -- Make icon
@@ -785,6 +804,11 @@ for ore, ore_data in pairs(MW_Data.ore_data) do -- Make gravel to plate and pebb
     {"__galdocs-manufacturing__/graphics/icons/intermediates/ore/" .. ore .. "/" .. ore .. "-pebble-shadow.png",
     "__galdocs-manufacturing__/graphics/icons/intermediates/ore/" .. ore .. "/" .. ore .. "-pebble-1.png"},
     64, GM_globals.stock_badge_scale, 0, GM_globals.remelting_badge_corner, 0)
+
+    local ib_data = {} -- Prepare badge data for the items
+    ib_data.ib_let_badge  = ore_data.ib_data.ib_let_badge
+    ib_data.ib_let_invert = ore_data.ib_data.ib_let_invert
+    ib_data.ib_let_corner = ore_data.ib_data.ib_let_corner
 
     recipe_prototype = { -- Pebble to plate recipe
       {
@@ -809,12 +833,9 @@ for ore, ore_data in pairs(MW_Data.ore_data) do -- Make gravel to plate and pebb
     }
 
     data:extend(recipe_prototype)
-
-    local ib_data = {}
-    ib_data.ib_let_badge  = ore_data.ib_data.ib_let_badge
-    ib_data.ib_let_invert = ore_data.ib_data.ib_let_invert
-    ib_data.ib_let_corner = ore_data.ib_data.ib_let_corner
-    Build_badge(data.raw.recipe[ore .. "-pebble-to-plate"], ib_data)
+    
+    GM_globals.GM_Badge_list["recipe"][ore .. "-pebble-to-plate"] = ib_data
+    -- Build_badge(data.raw.recipe[ore .. "-pebble-to-plate"], ib_data)
   end
 end
 
@@ -877,9 +898,10 @@ for property, parts in pairs(MW_Data.property_machined_part_pairs) do -- Add glo
           }
         }
       }
-      if GM_globals.show_property_badges == "all" then
-        table.insert(glow_me_up_fam.pictures[1].layers, Build_badge_pictures(property, GM_globals.property_badge_shift))
-      end
+
+      -- if GM_globals.show_property_badges == "all" then
+      --   table.insert(glow_me_up_fam.pictures[1].layers, Build_badge_pictures(property, GM_globals.property_badge_shift))
+      -- end
     end
   end
 end

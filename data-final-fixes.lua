@@ -184,4 +184,14 @@ end
 require("prototypes.passes.metalworking.mw-pass-final-fixes")
 -- other material passes will go here
 
+if mods["icon-badges"] then
+  if GM_globals.ib_activation then
+    local final_badge_list = Merge_badge_lists(Ib_global.Badge_list, GM_globals.GM_Badge_list)
+    if GM_globals.overhaul_badge_list then
+      final_badge_list = Merge_badge_lists(final_badge_list, GM_globals.overhaul_badge_list)
+    end
+    Process_badge_list(final_badge_list)
+  end
+end
+
 local a = 1

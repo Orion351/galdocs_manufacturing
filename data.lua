@@ -214,6 +214,17 @@ Mod_Names = {
 GM_globals = require("prototypes.settings-parser")
 GM_globals = table.merge(GM_globals, require("prototypes.global-variables"))
 
+-- Icon Badges
+if mods["icon-badges"] then
+  Ib_global.badge_vanilla = false
+end
+
+GM_globals.GM_Badge_list = {}
+for name, _ in pairs(defines.prototypes.item) do
+  GM_globals.GM_Badge_list[name] = {}
+end
+GM_globals.GM_Badge_list["recipe"] = {}
+
 
 
 -- ***************

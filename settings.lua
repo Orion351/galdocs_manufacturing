@@ -38,13 +38,16 @@ data:extend({
     setting_type = "startup",
     default_value = true
   },
+  --[[
   { -- delete culled recipes
     type = "bool-setting",
     name = "gm-debug-delete-culled-recipes",
     setting_type = "startup",
     default_value = false
   },
+  --]]
 })
+--[[
 if mods["icon-badges"] then
   data:extend({
     { -- Show minisembler badges
@@ -56,6 +59,7 @@ if mods["icon-badges"] then
     }
   })
 end
+--]]
 
 -- For compatibility with other mods, make settings HIDDEN rather than existant or not so as not to bloat the main options menu.
 

@@ -205,4 +205,8 @@ for _, recipe in pairs(lds_recipes) do
 end
 
 require("prototypes.compatibility.krastorio-2.mw-compat-final-fixes-badges")
-require("prototypes.compatibility.krastorio-2.icon_badges")
+if K2_Badge_list then
+  GM_globals.overhaul_badge_list = K2_Badge_list
+else
+  GM_globals.overhaul_badge_list = require("prototypes.compatibility.krastorio-2.k2-icon-badges")
+end

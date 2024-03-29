@@ -171,12 +171,13 @@ K2_badge_list["recipe"] = {
   ["nuclear-fuel"]                    = {ib_let_badge = "NF", },
 }
 
-if Ib_global.badge_vanilla then
-  for subListName, subList in pairs(K2_badge_list) do
-    for itemName, ib_data in pairs(subList) do
-      if data.raw[subListName][itemName] then
-        Build_badge(data.raw[subListName][itemName], ib_data)
-      end
-    end
-  end
-end
+return K2_badge_list
+-- if Ib_global.badge_vanilla then
+--   for subListName, subList in pairs(K2_badge_list) do
+--     for itemName, ib_data in pairs(subList) do
+--       if data.raw[subListName][itemName] then
+--         Build_badge(data.raw[subListName][itemName], ib_data)
+--       end
+--     end
+--   end
+-- end

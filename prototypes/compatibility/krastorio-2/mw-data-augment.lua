@@ -150,8 +150,6 @@ MW_Data.ore_data = table.merge_subtables(MW_Data.ore_data, { -- Icon Badges data
   [MW_Resource.COKE]            = {ib_data = {ib_let_badge = "CK"}},
 })
 
-
-
 MW_Data.smelting_data = { -- Set up the Smelting Recipes
   [MW_Ore_Shape.ORE]    = {input_count = 1,  output_shape = MW_Data.MW_Stock.PLATE, output_count = 1},
   [MW_Ore_Shape.PEBBLE] = {input_count = 10, output_shape = MW_Data.MW_Stock.PLATE, output_count = 1},
