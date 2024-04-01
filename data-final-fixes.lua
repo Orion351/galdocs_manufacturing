@@ -194,4 +194,16 @@ if mods["icon-badges"] then
   end
 end
 
+
+
+-- ***********
+-- QoL Balance
+-- ***********
+
+data.raw.character.character.inventory_size = data.raw.character.character.inventory_size + (10 * GM_globals.extra_inventory_rows)
+
+if GM_globals.extra_crafting_columns and data.raw["utility-constants"].default.select_slot_row_count == 10 then -- 10 is vanilla default
+  data.raw["utility-constants"].default.select_slot_row_count = GM_globals.num_extra_columns
+end
+
 local a = 1

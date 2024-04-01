@@ -38,6 +38,19 @@ data:extend({
     setting_type = "startup",
     default_value = true
   },
+  {
+    type = "int-setting",
+    name = "gm-extra-inventory-rows",
+    setting_type = "startup",
+    default_value = 3,
+    allowed_values = {0, 1, 2, 3, 4, 5, 6}
+  },
+  {
+    type = "bool-setting",
+    name = "gm-extra-crafting-columns",
+    setting_type = "startup",
+    default_value = true
+  }
   --[[
   { -- delete culled recipes
     type = "bool-setting",

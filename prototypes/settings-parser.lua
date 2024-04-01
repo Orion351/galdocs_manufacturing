@@ -24,4 +24,9 @@ settings_values.consumable_parts = false -- not implemented yet
 settings_values.metalworking_byproducts = false -- not implemented yet
 settings_values.metalworking_kits = false -- not implemented yet
 
+-- Balance Variables
+settings_values.extra_inventory_rows = settings.startup["gm-extra-inventory-rows"].value
+settings_values.extra_crafting_columns = settings.startup["gm-extra-crafting-columns"].value
+settings_values.num_extra_columns = 15
+
 return settings_values

@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.2.02
+Date: 2024-04-01
+  Changes:
+    - Added option for 5 extra columns in crafting tab for the sake of stocks/machined parts
+    - Added option to give player extra inventory slots because of the plethora of intermediates
+    - 17 dimensional phase 5 announced
+---------------------------------------------------------------------------------------------------
 Version: 0.2.01
 Date: 2024-03-29
   Changes:
