@@ -153,11 +153,28 @@ for recipe_name, recipe in pairs(data.raw.recipe) do -- Map which machined parts
               local current_property = current_item.gm_item_data.property
               for _, stock in pairs(current_backchain) do
                 for _, metal in pairs(MW_Data.MW_Metal) do
+                  -- If the metal has the property and it can be made into that sort of stock, add it to the 'seen' list
                   if MW_Data.metal_properties_pairs[metal][current_property] and MW_Data.metal_stocks_pairs[metal][stock] then
                     seen_stocks[metal .. "-" .. stock .. "-stock"] = true
                   end
+                  
+                  -- If the metal is the precursor to a Plated Treated Metal for which the above criteria applies, add it ot the 'seen' list
+                  for _, check_precursor_metal in pairs(MW_Data.MW_Metal) do
+                    if MW_Data.metal_data[check_precursor_metal].type == MW_Data.MW_Metal_Type.TREATMENT
+                      and MW_Data.metal_data[check_precursor_metal].treatment_type == MW_Data.MW_Treatment_Type.PLATING
+                      and metal == MW_Data.metal_data[check_precursor_metal].core_metal then
+                        seen_stocks[metal .. "-" .. stock .. "-stock"] = true
+                    end
+                    if MW_Data.metal_data[check_precursor_metal].type == MW_Data.MW_Metal_Type.TREATMENT
+                      and MW_Data.metal_data[check_precursor_metal].treatment_type == MW_Data.MW_Treatment_Type.ANNEALING
+                      and metal == MW_Data.metal_data[check_precursor_metal].source_metal then
+                        seen_stocks[metal .. "-" .. stock .. "-stock"] = true
+                    end
+                  end
+
                 end
               end
+
             end
           end
         end
