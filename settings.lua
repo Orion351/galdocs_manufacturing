@@ -50,7 +50,17 @@ data:extend({
     name = "gm-extra-crafting-columns",
     setting_type = "startup",
     default_value = true
+  },
+
+--[[
+  {
+    type = "bool-setting",
+    name = "gm-mw-byproducts",
+    setting_type = "startup",
+    default_value = false
   }
+--]]
+
   --[[
   { -- delete culled recipes
     type = "bool-setting",

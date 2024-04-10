@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.2.04
+Date: 2024-04-10
+  Changes:
+    - Out of Beta; please report any bugs you find
+    - General reshuffling of the tech tree so all products researched can be made immediately
+    - Long-handed inserters now don't require steel-grade properties
+---------------------------------------------------------------------------------------------------
 Version: 0.2.03
 Date: 2024-04-06
   Changes:

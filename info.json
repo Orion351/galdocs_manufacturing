@@ -1,7 +1,7 @@
 {
 	"name": "galdocs-manufacturing",
-	"version": "0.2.03",
-	"title": "Galdoc's manufacturing (BETA)",
+	"version": "0.2.04",
+	"title": "Galdoc's manufacturing",
 	"author": "Galdoc",
 	"factorio_version": "1.1",
   "package":{

@@ -16,7 +16,7 @@ return function(advanced)
 
       ["burner-inserter"]             = {{"basic-framing", 1}, {"basic-fine-gearing", 1}, {"thermally-conductive-wiring", 1}, {"basic-bolts", 1}, },
       ["inserter"]                    = {{"load-bearing-framing", 1}, {"basic-fine-gearing", 1}, {"load-bearing-shafting", 1}, {"basic-bolts", 1}, },
-      ["long-handed-inserter"]        = {{"heavy-load-bearing-framing", 2}, {"ductile-fine-gearing", 1}, {"heavy-load-bearing-shafting", 1}, {"high-tensile-bolts", 1}, },
+      ["long-handed-inserter"]        = {{"load-bearing-framing", 3}, {"basic-fine-gearing", 2}, {"load-bearing-shafting", 2}, {"basic-bolts", 1}, },
       ["fast-inserter"]               = {{"heavy-load-bearing-framing", 1}, {"ductile-fine-gearing", 1}, {"electrically-conductive-wiring", 1}, {"high-tensile-bolts", 1}, },
       ["stack-inserter"]              = {{"heavy-load-bearing-framing", 3}, {"high-tensile-fine-gearing", 8}, {"heavy-load-bearing-shafting", 6}, {"electrically-conductive-wiring", 3}, {"high-tensile-bolts", 4}, },
 
@@ -128,7 +128,7 @@ return function(advanced)
 
       ["burner-inserter"]             = {{"basic-framing", 1}, {"basic-gearing", 1}, {"thermally-conductive-wiring", 1}, {"basic-bolts", 1}, },
       ["inserter"]                    = {{"load-bearing-framing", 1}, {"basic-gearing", 1}, {"load-bearing-shafting", 1}, {"basic-bolts", 1}, },
-      ["long-handed-inserter"]        = {{"heavy-load-bearing-framing", 2}, {"ductile-gearing", 1}, {"heavy-load-bearing-shafting", 1}, {"high-tensile-bolts", 1}, },
+      ["long-handed-inserter"]        = {{"load-bearing-framing", 3}, {"basic-gearing", 2}, {"load-bearing-shafting", 2}, {"basic-bolts", 1}, },
       ["fast-inserter"]               = {{"heavy-load-bearing-framing", 1}, {"ductile-gearing", 1}, {"electrically-conductive-wiring", 1}, {"high-tensile-bolts", 1}, },
       ["stack-inserter"]              = {{"heavy-load-bearing-framing", 2}, {"high-tensile-gearing", 5}, {"heavy-load-bearing-shafting", 6}, {"electrically-conductive-wiring", 3}, {"high-tensile-bolts", 4}, },
 

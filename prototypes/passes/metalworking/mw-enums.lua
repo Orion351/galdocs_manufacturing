@@ -71,6 +71,11 @@ return {
 		WAFER						= "wafer",
 	},
 
+	MW_Byproduct = {
+		SWARF  = "swarf",
+		OFFCUT = "offcut",
+	},
+
 	MW_Machined_Part = {
 		PANELING        = "paneling",
 		LARGE_PANELING  = "large-paneling",

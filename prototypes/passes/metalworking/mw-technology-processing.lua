@@ -11,8 +11,8 @@ for minisembler, _ in pairs(MW_Data.minisemblers_recipe_parameters) do -- put mi
   )
 end
 
--- Technology
--- ==========
+-- New Technology
+-- ==============
 
 data:extend({ -- Early Inserter Stack Size Bonus
   {
@@ -61,6 +61,8 @@ data:extend({ -- electric metal machining minisembler technology
     localised_name = {"gm.technology-metal-machining-minisembler"}
   }
 })
+
+-- Updating Exis
 
 data.raw.technology["automation"].prerequisites = {"gm-technology-minisemblers"} -- FIXME: Put this in Data-Updates.lua
 
@@ -163,12 +165,14 @@ for metal, metal_data in pairs(MW_Data.metal_data) do -- Add Stocks and Machined
   end
 end
 
+-- steel
 -- Remove original "steel-plate" from the steel processing technology
 local new_effects = {}
 for _, unlock in pairs(data.raw.technology["steel-processing"].effects) do
   if unlock.recipe ~= "steel-plate" then table.insert(new_effects, unlock) end
 end
 data.raw.technology["steel-processing"].effects = new_effects
+data.raw.technology["steel-processing"].prerequisites = {"gm-technology-minisemblers"}
 
 -- Fix individual technologies
 -- robotics
@@ -194,6 +198,13 @@ table.insert(data.raw.technology["discharge-defense-equipment"].prerequisites, "
 -- tank
 table.insert(data.raw.technology["tank"].prerequisites, "gm-titanium-machined-part-processing")
 
+-- turret
+data.raw.technology["gun-turret"].prerequisites = {"gm-technology-minisemblers"}
 
+-- fast-inserter
+table.insert(data.raw.technology["fast-inserter"].prerequisites, "steel-machined-part-processing")
+
+-- electric-energy-distribution
+table.insert(data.raw.technology["electric-energy-distribution-1"].prerequisites, "gm-annealed-copper-machined-part-processing")
 
 return MW_Data

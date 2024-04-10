@@ -423,6 +423,29 @@ end
 
 
 
+-- MW Byproducts
+-- =============
+
+order_count = 0
+if GM_globals.mw_byproducts then
+  for _, metal in pairs(MW_Data.MW_Metal) do -- Make [Metal] Byproduct Subgroups
+    data:extend({
+      { -- Make Byproduct Subgroups
+        type = "item-subgroup",
+        name = "gm-mw-byproducts-" .. metal,
+        group = "gm-intermediates",
+        order = "a" .. "-gm-mw-byproducts-" .. MW_Data.metal_data[metal].order,
+        localised_name = {"gm.mw-byproducts-subgroup", {"gm." .. metal}}
+      }
+    })
+  
+    for byproduct, _ in pairs(MW_Data.byproduct_data) do
+      
+    end
+
+  end
+end
+
 -- Stocks
 -- ======
 
