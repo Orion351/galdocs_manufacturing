@@ -102,9 +102,6 @@ table.insert(data.raw.technology["kr-fluids-chemistry"].prerequisites, "gm-nicke
 -- kr-mineral-water-gathering
 table.insert(data.raw.technology["kr-mineral-water-gathering"].prerequisites, "gm-annealed-copper-machined-part-processing")
 
--- electric-energy-distribution-1
-table.insert(data.raw.technology["electric-energy-distribution-1"].prerequisites, "gm-annealed-copper-machined-part-processing")
-
 -- kr-gas-power-station
 table.insert(data.raw.technology["kr-gas-power-station"].prerequisites, "gm-annealed-copper-machined-part-processing")
 
