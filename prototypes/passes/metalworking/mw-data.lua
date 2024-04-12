@@ -1159,6 +1159,22 @@ end
 
 
 
+-- MW Byproducts Data
+-- ******************
+
+if advanced then -- Data for remelting the byprodcuts (into plate)
+  MW_Data.byproduct_recipe_data = {
+    [MW_Byproduct.OFFCUT]   = {input = 10, output = 1, output_shape = MW_Data.MW_Stock.PLATE},
+    [MW_Byproduct.SWARF]    = {input = 30, output = 1, output_shape = MW_Data.MW_Stock.PLATE},
+  }
+else
+  MW_Data.byproduct_recipe_data = {
+    [MW_Byproduct.SWARF]   = {input = 30, output = 1, output_shape = MW_Data.MW_Stock.PLATE},
+  }
+end
+
+
+
 -- Properties, Stocks and Machined Parts couplings
 -- ***********************************************
 
@@ -1219,43 +1235,43 @@ if advanced then -- stocks_recipe_data : [stock | stock that crafts it] {stock t
     [MW_Stock.GEAR]           = {precursor = MW_Stock.PLATE,      input = 2, output = 1,  made_in = MW_Minisembler.MILL,           plating_billet_count = 12, plating_fluid_count = 100, byproduct_name = MW_Byproduct.OFFCUT, byproduct_count = 1},
     [MW_Stock.SQUARE]         = {precursor = MW_Stock.PLATE,      input = 1, output = 2,  made_in = MW_Minisembler.METAL_BANDSAW,  plating_billet_count = 3,  plating_fluid_count = 100, byproduct_name = MW_Byproduct.OFFCUT, byproduct_count = 1},
     [MW_Stock.WIRE]           = {precursor = MW_Stock.SQUARE,     input = 1, output = 2,  made_in = MW_Minisembler.METAL_EXTRUDER, plating_billet_count = 2,  plating_fluid_count = 100                                                           },
-    [MW_Stock.PLATING_BILLET] = {precursor = MW_Stock.PLATE,      input = 1, output = 50, made_in = MW_Minisembler.METAL_BANDSAW,                                                        byproduct_name = MW_Byproduct.OFFCUT, byproduct_count = 1},
+    [MW_Stock.PLATING_BILLET] = {precursor = MW_Stock.PLATE,      input = 1, output = 50, made_in = MW_Minisembler.METAL_BANDSAW,                                                        byproduct_name = MW_Byproduct.OFFCUT,  byproduct_count = 1},
   }
 else
   MW_Data.stocks_recipe_data = {
-    [MW_Stock.PLATE]          = {                                                     made_in = "smelting",                    plating_billet_count = 10, plating_fluid_count = 100},
-    [MW_Stock.SQUARE]         = {precursor = MW_Stock.PLATE , input = 1, output = 2,  made_in = MW_Minisembler.METAL_BANDSAW,  plating_billet_count = 5,  plating_fluid_count = 100},
-    [MW_Stock.WIRE]           = {precursor = MW_Stock.SQUARE, input = 1, output = 2,  made_in = MW_Minisembler.METAL_EXTRUDER, plating_billet_count = 5,  plating_fluid_count = 100},
-    [MW_Stock.PLATING_BILLET] = {precursor = MW_Stock.PLATE,  input = 1, output = 50, made_in = MW_Minisembler.METAL_BANDSAW                                                       }
+    [MW_Stock.PLATE]          = {                                                     made_in = "smelting",                    plating_billet_count = 10, plating_fluid_count = 100                                                          },
+    [MW_Stock.SQUARE]         = {precursor = MW_Stock.PLATE , input = 1, output = 2,  made_in = MW_Minisembler.METAL_BANDSAW,  plating_billet_count = 5,  plating_fluid_count = 100, byproduct_name = MW_Byproduct.SWARF, byproduct_count = 1},
+    [MW_Stock.WIRE]           = {precursor = MW_Stock.SQUARE, input = 1, output = 2,  made_in = MW_Minisembler.METAL_EXTRUDER, plating_billet_count = 5,  plating_fluid_count = 100, byproduct_name = MW_Byproduct.SWARF, byproduct_count = 1},
+    [MW_Stock.PLATING_BILLET] = {precursor = MW_Stock.PLATE,  input = 1, output = 50, made_in = MW_Minisembler.METAL_BANDSAW,                                                        byproduct_name = MW_Byproduct.SWARF, byproduct_count = 1},
   }
 end
 
 if advanced then -- machined_parts_recipe_data : [machined part | stock from which it's crafted] {stock from which it's crafted, how many it takes, how many it makes}]
   MW_Data.machined_parts_recipe_data = {
-    [MW_Machined_Part.PANELING]        = {precursor = MW_Stock.SHEET,     input = 3, output = 1, made_in = MW_Minisembler.WELDER,       byproduct_name = MW_Byproduct.SWARF,  byproduct_count = 1},
-    [MW_Machined_Part.LARGE_PANELING]  = {precursor = MW_Stock.SHEET,     input = 5, output = 1, made_in = MW_Minisembler.WELDER,       byproduct_name = MW_Byproduct.SWARF,  byproduct_count = 1},
-    [MW_Machined_Part.FRAMING]         = {precursor = MW_Stock.ANGLE,     input = 2, output = 1, made_in = MW_Minisembler.DRILL_PRESS,  byproduct_name = MW_Byproduct.SWARF,  byproduct_count = 1},
-    [MW_Machined_Part.GIRDERING]       = {precursor = MW_Stock.GIRDER,    input = 1, output = 1, made_in = MW_Minisembler.GRINDER,      byproduct_name = MW_Byproduct.SWARF,  byproduct_count = 1},
-    [MW_Machined_Part.GEARING]         = {precursor = MW_Stock.GEAR,      input = 3, output = 1, made_in = MW_Minisembler.GRINDER,      byproduct_name = MW_Byproduct.SWARF,  byproduct_count = 1},
-    [MW_Machined_Part.FINE_GEARING]    = {precursor = MW_Stock.FINE_GEAR, input = 2, output = 1, made_in = MW_Minisembler.GRINDER,      byproduct_name = MW_Byproduct.SWARF,  byproduct_count = 1},
-    [MW_Machined_Part.PIPING]          = {precursor = MW_Stock.PIPE,      input = 2, output = 1, made_in = MW_Minisembler.WELDER,       byproduct_name = MW_Byproduct.SWARF,  byproduct_count = 1},
-    [MW_Machined_Part.FINE_PIPING]     = {precursor = MW_Stock.FINE_PIPE, input = 1, output = 1, made_in = MW_Minisembler.WELDER,       byproduct_name = MW_Byproduct.SWARF,  byproduct_count = 1},
-    [MW_Machined_Part.WIRING]          = {precursor = MW_Stock.WIRE,      input = 1, output = 1, made_in = MW_Minisembler.SPOOLER                                                                },
-    [MW_Machined_Part.SHIELDING]       = {precursor = MW_Stock.PLATE,     input = 6, output = 1, made_in = MW_Minisembler.MILL,         byproduct_name = MW_Byproduct.OFFCUT, byproduct_count = 1},
-    [MW_Machined_Part.SHAFTING]        = {precursor = MW_Stock.SQUARE,    input = 1, output = 1, made_in = MW_Minisembler.METAL_LATHE,  byproduct_name = MW_Byproduct.SWARF,  byproduct_count = 1},
-    [MW_Machined_Part.BOLTS]           = {precursor = MW_Stock.WIRE,      input = 3, output = 1, made_in = MW_Minisembler.THREADER,     byproduct_name = MW_Byproduct.SWARF,  byproduct_count = 1},
-    [MW_Machined_Part.RIVETS]          = {precursor = MW_Stock.WIRE,      input = 4, output = 1, made_in = MW_Minisembler.METAL_EXTRUDER                                                         },
+    [MW_Machined_Part.PANELING]        = {precursor = MW_Stock.SHEET,     input = 3, output = 1, made_in = MW_Minisembler.WELDER,         byproduct_name = MW_Byproduct.OFFCUT, byproduct_count = 1},
+    [MW_Machined_Part.LARGE_PANELING]  = {precursor = MW_Stock.SHEET,     input = 5, output = 1, made_in = MW_Minisembler.WELDER,         byproduct_name = MW_Byproduct.OFFCUT, byproduct_count = 1},
+    [MW_Machined_Part.FRAMING]         = {precursor = MW_Stock.ANGLE,     input = 2, output = 1, made_in = MW_Minisembler.DRILL_PRESS,    byproduct_name = MW_Byproduct.SWARF,  byproduct_count = 1},
+    [MW_Machined_Part.GIRDERING]       = {precursor = MW_Stock.GIRDER,    input = 1, output = 1, made_in = MW_Minisembler.GRINDER,        byproduct_name = MW_Byproduct.SWARF,  byproduct_count = 1},
+    [MW_Machined_Part.GEARING]         = {precursor = MW_Stock.GEAR,      input = 3, output = 1, made_in = MW_Minisembler.GRINDER,        byproduct_name = MW_Byproduct.SWARF,  byproduct_count = 1},
+    [MW_Machined_Part.FINE_GEARING]    = {precursor = MW_Stock.FINE_GEAR, input = 2, output = 1, made_in = MW_Minisembler.GRINDER,        byproduct_name = MW_Byproduct.SWARF,  byproduct_count = 1},
+    [MW_Machined_Part.PIPING]          = {precursor = MW_Stock.PIPE,      input = 2, output = 1, made_in = MW_Minisembler.WELDER,         byproduct_name = MW_Byproduct.OFFCUT, byproduct_count = 1},
+    [MW_Machined_Part.FINE_PIPING]     = {precursor = MW_Stock.FINE_PIPE, input = 1, output = 1, made_in = MW_Minisembler.WELDER,         byproduct_name = MW_Byproduct.OFFCUT, byproduct_count = 1},
+    [MW_Machined_Part.WIRING]          = {precursor = MW_Stock.WIRE,      input = 1, output = 1, made_in = MW_Minisembler.SPOOLER,        byproduct_name = MW_Byproduct.OFFCUT, byproduct_count = 1},
+    [MW_Machined_Part.SHIELDING]       = {precursor = MW_Stock.PLATE,     input = 6, output = 1, made_in = MW_Minisembler.MILL,           byproduct_name = MW_Byproduct.OFFCUT, byproduct_count = 1},
+    [MW_Machined_Part.SHAFTING]        = {precursor = MW_Stock.SQUARE,    input = 1, output = 1, made_in = MW_Minisembler.METAL_LATHE,    byproduct_name = MW_Byproduct.SWARF,  byproduct_count = 1},
+    [MW_Machined_Part.BOLTS]           = {precursor = MW_Stock.WIRE,      input = 3, output = 1, made_in = MW_Minisembler.THREADER,       byproduct_name = MW_Byproduct.SWARF,  byproduct_count = 1},
+    [MW_Machined_Part.RIVETS]          = {precursor = MW_Stock.WIRE,      input = 4, output = 1, made_in = MW_Minisembler.METAL_EXTRUDER, byproduct_name = MW_Byproduct.OFFCUT, byproduct_count = 1},
   }
 else
   MW_Data.machined_parts_recipe_data = {
-    [MW_Machined_Part.PANELING]        = {precursor = MW_Stock.PLATE,     input = 3, output = 1, made_in = MW_Minisembler.MILL,         byproduct_name = MW_Byproduct.SWARF,  byproduct_count = 1},
-    [MW_Machined_Part.FRAMING]         = {precursor = MW_Stock.PLATE,     input = 2, output = 1, made_in = MW_Minisembler.BENDER,       byproduct_name = MW_Byproduct.SWARF,  byproduct_count = 1},
-    [MW_Machined_Part.GEARING]         = {precursor = MW_Stock.PLATE,     input = 3, output = 1, made_in = MW_Minisembler.MILL,         byproduct_name = MW_Byproduct.SWARF,  byproduct_count = 1},
-    [MW_Machined_Part.PIPING]          = {precursor = MW_Stock.PLATE,     input = 2, output = 1, made_in = MW_Minisembler.ROLLER,       byproduct_name = MW_Byproduct.SWARF,  byproduct_count = 1},
-    [MW_Machined_Part.SHIELDING]       = {precursor = MW_Stock.PLATE,     input = 6, output = 1, made_in = MW_Minisembler.METAL_EXTRUDER                                                         },
-    [MW_Machined_Part.WIRING]          = {precursor = MW_Stock.SQUARE,    input = 1, output = 1, made_in = MW_Minisembler.MILL,         byproduct_name = MW_Byproduct.SWARF,  byproduct_count = 1},
-    [MW_Machined_Part.SHAFTING]        = {precursor = MW_Stock.SQUARE,    input = 1, output = 1, made_in = MW_Minisembler.METAL_LATHE,  byproduct_name = MW_Byproduct.SWARF,  byproduct_count = 1},
-    [MW_Machined_Part.BOLTS]           = {precursor = MW_Stock.WIRE,      input = 4, output = 1, made_in = MW_Minisembler.METAL_LATHE,  byproduct_name = MW_Byproduct.SWARF,  byproduct_count = 1},
+    [MW_Machined_Part.PANELING]        = {precursor = MW_Stock.PLATE,     input = 3, output = 1, made_in = MW_Minisembler.MILL,           byproduct_name = MW_Byproduct.SWARF, byproduct_count = 1},
+    [MW_Machined_Part.FRAMING]         = {precursor = MW_Stock.PLATE,     input = 2, output = 1, made_in = MW_Minisembler.BENDER,         byproduct_name = MW_Byproduct.SWARF, byproduct_count = 1},
+    [MW_Machined_Part.GEARING]         = {precursor = MW_Stock.PLATE,     input = 3, output = 1, made_in = MW_Minisembler.MILL,           byproduct_name = MW_Byproduct.SWARF, byproduct_count = 1},
+    [MW_Machined_Part.PIPING]          = {precursor = MW_Stock.PLATE,     input = 2, output = 1, made_in = MW_Minisembler.ROLLER,         byproduct_name = MW_Byproduct.SWARF, byproduct_count = 1},
+    [MW_Machined_Part.SHIELDING]       = {precursor = MW_Stock.PLATE,     input = 6, output = 1, made_in = MW_Minisembler.METAL_EXTRUDER, byproduct_name = MW_Byproduct.SWARF, byproduct_count = 1},
+    [MW_Machined_Part.WIRING]          = {precursor = MW_Stock.SQUARE,    input = 1, output = 1, made_in = MW_Minisembler.MILL,           byproduct_name = MW_Byproduct.SWARF, byproduct_count = 1},
+    [MW_Machined_Part.SHAFTING]        = {precursor = MW_Stock.SQUARE,    input = 1, output = 1, made_in = MW_Minisembler.METAL_LATHE,    byproduct_name = MW_Byproduct.SWARF, byproduct_count = 1},
+    [MW_Machined_Part.BOLTS]           = {precursor = MW_Stock.WIRE,      input = 4, output = 1, made_in = MW_Minisembler.METAL_LATHE,    byproduct_name = MW_Byproduct.SWARF, byproduct_count = 1},
   }
 end
 

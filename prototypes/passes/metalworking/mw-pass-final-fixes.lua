@@ -133,21 +133,19 @@ for recipe_name, recipe in pairs(data.raw.recipe) do -- Map which machined parts
           else
             current_name = ingredient[1]
           end
-          
+
           local current_item = data.raw.item[current_name]
           if current_item then
-            
             -- Is this a plating recipe? If so, add the plating-billet to seens stocks.
             if recipe.gm_recipe_data and recipe.gm_recipe_data.special == "plating" and recipe.gm_recipe_data.type == "stocks"then
               seen_stocks[recipe.gm_recipe_data.plate_metal .. "-plating-billet-stock"] = true
             end
 
-            -- log("asdf : current_name:" .. current_name .. "   current_item: " .. current_item.name)
             --- @diagnostic disable-next-line: undefined-field
             if current_item.gm_item_data and current_item.gm_item_data.type == "machined-parts" then
               -- Add the machined part to the list of ones we want to keep
               seen_machined_parts[current_name] = true
-              
+
               -- Add the backchain of all stocks that can make it to the list of stocks we want to keep
               local current_backchain = MW_Data.machined_parts_recipe_data[current_item.gm_item_data.part].backchain
               local current_property = current_item.gm_item_data.property
@@ -157,7 +155,7 @@ for recipe_name, recipe in pairs(data.raw.recipe) do -- Map which machined parts
                   if MW_Data.metal_properties_pairs[metal][current_property] and MW_Data.metal_stocks_pairs[metal][stock] then
                     seen_stocks[metal .. "-" .. stock .. "-stock"] = true
                   end
-                  
+
                   -- If the metal is the precursor to a Plated Treated Metal for which the above criteria applies, add it ot the 'seen' list
                   for _, check_precursor_metal in pairs(MW_Data.MW_Metal) do
                     if MW_Data.metal_data[check_precursor_metal].type == MW_Data.MW_Metal_Type.TREATMENT
@@ -382,5 +380,17 @@ wire.name = "copper-cable"
 wire.wire_count = 1
 data:extend{wire}
 data.raw.item["electrically-conductive-wiring-machined-part"] = nil
+
+-- Replace electrically-conductive-wiring-machined-part with copper-cable everywhere. Evvvverywhere. Ugh.
+-- for recipe, recipe_data in pairs(data.raw.recipe) do
+--   if recipe_data.result then
+--   end
+--   if recipe_data.results then
+--   end
+--   if recipe_data.ingredients then
+--   end
+--   if recipe_data.main_product then
+--   end
+-- end
 
 local a = 1

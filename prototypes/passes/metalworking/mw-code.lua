@@ -491,6 +491,14 @@ if GM_globals.mw_byproducts then -- Make all Byproduct Items (and subgroups?)
           end
         end
         
+        for part, part_data in pairs(MW_Data.machined_parts_recipe_data) do
+          if part_data.byproduct_name and part_data.byproduct_name == byproduct then
+            if not minismelber_sources[part_data.made_in] then
+              minismelber_sources[part_data.made_in] = true
+            end
+          end
+        end
+
         local byproduct_of_list = {""}
         for minisembler, _ in pairs(minismelber_sources) do
           if minisembler ~= "smelting" then
@@ -565,7 +573,7 @@ if GM_globals.mw_byproducts then -- Make all Byproduct Items (and subgroups?)
           }
           data:extend({item_prototype})
           GM_globals.GM_Badge_list["item"][metal .. "-" .. byproduct] = ib_data
-          GM_global_mw_data.stock_items[item_prototype[1].name] = item_prototype[1]
+          -- GM_global_mw_data.stock_items[item_prototype.name] = item_prototype   # FIXME : Cull unproducable byproducts in data-final-fixes
       end
     end
   end
@@ -803,6 +811,12 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
           recipe_hide_from_player_crafting = false
         end
         
+        local recipe_results = {
+          {type = "item", name = metal .. "-" .. stock .. "-stock", amount = 1}
+        }
+
+        local recipe_main_product = metal .. "-" .. stock .. "-stock"
+
         recipe_prototype = { -- recipe
           {
             type = "recipe",
@@ -811,8 +825,11 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
             enabled = MW_Data.metal_data[metal].tech_stock == "starter",
             
             ingredients = {{metal .. "-" .. MW_Data.stocks_recipe_data[stock].precursor, 1}},
-            result = metal .. "-" .. stock .. "-stock",
-            result_count = 1,
+
+            results = recipe_results,
+            main_product = recipe_main_product,
+            -- result = metal .. "-" .. stock .. "-stock",
+            -- result_count = 1,
 
             crafting_machine_tint = {
               primary = MW_Data.metal_data[metal].tint_metal,
@@ -918,6 +935,16 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
           recipe_hide_from_player_crafting = false
         end
 
+        local recipe_results = {
+          {type = "item", name = metal .. "-" .. stock .. "-stock", amount = 1}
+        }
+
+        if GM_globals.mw_byproducts and MW_Data.stocks_recipe_data[stock].byproduct_name then
+          table.insert(recipe_results, {type = "item", name = metal .. "-" .. MW_Data.stocks_recipe_data[stock].byproduct_name, amount = MW_Data.stocks_recipe_data[stock].byproduct_count})
+        end
+
+        local recipe_main_product = metal .. "-" .. stock .. "-stock"
+
         recipe_prototype = { -- recipe
           {
             type = "recipe",
@@ -926,8 +953,11 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
             enabled = MW_Data.metal_data[metal].tech_stock == "starter",
 
             ingredients = {{metal .. "-" .. MW_Data.stocks_recipe_data[stock].precursor .. "-stock", MW_Data.stocks_recipe_data[stock].input}},
-            result = metal .. "-" .. stock .. "-stock",
-            result_count = MW_Data.stocks_recipe_data[stock].output,
+
+            results = recipe_results,
+            main_product = recipe_main_product,
+            -- result = metal .. "-" .. stock .. "-stock",
+            -- result_count = MW_Data.stocks_recipe_data[stock].output,
 
             crafting_machine_tint = {
               primary = MW_Data.metal_data[metal].tint_metal,
@@ -977,45 +1007,44 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
         ib_data.ib_let_corner = MW_Data.metal_data[metal].ib_data.ib_let_corner
 
         recipe_prototype = { -- remelting recipe
-        {
-          type = "recipe",
-          name = metal .. "-" .. stock .. "-remelting-stock",
+          {
+            type = "recipe",
+            name = metal .. "-" .. stock .. "-remelting-stock",
 
-          enabled = MW_Data.metal_data[metal].tech_stock == "starter",
+            enabled = MW_Data.metal_data[metal].tech_stock == "starter",
 
-          icons = icons_data_recipe,
+            icons = icons_data_recipe,
 
-          ingredients = {
-            {name = item_prototype[1].name,
-            amount = MW_Data.stocks_recipe_data[stock].remelting_cost}
-          },
-          result = metal .. "-plate-stock",
-          result_count = MW_Data.stocks_recipe_data[stock].remelting_yield,
+            ingredients = {
+              {name = item_prototype[1].name,
+              amount = MW_Data.stocks_recipe_data[stock].remelting_cost}
+            },
+            result = metal .. "-plate-stock",
+            result_count = MW_Data.stocks_recipe_data[stock].remelting_yield,
 
-          crafting_machine_tint = {
-            primary = MW_Data.metal_data[metal].tint_metal,
-            secondary = MW_Data.metal_data[metal].tint_oxidation
-          },
+            crafting_machine_tint = {
+              primary = MW_Data.metal_data[metal].tint_metal,
+              secondary = MW_Data.metal_data[metal].tint_oxidation
+            },
 
-          always_show_made_in = true,
-          hide_from_player_crafting = recipe_hide_from_player_crafting,
+            always_show_made_in = true,
+            hide_from_player_crafting = recipe_hide_from_player_crafting,
 
-          energy_required = 3.2,
+            energy_required = 3.2,
 
-          order = MW_Data.metal_data[metal].order .. MW_Data.stock_data[stock].order,
-          category = "gm-remelting",
-          subgroup = "gm-remelting-" .. metal,
+            order = MW_Data.metal_data[metal].order .. MW_Data.stock_data[stock].order,
+            category = "gm-remelting",
+            subgroup = "gm-remelting-" .. metal,
 
-          localised_name = {"gm.metal-stock-remelting-recipe-name", {"gm." .. metal}, {"gm." .. MW_Data.MW_Stock.PLATE}},
+            localised_name = {"gm.metal-stock-remelting-recipe-name", {"gm." .. metal}, {"gm." .. MW_Data.MW_Stock.PLATE}},
 
-          gm_recipe_data = {type = "remelting", metal = metal, stock = stock},
+            gm_recipe_data = {type = "remelting", metal = metal, stock = stock},
+          }
         }
-      }
-      data:extend(recipe_prototype)
-      GM_globals.GM_Badge_list["recipe"][metal .. "-" .. stock .. "-remelting-stock"] = ib_data
-      -- Build_badge(data.raw.recipe[metal .. "-" .. stock .. "-remelting-stock"], ib_data)
-      if not GM_global_mw_data.stock_recipes[item_prototype[1].name] then GM_global_mw_data.stock_recipes[item_prototype[1].name] = {} end
-      table.insert(GM_global_mw_data.stock_recipes[item_prototype[1].name], {[recipe_prototype[1].name] = recipe_prototype[1]})
+        data:extend(recipe_prototype)
+        GM_globals.GM_Badge_list["recipe"][metal .. "-" .. stock .. "-remelting-stock"] = ib_data
+        if not GM_global_mw_data.stock_recipes[item_prototype[1].name] then GM_global_mw_data.stock_recipes[item_prototype[1].name] = {} end
+        table.insert(GM_global_mw_data.stock_recipes[item_prototype[1].name], {[recipe_prototype[1].name] = recipe_prototype[1]})
 
       end
 
@@ -1236,6 +1265,73 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
         if not GM_global_mw_data.stock_recipes[item_prototype[1].name] then GM_global_mw_data.stock_recipes[item_prototype[1].name] = {} end
         table.insert(GM_global_mw_data.stock_recipes[item_prototype[1].name], {[recipe_prototype[1].name] = recipe_prototype[1]})
       end
+    end
+  end
+end
+
+order_count = 0
+for byproduct, recipe_data in pairs(MW_Data.byproduct_recipe_data) do -- Make Byproudct remelting recipes for non-treated metals
+  for metal, metal_data in pairs(MW_Data.metal_data) do
+
+    if MW_Data.metal_data[metal].type ~= MW_Data.MW_Metal_Type.TREATMENT then
+      -- Make recipe icon for remelting recipe
+      local icons_data_recipe = {
+        {
+          icon = "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. metal .. "/" .. metal .. "-plate-stock-0000.png",
+          icon_size = 64,
+        },
+      }
+      
+      -- Function from Icon Badges: ib-lib.lua
+      Build_img_badge_icon(icons_data_recipe, 
+      {"__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. metal .. "/sdf-" .. metal .. "-" .. byproduct .. ".png",
+      "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. metal .. "/" .. metal .. "-" .. byproduct .. "-0000.png"},
+      64, GM_globals.stock_badge_scale, 0, GM_globals.remelting_badge_corner, 0)
+
+      local recipe_hide_from_player_crafting = true
+      if (GM_globals.show_non_hand_craftables == "all") then
+        recipe_hide_from_player_crafting = false
+      end
+
+      local ib_data = {} -- Prepare badge data for the items
+      ib_data.ib_let_badge  = MW_Data.metal_data[metal].ib_data.ib_let_badge
+      ib_data.ib_let_invert = MW_Data.metal_data[metal].ib_data.ib_let_invert
+      ib_data.ib_let_corner = MW_Data.metal_data[metal].ib_data.ib_let_corner
+
+      local recipe_prototype = { -- remelting recipe
+        {
+          type = "recipe",
+          name = metal .. "-" .. byproduct .. "-remelting-byproduct",
+
+          enabled = MW_Data.metal_data[metal].tech_stock == "starter",
+
+          icons = icons_data_recipe,
+
+          ingredients = {{name = metal .. "-" .. byproduct, amount = recipe_data.input}},
+          result = metal .. "-".. recipe_data.output_shape .. "-stock",
+          result_count = recipe_data.output,
+
+          crafting_machine_tint = {
+            primary = MW_Data.metal_data[metal].tint_metal,
+            secondary = MW_Data.metal_data[metal].tint_oxidation
+          },
+
+          always_show_made_in = true,
+          hide_from_player_crafting = recipe_hide_from_player_crafting,
+
+          energy_required = 3.2,
+
+          order = MW_Data.metal_data[metal].order .. MW_Data.byproduct_data[byproduct].order,
+          category = "gm-remelting",
+          subgroup = "gm-remelting-" .. metal,
+
+          localised_name = {"gm.metal-stock-remelting-recipe-name", {"gm." .. metal}, {"gm." .. MW_Data.MW_Stock.PLATE}},
+
+          gm_recipe_data = {type = "remelting-byproduct", metal = metal, byproduct = byproduct},
+        }
+      }
+      data:extend(recipe_prototype)
+      GM_globals.GM_Badge_list["recipe"][metal .. "-" .. byproduct .. "-remelting-byproduct"] = ib_data
     end
   end
 end
@@ -1734,6 +1830,32 @@ for property, parts in pairs(MW_Data.property_machined_part_pairs) do -- Make th
         ib_data.ib_img_scale  = GM_globals.property_image_scale
         ib_data.ib_img_space  = GM_globals.property_badge_space
 
+        local recipe_results = {
+          {type = "item", name = property .. "-" .. part .. "-machined-part", amount = MW_Data.machined_parts_recipe_data[part].output}
+        }
+
+        local byprodcut_metal = metal
+        local actual_metal = "same"
+        if GM_globals.mw_byproducts and MW_Data.machined_parts_recipe_data[part].byproduct_name then
+          if MW_Data.metal_data[byprodcut_metal].type == MW_Data.MW_Metal_Type.TREATMENT then
+            if MW_Data.metal_data[byprodcut_metal].treatment_type == MW_Data.MW_Treatment_Type.PLATING then
+              actual_metal = MW_Data.metal_data[byprodcut_metal].core_metal
+            end
+            if MW_Data.metal_data[byprodcut_metal].treatment_type == MW_Data.MW_Treatment_Type.ANNEALING then
+              actual_metal = MW_Data.metal_data[byprodcut_metal].source_metal
+            end
+          end
+
+          if actual_metal ~= "same" then
+            byprodcut_metal = actual_metal
+          end
+
+          table.insert(recipe_results, {type = "item", name = byprodcut_metal .. "-" .. MW_Data.machined_parts_recipe_data[part].byproduct_name, amount = MW_Data.machined_parts_recipe_data[part].byproduct_count})
+        end
+
+        local recipe_main_product = property .. "-" .. part .. "-machined-part"
+        if recipe_main_product == "electrically-conductive-wiring-machined-part" then recipe_main_product = "copper-cable" end
+
         -- Build recipe prototype
         local recipe_prototype = { -- recipe
           {
@@ -1748,8 +1870,11 @@ for property, parts in pairs(MW_Data.property_machined_part_pairs) do -- Make th
             {
               {metal .. "-" .. precursor .. "-stock", MW_Data.machined_parts_recipe_data[part].input}
             },
-            result = property .. "-" .. part .. "-machined-part",
-            result_count = MW_Data.machined_parts_recipe_data[part].output,
+            results = recipe_results,
+            main_product = recipe_main_product,
+            
+            -- result = property .. "-" .. part .. "-machined-part",
+            -- result_count = MW_Data.machined_parts_recipe_data[part].output,
             
             crafting_machine_tint = { -- I don't know if anything will use this, but here it is just in case. You're welcome, future me.
             primary = MW_Data.metal_data[metal].tint_metal,
@@ -1921,6 +2046,31 @@ for property_key, multi_properties in pairs(MW_Data.multi_property_with_key_pair
           ib_data.ib_img_scale  = GM_globals.property_image_scale
           ib_data.ib_img_space  = GM_globals.property_badge_space
 
+          local recipe_results = {
+            {type = "item", name = property_key .. "-" .. part .. "-machined-part", amount = MW_Data.machined_parts_recipe_data[part].output}
+          }
+  
+          local byprodcut_metal = metal
+          local actual_metal = "same"
+          if GM_globals.mw_byproducts and MW_Data.machined_parts_recipe_data[part].byproduct_name then
+            if MW_Data.metal_data[byprodcut_metal].type == MW_Data.MW_Metal_Type.TREATMENT then
+              if MW_Data.metal_data[byprodcut_metal].treatment_type == MW_Data.MW_Treatment_Type.PLATING then
+                actual_metal = MW_Data.metal_data[byprodcut_metal].core_metal
+              end
+              if MW_Data.metal_data[byprodcut_metal].treatment_type == MW_Data.MW_Treatment_Type.ANNEALING then
+                actual_metal = MW_Data.metal_data[byprodcut_metal].source_metal
+              end
+            end
+  
+            if actual_metal ~= "same" then
+              byprodcut_metal = actual_metal
+            end
+  
+            table.insert(recipe_results, {type = "item", name = byprodcut_metal .. "-" .. MW_Data.machined_parts_recipe_data[part].byproduct_name, amount = MW_Data.machined_parts_recipe_data[part].byproduct_count})
+          end
+  
+          local recipe_main_product = property_key .. "-" .. part .. "-machined-part"
+
           local recipe_prototype = {
             { -- recipe
               type = "recipe",
@@ -1930,12 +2080,12 @@ for property_key, multi_properties in pairs(MW_Data.multi_property_with_key_pair
 
               icons = icons_data_recipe,
               
-              ingredients =
-              {
-                {metal .. "-" .. MW_Data.machined_parts_recipe_data[part].precursor .. "-stock", MW_Data.machined_parts_recipe_data[part].input}
-              },
-              result = property_key .. "-" .. part .. "-machined-part",
-              result_count = MW_Data.machined_parts_recipe_data[part].output,
+              ingredients = {{metal .. "-" .. MW_Data.machined_parts_recipe_data[part].precursor .. "-stock", MW_Data.machined_parts_recipe_data[part].input}},
+              results = recipe_results,
+              main_product = recipe_main_product,
+
+              -- result = property_key .. "-" .. part .. "-machined-part",
+              -- result_count = MW_Data.machined_parts_recipe_data[part].output,
 
               crafting_machine_tint = 
               { -- I don't know if anything will use this, but here it is just in case. You're welcome, future me.
