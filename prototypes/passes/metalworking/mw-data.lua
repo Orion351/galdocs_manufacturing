@@ -273,12 +273,12 @@ end
 
 if advanced then 
   MW_Data.byproduct_data = {
-    [MW_Byproduct.OFFCUT]   = {order = "aa", introduced = Mod_Names.GM},
-    [MW_Byproduct.SWARF]    = {order = "ab", introduced = Mod_Names.GM},
+    [MW_Byproduct.OFFCUT]   = {order = "ma", introduced = Mod_Names.GM},
+    [MW_Byproduct.SWARF]    = {order = "mb", introduced = Mod_Names.GM},
   }
 else
   MW_Data.byproduct_data = {
-    [MW_Byproduct.SWARF]   = {order = "aa", introduced = Mod_Names.GM},
+    [MW_Byproduct.SWARF]   = {order = "ma", introduced = Mod_Names.GM},
   }
 end
 

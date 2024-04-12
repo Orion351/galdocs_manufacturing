@@ -21,7 +21,7 @@ end
 settings_values.advanced = settings.startup["gm-advanced-mode"].value
 settings_values.specialty_parts = false -- not implimented yet
 settings_values.consumable_parts = false -- not implemented yet
--- settings_values.mw_byproducts = settings.startup["gm-mw-byproducts"].value
+settings_values.mw_byproducts = settings.startup["gm-mw-byproducts"].value
 settings_values.metalworking_kits = false -- not implemented yet
 
 -- Balance Variables

@@ -73,7 +73,7 @@ return {
 
 	MW_Byproduct = {
 		SWARF  = "swarf",
-		OFFCUT = "offcut",
+		OFFCUT = "offcuts",
 	},
 
 	MW_Machined_Part = {
