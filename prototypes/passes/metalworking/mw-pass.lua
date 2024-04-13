@@ -49,6 +49,8 @@ GM_global_mw_data.stock_items = {}
 GM_global_mw_data.stock_recipes = {}
 GM_global_mw_data.machined_part_items = {}
 GM_global_mw_data.machined_part_recipes = {}
+GM_global_mw_data.byproduct_items = {}
+GM_global_mw_data.byproduct_recipes = {}
 
 -- Code
 GM_global_mw_data.MW_Data = require("prototypes.passes.metalworking.mw-code")

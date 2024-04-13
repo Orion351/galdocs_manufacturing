@@ -553,7 +553,7 @@ if GM_globals.mw_byproducts then -- Make all Byproduct Items (and subgroups?)
         ib_data.ib_let_invert = MW_Data.metal_data[metal].ib_data.ib_let_invert
         ib_data.ib_let_corner = MW_Data.metal_data[metal].ib_data.ib_let_corner
 
-        local item_prototype =
+        local item_prototype = {
           {
             type = "item",
             name = metal .. "-" .. byproduct,
@@ -571,9 +571,10 @@ if GM_globals.mw_byproducts then -- Make all Byproduct Items (and subgroups?)
 
             gm_item_data = {type = "byproduct", metal = metal, byproduct = byproduct},
           }
-          data:extend({item_prototype})
-          GM_globals.GM_Badge_list["item"][metal .. "-" .. byproduct] = ib_data
-          -- GM_global_mw_data.stock_items[item_prototype.name] = item_prototype   # FIXME : Cull unproducable byproducts in data-final-fixes
+        }
+        data:extend(item_prototype)
+        GM_globals.GM_Badge_list["item"][metal .. "-" .. byproduct] = ib_data
+        GM_global_mw_data.byproduct_items[item_prototype[1].name] = item_prototype[1] -- # FIXME : Cull unproducable byproducts in data-final-fixes
       end
     end
   end
@@ -1332,6 +1333,10 @@ for byproduct, recipe_data in pairs(MW_Data.byproduct_recipe_data) do -- Make By
       }
       data:extend(recipe_prototype)
       GM_globals.GM_Badge_list["recipe"][metal .. "-" .. byproduct .. "-remelting-byproduct"] = ib_data
+      if not GM_global_mw_data.byproduct_recipes[metal .. "-" .. byproduct] then GM_global_mw_data.byproduct_recipes[metal .. "-" .. byproduct] = {} end
+      table.insert(GM_global_mw_data.byproduct_recipes[metal .. "-" .. byproduct], {[recipe_prototype[1].name] = recipe_prototype[1]})
+
+--      GM_global_mw_data.byproduct_recipes[recipe_prototype[1].name] = recipe_prototype[1]
     end
   end
 end
