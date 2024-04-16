@@ -440,141 +440,142 @@ if GM_globals.mw_byproducts then -- Make all Byproduct Items (and subgroups?)
       }
     })
     --]]
-    
-    local actual_metal = nil
-    if MW_Data.metal_data[metal_to_test].type == MW_Data.MW_Metal_Type.TREATMENT then
-      if MW_Data.metal_data[metal_to_test].treatment_type == MW_Data.MW_Treatment_Type.PLATING then
-        actual_metal = MW_Data.metal_data[metal_to_test].core_metal
+    if MW_Data.metal_stocks_pairs[metal_to_test][MW_Data.MW_Stock.PLATE] then
+      local actual_metal = nil
+      if MW_Data.metal_data[metal_to_test].type == MW_Data.MW_Metal_Type.TREATMENT then
+        if MW_Data.metal_data[metal_to_test].treatment_type == MW_Data.MW_Treatment_Type.PLATING then
+          actual_metal = MW_Data.metal_data[metal_to_test].core_metal
+        end
+        if MW_Data.metal_data[metal_to_test].treatment_type == MW_Data.MW_Treatment_Type.ANNEALING then
+          actual_metal = MW_Data.metal_data[metal_to_test].source_metal
+        end
       end
-      if MW_Data.metal_data[metal_to_test].treatment_type == MW_Data.MW_Treatment_Type.ANNEALING then
-        actual_metal = MW_Data.metal_data[metal_to_test].source_metal
-      end
-    end
-    
-    local metal = metal_to_test
-    if actual_metal then
-      metal = actual_metal
-    end
-    
-    for byproduct, byproduct_data in pairs(MW_Data.byproduct_data) do
       
-      local make_item = true
-      if data.raw.item[metal .. "-" .. byproduct] then
-        make_item = false
+      local metal = metal_to_test
+      if actual_metal then
+        metal = actual_metal
       end
-
-      if make_item then
-        -- Populate property_list
-        local property_list = {""}
-
-        -- Add properties to property_list
-                for property, _ in pairs(MW_Data.metal_properties_pairs[metal]) do
-          table.insert(property_list, " - [img=" .. property ..  "-sprite]  ")
-          table.insert(property_list, {"gm." .. property})
-          table.insert(property_list, {"gm.line-separator"})
-        end
-
-        -- Break up produces_list for use in localization
-        local property_list_pieces = Localization_split(property_list, 3, 6, true)
-        -- If there weren't any entries for property_list, then ... well ... this.
-        if #property_list_pieces[1] == 1 then
-          table.insert(property_list_pieces[1], " - None")
-        end
-
-        -- Populate byproduct_of_list
-        local minismelber_sources = {}
-        for stock, stock_data in pairs(MW_Data.stocks_recipe_data) do
-          if stock_data.byproduct_name and stock_data.byproduct_name == byproduct then
-            if not minismelber_sources[stock_data.made_in] then
-              minismelber_sources[stock_data.made_in] = true
-            end
-          end
-        end
+      
+      for byproduct, byproduct_data in pairs(MW_Data.byproduct_data) do
         
-        for part, part_data in pairs(MW_Data.machined_parts_recipe_data) do
-          if part_data.byproduct_name and part_data.byproduct_name == byproduct then
-            if not minismelber_sources[part_data.made_in] then
-              minismelber_sources[part_data.made_in] = true
+        local make_item = true
+        if data.raw.item[metal .. "-" .. byproduct] then
+          make_item = false
+        end
+
+        if make_item then
+          -- Populate property_list
+          local property_list = {""}
+
+          -- Add properties to property_list
+                  for property, _ in pairs(MW_Data.metal_properties_pairs[metal]) do
+            table.insert(property_list, " - [img=" .. property ..  "-sprite]  ")
+            table.insert(property_list, {"gm." .. property})
+            table.insert(property_list, {"gm.line-separator"})
+          end
+
+          -- Break up produces_list for use in localization
+          local property_list_pieces = Localization_split(property_list, 3, 6, true)
+          -- If there weren't any entries for property_list, then ... well ... this.
+          if #property_list_pieces[1] == 1 then
+            table.insert(property_list_pieces[1], " - None")
+          end
+
+          -- Populate byproduct_of_list
+          local minismelber_sources = {}
+          for stock, stock_data in pairs(MW_Data.stocks_recipe_data) do
+            if stock_data.byproduct_name and stock_data.byproduct_name == byproduct then
+              if not minismelber_sources[stock_data.made_in] then
+                minismelber_sources[stock_data.made_in] = true
+              end
             end
           end
-        end
-
-        local byproduct_of_list = {""}
-        for minisembler, _ in pairs(minismelber_sources) do
-          if minisembler ~= "smelting" then
-            table.insert(byproduct_of_list, " - [item=gm-" .. minisembler .. "]  ")
-            table.insert(byproduct_of_list, {"gm." .. minisembler})
-            table.insert(byproduct_of_list, {"gm.line-separator"})
+          
+          for part, part_data in pairs(MW_Data.machined_parts_recipe_data) do
+            if part_data.byproduct_name and part_data.byproduct_name == byproduct then
+              if not minismelber_sources[part_data.made_in] then
+                minismelber_sources[part_data.made_in] = true
+              end
+            end
           end
-          if minisembler == "smelting" then
-            table.insert(byproduct_of_list, " - [item=stone-furnace]  ")
-            table.insert(byproduct_of_list, {"gm.smelting-type"})
-            table.insert(byproduct_of_list, {"gm.line-separator"})
+
+          local byproduct_of_list = {""}
+          for minisembler, _ in pairs(minismelber_sources) do
+            if minisembler ~= "smelting" then
+              table.insert(byproduct_of_list, " - [item=gm-" .. minisembler .. "]  ")
+              table.insert(byproduct_of_list, {"gm." .. minisembler})
+              table.insert(byproduct_of_list, {"gm.line-separator"})
+            end
+            if minisembler == "smelting" then
+              table.insert(byproduct_of_list, " - [item=stone-furnace]  ")
+              table.insert(byproduct_of_list, {"gm.smelting-type"})
+              table.insert(byproduct_of_list, {"gm.line-separator"})
+            end
           end
-        end
 
-        -- Break up produces_list for use in localization
-        local byproduct_of_list_pieces = Localization_split(byproduct_of_list, 3, 6, true)
+          -- Break up produces_list for use in localization
+          local byproduct_of_list_pieces = Localization_split(byproduct_of_list, 3, 6, true)
 
-        -- Entirely disable the tootips according to the user's settings
-        local localized_description_item = {}
-        if GM_globals.show_detailed_tooltips then
-          localized_description_item = {"gm.metal-byproduct-item-description-detailed", {"gm." .. metal}, {"gm." .. byproduct},
-          byproduct_of_list_pieces[1], byproduct_of_list_pieces[2], byproduct_of_list_pieces[3], byproduct_of_list_pieces[4], byproduct_of_list_pieces[5], byproduct_of_list_pieces[6],
-          property_list_pieces[1], property_list_pieces[2], property_list_pieces[3], property_list_pieces[4], property_list_pieces[5], property_list_pieces[6],
-        }
-        else
-          localized_description_item = {"gm.metal-byproduct-item-description-brief", {"gm." .. metal}, {"gm." .. byproduct}}
-        end
-
-        local icons_data_item = { -- Make item icon
-          {
-            icon = "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. metal .. "/" .. metal .. "-" .. byproduct .. "-0000.png",
-            icon_size = 64,
-            icon_mipmaps = 1,
+          -- Entirely disable the tootips according to the user's settings
+          local localized_description_item = {}
+          if GM_globals.show_detailed_tooltips then
+            localized_description_item = {"gm.metal-byproduct-item-description-detailed", {"gm." .. metal}, {"gm." .. byproduct},
+            byproduct_of_list_pieces[1], byproduct_of_list_pieces[2], byproduct_of_list_pieces[3], byproduct_of_list_pieces[4], byproduct_of_list_pieces[5], byproduct_of_list_pieces[6],
+            property_list_pieces[1], property_list_pieces[2], property_list_pieces[3], property_list_pieces[4], property_list_pieces[5], property_list_pieces[6],
           }
-        }
+          else
+            localized_description_item = {"gm.metal-byproduct-item-description-brief", {"gm." .. metal}, {"gm." .. byproduct}}
+          end
 
-        local pictures_data = {}
-        for i = 0, 3, 1 do
-          local single_picture = {
+          local icons_data_item = { -- Make item icon
             {
-              size = 64,
-              filename = "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. metal .. "/" .. metal .. "-" .. byproduct .. "-000" .. i .. ".png",
-              scale = 0.25,
+              icon = "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. metal .. "/" .. metal .. "-" .. byproduct .. "-0000.png",
+              icon_size = 64,
+              icon_mipmaps = 1,
             }
           }
-      
-          table.insert(pictures_data, {layers = single_picture})
-        end
 
-        local ib_data = {} -- Prepare badge data for the items
-        ib_data.ib_let_badge  = MW_Data.metal_data[metal].ib_data.ib_let_badge
-        ib_data.ib_let_invert = MW_Data.metal_data[metal].ib_data.ib_let_invert
-        ib_data.ib_let_corner = MW_Data.metal_data[metal].ib_data.ib_let_corner
+          local pictures_data = {}
+          for i = 0, 3, 1 do
+            local single_picture = {
+              {
+                size = 64,
+                filename = "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. metal .. "/" .. metal .. "-" .. byproduct .. "-000" .. i .. ".png",
+                scale = 0.25,
+              }
+            }
+        
+            table.insert(pictures_data, {layers = single_picture})
+          end
 
-        local item_prototype = {
-          {
-            type = "item",
-            name = metal .. "-" .. byproduct,
+          local ib_data = {} -- Prepare badge data for the items
+          ib_data.ib_let_badge  = MW_Data.metal_data[metal].ib_data.ib_let_badge
+          ib_data.ib_let_invert = MW_Data.metal_data[metal].ib_data.ib_let_invert
+          ib_data.ib_let_corner = MW_Data.metal_data[metal].ib_data.ib_let_corner
 
-            icons = icons_data_item,
-            pictures = pictures_data,
-            
-            stack_size = GM_globals.stock_stack_size,
+          local item_prototype = {
+            {
+              type = "item",
+              name = metal .. "-" .. byproduct,
 
-            order = "gm-stocks-" .. MW_Data.metal_data[metal].order .. byproduct_data.order,
-            subgroup = "gm-stocks-" .. metal,
+              icons = icons_data_item,
+              pictures = pictures_data,
+              
+              stack_size = GM_globals.stock_stack_size,
 
-            localised_name = {"gm.metal-byproduct-item-name", {"gm." .. metal}, {"gm." .. byproduct}},
-            localised_description = localized_description_item,
+              order = "gm-stocks-" .. MW_Data.metal_data[metal].order .. byproduct_data.order,
+              subgroup = "gm-stocks-" .. metal,
 
-            gm_item_data = {type = "byproduct", metal = metal, byproduct = byproduct},
+              localised_name = {"gm.metal-byproduct-item-name", {"gm." .. metal}, {"gm." .. byproduct}},
+              localised_description = localized_description_item,
+
+              gm_item_data = {type = "byproduct", metal = metal, byproduct = byproduct},
+            }
           }
-        }
-        data:extend(item_prototype)
-        GM_globals.GM_Badge_list["item"][metal .. "-" .. byproduct] = ib_data
-        GM_global_mw_data.byproduct_items[item_prototype[1].name] = item_prototype[1] -- # FIXME : Cull unproducable byproducts in data-final-fixes
+          data:extend(item_prototype)
+          GM_globals.GM_Badge_list["item"][metal .. "-" .. byproduct] = ib_data
+          GM_global_mw_data.byproduct_items[item_prototype[1].name] = item_prototype[1] -- # FIXME : Cull unproducable byproducts in data-final-fixes
+        end
       end
     end
   end
@@ -652,7 +653,6 @@ data:extend({ -- Make Electroplating recipe category
   }
 })
 
-order_count = 0
 for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treated [Metal] [Stock] Items and Recipes
   if MW_Data.metal_data[metal].type ~= MW_Data.MW_Metal_Type.TREATMENT then
     for stock, _ in pairs(stocks) do
@@ -1270,73 +1270,72 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
   end
 end
 
-order_count = 0
-for byproduct, recipe_data in pairs(MW_Data.byproduct_recipe_data) do -- Make Byproudct remelting recipes for non-treated metals
-  for metal, metal_data in pairs(MW_Data.metal_data) do
+if GM_globals.mw_byproducts then
+  for byproduct, recipe_data in pairs(MW_Data.byproduct_recipe_data) do -- Make Byproudct remelting recipes for non-treated metals
+    for metal, metal_data in pairs(MW_Data.metal_data) do
 
-    if MW_Data.metal_data[metal].type ~= MW_Data.MW_Metal_Type.TREATMENT then
-      -- Make recipe icon for remelting recipe
-      local icons_data_recipe = {
-        {
-          icon = "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. metal .. "/" .. metal .. "-plate-stock-0000.png",
-          icon_size = 64,
-        },
-      }
-      
-      -- Function from Icon Badges: ib-lib.lua
-      Build_img_badge_icon(icons_data_recipe, 
-      {"__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. metal .. "/sdf-" .. metal .. "-" .. byproduct .. ".png",
-      "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. metal .. "/" .. metal .. "-" .. byproduct .. "-0000.png"},
-      64, GM_globals.stock_badge_scale, 0, GM_globals.remelting_badge_corner, 0)
-
-      local recipe_hide_from_player_crafting = true
-      if (GM_globals.show_non_hand_craftables == "all") then
-        recipe_hide_from_player_crafting = false
-      end
-
-      local ib_data = {} -- Prepare badge data for the items
-      ib_data.ib_let_badge  = MW_Data.metal_data[metal].ib_data.ib_let_badge
-      ib_data.ib_let_invert = MW_Data.metal_data[metal].ib_data.ib_let_invert
-      ib_data.ib_let_corner = MW_Data.metal_data[metal].ib_data.ib_let_corner
-
-      local recipe_prototype = { -- remelting recipe
-        {
-          type = "recipe",
-          name = metal .. "-" .. byproduct .. "-remelting-byproduct",
-
-          enabled = MW_Data.metal_data[metal].tech_stock == "starter",
-
-          icons = icons_data_recipe,
-
-          ingredients = {{name = metal .. "-" .. byproduct, amount = recipe_data.input}},
-          result = metal .. "-".. recipe_data.output_shape .. "-stock",
-          result_count = recipe_data.output,
-
-          crafting_machine_tint = {
-            primary = MW_Data.metal_data[metal].tint_metal,
-            secondary = MW_Data.metal_data[metal].tint_oxidation
+      if MW_Data.metal_data[metal].type ~= MW_Data.MW_Metal_Type.TREATMENT and MW_Data.metal_stocks_pairs[metal][MW_Data.MW_Stock.PLATE] then
+        -- Make recipe icon for remelting recipe
+        local icons_data_recipe = {
+          {
+            icon = "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. metal .. "/" .. metal .. "-plate-stock-0000.png",
+            icon_size = 64,
           },
-
-          always_show_made_in = true,
-          hide_from_player_crafting = recipe_hide_from_player_crafting,
-
-          energy_required = 3.2,
-
-          order = MW_Data.metal_data[metal].order .. MW_Data.byproduct_data[byproduct].order,
-          category = "gm-remelting",
-          subgroup = "gm-remelting-" .. metal,
-
-          localised_name = {"gm.metal-stock-remelting-recipe-name", {"gm." .. metal}, {"gm." .. MW_Data.MW_Stock.PLATE}},
-
-          gm_recipe_data = {type = "remelting-byproduct", metal = metal, byproduct = byproduct},
         }
-      }
-      data:extend(recipe_prototype)
-      GM_globals.GM_Badge_list["recipe"][metal .. "-" .. byproduct .. "-remelting-byproduct"] = ib_data
-      if not GM_global_mw_data.byproduct_recipes[metal .. "-" .. byproduct] then GM_global_mw_data.byproduct_recipes[metal .. "-" .. byproduct] = {} end
-      table.insert(GM_global_mw_data.byproduct_recipes[metal .. "-" .. byproduct], {[recipe_prototype[1].name] = recipe_prototype[1]})
+        
+        -- Function from Icon Badges: ib-lib.lua
+        Build_img_badge_icon(icons_data_recipe, 
+        {"__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. metal .. "/sdf-" .. metal .. "-" .. byproduct .. ".png",
+        "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. metal .. "/" .. metal .. "-" .. byproduct .. "-0000.png"},
+        64, GM_globals.stock_badge_scale, 0, GM_globals.remelting_badge_corner, 0)
 
---      GM_global_mw_data.byproduct_recipes[recipe_prototype[1].name] = recipe_prototype[1]
+        local recipe_hide_from_player_crafting = true
+        if (GM_globals.show_non_hand_craftables == "all") then
+          recipe_hide_from_player_crafting = false
+        end
+
+        local ib_data = {} -- Prepare badge data for the items
+        ib_data.ib_let_badge  = MW_Data.metal_data[metal].ib_data.ib_let_badge
+        ib_data.ib_let_invert = MW_Data.metal_data[metal].ib_data.ib_let_invert
+        ib_data.ib_let_corner = MW_Data.metal_data[metal].ib_data.ib_let_corner
+
+        local recipe_prototype = { -- remelting recipe
+          {
+            type = "recipe",
+            name = metal .. "-" .. byproduct .. "-remelting-byproduct",
+
+            enabled = MW_Data.metal_data[metal].tech_stock == "starter",
+
+            icons = icons_data_recipe,
+
+            ingredients = {{name = metal .. "-" .. byproduct, amount = recipe_data.input}},
+            result = metal .. "-".. recipe_data.output_shape .. "-stock",
+            result_count = recipe_data.output,
+
+            crafting_machine_tint = {
+              primary = MW_Data.metal_data[metal].tint_metal,
+              secondary = MW_Data.metal_data[metal].tint_oxidation
+            },
+
+            always_show_made_in = true,
+            hide_from_player_crafting = recipe_hide_from_player_crafting,
+
+            energy_required = 3.2,
+
+            order = MW_Data.metal_data[metal].order .. MW_Data.byproduct_data[byproduct].order,
+            category = "gm-remelting",
+            subgroup = "gm-remelting-" .. metal,
+
+            localised_name = {"gm.metal-stock-remelting-recipe-name", {"gm." .. metal}, {"gm." .. MW_Data.MW_Stock.PLATE}},
+
+            gm_recipe_data = {type = "remelting-byproduct", metal = metal, byproduct = byproduct},
+          }
+        }
+        data:extend(recipe_prototype)
+        GM_globals.GM_Badge_list["recipe"][metal .. "-" .. byproduct .. "-remelting-byproduct"] = ib_data
+        if not GM_global_mw_data.byproduct_recipes[metal .. "-" .. byproduct] then GM_global_mw_data.byproduct_recipes[metal .. "-" .. byproduct] = {} end
+        table.insert(GM_global_mw_data.byproduct_recipes[metal .. "-" .. byproduct], {[recipe_prototype[1].name] = recipe_prototype[1]})
+      end
     end
   end
 end
@@ -1690,7 +1689,6 @@ for minisembler, _ in pairs(MW_Data.minisemblers_recipe_parameters) do -- Make M
   })
 end
 
-order_count = 0
 for property, parts in pairs(MW_Data.property_machined_part_pairs) do -- Make the [Property] [Machined Part] Items and Recipes
   for part, _ in pairs(parts) do
     -- Work out how to fan out the machined parts

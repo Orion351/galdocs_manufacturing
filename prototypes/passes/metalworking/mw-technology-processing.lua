@@ -67,13 +67,15 @@ data:extend({ -- electric metal machining minisembler technology
 data.raw.technology["automation"].prerequisites = {"gm-technology-minisemblers"} -- FIXME: Put this in Data-Updates.lua
 
 for metal, metal_data in pairs(MW_Data.metal_data) do -- Add Stocks and Machined Parts and byproduct remelting recipes into their appropriate technologies
-  if metal_data.tech_stock ~= "starter" and metal_data.type ~= MW_Data.MW_Metal_Type.TREATMENT then -- Add Byproduct remelting recipes
-    local byproduct_technology_effects = data.raw.technology[metal_data.tech_stock].effects
-    for byproduct, _ in pairs(MW_Data.byproduct_data) do
-      table.insert(byproduct_technology_effects, {type = "unlock-recipe", recipe = metal .. "-" .. byproduct .. "-remelting-byproduct"})
+  if GM_globals.mw_byproducts then
+    if metal_data.tech_stock ~= "starter" and metal_data.type ~= MW_Data.MW_Metal_Type.TREATMENT then -- Add Byproduct remelting recipes
+      local byproduct_technology_effects = data.raw.technology[metal_data.tech_stock].effects
+      for byproduct, _ in pairs(MW_Data.byproduct_data) do
+        table.insert(byproduct_technology_effects, {type = "unlock-recipe", recipe = metal .. "-" .. byproduct .. "-remelting-byproduct"})
+      end
     end
   end
-
+  
   if metal_data.tech_stock ~= "starter" then -- Add Stocks into their appropriate technologies
     -- Cache a reference to the technology
     local stock_technology_effects = data.raw.technology[metal_data.tech_stock].effects

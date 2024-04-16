@@ -740,6 +740,40 @@ end
 
 
 
+-- MW Byproducts
+-- *************
+
+if GM_globals.mw_byproducts then -- Add glow layer to the byproducts
+  for metal, metal_data in pairs(MW_Data.metal_data) do
+    if metal_data.introduced == Mod_Names.K2 and metal_data.has_K2_glow_layer == true then
+      for byproduct, byproduct_data in pairs(MW_Data.byproduct_data) do
+        local glow_me_up_fam = data.raw.item[metal .. "-" .. byproduct]
+        local picture_count = 0
+        for _, picture in pairs(glow_me_up_fam.pictures) do
+          local index = #picture.layers + 1
+          if GM_globals.show_property_badges == "all" then
+            index = index - 1
+          end
+          
+          table.insert(picture.layers, index, {
+            draw_as_light = true,
+            flags = { "light" },
+            blend_mode = "additive",
+            tint = metal_data.K2_glow_tint,
+            size = 64,
+            filename = "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/k2-byproduct-glow/" .. metal .. "/k2-byproduct-glow-" .. metal .. "-" .. byproduct .. "-000" .. picture_count .. ".png",
+            scale = 0.25,
+            mipmap_count = 1,
+          })
+          picture_count = picture_count + 1
+        end
+      end
+    end
+  end
+end
+
+
+
 -- Stocks
 -- ******
 

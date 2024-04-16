@@ -298,7 +298,7 @@ end
 
 if GM_globals.mw_byproducts then -- -- Eliminate all unused Byproducts (as per the list above) from technologies and recipes
   for item_name, item_prototype in pairs(GM_global_mw_data.byproduct_items) do
-    if not seen_byproducts[item_name] then
+    if not seen_byproducts[item_name] and GM_global_mw_data.byproduct_recipes[item_name] then
       for _, recipe_prototypes in pairs(GM_global_mw_data.byproduct_recipes[item_name]) do
         for recipe_name, recipe_prototype in pairs(recipe_prototypes) do
 

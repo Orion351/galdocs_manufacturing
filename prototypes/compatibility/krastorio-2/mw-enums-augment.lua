@@ -47,6 +47,10 @@ MW_Data.MW_Stock = table.merge(MW_Data.MW_Stock, {
   -- None
 })
 
+MW_Data.MW_Byproduct = table.merge(MW_Data.MW_Byproduct, {
+  -- None.
+})
+
 MW_Data.MW_Machined_Part = table.merge(MW_Data.MW_Machined_Part, {
   -- none
 })

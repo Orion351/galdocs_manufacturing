@@ -156,13 +156,6 @@ MW_Data.smelting_data = { -- Set up the Smelting Recipes
   -- [MW_Ore_Shape.PEBBLE] = {input_count = 1, output_shape = MW_Data.MW_Stock.WAFER, output_count = 1},
 }
 
---[[ FIXME: Needs a machine to do this in! CRUSHER!!!!!!!!!!!
-MW_Data.ore_processing_data = { -- Set up the Pebble to Ore conversions
-  [MW_Ore_Shape.ORE]    = {shape = MW_Ore_Shape.PEBBLE, input_count = 1,  output_count = 10},
-  -- [MW_Ore_Shape.PEBBLE] = {shape = MW_Ore_Shape.ORE,    input_count = 10, output_count = 1 },
-}
---]]
-
 
 
 -- Metal Data
