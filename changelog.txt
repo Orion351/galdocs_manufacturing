@@ -3,6 +3,7 @@ Version: 0.2.06
 Date: 2024-04-11
   Changes:
     - Tuned locale for easier translation
+    - Added Challenge Toggle: Metalworking Byproducts. Adds Swarf and Offcuts to machining outputs
 ---------------------------------------------------------------------------------------------------
 Version: 0.2.05
 Date: 2024-04-11
