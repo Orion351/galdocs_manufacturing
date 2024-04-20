@@ -242,7 +242,7 @@ for item_name, item_prototype in pairs(GM_global_mw_data.machined_part_items) do
             local current_effects = data.raw.technology[MW_Data.metal_data[metal].tech_machined_part].effects
             local new_effects = {}
             for _, effect in pairs(current_effects) do
-              if effect.recipe ~= recipe_name then
+              if effect.recipe ~= recipe_name or cull_downgrade then
                 table.insert(new_effects, effect)
               end
             end
@@ -251,9 +251,9 @@ for item_name, item_prototype in pairs(GM_global_mw_data.machined_part_items) do
           
           -- Pull the recipes out of crafting
           if GM_globals.gm_debug_delete_culled_recipes then
-            data.raw.recipe[recipe_prototype.name] = nil
+            data.raw.recipe[recipe_name] = nil
           else
-            data.raw.recipe[recipe_prototype.name].enabled = false
+            data.raw.recipe[recipe_name].enabled = false
           end
         end
       end
@@ -326,6 +326,8 @@ if GM_globals.mw_byproducts then -- -- Eliminate all unused Byproducts (as per t
     end
   end
 end
+
+
 
 -- ***************
 -- Update Furnaces

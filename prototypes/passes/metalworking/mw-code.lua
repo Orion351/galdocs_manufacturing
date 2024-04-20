@@ -336,6 +336,7 @@ end
 
 
 -- Experiment (ore sparkle)
+-- ========================
 
 data.raw.resource["copper-ore"].stages_effect = {
   sheet =
@@ -410,16 +411,6 @@ data:extend({ -- Make annealing category
   }
 })
 table.insert(MW_Data.new_smelting_categories, "gm-annealing")
-
--- if GM_globals.dedicated_handcrafting_downgrade_recipe_category then
---   data:extend({ -- Make dedicated handcrafting downgrade recipe category
---     {
---       type = "recipe-category",
---       name = "gm-dedicated-handcrafting-downgrade-recipe-category",
---       order = "a" .. "gm-dedicated-handcrafting-downgrade-recipe-category"
---     }
---   })
--- end
 
 local productivity_whitelist = {} -- Start the whitelist for productivity modules
 
@@ -1676,16 +1667,12 @@ data:extend({ -- Make Metal Assaying recipe category and player crafting categor
   {
     type = "recipe-category",
     name = "gm-metal-assayer"
-  }
-})
-
-data:extend({
+  },
   {
     type = "recipe-category",
     name = "gm-metal-assayer-player-crafting"
   }
 })
-
 
 order_count = 0
 for property, parts in pairs(MW_Data.property_machined_part_pairs) do -- Make [Property] [Machined Part] Subgroups. Multi-property subgroups are declared below.
@@ -2278,6 +2265,8 @@ for metal, metal_data in pairs(MW_Data.metal_data) do -- Make "Basic" property d
           -- Build_badge(data.raw.recipe[property .. "-" .. part .. "-downgrade-to-basic-" .. part], ib_data)
           if not GM_global_mw_data.machined_part_recipes["basic-" .. part .. "-machined-part"] then GM_global_mw_data.machined_part_recipes["basic-" .. part .. "-machined-part"] = {} end
           table.insert(GM_global_mw_data.machined_part_recipes["basic-" .. part .. "-machined-part"], {[recipe_prototype[1].name] = recipe_prototype[1]})
+          if not GM_global_mw_data.machined_part_recipes[property .. "-" .. part .. "-machined-part"] then GM_global_mw_data.machined_part_recipes[property .. "-" .. part .. "-machined-part"] = {} end
+          table.insert(GM_global_mw_data.machined_part_recipes[property .. "-" .. part .. "-machined-part"], {[recipe_prototype[1].name] = recipe_prototype[1]})
         end
       end
     end
@@ -2363,6 +2352,8 @@ for property, property_downgrade_list in pairs(MW_Data.property_downgrades) do -
       -- Build_badge(data.raw.recipe[next_property .. "-" .. part .. "-downgrade-to-" .. previous_property .. "-" .. part], ib_data)
       if not GM_global_mw_data.machined_part_recipes[previous_property .. "-" .. part .. "-machined-part"] then GM_global_mw_data.machined_part_recipes[previous_property .. "-" .. part .. "-machined-part"] = {} end
       table.insert(GM_global_mw_data.machined_part_recipes[previous_property .. "-" .. part .. "-machined-part"], {[recipe_prototype[1].name] = recipe_prototype[1]})
+      if not GM_global_mw_data.machined_part_recipes[next_property .. "-" .. part .. "-machined-part"] then GM_global_mw_data.machined_part_recipes[next_property .. "-" .. part .. "-machined-part"] = {} end
+      table.insert(GM_global_mw_data.machined_part_recipes[next_property .. "-" .. part .. "-machined-part"], {[recipe_prototype[1].name] = recipe_prototype[1]})
     end
   end
 end
@@ -2437,7 +2428,8 @@ for property_key, multi_properties in pairs(MW_Data.multi_property_with_key_pair
         -- Build_badge(data.raw.recipe[property_key .. "-" .. part .. "-downgrade-to-" .. multi_property .. "-" .. part], ib_data)
         if not GM_global_mw_data.machined_part_recipes[multi_property .. "-" .. part .. "-machined-part"] then GM_global_mw_data.machined_part_recipes[multi_property .. "-" .. part .. "-machined-part"] = {} end
         table.insert(GM_global_mw_data.machined_part_recipes[multi_property .. "-" .. part .. "-machined-part"], {[recipe_prototype[1].name] = recipe_prototype[1]})
-
+        if not GM_global_mw_data.machined_part_recipes[property_key .. "-" .. part .. "-machined-part"] then GM_global_mw_data.machined_part_recipes[property_key .. "-" .. part .. "-machined-part"] = {} end
+        table.insert(GM_global_mw_data.machined_part_recipes[property_key .. "-" .. part .. "-machined-part"], {[recipe_prototype[1].name] = recipe_prototype[1]})
       end
     end
   end
@@ -2601,7 +2593,7 @@ if multi_to_multi_map then -- -- Make 2-multi-property to 2-multi-property machi
           
           -- localised_name = {"gm.metal-machined-part-downgrade-recipe", {"gm." .. to_key}, {"gm." .. part}},
 
-          gm_recipe_data = {type = "machined-parts", start_compound_property = from_key, end_property = to_key, part = part, special = "downgrade"},
+          gm_recipe_data = {type = "machined-parts", start_compound_property = from_key, end_compound_property = to_key, part = part, special = "downgrade"},
         }
       }
       
@@ -2610,6 +2602,8 @@ if multi_to_multi_map then -- -- Make 2-multi-property to 2-multi-property machi
       -- Build_badge(data.raw.recipe[from_key .. "-" .. part .. "-downgrade-to-" .. to_key .. "-" .. part], ib_data)
       if not GM_global_mw_data.machined_part_recipes[to_key .. "-" .. part .. "-machined-part"] then GM_global_mw_data.machined_part_recipes[to_key .. "-" .. part .. "-machined-part"] = {} end
       table.insert(GM_global_mw_data.machined_part_recipes[to_key .. "-" .. part .. "-machined-part"], {[recipe_prototype[1].name] = recipe_prototype[1]})
+      if not GM_global_mw_data.machined_part_recipes[from_key .. "-" .. part .. "-machined-part"] then GM_global_mw_data.machined_part_recipes[from_key .. "-" .. part .. "-machined-part"] = {} end
+      table.insert(GM_global_mw_data.machined_part_recipes[from_key .. "-" .. part .. "-machined-part"], {[recipe_prototype[1].name] = recipe_prototype[1]})
     end
   end
 end
