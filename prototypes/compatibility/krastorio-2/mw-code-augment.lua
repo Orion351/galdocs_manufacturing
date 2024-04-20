@@ -969,8 +969,13 @@ for _, recipe in pairs(MW_Data.enriched_to_plate_alloy_recipes) do
   local new_ingredient = ""
   local new_name = ""
   for _, ingredient in pairs(enriched_alloy_recipe.ingredients) do
-    new_ingredient = "enriched-" .. ingredient[1]
-    ingredient[1] = string.sub(new_ingredient, 1, #new_ingredient - 4)
+    if ingredient.name then
+      new_ingredient = "enriched-" .. ingredient.name
+      ingredient.name = string.sub(new_ingredient, 1, #new_ingredient - 4)
+    else
+      new_ingredient = "enriched-" .. ingredient[1]
+      ingredient[1] = string.sub(new_ingredient, 1, #new_ingredient - 4)
+    end
   end
   new_name = string.sub(recipe, 1, #recipe - 4)
   enriched_alloy_recipe.name = new_name .. "-enriched"

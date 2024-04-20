@@ -2556,11 +2556,17 @@ if multi_to_multi_map then -- -- Make 2-multi-property to 2-multi-property machi
         recipe_hide_from_player_crafting = false
       end
 
+      -- Add multi-property badges
+      local badge_paths = {}
+      for _, multi_property in pairs(MW_Data.multi_property_with_key_pairs[to_key]) do
+        table.insert(badge_paths, "__galdocs-manufacturing__/graphics/badges/" .. GM_globals.ib_mipmaps .. "/" .. GM_globals.ib_mipmaps .. "-" .. multi_property .. ".png")
+      end
+
       local ib_data = {} -- Prepare badge data for the items
-      ib_data.ib_img_paths = {"__galdocs-manufacturing__/graphics/badges/" .. to_key .. ".png"}
-      ib_data.ib_img_size  = GM_globals.badge_image_size
-      ib_data.ib_img_scale = GM_globals.property_image_scale
-      ib_data.ib_img_space = GM_globals.property_badge_space
+      ib_data.ib_img_paths  = badge_paths
+      ib_data.ib_img_size   = GM_globals.badge_image_size
+      ib_data.ib_img_scale  = GM_globals.property_image_scale
+      ib_data.ib_img_space  = GM_globals.property_badge_space
 
       local sugroup_thing = "gm-machined-parts-" .. to_key
       if GM_globals.dedicated_handcrafting_downgrade_recipe_category then
