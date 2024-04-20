@@ -44,9 +44,9 @@ local function map_minisembler_recipes(t)
   for _, part in pairs(minisembler_starter_recipe_ordering) do
     if t[counter] > 0 then
       if part == "wiring" then
-        table.insert(returnTable, #returnTable, {"electrically-conductive-" .. part .. "-machined-part", t[counter]})
+        table.insert(returnTable, #returnTable, {type = "item", name = "electrically-conductive-" .. part .. "-machined-part", amount = t[counter]})
       else 
-        table.insert(returnTable, #returnTable, {"basic-" .. part .. "-machined-part", t[counter]})
+        table.insert(returnTable, #returnTable, {type = "item", name = "basic-" .. part .. "-machined-part", amount = t[counter]})
       end
     end
     counter = counter + 1
@@ -1036,11 +1036,21 @@ end
 
 if advanced then -- Append special minisembler recipes
   MW_Data.minisemblers_recipe_parameters = table.group_key_assign(MW_Data.minisemblers_recipe_parameters, {
-    [MW_Minisembler.ELECTROPLATER]  = {{"corrosion-resistant-large-paneling-machined-part", 2}, {"load-bearing-girdering-machined-part", 2}, {"corrosion-resistant-piping-machined-part", 2}, {"electrically-conductive-wiring-machined-part", 2}, {"basic-bolts-machined-part", 1}},
+    [MW_Minisembler.ELECTROPLATER]  = {
+      {type = "item", name = "corrosion-resistant-large-paneling-machined-part", amount = 2},
+      {type = "item", name = "load-bearing-girdering-machined-part",             amount = 2},
+      {type = "item", name = "corrosion-resistant-piping-machined-part",         amount = 2},
+      {type = "item", name = "electrically-conductive-wiring-machined-part",     amount = 2},
+      {type = "item", name = "basic-bolts-machined-part",                        amount = 1}},
   })
 else
   MW_Data.minisemblers_recipe_parameters = table.group_key_assign(MW_Data.minisemblers_recipe_parameters, {
-    [MW_Minisembler.ELECTROPLATER]  = {{"corrosion-resistant-paneling-machined-part", 2}, {"load-bearing-framing-machined-part", 2}, {"corrosion-resistant-piping-machined-part", 2}, {"electrically-conductive-wiring-machined-part", 2}, {"basic-bolts-machined-part", 1}},
+    [MW_Minisembler.ELECTROPLATER]  = {
+      {type = "item", name = "corrosion-resistant-paneling-machined-part",   amount = 2},
+      {type = "item", name = "load-bearing-framing-machined-part",           amount = 2},
+      {type = "item", name = "corrosion-resistant-piping-machined-part",     amount = 2},
+      {type = "item", name = "electrically-conductive-wiring-machined-part", amount = 2},
+      {type = "item", name = "basic-bolts-machined-part",                    amount = 1}},
   })
 end
 
@@ -1118,7 +1128,7 @@ MW_Data.metal_properties_pairs = { -- [metal | list of properties]
   [MW_Metal.ANNEALED_COPPER]  = map{MW_Property.BASIC, MW_Property.THERMALLY_CONDUCTIVE, MW_Property.ELECTRICALLY_CONDUCTIVE, MW_Property.DUCTILE},
 }
 
-MW_Data.multi_property_pairs = { -- Two or more properties in a table.
+MW_Data.multi_property_pairs = { -- Two or more properties in a table (this ordering matches the associated .png filenames and directory structure)
   {MW_Property.CORROSION_RESISTANT, MW_Property.HIGH_TENSILE},
   {MW_Property.CORROSION_RESISTANT, MW_Property.HEAVY_LOAD_BEARING},
   {MW_Property.CORROSION_RESISTANT, MW_Property.LOAD_BEARING},

@@ -62,7 +62,7 @@ data:extend({ -- electric metal machining minisembler technology
   }
 })
 
--- Updating Exis
+-- Updating Exis ... ... exis? i didn't finish typing this. what was I trying to say? It's like it doesn't exis
 
 data.raw.technology["automation"].prerequisites = {"gm-technology-minisemblers"} -- FIXME: Put this in Data-Updates.lua
 
@@ -81,7 +81,7 @@ for metal, metal_data in pairs(MW_Data.metal_data) do -- Add Stocks and Machined
     local stock_technology_effects = data.raw.technology[metal_data.tech_stock].effects
 
     -- Insert each stock recipe into the relevant tech
-    for stock, _ in pairs(MW_Data.metal_stocks_pairs[metal]) do
+    for stock, _ in pairs(MW_Data.metal_stocks_pairs[metal]) do -- Add plate recipes
       if stock == MW_Data.MW_Stock.PLATE then
         if metal_data.alloy_plate_recipe then table.insert(stock_technology_effects, {type = "unlock-recipe", recipe = metal .. "-" .. stock .. "-stock-from-plate"}) end
         if metal_data.alloy_ore_recipe then table.insert(stock_technology_effects, {type = "unlock-recipe", recipe = metal .. "-" .. stock .. "-stock-from-ore"}) end
@@ -89,12 +89,12 @@ for metal, metal_data in pairs(MW_Data.metal_data) do -- Add Stocks and Machined
         if metal_data.alloy_plate_recipe == nil and metal_data.alloy_ore_recipe == nil and metal_data.type == MW_Data.MW_Metal_Type.ELEMENT then table.insert(stock_technology_effects, {type = "unlock-recipe", recipe = metal .. "-" .. stock .. "-stock"}) end
       end
     end
-    for stock, _ in pairs(MW_Data.metal_stocks_pairs[metal]) do
+    for stock, _ in pairs(MW_Data.metal_stocks_pairs[metal]) do -- Add stock recipes
       if stock ~= MW_Data.MW_Stock.PLATE then
         table.insert(stock_technology_effects, {type = "unlock-recipe", recipe = metal .. "-" .. stock .. "-stock"})
       end
     end
-    for stock, _ in pairs(MW_Data.metal_stocks_pairs[metal]) do
+    for stock, _ in pairs(MW_Data.metal_stocks_pairs[metal]) do -- Add remelting recipes
       if stock ~= MW_Data.MW_Stock.PLATE then
         table.insert(stock_technology_effects, {type = "unlock-recipe", recipe = metal .. "-" .. stock .. "-remelting-stock"})
       end
@@ -106,17 +106,17 @@ for metal, metal_data in pairs(MW_Data.metal_data) do -- Add Stocks and Machined
     local machined_part_technology_effects = data.raw.technology[metal_data.tech_machined_part].effects
 
     for property, _ in pairs(MW_Data.metal_properties_pairs[metal]) do -- Insert each single property Machined Parts recipe into the relevant tech
-      if MW_Data.property_machined_part_pairs[property] then
+      if MW_Data.property_machined_part_pairs[property] then -- Unlock stock-to-machined-part recipes
         for part, _ in pairs(MW_Data.property_machined_part_pairs[property]) do
-          if MW_Data.metal_stocks_pairs[metal][MW_Data.machined_parts_recipe_data[part].precursor] then -- Unlock stock-to-machined-part recipes
+          if MW_Data.metal_stocks_pairs[metal][MW_Data.machined_parts_recipe_data[part].precursor] then 
             table.insert(machined_part_technology_effects, {type = "unlock-recipe", recipe = property .. "-" .. part .. "-from-" .. metal .. "-" .. MW_Data.machined_parts_recipe_data[part].precursor})
           end
         end
       end
 
-      if MW_Data.property_machined_part_pairs[property] then
+      if MW_Data.property_machined_part_pairs[property] then -- Unlock proper downgrade recipes
         for part, _ in pairs(MW_Data.property_machined_part_pairs[property]) do
-          if MW_Data.property_downgrades[property] then -- Unlock proper downgrade recipes
+          if MW_Data.property_downgrades[property] then 
             for tier_minus_one, next_property in pairs(MW_Data.property_downgrades[property]) do
               local tier = tier_minus_one + 1
               local previous_property
@@ -131,44 +131,48 @@ for metal, metal_data in pairs(MW_Data.metal_data) do -- Add Stocks and Machined
         end
       end
 
-      if MW_Data.property_machined_part_pairs[property] then
+      if MW_Data.property_machined_part_pairs[property] then -- Unlock to-basic downgrade recipes
         for part, _ in pairs(MW_Data.property_machined_part_pairs[property]) do
-          if property ~= MW_Data.MW_Property.BASIC and not table.subtable_contains(MW_Data.property_downgrades, property) then -- Unlock to-basic downgrade recipes
+          if property ~= MW_Data.MW_Property.BASIC and not table.subtable_contains(MW_Data.property_downgrades, property) then 
             table.insert(machined_part_technology_effects, {type = "unlock-recipe", recipe = property .. "-" .. part .. "-downgrade-to-basic-" .. part})
           end
         end
       end
-
     end
 
     -- Insert each multi-property Machined Parts recipe into the relevant tech
     -- This code relies on tables built above. Decouple?
     for property_key, multi_properties in pairs(MW_Data.multi_property_with_key_pairs) do -- Add in multi-property Machined Parts into their appropriate technologies
-      -- Find metals that work for this machined part; they must have all relevant properties
       local metal_found = false
-      for _, check_metal in pairs(MW_Data.multi_property_metal_pairs[property_key]) do
+      for _, check_metal in pairs(MW_Data.multi_property_metal_pairs[property_key]) do -- Find metals that work for this machined part; they must have all relevant properties
         if check_metal == metal then metal_found = true end
       end
 
-      -- Combine the lists of machined parts the metals can make; this will ADD to the parts, and make things that couldn't be made otherwise
-      if metal_found then -- FIXME this is parallel code; make this into a function smoosh_table
+      if metal_found then -- Combine the lists of machined parts the metals can make; this will ADD to the parts, and make things that couldn't be made otherwise
         local combined_parts_list = {}
         for _, multi_property in pairs(multi_properties) do
           for part, _ in pairs(MW_Data.property_machined_part_pairs[multi_property]) do
             combined_parts_list[part] = true
-            -- Unlock the associated multi-property downgrade to property machined part recipe
+            -- Unlock the associated multi-property downgrade to single property machined part recipe
             table.insert(machined_part_technology_effects, {type = "unlock-recipe", recipe = property_key .. "-" .. part .. "-downgrade-to-" .. multi_property .. "-" .. part})
           end
         end
 
-        -- Insert each multi property Machined Parts recipe into the relevant tech
-        for part, _ in pairs(combined_parts_list) do
+        for part, _ in pairs(combined_parts_list) do -- Insert each multi property Machined Parts recipe into the relevant tech
           if MW_Data.metal_stocks_pairs[metal][MW_Data.machined_parts_recipe_data[part].precursor] then
             table.insert(machined_part_technology_effects, {type = "unlock-recipe", recipe = property_key .. "-" .. part .. "-from-" .. metal .. "-" .. MW_Data.machined_parts_recipe_data[part].precursor})
           end
         end
 
+        for part, _ in pairs(combined_parts_list) do
+          for multi_to_multi_map_key, multi_to_multi_map_property_keys in pairs(MW_Data.multi_to_multi_map) do -- Add 2-multi-property to 2-multi-property downgrade recipes
+            if property_key == multi_to_multi_map_property_keys[1] then
+              table.insert(machined_part_technology_effects, {type = "unlock-recipe", recipe = multi_to_multi_map_property_keys[1] .. "-" .. part .. "-downgrade-to-" .. multi_to_multi_map_property_keys[2] .. "-" .. part})
+            end
+          end
+        end
       end
+
     end
 
   end

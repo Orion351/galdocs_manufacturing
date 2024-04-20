@@ -1,6 +1,13 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.2.07
+Date: 2024-04-19
+  Changes:
+    - Added multi-property to multi-property downgrade recipes
+    - Player can now handcraft downgrade recipes
+    - Added option to put handcrafting downgrade recipes in separate tab in player's crafting GUI
+---------------------------------------------------------------------------------------------------
 Version: 0.2.06
-Date: 2024-04-11
+Date: 2024-04-17
   Changes:
     - Tuned locale for easier translation
     - Added Challenge Toggle: Metalworking Byproducts. Adds Swarf and Offcuts to machining outputs

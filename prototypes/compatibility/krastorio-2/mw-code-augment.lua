@@ -235,9 +235,11 @@ for ore, ore_data in pairs(MW_Data.ore_data) do -- Add Enriched Items and Recipe
 
           result = ore .. "-plate-stock",
           result_count = 5,
-          ingredients = {
-            {type = "item", name = "enriched-" .. ore, amount = 5}
-          },
+          ingredients = {{
+            type = "item",
+            name = "enriched-" .. ore,
+            amount = 5
+          }},
           energy_required = 16,
           enabled = false,
           always_show_made_in = true,

@@ -82,6 +82,19 @@ data:extend({ -- Create metalworking remelting item group
   }
 })
 
+if GM_globals.dedicated_handcrafting_downgrade_recipe_category then -- (Maybe) Create metalworking remelting item group, 
+  data:extend({ 
+    {
+      type = "item-group",
+      name = "gm-dedicated-handcrafting-downgrade-recipe-category",
+      icon = "__galdocs-manufacturing__/graphics/group-icons/galdocs-intermediates-downgrade-group-icon.png",
+      localised_name = {"gm.item-remelting-group"},
+      order = "c-b",
+      icon_size = 128
+    }
+  })
+end
+
 
 
 -- Ore
@@ -372,7 +385,6 @@ data:extend({ -- add alloy recipe category
 })
 table.insert(MW_Data.new_smelting_categories, "gm-alloys")
 
-
 data:extend({ -- Make plate smelting category so player can see recipes in inventory
   {
     type = "item-subgroup",
@@ -380,7 +392,6 @@ data:extend({ -- Make plate smelting category so player can see recipes in inven
     name = "gm-plates"
   }
 })
-
 
 data:extend({ -- Make remelting category
   {
@@ -391,7 +402,6 @@ data:extend({ -- Make remelting category
 })
 table.insert(MW_Data.new_smelting_categories, "gm-remelting")
 
-
 data:extend({ -- Make annealing category
   {
     type = "recipe-category",
@@ -400,6 +410,16 @@ data:extend({ -- Make annealing category
   }
 })
 table.insert(MW_Data.new_smelting_categories, "gm-annealing")
+
+-- if GM_globals.dedicated_handcrafting_downgrade_recipe_category then
+--   data:extend({ -- Make dedicated handcrafting downgrade recipe category
+--     {
+--       type = "recipe-category",
+--       name = "gm-dedicated-handcrafting-downgrade-recipe-category",
+--       order = "a" .. "gm-dedicated-handcrafting-downgrade-recipe-category"
+--     }
+--   })
+-- end
 
 local productivity_whitelist = {} -- Start the whitelist for productivity modules
 
@@ -426,7 +446,6 @@ end
 -- MW Byproducts
 -- =============
 
-order_count = 0
 if GM_globals.mw_byproducts then -- Make all Byproduct Items (and subgroups?)
   for _, metal_to_test in pairs(MW_Data.MW_Metal) do
     --[[
@@ -581,21 +600,22 @@ if GM_globals.mw_byproducts then -- Make all Byproduct Items (and subgroups?)
   end
 end
 
+
+
 -- Stocks
 -- ======
 
 order_count = 0
 for _, metal in pairs(MW_Data.MW_Metal) do -- Make [Metal] Stock Subgroups
-  
   data:extend({
-    { -- Make Stock Subgroups
+    { -- Make Stock Item Subgroups
       type = "item-subgroup",
       name = "gm-stocks-" .. metal,
       group = "gm-intermediates",
       order = "a" .. "-gm-stocks-" .. MW_Data.metal_data[metal].order,
       localised_name = {"gm.stocks-subgroup", {"gm." .. metal}}
     },
-    { -- Make Stock Remelting Subgroups
+    { -- Make Stock Remelting Item Subgroups
       type = "item-subgroup",
       name = "gm-remelting-" .. metal,
       group = "gm-remelting",
@@ -629,7 +649,7 @@ for _, metal in pairs(MW_Data.MW_Metal) do -- Make [Metal] Stock Subgroups
   end
 end
 
-local seen_minisembler_categories = {}
+local seen_minisembler_categories = {} 
 for stock, recipe_data in pairs(MW_Data.stocks_recipe_data) do -- Make Stock recipe categories
   if not seen_minisembler_categories[stock] then
     seen_minisembler_categories[stock] = true
@@ -825,7 +845,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
             
             enabled = MW_Data.metal_data[metal].tech_stock == "starter",
             
-            ingredients = {{metal .. "-" .. MW_Data.stocks_recipe_data[stock].precursor, 1}},
+            ingredients = {{type = "item", name = metal .. "-" .. MW_Data.stocks_recipe_data[stock].precursor, amount = 1}},
 
             results = recipe_results,
             main_product = recipe_main_product,
@@ -880,10 +900,11 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
 
             icons = icons_data_recipe,
 
-            ingredients = {
-              {name = item_prototype[1].name,
-              amount = MW_Data.stocks_recipe_data[stock].remelting_cost}
-            },
+            ingredients = {{
+              type = "item",
+              name = item_prototype[1].name,
+              amount = MW_Data.stocks_recipe_data[stock].remelting_cost
+            }},
             result = metal .. "-plate-stock",
             result_count = MW_Data.stocks_recipe_data[stock].remelting_yield,
 
@@ -953,12 +974,13 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
 
             enabled = MW_Data.metal_data[metal].tech_stock == "starter",
 
-            ingredients = {{metal .. "-" .. MW_Data.stocks_recipe_data[stock].precursor .. "-stock", MW_Data.stocks_recipe_data[stock].input}},
-
+            ingredients = {{
+              type = "item", 
+              name = metal .. "-" .. MW_Data.stocks_recipe_data[stock].precursor .. "-stock",
+              amount = MW_Data.stocks_recipe_data[stock].input
+            }},
             results = recipe_results,
             main_product = recipe_main_product,
-            -- result = metal .. "-" .. stock .. "-stock",
-            -- result_count = MW_Data.stocks_recipe_data[stock].output,
 
             crafting_machine_tint = {
               primary = MW_Data.metal_data[metal].tint_metal,
@@ -1016,10 +1038,11 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
 
             icons = icons_data_recipe,
 
-            ingredients = {
-              {name = item_prototype[1].name,
-              amount = MW_Data.stocks_recipe_data[stock].remelting_cost}
-            },
+            ingredients = {{
+              type = "item",
+              name = item_prototype[1].name,
+              amount = MW_Data.stocks_recipe_data[stock].remelting_cost
+            }},
             result = metal .. "-plate-stock",
             result_count = MW_Data.stocks_recipe_data[stock].remelting_yield,
 
@@ -1063,13 +1086,13 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
         for _, ingredient in pairs(MW_Data.metal_data[metal].alloy_plate_recipe) do
           output_count = output_count + ingredient.amount
           if table.contains(MW_Data.MW_Metal, ingredient.name) then
-            table.insert(ingredient_list, {ingredient.name .. "-" .. ingredient.shape .. "-stock", ingredient.amount})
+            table.insert(ingredient_list, {type = "item", name = ingredient.name .. "-" .. ingredient.shape .. "-stock", amount = ingredient.amount})
             if ingredient.amount > icon_badge_metal_most then
               icon_badge_metal = ingredient.name
               icon_badge_metal_most = ingredient.amount
             end
           else
-            table.insert(ingredient_list, {ingredient.name, ingredient.amount}) -- This is going to break when the 'name' field in MW_Data.metal_data[metal].alloy_plate_recipe doesn't match with an item.
+            table.insert(ingredient_list, {type = "item", name = ingredient.name, amount = ingredient.amount}) -- This is going to break when the 'name' field in MW_Data.metal_data[metal].alloy_plate_recipe doesn't match with an item.
           end
         end
 
@@ -1141,13 +1164,13 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
         for _, ingredient in pairs(MW_Data.metal_data[metal].alloy_ore_recipe) do
           output_count = output_count + ingredient.amount
           if table.contains(MW_Data.MW_Metal, ingredient.name) then
-            table.insert(ingredient_list, {ingredient.name .. "-ore", ingredient.amount})
+            table.insert(ingredient_list, {type = "item", name = ingredient.name .. "-ore", amount = ingredient.amount})
             if ingredient.amount > icon_badge_metal_most then
               icon_badge_metal = ingredient.name
               icon_badge_metal_most = ingredient.amount
             end
           else
-            table.insert(ingredient_list, {ingredient.name, ingredient.amount}) -- This is going to break when the 'name' field in MW_Data.metal_data[metal].alloy_plate_recipe doesn't match with an item.
+            table.insert(ingredient_list, {type = "item", name = ingredient.name, amount = ingredient.amount}) -- This is going to break when the 'name' field in MW_Data.metal_data[metal].alloy_plate_recipe doesn't match with an item.
           end
         end
 
@@ -1239,7 +1262,11 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
 
             icons = icons_data_recipe,
 
-            ingredients = {{type = "item", name = metal .. "-ore", MW_Data.stocks_recipe_data[stock].input, amount = 1}},
+            ingredients = {{
+              type = "item",
+              name = metal .. "-ore", MW_Data.stocks_recipe_data[stock].input, 
+              amount = 1
+            }},
             crafting_machine_tint = {
               primary = MW_Data.metal_data[metal].tint_metal,
               secondary = MW_Data.metal_data[metal].tint_oxidation
@@ -1308,7 +1335,11 @@ if GM_globals.mw_byproducts then
 
             icons = icons_data_recipe,
 
-            ingredients = {{name = metal .. "-" .. byproduct, amount = recipe_data.input}},
+            ingredients = {{
+              type = "item", 
+              name = metal .. "-" .. byproduct,
+              amount = recipe_data.input
+            }},
             result = metal .. "-".. recipe_data.output_shape .. "-stock",
             result_count = recipe_data.output,
 
@@ -1484,9 +1515,9 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the treated [M
         -- Plating-specific properties for recipe
         if MW_Data.metal_data[metal].treatment_type == MW_Data.MW_Treatment_Type.PLATING then
           recipe_ingredients = {
-            {name = MW_Data.metal_data[metal].core_metal .. "-" .. stock .. "-stock",      amount = 1},
-            {name = MW_Data.metal_data[metal].plate_metal .. "-plating-billet-stock", amount = MW_Data.metal_data[metal].plating_ratio_multiplier * MW_Data.stocks_recipe_data[stock].plating_billet_count},
-            {name = MW_Data.metal_data[metal].plating_fluid, type = "fluid", amount = MW_Data.stocks_recipe_data[stock].plating_fluid_count}
+            {type = "item", name = MW_Data.metal_data[metal].core_metal .. "-" .. stock .. "-stock", amount = 1},
+            {type = "item", name = MW_Data.metal_data[metal].plate_metal .. "-plating-billet-stock", amount = MW_Data.metal_data[metal].plating_ratio_multiplier * MW_Data.stocks_recipe_data[stock].plating_billet_count},
+            {type = "fluid", name = MW_Data.metal_data[metal].plating_fluid, amount = MW_Data.stocks_recipe_data[stock].plating_fluid_count}
           }
           recipe_gm_recipe_data = {type = "stocks", metal = metal, stock = stock, special = "plating", core_metal = MW_Data.metal_data[metal].core_metal, plate_metal = MW_Data.metal_data[metal].plate_metal}
           recipe_category = "gm-electroplating"
@@ -1556,7 +1587,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the treated [M
           result_metal = MW_Data.metal_data[metal].source_metal
           main_remelting_icon = "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. MW_Data.metal_data[metal].source_metal .. "/" .. MW_Data.metal_data[metal].source_metal .. "-plate-stock-0000.png"
           recipe_remelting_ingredients = {
-            {name = item_prototype[1].name, amount = 1}
+            {type = "item", name = item_prototype[1].name, amount = 1}
           }
           recipe_remelting_result = MW_Data.metal_data[metal].source_metal .. "-plate-stock"
           recipe_remelting_result_count = 1
@@ -1641,16 +1672,35 @@ end
 -- Machined Parts
 -- ==============
 
-data:extend({ -- Make Metal Assaying recipe category
+data:extend({ -- Make Metal Assaying recipe category and player crafting category
   {
     type = "recipe-category",
-    name = "gm-metal-assaying"
+    name = "gm-metal-assayer"
   }
 })
+
+data:extend({
+  {
+    type = "recipe-category",
+    name = "gm-metal-assayer-player-crafting"
+  }
+})
+
 
 order_count = 0
 for property, parts in pairs(MW_Data.property_machined_part_pairs) do -- Make [Property] [Machined Part] Subgroups. Multi-property subgroups are declared below.
   if property ~= MW_Data.MW_Property.BASIC then
+    if GM_globals.dedicated_handcrafting_downgrade_recipe_category then
+      data:extend({
+        {
+          type = "item-subgroup",
+          name = "gm-machined-parts-dedicated-handcrafting-downgrade-" .. property,
+          group = "gm-dedicated-handcrafting-downgrade-recipe-category",
+          order = "c" .. "-gm-intermediates-machined-parts" .. MW_Data.property_data[property].order,
+          localised_name = {"gm.machined-parts-subgroup-property", {"gm." .. property}}
+        }
+      })
+    end
     data:extend({
       {
         type = "item-subgroup",
@@ -1660,9 +1710,21 @@ for property, parts in pairs(MW_Data.property_machined_part_pairs) do -- Make [P
         localised_name = {"gm.machined-parts-subgroup-property", {"gm." .. property}}
       }
     })
+  
     order_count = order_count + 1
   else
     for part, _ in pairs(parts) do
+      if GM_globals.dedicated_handcrafting_downgrade_recipe_category then
+        data:extend({
+          {
+            type = "item-subgroup",
+            name = "gm-machined-parts-dedicated-handcrafting-downgrade-basic-" .. part,
+            group = "gm-dedicated-handcrafting-downgrade-recipe-category",
+            order = "b" .. "-gm-intermediates-machined-parts" .. MW_Data.machined_part_data[part].order,
+            localised_name = {"gm.machined-parts-subgroup-property", {"", {"gm.basic"}, "-", {"gm." .. part}}}
+          }
+        })
+      end
       data:extend({
         {
           type = "item-subgroup",
@@ -1672,6 +1734,7 @@ for property, parts in pairs(MW_Data.property_machined_part_pairs) do -- Make [P
           localised_name = {"gm.machined-parts-subgroup-property", {"", {"gm.basic"}, "-", {"gm." .. part}}}
         }
       })
+      
     end
   end
 end
@@ -1869,10 +1932,11 @@ for property, parts in pairs(MW_Data.property_machined_part_pairs) do -- Make th
             
             icons = icons_data_recipe,
 
-            ingredients =
-            {
-              {metal .. "-" .. precursor .. "-stock", MW_Data.machined_parts_recipe_data[part].input}
-            },
+            ingredients = {{
+              type = "item",
+              name = metal .. "-" .. precursor .. "-stock", 
+              amount = MW_Data.machined_parts_recipe_data[part].input
+            }},
             results = recipe_results,
             main_product = recipe_main_product,
             
@@ -1910,6 +1974,17 @@ end
 
 order_count = 0
 for property_key, multi_properties in pairs(MW_Data.multi_property_with_key_pairs) do -- Make [Multi-Property] [Machined Part] Subgroups.
+  if GM_globals.dedicated_handcrafting_downgrade_recipe_category then
+    data:extend({
+      {
+        type = "item-subgroup",
+        name = "gm-machined-parts-dedicated-handcrafting-downgrade-" .. property_key,
+        group = "gm-dedicated-handcrafting-downgrade-recipe-category",
+        order = "d" .. "gm-intermediates-machined-parts" .. MW_Data.property_data[MW_Data.multi_property_with_key_pairs[property_key][1]].order .. MW_Data.property_data[MW_Data.multi_property_with_key_pairs[property_key][2]].order,
+        localised_name = {"gm.machined-parts-subgroup-property", {"gm." .. property_key}}
+      }
+    })
+  end
   data:extend({
     {
       type = "item-subgroup",
@@ -1924,7 +1999,7 @@ end
 
 for property_key, multi_properties in pairs(MW_Data.multi_property_with_key_pairs) do -- Make Multi-property machined part items and recipes.
   if MW_Data.multi_property_metal_pairs[property_key] then
-    --
+
     local combined_parts_list = {}
     for _, multi_property in pairs(multi_properties) do
       for part, _ in pairs(MW_Data.property_machined_part_pairs[multi_property]) do
@@ -2083,7 +2158,11 @@ for property_key, multi_properties in pairs(MW_Data.multi_property_with_key_pair
 
               icons = icons_data_recipe,
               
-              ingredients = {{metal .. "-" .. MW_Data.machined_parts_recipe_data[part].precursor .. "-stock", MW_Data.machined_parts_recipe_data[part].input}},
+              ingredients = {{
+                type = "item",
+                name = metal .. "-" .. MW_Data.machined_parts_recipe_data[part].precursor .. "-stock", 
+                amount = MW_Data.machined_parts_recipe_data[part].input
+              }},
               results = recipe_results,
               main_product = recipe_main_product,
 
@@ -2157,6 +2236,11 @@ for metal, metal_data in pairs(MW_Data.metal_data) do -- Make "Basic" property d
           ib_data.ib_img_scale  = GM_globals.property_image_scale
           ib_data.ib_img_space  = GM_globals.property_badge_space
 
+          local sugroup_thing = "gm-machined-parts-basic-" .. part
+          if GM_globals.dedicated_handcrafting_downgrade_recipe_category then
+            sugroup_thing = "gm-machined-parts-dedicated-handcrafting-downgrade-basic-" .. part
+          end
+
           local recipe_prototype = {
             {
               type = "recipe",
@@ -2166,18 +2250,22 @@ for metal, metal_data in pairs(MW_Data.metal_data) do -- Make "Basic" property d
 
               icons = icons_data,
 
-              ingredients = {{property .. "-" .. part .. "-machined-part", 1}},
+              ingredients = {{
+                type = "item",
+                name = property .. "-" .. part .. "-machined-part", 
+                amount = 1
+              }},
               result = "basic-" .. part .. "-machined-part",
               result_count = 1,
 
               always_show_made_in = true,
-              hide_from_player_crafting = recipe_hide_from_player_crafting,
+              hide_from_player_crafting = false,-- recipe_hide_from_player_crafting,
 
               energy_required = 0.3,
 
               order = MW_Data.property_data[MW_Data.MW_Property.BASIC].order .. MW_Data.machined_part_data[part].order .. " z",
-              category = "gm-metal-assaying",
-              subgroup = "gm-machined-parts-basic-" .. part,
+              category = "gm-metal-assayer-player-crafting",
+              subgroup = sugroup_thing,
 
               localised_name = {"gm.metal-machined-part-downgrade-recipe", {"gm.basic"}, {"gm." .. part}},
 
@@ -2233,6 +2321,11 @@ for property, property_downgrade_list in pairs(MW_Data.property_downgrades) do -
       ib_data.ib_img_scale  = GM_globals.property_image_scale
       ib_data.ib_img_space  = GM_globals.property_badge_space
 
+      local sugroup_thing = "gm-machined-parts-" .. previous_property
+      if GM_globals.dedicated_handcrafting_downgrade_recipe_category then
+        sugroup_thing = "gm-machined-parts-dedicated-handcrafting-downgrade-" .. previous_property
+      end
+
       local recipe_prototype = {
         {
           type = "recipe",
@@ -2242,18 +2335,22 @@ for property, property_downgrade_list in pairs(MW_Data.property_downgrades) do -
 
           icons = icons_data,
 
-          ingredients = {{next_property .. "-" .. part .. "-machined-part", 1}},
+          ingredients = {{
+            type = "item",
+            name = next_property .. "-" .. part .. "-machined-part", 
+            amount = 1
+          }},
           result = previous_property .. "-" .. part .. "-machined-part",
           result_count = 1,
 
           always_show_made_in = true,
-          hide_from_player_crafting = recipe_hide_from_player_crafting,
+          hide_from_player_crafting = false, -- recipe_hide_from_player_crafting,
 
           energy_required = 0.3,
 
           order = MW_Data.property_data[previous_property].order .. MW_Data.machined_part_data[part].order .. " z",
-          category = "gm-metal-assaying",
-          subgroup = "gm-machined-parts-" .. previous_property,
+          category = "gm-metal-assayer-player-crafting",
+          subgroup = sugroup_thing,
 
           localised_name = {"gm.metal-machined-part-downgrade-recipe", {"gm." .. previous_property}, {"gm." .. part}},
 
@@ -2270,8 +2367,7 @@ for property, property_downgrade_list in pairs(MW_Data.property_downgrades) do -
   end
 end
 
-for property_key, multi_properties in pairs(MW_Data.multi_property_with_key_pairs) do -- Make Multi-property machined part downgrade recipes.
-
+for property_key, multi_properties in pairs(MW_Data.multi_property_with_key_pairs) do -- Make Multi-property to single property machined part downgrade recipes.
   for _, multi_property in pairs(multi_properties) do
     for part, _ in pairs(MW_Data.property_machined_part_pairs[multi_property]) do
       if MW_Data.property_machined_part_pairs[multi_property][part] then
@@ -2282,7 +2378,6 @@ for property_key, multi_properties in pairs(MW_Data.multi_property_with_key_pair
             icon = "__galdocs-manufacturing__/graphics/icons/intermediates/machined-parts/" .. multi_property .. "/" .. multi_property .. "-" .. part .. ".png",
             icon_size = 64
           },
-
         }
 
         Build_img_badge_icon(icons_data, 
@@ -2301,6 +2396,11 @@ for property_key, multi_properties in pairs(MW_Data.multi_property_with_key_pair
         ib_data.ib_img_scale = GM_globals.property_image_scale
         ib_data.ib_img_space = GM_globals.property_badge_space
 
+        local sugroup_thing = "gm-machined-parts-" .. multi_property
+        if GM_globals.dedicated_handcrafting_downgrade_recipe_category then
+          sugroup_thing = "gm-machined-parts-dedicated-handcrafting-downgrade-" .. multi_property
+        end
+
         local recipe_prototype = {
           {
             type = "recipe",
@@ -2310,19 +2410,23 @@ for property_key, multi_properties in pairs(MW_Data.multi_property_with_key_pair
 
             icons = icons_data,
 
-            ingredients = {{property_key .. "-" .. part .. "-machined-part", 1}},
+            ingredients = {{
+              type = "item",
+              name = property_key .. "-" .. part .. "-machined-part", 
+              amount = 1
+            }},
             result = multi_property .. "-" .. part .. "-machined-part",
             result_count = 1,
 
             always_show_made_in = true,
-            hide_from_player_crafting = recipe_hide_from_player_crafting,
+            hide_from_player_crafting = false, -- recipe_hide_from_player_crafting,
 
             energy_required = 0.3,
-            
+
             order = MW_Data.property_data[multi_property].order .. MW_Data.machined_part_data[part].order .. " z",
-            category = "gm-metal-assaying",
-            subgroup = "gm-machined-parts-" .. multi_property,
-            
+            category = "gm-metal-assayer-player-crafting",
+            subgroup = sugroup_thing,
+
             localised_name = {"gm.metal-machined-part-downgrade-recipe", {"gm." .. multi_property}, {"gm." .. part}},
 
             gm_recipe_data = {type = "machined-parts", start_compound_property = property_key, end_property = multi_property, part = part, special = "downgrade"},
@@ -2335,6 +2439,171 @@ for property_key, multi_properties in pairs(MW_Data.multi_property_with_key_pair
         table.insert(GM_global_mw_data.machined_part_recipes[multi_property .. "-" .. part .. "-machined-part"], {[recipe_prototype[1].name] = recipe_prototype[1]})
 
       end
+    end
+  end
+end
+
+local function check_if_multi_property_pair_exists(property1, property2) -- Helper Function for 2-multi-property to 2-multi-property machined part downgrade recipes
+  -- Order of the properties matters for 2 reasons: 1) filename structure is ordered, and 2) don't want both 'ductile-and-lightweight' AND 'lightweight-and-ductile' in principle
+  local pair_exists = false
+  for _, property_pair in pairs(MW_Data.multi_property_pairs) do
+    if property1 == property_pair[1] and property2 == property_pair[2] then pair_exists = true end
+  end
+  return pair_exists
+end
+
+local multi_to_multi_map = {}
+MW_Data.multi_to_multi_map = multi_to_multi_map
+for property_key, multi_properties in pairs(MW_Data.multi_property_with_key_pairs) do -- Make 2-multi-property to 2-multi-property machined part downgrade map
+  if #multi_properties == 2 then
+    local first_property = multi_properties[1]
+    local second_property = multi_properties[2]
+
+    local first_property_downgrade_chain
+    local second_property_downgrade_chain
+
+    for base_property, property_chain in pairs(MW_Data.property_downgrades) do -- Build all downgrade chains; they are reversed property downgrade table with base property
+      -- example: first_property_downgrade_chain = {'very-heavy-load-bearing', 'heavy-load-bearing', 'load-bearing'}
+      for index, test_property in pairs(property_chain) do
+        if test_property == first_property then 
+          first_property_downgrade_chain = {base_property}
+          if index > 1 then
+            for i = index, 1, -1 do
+              table.insert(first_property_downgrade_chain, 1, property_chain[i])
+            end
+          end
+        end
+        if test_property == second_property then
+          second_property_downgrade_chain = {base_property}
+          if index > 1 then
+            for i = index, 1, -1 do
+              table.insert(second_property_downgrade_chain, 1, property_chain[i])
+            end
+          end
+        end
+      end
+    end
+
+    if first_property_downgrade_chain and not second_property_downgrade_chain then -- First property has a downgrade chain
+      local most_recent_property = first_property
+      for index, chain_property in pairs(first_property_downgrade_chain) do
+        if check_if_multi_property_pair_exists(chain_property, second_property) and 
+        not multi_to_multi_map[most_recent_property .. "-and-" .. second_property .. "-to-" .. chain_property .. "-and-" .. second_property] then
+          multi_to_multi_map[most_recent_property .. "-and-" .. second_property .. "-to-" .. chain_property .. "-and-" .. second_property] = {most_recent_property .. "-and-" .. second_property, chain_property .. "-and-" .. second_property}
+          most_recent_property = chain_property
+        end
+        if check_if_multi_property_pair_exists(chain_property, second_property) and 
+        not multi_to_multi_map[second_property .. "-and-" .. most_recent_property .. "-to-" .. second_property .. "-and-" .. chain_property] then
+          multi_to_multi_map[second_property .. "-and-" .. most_recent_property .. "-to-" .. second_property .. "-and-" .. chain_property] = {second_property .. "-and-" .. most_recent_property, second_property .. "-and-" .. chain_property}
+          most_recent_property = chain_property
+        end
+      end
+    end
+    if not first_property_downgrade_chain and second_property_downgrade_chain then -- Second property has a downgrade chain
+      local most_recent_property = second_property
+      for index, chain_property in pairs(second_property_downgrade_chain) do
+        if check_if_multi_property_pair_exists(chain_property, first_property) and not multi_to_multi_map[most_recent_property .. "-and-" .. first_property .. "-to-" .. chain_property .. "-and-" .. first_property] then
+          multi_to_multi_map[most_recent_property .. "-and-" .. first_property .. "-to-" .. chain_property .. "-and-" .. first_property] = {most_recent_property .. "-and-" .. first_property, chain_property .. "-and-" .. first_property}
+          most_recent_property = chain_property -- is this a reference or an actual copy?
+        end
+        if check_if_multi_property_pair_exists(first_property, chain_property) and not multi_to_multi_map[first_property .. "-and-" .. most_recent_property .. "-to-" .. first_property .. "-and-" .. chain_property] then
+          multi_to_multi_map[first_property .. "-and-" .. most_recent_property .. "-to-" .. first_property .. "-and-" .. chain_property] = {first_property .. "-and-" .. most_recent_property, first_property .. "-and-" .. chain_property}
+          most_recent_property = chain_property -- is this a reference or an actual copy?
+        end
+
+      end
+    end
+    if first_property_downgrade_chain and second_property_downgrade_chain then -- Both properties have a downgrade chains, get rekt me
+      -- FIXME - why do i do this to myself
+    end
+  end
+end
+
+if multi_to_multi_map then -- -- Make 2-multi-property to 2-multi-property machined part downgrade recipes
+  for multi_to_multi_map_key, multi_to_multi_map_property_keys in pairs(multi_to_multi_map) do
+
+    -- Convenience Variables
+    local from_key = multi_to_multi_map_property_keys[1]
+    local to_key = multi_to_multi_map_property_keys[2]
+    local from_first_property = MW_Data.multi_property_with_key_pairs[from_key][1]
+    local from_second_property = MW_Data.multi_property_with_key_pairs[from_key][2]
+    local to_first_property = MW_Data.multi_property_with_key_pairs[to_key][1]
+    local to_second_property = MW_Data.multi_property_with_key_pairs[to_key][2]
+
+    local parts_that_work = {}
+    for _, part in pairs(MW_Data.MW_Machined_Part) do  -- Come up with a list of parts to make recipes for
+      if MW_Data.property_machined_part_pairs[from_first_property][part] or MW_Data.property_machined_part_pairs[from_second_property][part] then
+        parts_that_work[part] = true
+      end
+    end
+
+    for part, _ in pairs(parts_that_work) do
+      -- Make icon
+      local icons_data = {
+        {
+          icon = "__galdocs-manufacturing__/graphics/icons/intermediates/machined-parts/" .. to_key .. "/" .. to_key .. "-" .. part .. ".png",
+          icon_size = 64
+        },
+      }
+
+      Build_img_badge_icon(icons_data, 
+      {"__galdocs-manufacturing__/graphics/icons/intermediates/machined-parts/sdf/sdf-".. part .. ".png",
+      "__galdocs-manufacturing__/graphics/icons/intermediates/machined-parts/" .. from_key .. "/" .. from_key .. "-".. part .. ".png"},
+      64, GM_globals.stock_badge_scale, 0, GM_globals.remelting_badge_corner, 0)
+
+      local recipe_hide_from_player_crafting = true
+      if (GM_globals.show_non_hand_craftables == "all" or GM_globals.show_non_hand_craftables == "all except remelting") then
+        recipe_hide_from_player_crafting = false
+      end
+
+      local ib_data = {} -- Prepare badge data for the items
+      ib_data.ib_img_paths = {"__galdocs-manufacturing__/graphics/badges/" .. to_key .. ".png"}
+      ib_data.ib_img_size  = GM_globals.badge_image_size
+      ib_data.ib_img_scale = GM_globals.property_image_scale
+      ib_data.ib_img_space = GM_globals.property_badge_space
+
+      local sugroup_thing = "gm-machined-parts-" .. to_key
+      if GM_globals.dedicated_handcrafting_downgrade_recipe_category then
+        sugroup_thing = "gm-machined-parts-dedicated-handcrafting-downgrade-" .. to_key
+      end
+
+      local recipe_prototype = {
+        {
+          type = "recipe",
+          name = from_key .. "-" .. part .. "-downgrade-to-" .. to_key .. "-" .. part,
+
+          enabled = false,
+
+          icons = icons_data,
+
+          ingredients = {{
+            type = "item",
+            name = from_key .. "-" .. part .. "-machined-part", 
+            amount = 1
+          }},
+          result = to_key .. "-" .. part .. "-machined-part",
+          result_count = 1,
+
+          always_show_made_in = true,
+          hide_from_player_crafting = false, -- recipe_hide_from_player_crafting,
+
+          energy_required = 0.3,
+          
+          order = MW_Data.property_data[to_first_property].order .. MW_Data.property_data[to_second_property].order .. MW_Data.machined_part_data[part].order .. " z",
+          category = "gm-metal-assayer-player-crafting",
+          subgroup = sugroup_thing,
+          
+          -- localised_name = {"gm.metal-machined-part-downgrade-recipe", {"gm." .. to_key}, {"gm." .. part}},
+
+          gm_recipe_data = {type = "machined-parts", start_compound_property = from_key, end_property = to_key, part = part, special = "downgrade"},
+        }
+      }
+      
+      data:extend(recipe_prototype)
+      GM_globals.GM_Badge_list["recipe"][from_key .. "-" .. part .. "-downgrade-to-" .. to_key .. "-" .. part] = ib_data
+      -- Build_badge(data.raw.recipe[from_key .. "-" .. part .. "-downgrade-to-" .. to_key .. "-" .. part], ib_data)
+      if not GM_global_mw_data.machined_part_recipes[to_key .. "-" .. part .. "-machined-part"] then GM_global_mw_data.machined_part_recipes[to_key .. "-" .. part .. "-machined-part"] = {} end
+      table.insert(GM_global_mw_data.machined_part_recipes[to_key .. "-" .. part .. "-machined-part"], {[recipe_prototype[1].name] = recipe_prototype[1]})
     end
   end
 end
@@ -2633,7 +2902,7 @@ for _, tier in pairs(MW_Data.MW_Minisembler_Tier) do -- make the minisembler ent
 
     if MW_Data.minisembler_data[minisembler].stage == MW_Data.MW_Minisembler_Stage.ASSAYING then
 
-      crafting_categories = {"gm-metal-assaying"}
+      crafting_categories = {"gm-metal-assayer", "gm-metal-assayer-player-crafting"}
       
       -- Entirely disable the tootips according to the user's settings
       if GM_globals.show_detailed_tooltips then

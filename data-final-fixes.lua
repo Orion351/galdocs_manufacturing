@@ -134,6 +134,15 @@ function Re_recipe(intermediates_to_replace, pull_table_name, finished_part_name
   local finished_part_list = machined_part_list_to_log
   for name, ingredients in pairs(intermediates_to_add_table) do
 
+    -- sanitize ingredients
+    for _, ingredient in pairs(ingredients) do
+      local sanitized_ingredient = table.deepcopy(ingredient)
+      if ingredient.type then sanitized_ingredient.type = ingredient.type else sanitized_ingredient.type = "item" end
+      if ingredient.name then sanitized_ingredient.name = ingredient.name else sanitized_ingredient.name = ingredient[1] end
+      if ingredient.amount then sanitized_ingredient.amount = ingredient.amount else sanitized_ingredient.amount = ingredient[2] end
+      ingredient = sanitized_ingredient
+    end
+
     -- copy data out of "nomral"
     current_recipe = data.raw.recipe[name]
     if current_recipe.normal ~= nil then

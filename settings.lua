@@ -13,45 +13,51 @@ data:extend({
   --   default_value = "average",
   --   allowed_values = {"tiny", "small", "average", "big", "why"}
   -- },
-  { -- Advanced mode setting
+  { -- Challenge Mode: Advanced mode setting
     type = "bool-setting",
     name = "gm-advanced-mode",
     setting_type = "startup",
     default_value = true
   },
-  { -- Display non-hand-craftable recipes in player crafting menu
+  { -- QoL (visual): Display non-hand-craftable recipes in player crafting menu
     type = "string-setting",
     name = "gm-show-non-hand-craftable",
     setting_type = "startup",
     default_value = "starter",
     allowed_values = {"none", "starter", "all except remelting", "all"}
   },
-  { -- Display detailed tooltips
+  { -- QoL (visual): Display detailed tooltips
     type = "bool-setting",
     name = "gm-show-detailed-tooltips",
     setting_type = "startup",
     default_value = true
   },
-  { -- Ore sPaRkLe
+  { -- QoL (visual): Ore sPaRkLe
     type = "bool-setting",
     name = "gm-ore-sPaRkLe",
     setting_type = "startup",
     default_value = true
   },
-  {
+  { -- QoL (gameplay): Extra Inventory space (rows) 
     type = "int-setting",
     name = "gm-extra-inventory-rows",
     setting_type = "startup",
     default_value = 3,
     allowed_values = {0, 1, 2, 3, 4, 5, 6}
   },
-  {
+  { -- QoL (visual): Extra Crafting Columns
     type = "bool-setting",
     name = "gm-extra-crafting-columns",
     setting_type = "startup",
     default_value = true
   },
-  {
+  { -- QoL (visual): Dedicated Handcrafting Downgrade Recipe Category
+  type = "bool-setting",
+  name = "gm-dedicated-handcrafting-downgrade-recipe-category",
+  setting_type = "startup",
+  default_value = false
+  },
+  { -- Challenge Mode: Byproducts
     type = "bool-setting",
     name = "gm-mw-byproducts",
     setting_type = "startup",
