@@ -215,4 +215,9 @@ if GM_globals.extra_crafting_columns and data.raw["utility-constants"].default.s
   data.raw["utility-constants"].default.select_slot_row_count = GM_globals.num_extra_columns
 end
 
+if GM_globals.extra_crafting_columns and GM_globals.dedicated_handcrafting_downgrade_recipe_category and GM_globals.show_non_hand_craftables == "all"
+  and data.raw["utility-constants"].default.select_group_row_count <= 6 then
+  data.raw["utility-constants"].default.select_group_row_count = 7
+end
+
 local a = 1

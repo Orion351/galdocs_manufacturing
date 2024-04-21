@@ -3,6 +3,7 @@ Version: 0.2.09
 Date: 2024-04-20
   Changes:
     - Culled unused downgrade recipes properly
+    - Fixed crafting tab alignment when all three GM tabs were activated in settings
 ---------------------------------------------------------------------------------------------------
 Version: 0.2.08
 Date: 2024-04-20
