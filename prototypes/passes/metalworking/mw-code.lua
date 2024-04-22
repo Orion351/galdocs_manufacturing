@@ -596,6 +596,15 @@ end
 -- Stocks
 -- ======
 
+-- Screwing around with auto-queueing in hand crafting
+local stock_crafting_allow_as_intermediate = true
+local stock_crafting_allow_decomposition = true
+local stock_crafting_allow_intermediates = true
+
+local mp_crafting_allow_as_intermediate = true
+local mp_crafting_allow_decomposition = true
+local mp_crafting_allow_intermediates = true
+
 order_count = 0
 for _, metal in pairs(MW_Data.MW_Metal) do -- Make [Metal] Stock Subgroups
   data:extend({
@@ -850,6 +859,9 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
 
             always_show_made_in = true,
             hide_from_player_crafting = recipe_hide_from_player_crafting,
+            allow_as_intermediate = stock_crafting_allow_as_intermediate,
+            allow_decomposition = stock_crafting_allow_decomposition,
+            allow_intermediates = stock_crafting_allow_intermediates,
 
             energy_required = 3.2,
 
@@ -906,6 +918,8 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
 
             always_show_made_in = true,
             hide_from_player_crafting = recipe_hide_from_player_crafting,
+            allow_as_intermediate = false,
+            allow_decomposition = false,
 
             energy_required = 3.2,
 
@@ -980,6 +994,9 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
 
             always_show_made_in = true,
             hide_from_player_crafting = recipe_hide_from_player_crafting,
+            allow_as_intermediate = stock_crafting_allow_as_intermediate,
+            allow_decomposition = stock_crafting_allow_decomposition,
+            allow_intermediates = stock_crafting_allow_intermediates,
 
             energy_required = 0.3,
 
@@ -1044,6 +1061,8 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
 
             always_show_made_in = true,
             hide_from_player_crafting = recipe_hide_from_player_crafting,
+            allow_as_intermediate = false,
+            allow_decomposition = false,
 
             energy_required = 3.2,
 
@@ -1124,6 +1143,9 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
             },
 
             hide_from_player_crafting = false,
+            allow_as_intermediate = stock_crafting_allow_as_intermediate,
+            allow_decomposition = stock_crafting_allow_decomposition,
+            allow_intermediates = stock_crafting_allow_intermediates,
 
             energy_required = 3.2 * output_count,
 
@@ -1202,6 +1224,9 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
             },
 
             hide_from_player_crafting = false,
+            allow_as_intermediate = stock_crafting_allow_as_intermediate,
+            allow_decomposition = stock_crafting_allow_decomposition,
+            allow_intermediates = stock_crafting_allow_intermediates,
 
             energy_required = 3.2 * output_count,
 
@@ -1266,6 +1291,9 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
             result_count = MW_Data.stocks_recipe_data[stock].output,
             
             hide_from_player_crafting = false,
+            allow_as_intermediate = stock_crafting_allow_as_intermediate,
+            allow_decomposition = stock_crafting_allow_decomposition,
+            allow_intermediates = stock_crafting_allow_intermediates,
 
             energy_required = 3.2,
             
@@ -1341,6 +1369,8 @@ if GM_globals.mw_byproducts then
 
             always_show_made_in = true,
             hide_from_player_crafting = recipe_hide_from_player_crafting,
+            allow_as_intermediate = false,
+            allow_decomposition = false,
 
             energy_required = 3.2,
 
@@ -1541,7 +1571,10 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the treated [M
             
             always_show_made_in = true,
             hide_from_player_crafting = hide_from_player_crafting,
-            
+            allow_as_intermediate = stock_crafting_allow_as_intermediate,
+            allow_decomposition = stock_crafting_allow_decomposition,
+            allow_intermediates = stock_crafting_allow_intermediates,
+
             energy_required = 0.3,
 
             order = MW_Data.metal_data[metal].order .. MW_Data.stock_data[stock].order,
@@ -1623,6 +1656,8 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the treated [M
 
             always_show_made_in = true,
             hide_from_player_crafting = hide_from_player_crafting,
+            allow_as_intermediate = false,
+            allow_decomposition = false,
 
             energy_required = 3.2,
 
@@ -1662,6 +1697,8 @@ end
 
 -- Machined Parts
 -- ==============
+
+
 
 data:extend({ -- Make Metal Assaying recipe category and player crafting category
   {
@@ -1926,10 +1963,7 @@ for property, parts in pairs(MW_Data.property_machined_part_pairs) do -- Make th
             }},
             results = recipe_results,
             main_product = recipe_main_product,
-            
-            -- result = property .. "-" .. part .. "-machined-part",
-            -- result_count = MW_Data.machined_parts_recipe_data[part].output,
-            
+
             crafting_machine_tint = { -- I don't know if anything will use this, but here it is just in case. You're welcome, future me.
             primary = MW_Data.metal_data[metal].tint_metal,
             secondary = MW_Data.metal_data[metal].tint_oxidation
@@ -1937,6 +1971,9 @@ for property, parts in pairs(MW_Data.property_machined_part_pairs) do -- Make th
             
             hide_from_player_crafting = hide_from_player_crafting,
             always_show_made_in = true,
+            allow_as_intermediate = mp_crafting_allow_as_intermediate,
+            allow_decomposition = mp_crafting_allow_decomposition,
+            allow_intermediates = mp_crafting_allow_intermediates,
 
             energy_required = 0.3,
 
@@ -2153,9 +2190,6 @@ for property_key, multi_properties in pairs(MW_Data.multi_property_with_key_pair
               results = recipe_results,
               main_product = recipe_main_product,
 
-              -- result = property_key .. "-" .. part .. "-machined-part",
-              -- result_count = MW_Data.machined_parts_recipe_data[part].output,
-
               crafting_machine_tint = 
               { -- I don't know if anything will use this, but here it is just in case. You're welcome, future me.
                 primary = MW_Data.metal_data[metal].tint_metal,
@@ -2164,7 +2198,10 @@ for property_key, multi_properties in pairs(MW_Data.multi_property_with_key_pair
 
               always_show_made_in = true,
               hide_from_player_crafting = recipe_hide_from_player_crafting,
-              
+              allow_as_intermediate = mp_crafting_allow_as_intermediate,
+              allow_decomposition = mp_crafting_allow_decomposition,
+              allow_intermediates = mp_crafting_allow_intermediates,
+
               energy_required = 0.3,
               
               order = MW_Data.property_data[MW_Data.multi_property_with_key_pairs[property_key][1]].order .. MW_Data.property_data[MW_Data.multi_property_with_key_pairs[property_key][2]].order .. MW_Data.machined_part_data[part].order,
@@ -2247,6 +2284,8 @@ for metal, metal_data in pairs(MW_Data.metal_data) do -- Make "Basic" property d
 
               always_show_made_in = true,
               hide_from_player_crafting = false,-- recipe_hide_from_player_crafting,
+              allow_as_intermediate = false,
+              allow_decomposition = false,
 
               energy_required = 0.3,
 
@@ -2334,6 +2373,8 @@ for property, property_downgrade_list in pairs(MW_Data.property_downgrades) do -
 
           always_show_made_in = true,
           hide_from_player_crafting = false, -- recipe_hide_from_player_crafting,
+          allow_as_intermediate = false,
+          allow_decomposition = false,
 
           energy_required = 0.3,
 
@@ -2411,6 +2452,8 @@ for property_key, multi_properties in pairs(MW_Data.multi_property_with_key_pair
 
             always_show_made_in = true,
             hide_from_player_crafting = false, -- recipe_hide_from_player_crafting,
+            allow_as_intermediate = false,
+            allow_decomposition = false,
 
             energy_required = 0.3,
 
@@ -2584,6 +2627,8 @@ if multi_to_multi_map then -- -- Make 2-multi-property to 2-multi-property machi
 
           always_show_made_in = true,
           hide_from_player_crafting = false, -- recipe_hide_from_player_crafting,
+          allow_as_intermediate = false,
+          allow_decomposition = false,
 
           energy_required = 0.3,
           

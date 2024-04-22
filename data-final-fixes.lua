@@ -209,15 +209,37 @@ end
 -- QoL Balance
 -- ***********
 
+-- Add extra inventory
 data.raw.character.character.inventory_size = data.raw.character.character.inventory_size + (10 * GM_globals.extra_inventory_rows)
 
+-- Add extra crafting column slots
 if GM_globals.extra_crafting_columns and data.raw["utility-constants"].default.select_slot_row_count == 10 then -- 10 is vanilla default
   data.raw["utility-constants"].default.select_slot_row_count = GM_globals.num_extra_columns
 end
 
-if GM_globals.extra_crafting_columns and GM_globals.dedicated_handcrafting_downgrade_recipe_category and GM_globals.show_non_hand_craftables == "all"
-  and data.raw["utility-constants"].default.select_group_row_count <= 6 then
+-- Notes about tabs and slots
+-- basically its all about the numbers lining up, the group buttons are wider than slots,
+-- 10 slots = 40 * 10 wide, + 8 +8 padding on each side = 416
+-- So then that 416 is divided between the groups, so 416 / 6 = 69.33, rounded up to 70
+-- 7 slots = 60 each, but they have a minimal width of 64, so you get that 28px extra gap
+-- if you go over the number of groups it switches to a slot layout, which had some style problems in 1.1 which are fixed in 2.0
+-- basically you got to find a nicer number where
+-- 16 + (N * 40) == Some integer division of Group row count
+-- With base game its easy, because
+-- 416 / 4 = 104
+-- 12 slots might be close enough
+-- it will be just a few pixels off
+
+-- Add extra crafting tab slots
+local num_gm_extra_tabs = 1
+if GM_globals.dedicated_handcrafting_downgrade_recipe_category then num_gm_extra_tabs = num_gm_extra_tabs + 1 end
+if GM_globals.show_non_hand_craftables == "all" then num_gm_extra_tabs = num_gm_extra_tabs + 1 end
+
+if num_gm_extra_tabs >= 2 and data.raw["utility-constants"].default.select_group_row_count <= 6 then
   data.raw["utility-constants"].default.select_group_row_count = 7
+
+  -- If there are 7 crafting tabs and they DIDN'T add a crafting column slot, there's a gap of half a column. Adding 1 row fixes it.
+  if data.raw["utility-constants"].default.select_slot_row_count == 10 then data.raw["utility-constants"].default.select_slot_row_count = 12 end
 end
 
 local a = 1
