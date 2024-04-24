@@ -4,3 +4,4 @@ dev/**
 # Ignore all python code and zip files
 *.py
 *.zip
+todays roadmap.txt
