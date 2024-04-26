@@ -7,6 +7,7 @@ return function(advanced)
       ["iron-gear-wheel"] = true,
       ["copper-cable"]    = true,
       ["iron-stick"]      = true,
+      ["pipe"]            = true,
     }
   else
     return { -- list of item-names
@@ -16,6 +17,7 @@ return function(advanced)
       ["iron-gear-wheel"] = true,
       ["copper-cable"]    = true,
       ["iron-stick"]      = true,
+      ["pipe"]            = true,
     }
   end
 end

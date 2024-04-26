@@ -38,9 +38,9 @@ data.raw.recipe["dirty-water-filtration-2"].icons = {
   }
 }
 
-
 data.raw.recipe["dirty-water-filtration-3"].enabled = false
 data.raw.recipe["dirty-water-filtration-3"].hidden = true
+
 
 
 -- Tehcnology
@@ -49,7 +49,6 @@ data.raw.recipe["dirty-water-filtration-3"].hidden = true
 local temp_tech
 local new_effects
 
--- Stuff
 -- Steel Processing
 temp_tech = data.raw.technology["steel-processing"]
 new_effects = {}
@@ -176,7 +175,13 @@ local crash_site_entities = {
 }
 
 local i_hate_copper_cable = {}
-for k, v in pairs(GM_global_mw_data.mw_intermediates_to_replace_overhauled) do
+local mw_intermediates_to_replace_overhauled = {}
+for _, overhaul in pairs(GM_global_mw_data.current_overhaul_data) do
+  if overhaul.title and overhaul.title == "Krastorio2" then
+    mw_intermediates_to_replace_overhauled = overhaul.mw_intermediates_to_replace_overhauled
+  end
+end
+for k, v in pairs(mw_intermediates_to_replace_overhauled) do
   if v ~= "electrically-conductive-wiring-machined-part" then 
     i_hate_copper_cable[k] = v
   end

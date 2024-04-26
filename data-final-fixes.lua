@@ -105,11 +105,11 @@ end
 
 -- Arguments:
 --   Table: intermediates to remove and replace, formed like: { ["item-to-remove"] = "item-that-replaces-it", ... }
---   String: pull_table (a .lua file that splits advanced and simple modes, formatted with the "csv to lua.py" file).
+--   String: rerecipe_table_name (a .lua file that splits advanced and simple modes, formatted with the "csv to lua.py" file).
 --   String: Name of '-finished-part' suffix; use "none" if none.
 --   String: Name of '-stock' suffix; use "none" if none.
 --   Table: List of finished parts (without sufficies) for writing to log() a .csv of the changed recipes for debugging purposes. Send an empty table {} to not log.
-function Re_recipe(intermediates_to_replace, pull_table_name, finished_part_name, stock_name, machined_part_list_to_log)
+function Re_recipe(intermediates_to_remove, rerecipe_table_name, finished_part_name, stock_name, machined_part_list_to_log)
   -- Make intermediates_to_add_table. Looks like 
   -- {
   --   ["item-name-1"] = {{"ingredient-1-name", ingredient-1-amount}, {"ingredient-2-name", ingredient-2-amount} ... {"ingredient-n-name", ingredient-n-amount} }, 
@@ -117,10 +117,10 @@ function Re_recipe(intermediates_to_replace, pull_table_name, finished_part_name
   --   ...
   --   ["item-name-m"] = {{"ingredient-1-name", ingredient-1-amount}, {"ingredient-2-name", ingredient-2-amount} ... {"ingredient-n-name", ingredient-n-amount} }, 
   -- }
-  local pull_table = require(pull_table_name)
-  local intermediates_to_add_table = pull_table(GM_globals.advanced) -- FIXME : Rename this
+  local rerecipe_table = require(rerecipe_table_name)
+  local intermediates_to_add_table = rerecipe_table(GM_globals.advanced)
 
-  -- Append "-machined-part" onto the intermediate names; this keeps it consistent with their creation but also easy to type above
+  -- Append finished_part_name ("-machined-part" for metalworking) onto the intermediate names; this keeps it consistent with their creation but also easy to type above
   for name, ingredients_to_add in pairs(intermediates_to_add_table) do
     for _, ingredient_pair in pairs(ingredients_to_add) do
       ingredient_pair[1] = ingredient_pair[1] .. finished_part_name
@@ -136,7 +136,7 @@ function Re_recipe(intermediates_to_replace, pull_table_name, finished_part_name
 
     -- sanitize ingredients
     for _, ingredient in pairs(ingredients) do
-      local sanitized_ingredient = table.deepcopy(ingredient)
+      local sanitized_ingredient = {}
       if ingredient.type then sanitized_ingredient.type = ingredient.type else sanitized_ingredient.type = "item" end
       if ingredient.name then sanitized_ingredient.name = ingredient.name else sanitized_ingredient.name = ingredient[1] end
       if ingredient.amount then sanitized_ingredient.amount = ingredient.amount else sanitized_ingredient.amount = ingredient[2] end
@@ -154,7 +154,7 @@ function Re_recipe(intermediates_to_replace, pull_table_name, finished_part_name
 
     -- fuss with ingredients
     current_ingredients = current_recipe.ingredients
-    current_ingredients = Remove_ingredients(current_ingredients, intermediates_to_replace)
+    current_ingredients = Remove_ingredients(current_ingredients, intermediates_to_remove)
     current_ingredients = Append_ingredients(current_ingredients, ingredients)
     used_recipe_list = Keep_track_of_used_ingredients(used_recipe_list, ingredients)
     data.raw.recipe[name].ingredients = current_ingredients

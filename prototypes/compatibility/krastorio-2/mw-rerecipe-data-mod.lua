@@ -166,7 +166,7 @@ return function(advanced)
     end
 
     -- kr-rebalance-fuels
-    if not krastorio.general.getSafeSettingValue("kr-rebalance-fuels") then
+    if krastorio.general.getSafeSettingValue("kr-rebalance-fuels") then
       re_recipe_table = table.group_key_assign(re_recipe_table, {
         ["kr-nuclear-locomotive"]                           = {{"very-heavy-load-bearing-girdering", 10}, {"ductile-gearing", 10}, {"corrosion-resistant-and-very-high-tensile-piping", 10}, {"thermally-stable-shafting", 2}, {"ductile-and-electrically-conductive-wiring", 30}, {"radiation-resistant-and-high-tensile-shielding", 6}, {"very-high-tensile-rivets", 20}, },
       })

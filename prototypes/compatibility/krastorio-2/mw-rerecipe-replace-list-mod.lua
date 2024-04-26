@@ -17,9 +17,9 @@ return function(advanced)
       ["imersium-beam"]       = "imersium-grade-load-bearing-girdering-machined-part",
 
       ["iron-stick"]          = "basic-framing-machined-part",
-      
+
       ["copper-cable"]        = "electrically-conductive-wiring-machined-part",
-      
+
       ["pipe"]                = "basic-fine-piping-machined-part",
       ["steel-pipe"]          = "corrosion-resistant-fine-piping-machined-part",
     }
