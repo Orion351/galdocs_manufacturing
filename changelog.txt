@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.2.11
+Date: 2024-04-29
+  Changes:
+    - Added Nickel Wire
+    - Added Untreatment recipes: Annealed Copper to Copper and Galvanized Steel to Steel
+    - Fix Icon Badges for remelting recipes
+---------------------------------------------------------------------------------------------------
 Version: 0.2.10
 Date: 2024-04-22
   Changes:

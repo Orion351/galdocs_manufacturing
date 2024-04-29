@@ -99,6 +99,11 @@ for metal, metal_data in pairs(MW_Data.metal_data) do -- Add Stocks and Machined
         table.insert(stock_technology_effects, {type = "unlock-recipe", recipe = metal .. "-" .. stock .. "-remelting-stock"})
       end
     end
+    if metal_data.type == MW_Data.MW_Metal_Type.TREATMENT then -- Add untreatment recipes
+      for stock, _ in pairs(MW_Data.metal_stocks_pairs[metal]) do
+        table.insert(stock_technology_effects, {type = "unlock-recipe", recipe = metal .. "-" .. stock .. "-stock-untreatment"})
+      end
+    end
   end
 
   if metal_data.tech_machined_part ~= "starter" then -- Add single property Machined Parts into their appropriate technologies
