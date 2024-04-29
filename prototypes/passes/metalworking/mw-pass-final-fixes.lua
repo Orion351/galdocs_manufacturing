@@ -103,9 +103,8 @@ end
 
 -- Educated Guess Replace
 -- **********************
--- Find all the science packs
 local science_packs_items = {}
-for _, tech in pairs(data.raw.technology) do
+for _, tech in pairs(data.raw.technology) do -- Find all the science pack items
   if tech.unit and tech.unit.ingredients and type(tech.unit.ingredients) == "table" and #tech.unit.ingredients > 0 then
     for _, ingredient in pairs(tech.unit.ingredients) do
       local name = ingredient.name or ingredient[1]
@@ -115,21 +114,113 @@ for _, tech in pairs(data.raw.technology) do
 end
 
 local science_pack_recipes = {}
-for _, recipe in pairs(data.raw.recipe) do
-  local main_product = recipe.main_product or recipe.result
-  if science_packs_items[main_product] then
-    science_pack_recipes[main_product] = recipe.name
-  else
-    if recipe.results and #recipe.results > 0 then
-      for _, other_result in pairs(recipe.results) do
-        if other_result.type == "item" and science_packs_items[other_result.name] then
-          science_pack_recipes[other_result] = recipe.name
+for _, recipe in pairs(data.raw.recipe) do -- Find all science pack recipes
+  local products = recipe.results or {recipe.result}
+  for _, product in pairs(products) do
+    if science_packs_items[product] then
+      if not science_pack_recipes[product] then science_pack_recipes[product] = {} end
+      table.insert(science_pack_recipes[product], recipe.name)
+    end
+  end
+end
+
+
+local im_a_tool = {"tool", "armor", "repair-tool"} -- Find all science pack rocket products
+for _, really_im_a_tool in pairs(im_a_tool) do
+  for _, item in pairs(data.raw[really_im_a_tool]) do
+    if item.rocket_launch_product or item.rocket_launch_products then
+      if science_packs_items[item.name] then
+        if not science_pack_recipes[item.name] then science_pack_recipes[item.name] = {} end
+        table.insert(science_pack_recipes[item.name], "rocket-launch-product")
+      end
+    end
+  end
+end
+
+local function recipe_check(check_recipe)
+  local item_name = "fail"
+  for item, recipes in pairs(science_pack_recipes) do
+    for _, recipe in pairs(recipes) do
+      if check_recipe == recipe then
+        item_name = item
+      end
+    end
+  end
+  return item_name
+end
+
+local tech_map = {} -- Build dependency graph for science packs
+for _, tech in pairs(data.raw.technology) do
+  if tech.effects and type(tech.effects) == "table" and #tech.effects > 0 then
+    for _, effect in pairs(tech.effects) do
+      if effect.type == "unlock-recipe" then
+        local check_item = recipe_check(effect.recipe)
+        if check_item ~= "fail" then -- Check to see if a science-pack recipe is unlocked by the tech
+          local prerequisites = {}
+          local unit = tech.unit or tech.normal.unit or tech.expensive.unit
+          -- FIXME : What if normal.unit.ingredients and expensive.unit.ingredients differ in the items? waaah
+          if unit.ingredients and type(unit.ingredients) == "table" and #unit.ingredients > 0 then
+            for _, ingredient in pairs(unit.ingredients) do
+              local name = ingredient.name or ingredient[1]
+              table.insert(prerequisites, name)
+            end
+          end
+          tech_map[check_item] = {
+            ["item-name"] = check_item,
+            ["recipe-names"] = science_pack_recipes[check_item],
+            ["technology-name"] = tech.name,
+          }
+          if #prerequisites == 0 then 
+            tech_map[check_item]["prerequisites"] = "none"
+          else
+            tech_map[check_item]["prerequisites"] = prerequisites
+          end
         end
       end
     end
   end
 end
 
+-- Get starter stuff
+for name, recipes in pairs(science_pack_recipes) do
+  for _, recipe in pairs(recipes) do
+    if not tech_map[name] then 
+      tech_map[name] = {
+        ["item-name"] = name,
+        ["recipe-name"] = recipes,
+        ["technology-name"] = "starter",
+        ["prerequisites"] = "none",
+      }
+    end
+  end
+end
+
+local rekit_silo = table.deepcopy(data.raw["rocket-silo"]["rocket-silo"])
+table.insert(rekit_silo.crafting_categories, "crafting")
+rekit_silo.name = "rekit-silo"
+data:extend({rekit_silo})
+
+--[[
+-- Here be curse knowledge. Be careful. There are some things that you cannot un-know. You have been warned. :]
+local test_item = {
+  {
+    type = "repair-tool",
+    name = "get_rekt",
+    stack_size = 10,
+    icon = "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/copper/copper-square-stock-0000.png",
+    icon_size = 64,
+    icon_mipmaps = 1,
+    durability = 1,
+    speed = 1
+  }
+}
+data:extend(test_item)
+table.insert(data.raw.lab["lab"].inputs, test_item[1].name)
+table.insert(data.raw.technology["automation"].unit.ingredients, {type = "item", name = test_item[1].name, amount = 1})
+--]]
+
+
+--[[
 -- Build dependency graph for science packs
 local tech_map = {}
 for _, tech in pairs(data.raw.technology) do
@@ -145,15 +236,15 @@ for _, tech in pairs(data.raw.technology) do
               table.insert(prerequisites, name)
             end
           end
-          tech_map[science_pack_recipes[effect.recipe]] = {
+          tech_map[science_pack_recipes[effect.recipe] ] = {
             ["item-name"] = science_pack_recipes[effect.recipe],
             ["recipe-name"] = effect.recipe,
             ["technology-name"] = tech.name,
           }
           if #prerequisites == 0 then 
-            tech_map[science_pack_recipes[effect.recipe]]["prerequisites"] = "none"
+            tech_map[science_pack_recipes[effect.recipe] ]["prerequisites"] = "none"
           else
-            tech_map[science_pack_recipes[effect.recipe]]["prerequisites"] = prerequisites
+            tech_map[science_pack_recipes[effect.recipe] ]["prerequisites"] = prerequisites
           end
         end
       end
@@ -172,7 +263,7 @@ for name, recipe in pairs(science_pack_recipes) do
   end
 end
 
-
+--]]
 
 
 

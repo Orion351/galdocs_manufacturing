@@ -51,12 +51,13 @@ GM_globals.we_be_testing = mods["galdocs-testing"] and GM_globals.testing_activa
 
 -- This is going to be a giant, awful brick of if/thens whose structure will be dictated by how mods depend on one another, a thing over which I have no control
 
-local current_overhaul_data = {}
+local current_overhaul_data = {overhaul_modpack_data["Vanilla"]}
 GM_global_mw_data.re_recipe_vanilla = true
 if mods["Krastorio2"] then
-  table.insert(current_overhaul_data, 1, overhaul_modpack_data["Vanilla"])
   table.insert(current_overhaul_data, #current_overhaul_data + 1, overhaul_modpack_data["Krastorio2"])
 end
+
+
 
 -- Order Supplementary Overhauls
 -- *****************************
