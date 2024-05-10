@@ -370,8 +370,6 @@ data.raw.resource["copper-ore"].effect_darkness_multiplier = 0
 data.raw.resource["copper-ore"].min_effect_alpha = 0
 data.raw.resource["copper-ore"].max_effect_alpha = GM_globals.show_ore_sPaRkLe
 
-
-
 -- Metals
 -- ======
 

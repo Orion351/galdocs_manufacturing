@@ -77,6 +77,7 @@ if GM_global_mw_data.current_overhaul_data and type(GM_global_mw_data.current_ov
     end
   end
 end
+
 -- Technology Processing
 GM_global_mw_data.MW_Data = require("prototypes.passes.metalworking.mw-technology-processing")
 if GM_global_mw_data.current_overhaul_data and type(GM_global_mw_data.current_overhaul_data) == "table" and #GM_global_mw_data.current_overhaul_data > 0 then

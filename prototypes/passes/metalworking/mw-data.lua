@@ -1106,10 +1106,10 @@ if advanced then
     [MW_Metal.ANNEALED_COPPER]  = {untreatment_minisembler = "smelter",              untreatment_stocks = {["all"] = true}},
   })
 else
-MW_Data.metal_data = table.merge_subtables(MW_Data.metal_data, { -- Untreatment Metal Data
-  [MW_Metal.GALVANIZED_STEEL] = {untreatment_minisembler = MW_Minisembler.MILL, untreatment_stocks = {["all"] = true}},
-  [MW_Metal.ANNEALED_COPPER]  = {untreatment_minisembler = "smelter",           untreatment_stocks = {["all"] = true}},
-})
+  MW_Data.metal_data = table.merge_subtables(MW_Data.metal_data, { -- Untreatment Metal Data
+    [MW_Metal.GALVANIZED_STEEL] = {untreatment_minisembler = MW_Minisembler.MILL, untreatment_stocks = {["all"] = true}},
+    [MW_Metal.ANNEALED_COPPER]  = {untreatment_minisembler = "smelter",           untreatment_stocks = {["all"] = true}},
+  })
 end
 
 MW_Data.metal_data = table.merge_subtables(MW_Data.metal_data, { -- Staple on the metal types
