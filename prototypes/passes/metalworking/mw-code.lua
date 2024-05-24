@@ -1765,8 +1765,6 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the treated [M
   end
 end
 
-
-
 -- Check each module to see if 'productivity' is in its 'effect' list; if so, then add the plate-stock recipes to it.
 for _, module in pairs(data.raw.module) do
   if module.effect["productivity"] then

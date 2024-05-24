@@ -1,0 +1,59 @@
+1) Not compatible with the Components Setting -- wait until it's out of beta
+2) Not sure about the tech overhaul -- ignore for now
+
+Metals and Alloys
+=================
+Pure Metals
+-----------
+Aluminum
+Chrome
+Cobalt
+Copper
+Gold
+Lead (replace GM)
+Maganese
+Nickel (replace GM)
+Silver
+Tin
+Titanium (replace GM)
+Tungsten
+Zinc (replace GM)
+
+Alloy Metals
+------------
+Steel (replace GM)
+Tungsten Carbide
+Copper Tungsten
+Nitinol
+Cobalt Steel
+Invar (replace GM)
+Gunmetal
+Brass (replace GM)
+Bronze
+Solder
+
+GM Only
+-------
+Annealed Copper
+Galvanized Steel
+
+Unused
+------
+Sodium
+Lithium
+Glass
+Silicon
+Concrete
+Rubber
+Resin
+Plastic
+
+Science Packs
+=============
+Steam SP       Iron, Copper, Lead, Tin
+Automation SP  Maganese, Steel, Bronze, Solder
+Transport SP   Aluminum, Silver, Zinc, Gunmetal, Invar, Nickel, Brass, Annealed Copper, Galvanized Steel
+Checmical SP   Chrome, Cobalt, Cobalt Steel, Gold, Titanium
+Logistic SP
+Production SP  Tungsten, Tungsten Carbide, Copper Tungsten, Nitinol
+Utility SP

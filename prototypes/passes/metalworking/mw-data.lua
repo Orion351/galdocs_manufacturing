@@ -345,7 +345,29 @@ else
   })
 end
 
-
+if advanced then -- Machined Part Size Sequences, from smallest to largest
+  MW_Data.machined_part_size_sequences = {
+    [MW_Machined_Part.PANELING]        = {MW_Machined_Part.LARGE_PANELING},
+    [MW_Machined_Part.FRAMING]         = {MW_Machined_Part.GIRDERING},
+    [MW_Machined_Part.FINE_GEARING]    = {MW_Machined_Part.GEARING},
+    [MW_Machined_Part.PIPING]          = {MW_Machined_Part.FINE_PIPING},
+    [MW_Machined_Part.SHIELDING]       = {},
+    [MW_Machined_Part.WIRING]          = {},
+    [MW_Machined_Part.SHAFTING]        = {},
+    [MW_Machined_Part.BOLTS]           = {MW_Machined_Part.RIVETS},
+  }
+else
+  MW_Data.machined_part_size_sequences = {
+    [MW_Machined_Part.PANELING]        = {},
+    [MW_Machined_Part.FRAMING]         = {},
+    [MW_Machined_Part.GEARING]         = {},
+    [MW_Machined_Part.PIPING]          = {},
+    [MW_Machined_Part.SHIELDING]       = {},
+    [MW_Machined_Part.WIRING]          = {},
+    [MW_Machined_Part.SHAFTING]        = {},
+    [MW_Machined_Part.BOLTS]           = {},
+  }
+end
 
 -- Property Data
 -- *************
@@ -1002,6 +1024,141 @@ require("prototypes.passes.metalworking.mw-minisembler-rendering-parser")
 -- ****************************
 -- Settings Dependent Couplings
 -- ****************************
+
+-- Guesser Data
+-- ************
+
+-- Differentiators: 
+--   * Collision Size (determines size of machined parts, eg. Gearing vs. Fine Gearing)
+--   * Advancement (Determines if some extra complexity is needed, eg. Assembling Machines 1 don't need shielding, but Assembling Machines 3 need thermal shielding)
+--   * Fuel type (Determines if wiring is needed, eg. Stone Furnaces consume coal and don't need wiring, but Electric Furnaces consume electricity and do)
+--   * Are fluid boxes optional on some entities? Assemblers yes?
+
+MW_Data.guesser_entity_machined_part_pairs = {
+  -- Electric Energy
+  ["accumulator"]               = map{MW_Machined_Part.PANELING, MW_Machined_Part.FRAMING, MW_Machined_Part.WIRING, MW_Machined_Part.BOLTS}, -- 'accumulator'
+  ["solar-panel"]               = map{MW_Machined_Part.FRAMING, MW_Machined_Part.WIRING, MW_Machined_Part.BOLTS}, -- 'solar-panel'
+  ["electric-energy-interface"] = map{MW_Machined_Part.PANELING, MW_Machined_Part.FRAMING, MW_Machined_Part.WIRING, MW_Machined_Part.BOLTS}, -- 'electric-energy-interface'
+
+  -- Heat Energy
+  ["reactor"]                   = map{MW_Machined_Part.PANELING, MW_Machined_Part.FRAMING, MW_Machined_Part.GEARING, MW_Machined_Part.PIPING, MW_Machined_Part.WIRING, MW_Machined_Part.SHIELDING, MW_Machined_Part.BOLTS}, -- 'reactor'
+
+  -- Fluid Energy
+  ["boiler"]                    = map{MW_Machined_Part.PANELING, MW_Machined_Part.FRAMING, MW_Machined_Part.PIPING, MW_Machined_Part.BOLTS}, -- 'boiler'
+  ["generator"]                 = map{MW_Machined_Part.PANELING, MW_Machined_Part.FRAMING, MW_Machined_Part.GEARING, MW_Machined_Part.PIPING, MW_Machined_Part.WIRING, MW_Machined_Part.SHIELDING, MW_Machined_Part.BOLTS}, -- 'generator'
+
+  -- Burner Energy
+  ["burner-generator"]          = map{MW_Machined_Part.PANELING, MW_Machined_Part.FRAMING, MW_Machined_Part.GEARING, MW_Machined_Part.PIPING, MW_Machined_Part.WIRING, MW_Machined_Part.SHIELDING, MW_Machined_Part.BOLTS}, -- 'burner-generator'
+
+  -- Energy Infrastructure
+  ["electric-pole"]             = map{MW_Machined_Part.FRAMING, MW_Machined_Part.WIRING, MW_Machined_Part.BOLTS}, -- 'electric-pole'
+  ["power-switch"]              = map{MW_Machined_Part.PANELING, MW_Machined_Part.WIRING, MW_Machined_Part.BOLTS}, -- 'power-switch'
+
+  -- Heat Pipes
+  ["heat-interface"]            = map{MW_Machined_Part.PANELING, MW_Machined_Part.FRAMING, MW_Machined_Part.GEARING, MW_Machined_Part.PIPING, MW_Machined_Part.WIRING, MW_Machined_Part.SHIELDING, MW_Machined_Part.SHAFTING, MW_Machined_Part.BOLTS}, -- 'heat-interface'
+  ["heat-pipe"]                 = map{MW_Machined_Part.SHIELDING, MW_Machined_Part.SHAFTING, MW_Machined_Part.BOLTS}, -- 'heat-pipe'
+
+  -- Combat
+  ["turret"]                    = map{MW_Machined_Part.PANELING, MW_Machined_Part.FRAMING, MW_Machined_Part.GEARING, MW_Machined_Part.WIRING, MW_Machined_Part.SHIELDING, MW_Machined_Part.SHAFTING, MW_Machined_Part.BOLTS}, -- 'turret'
+  ["ammo-turret"]               = map{MW_Machined_Part.PANELING, MW_Machined_Part.FRAMING, MW_Machined_Part.GEARING, MW_Machined_Part.WIRING, MW_Machined_Part.SHIELDING, MW_Machined_Part.SHAFTING, MW_Machined_Part.BOLTS}, -- 'ammo-turret'
+  ["electric-turret"]           = map{MW_Machined_Part.PANELING, MW_Machined_Part.FRAMING, MW_Machined_Part.GEARING, MW_Machined_Part.WIRING, MW_Machined_Part.SHIELDING, MW_Machined_Part.SHAFTING, MW_Machined_Part.BOLTS}, -- 'electric-turret'
+  ["fluid-turret"]              = map{MW_Machined_Part.PANELING, MW_Machined_Part.FRAMING, MW_Machined_Part.GEARING, MW_Machined_Part.PIPING, MW_Machined_Part.WIRING, MW_Machined_Part.SHIELDING, MW_Machined_Part.SHAFTING, MW_Machined_Part.BOLTS}, -- 'fluid-turret' 
+  ["artillery-turret"]          = map{MW_Machined_Part.PANELING, MW_Machined_Part.FRAMING, MW_Machined_Part.GEARING, MW_Machined_Part.WIRING, MW_Machined_Part.SHIELDING, MW_Machined_Part.SHAFTING, MW_Machined_Part.BOLTS}, -- 'artillery-turret'
+  ["land-mine"]                 = map{MW_Machined_Part.PANELING, MW_Machined_Part.WIRING, MW_Machined_Part.BOLTS}, -- 'land-mine'
+
+  -- Beacons
+  ["beacon"]                    = map{MW_Machined_Part.PANELING, MW_Machined_Part.FRAMING, MW_Machined_Part.WIRING, MW_Machined_Part.BOLTS}, -- 'beacon'
+
+  -- Combinators
+  ["arithmetic-combinator"]     = map{MW_Machined_Part.PANELING, MW_Machined_Part.WIRING, MW_Machined_Part.BOLTS}, -- 'arithmetic-combinator'
+  ["decider-combinator"]        = map{MW_Machined_Part.PANELING, MW_Machined_Part.WIRING, MW_Machined_Part.BOLTS}, -- 'decider-combinator' 
+  ["constant-combinator"]       = map{MW_Machined_Part.PANELING, MW_Machined_Part.WIRING, MW_Machined_Part.BOLTS}, -- 'constant-combinator'
+  ["lamp"]                      = map{MW_Machined_Part.PANELING, MW_Machined_Part.WIRING, MW_Machined_Part.BOLTS}, -- 'lamp'
+  ["programmable-speaker"]      = map{MW_Machined_Part.PANELING, MW_Machined_Part.WIRING, MW_Machined_Part.SHAFTING, MW_Machined_Part.BOLTS}, -- 'programmable-speaker'
+
+  -- Containers
+  ["logistic-container"]        = map{MW_Machined_Part.PANELING, MW_Machined_Part.FRAMING, MW_Machined_Part.WIRING, MW_Machined_Part.BOLTS}, -- 'logistic-container'
+  ["container"]                 = map{MW_Machined_Part.PANELING, MW_Machined_Part.FRAMING, MW_Machined_Part.BOLTS}, -- 'container'
+  ["linked-container"]          = map{MW_Machined_Part.PANELING, MW_Machined_Part.FRAMING, MW_Machined_Part.WIRING, MW_Machined_Part.BOLTS}, -- 'linked-container'
+
+  -- Assembling machines
+  ["assembling-machine"]        = map{MW_Machined_Part.PANELING, MW_Machined_Part.FRAMING, MW_Machined_Part.GEARING, MW_Machined_Part.PIPING, MW_Machined_Part.WIRING, MW_Machined_Part.SHIELDING, MW_Machined_Part.SHAFTING, MW_Machined_Part.BOLTS}, -- 'assembling-machine'
+
+  -- Silo
+  ["rocket-silo"]               = map{MW_Machined_Part.PANELING, MW_Machined_Part.FRAMING, MW_Machined_Part.GEARING, MW_Machined_Part.PIPING, MW_Machined_Part.WIRING, MW_Machined_Part.SHIELDING, MW_Machined_Part.SHAFTING, MW_Machined_Part.BOLTS}, -- 'rocket-silo' 
+
+  -- Furnaces
+  ["furnace"]                   = map{MW_Machined_Part.PANELING, MW_Machined_Part.FRAMING, MW_Machined_Part.WIRING, MW_Machined_Part.SHIELDING, MW_Machined_Part.BOLTS}, -- 'furnace' 
+
+  -- Robots
+  ["combat-robot"]              = map{MW_Machined_Part.PANELING, MW_Machined_Part.WIRING, MW_Machined_Part.BOLTS}, -- 'combat-robot'
+  ["construction-robot"]        = map{MW_Machined_Part.PANELING, MW_Machined_Part.WIRING, MW_Machined_Part.BOLTS}, -- 'construction-robot'
+  ["logistic-robot"]            = map{MW_Machined_Part.PANELING, MW_Machined_Part.WIRING, MW_Machined_Part.BOLTS}, -- 'logistic-robot' 
+
+  -- Defenses
+  ["gate"]                      = map{MW_Machined_Part.PANELING, MW_Machined_Part.FRAMING, MW_Machined_Part.GEARING, MW_Machined_Part.WIRING, MW_Machined_Part.SHIELDING, MW_Machined_Part.BOLTS}, -- 'gate'
+  ["wall"]                      = map{MW_Machined_Part.PANELING, MW_Machined_Part.FRAMING, MW_Machined_Part.SHIELDING, MW_Machined_Part.BOLTS}, -- 'wall' 
+
+  -- Vehicles
+  ["car"]                       = map{MW_Machined_Part.PANELING, MW_Machined_Part.FRAMING, MW_Machined_Part.GEARING, MW_Machined_Part.PIPING, MW_Machined_Part.WIRING, MW_Machined_Part.SHIELDING, MW_Machined_Part.SHAFTING, MW_Machined_Part.BOLTS}, -- 'car'
+  ["spider-vehicle"]            = map{MW_Machined_Part.PANELING, MW_Machined_Part.FRAMING, MW_Machined_Part.GEARING, MW_Machined_Part.PIPING, MW_Machined_Part.WIRING, MW_Machined_Part.SHIELDING, MW_Machined_Part.SHAFTING, MW_Machined_Part.BOLTS}, -- 'spider-vehicle' 
+
+  -- Lab
+  ["lab"]                       = map{MW_Machined_Part.PANELING, MW_Machined_Part.FRAMING, MW_Machined_Part.GEARING, MW_Machined_Part.WIRING, MW_Machined_Part.BOLTS}, -- 'lab'
+
+  -- Mining
+  ["mining-drill"]              = map{MW_Machined_Part.PANELING, MW_Machined_Part.FRAMING, MW_Machined_Part.GEARING, MW_Machined_Part.PIPING, MW_Machined_Part.WIRING, MW_Machined_Part.SHAFTING, MW_Machined_Part.BOLTS}, -- 'mining-drill'
+
+  -- Belts
+  ["linked-belt"]               = map{MW_Machined_Part.PANELING, MW_Machined_Part.FRAMING, MW_Machined_Part.GEARING, MW_Machined_Part.BOLTS}, -- 'linked-belt'
+  ["loader-1x1"]                = map{MW_Machined_Part.PANELING, MW_Machined_Part.FRAMING, MW_Machined_Part.GEARING, MW_Machined_Part.BOLTS}, -- 'loader-1x1'
+  ["loader-1x2"]                = map{MW_Machined_Part.PANELING, MW_Machined_Part.FRAMING, MW_Machined_Part.GEARING, MW_Machined_Part.BOLTS}, -- 'loader' 
+  ["splitter"]                  = map{MW_Machined_Part.PANELING, MW_Machined_Part.FRAMING, MW_Machined_Part.GEARING, MW_Machined_Part.BOLTS}, -- 'splitter'
+  ["transport-belt"]            = map{MW_Machined_Part.PANELING, MW_Machined_Part.FRAMING, MW_Machined_Part.GEARING, MW_Machined_Part.BOLTS}, -- 'transport-belt'
+  ["underground-belt"]          = map{MW_Machined_Part.PANELING, MW_Machined_Part.FRAMING, MW_Machined_Part.GEARING, MW_Machined_Part.BOLTS}, -- 'underground-belt' 
+
+  -- Inserters
+  ["inserter"]                  = map{MW_Machined_Part.FRAMING, MW_Machined_Part.GEARING, MW_Machined_Part.WIRING, MW_Machined_Part.SHAFTING, MW_Machined_Part.BOLTS}, -- 'inserter'
+
+  -- Pipes
+  ["storage-tank"]              = map{MW_Machined_Part.PANELING, MW_Machined_Part.FRAMING, MW_Machined_Part.PIPING, MW_Machined_Part.SHIELDING, MW_Machined_Part.BOLTS}, -- 'storage-tank'
+  ["offshore-pump"]             = map{MW_Machined_Part.PANELING, MW_Machined_Part.FRAMING, MW_Machined_Part.PIPING, MW_Machined_Part.WIRING, MW_Machined_Part.BOLTS}, -- 'offshore-pump'
+  ["pipe"]                      = map{MW_Machined_Part.PIPING, MW_Machined_Part.BOLTS}, -- 'pipe'
+  ["pipe-to-ground"]            = map{MW_Machined_Part.PIPING, MW_Machined_Part.BOLTS}, -- 'pipe-to-ground'
+  ["pump"]                      = map{MW_Machined_Part.PANELING, MW_Machined_Part.FRAMING, MW_Machined_Part.PIPING, MW_Machined_Part.WIRING, MW_Machined_Part.BOLTS}, -- 'pump'
+
+  -- Radar
+  ["radar"]                     = map{MW_Machined_Part.PANELING, MW_Machined_Part.FRAMING, MW_Machined_Part.GEARING, MW_Machined_Part.WIRING, MW_Machined_Part.BOLTS}, -- 'radar'
+
+  -- Roboport
+  ["roboport"]                  = map{MW_Machined_Part.PANELING, MW_Machined_Part.FRAMING, MW_Machined_Part.GEARING, MW_Machined_Part.WIRING, MW_Machined_Part.BOLTS}, -- 'roboport'
+
+  -- Rail
+  ["rail-signal"]               = map{MW_Machined_Part.PANELING, MW_Machined_Part.FRAMING, MW_Machined_Part.BOLTS}, -- 'rail-signal' 
+  ["rail-chain-signal"]         = map{MW_Machined_Part.PANELING, MW_Machined_Part.FRAMING, MW_Machined_Part.BOLTS}, -- 'rail-chain-signal'
+
+  -- Rail Infrastructure
+  ["curved-rail"]               = map{MW_Machined_Part.FRAMING, MW_Machined_Part.BOLTS}, -- 'curved-rail'
+  ["straight-rail"]             = map{MW_Machined_Part.FRAMING, MW_Machined_Part.BOLTS}, -- 'straight-rail' 
+  ["train-stop"]                = map{MW_Machined_Part.PANELING, MW_Machined_Part.FRAMING, MW_Machined_Part.WIRING, MW_Machined_Part.BOLTS}, -- 'train-stop'
+
+  -- Trains
+  ["cargo-wagon"]               = map{MW_Machined_Part.PANELING, MW_Machined_Part.FRAMING, MW_Machined_Part.GEARING, MW_Machined_Part.WIRING, MW_Machined_Part.SHAFTING, MW_Machined_Part.BOLTS}, -- 'cargo-wagon'
+  ["fluid-wagon"]               = map{MW_Machined_Part.PANELING, MW_Machined_Part.FRAMING, MW_Machined_Part.GEARING, MW_Machined_Part.PIPING, MW_Machined_Part.WIRING, MW_Machined_Part.SHAFTING, MW_Machined_Part.BOLTS}, -- 'fluid-wagon'
+  ["locomotive"]                = map{MW_Machined_Part.PANELING, MW_Machined_Part.FRAMING, MW_Machined_Part.GEARING, MW_Machined_Part.WIRING, MW_Machined_Part.SHAFTING, MW_Machined_Part.BOLTS}, -- 'locomotive' 
+  ["artillery-wagon"]           = map{MW_Machined_Part.PANELING, MW_Machined_Part.FRAMING, MW_Machined_Part.GEARING, MW_Machined_Part.WIRING, MW_Machined_Part.SHIELDING, MW_Machined_Part.SHAFTING, MW_Machined_Part.BOLTS}, -- 'artillery-wagon'
+
+  -- N/A
+  -- ["SimpleEntityWithOwner"]   = map{MW_Machined_Part.PANELING, MW_Machined_Part.FRAMING, MW_Machined_Part.GEARING, MW_Machined_Part.PIPING, MW_Machined_Part.WIRING, MW_Machined_Part.SHIELDING, MW_Machined_Part.SHAFTING, MW_Machined_Part.BOLTS}, -- 'simple-entity-with-owner'
+  -- ["SimpleEntityWithForce"]   = map{MW_Machined_Part.PANELING, MW_Machined_Part.FRAMING, MW_Machined_Part.GEARING, MW_Machined_Part.PIPING, MW_Machined_Part.WIRING, MW_Machined_Part.SHIELDING, MW_Machined_Part.SHAFTING, MW_Machined_Part.BOLTS}, -- 'simple-entity-with-force' 
+  -- ["PlayerPort"]              = map{MW_Machined_Part.PANELING, MW_Machined_Part.FRAMING, MW_Machined_Part.GEARING, MW_Machined_Part.PIPING, MW_Machined_Part.WIRING, MW_Machined_Part.SHIELDING, MW_Machined_Part.SHAFTING, MW_Machined_Part.BOLTS}, -- 'player-port'
+  -- ["Character"]               = map{}, -- 'character'
+  -- ["Combinator"]              = map{}, -- ABSTRACT
+  -- ["InfinityContainer"]       = map{}, -- 'infinity-container' 
+  -- ["EnemySpawner"]            = map{MW_Machined_Part.PANELING, MW_Machined_Part.FRAMING, MW_Machined_Part.GEARING, MW_Machined_Part.PIPING, MW_Machined_Part.WIRING, MW_Machined_Part.SHIELDING, MW_Machined_Part.SHAFTING, MW_Machined_Part.BOLTS}, -- 'unit-spawner'
+  -- ["Market"]                  = map{MW_Machined_Part.PANELING, MW_Machined_Part.FRAMING, MW_Machined_Part.GEARING, MW_Machined_Part.PIPING, MW_Machined_Part.WIRING, MW_Machined_Part.SHIELDING, MW_Machined_Part.SHAFTING, MW_Machined_Part.BOLTS}, -- 'market'
+  -- ["Unit"]                    = map{MW_Machined_Part.PANELING, MW_Machined_Part.FRAMING, MW_Machined_Part.GEARING, MW_Machined_Part.PIPING, MW_Machined_Part.WIRING, MW_Machined_Part.SHIELDING, MW_Machined_Part.SHAFTING, MW_Machined_Part.BOLTS}, -- 'unit'
+}
 
 -- Minisembler Data (settings based)
 -- *********************************

@@ -4,7 +4,7 @@ return function(advanced)
       ["iron-chest"]                  = {{"basic-paneling", 4}, {"basic-framing", 2}, {"basic-bolts", 2}, },
       ["steel-chest"]                 = {{"high-tensile-paneling", 6}, {"high-tensile-framing", 8}, {"high-tensile-bolts", 2}, },
 
-      ["transport-belt"]              = {{"basic-paneling", 1}, {"basic-fine-gearing", 1}, {"basic-bolts", 1}, },
+      -- ["transport-belt"]              = {{"basic-paneling", 1}, {"basic-fine-gearing", 1}, {"basic-bolts", 1}, },
       ["fast-transport-belt"]         = {{"high-tensile-paneling", 1}, {"high-tensile-framing", 1}, {"ductile-fine-gearing", 2}, {"basic-bolts", 2}, },
       ["express-transport-belt"]      = {{"very-high-tensile-paneling", 1}, {"very-high-tensile-framing", 2}, {"ductile-fine-gearing", 4}, {"very-high-tensile-bolts", 4}, },
       ["underground-belt"]            = {{"basic-paneling", 1}, {"basic-framing", 1}, {"basic-fine-gearing", 2}, {"basic-bolts", 4}, },

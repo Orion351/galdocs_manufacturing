@@ -158,6 +158,7 @@ function Re_recipe(intermediates_to_remove, rerecipe_table_name, finished_part_n
     current_ingredients = Append_ingredients(current_ingredients, ingredients)
     used_recipe_list = Keep_track_of_used_ingredients(used_recipe_list, ingredients)
     data.raw.recipe[name].ingredients = current_ingredients
+    data.raw.recipe[name].re_recipe = "explicit"
 
     -- get rekt normal vs. expensive
     data.raw.recipe[name].normal = nil

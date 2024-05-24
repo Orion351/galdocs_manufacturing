@@ -73,6 +73,34 @@ if GM_global_mw_data.current_overhaul_data and type(GM_global_mw_data.current_ov
 end
 
 
+-- Yeet Normal vs. Expensive
+-- *************************
+-- for name, recipe in pairs(data.raw.recipe) do
+--   if recipe.normal or recipe.expensive then
+--     for k, v in pairs(recipe.normal) do
+--       recipe[k] = v
+--     end
+--     recipe.normal = nil
+--     recipe.expensive = nil
+--   end
+-- end
+
+-- for _, recipe in pairs(data.raw.recipe or {}) do
+--   local recipe_data = recipe.normal or recipe.expensive or recipe --[[@as data.RecipeData]]
+
+--   for property_name, property_data in pairs(recipe_data or {}) do
+--     recipe[property_name] = property_data
+--   end
+-- end
+
+-- for _, technology in pairs(data.raw.technology or {}) do
+--   local technology_data = technology.normal or technology.expensive or technology --[[@as data.TechnologyData]]
+
+--   for property_name, property_data in pairs(technology_data or {}) do
+--     technology[property_name] = property_data
+--   end
+-- end
+
 
 -- Cull Unused non-GM intermediates
 -- ********************************
@@ -101,8 +129,10 @@ end
 
 
 
--- Educated Guess Replace
--- **********************
+-- Re_Guessipe
+-- ***********
+
+-- Prep
 local science_packs_items = {}
 for _, tech in pairs(data.raw.technology) do -- Find all the science pack items
   if tech.unit and tech.unit.ingredients and type(tech.unit.ingredients) == "table" and #tech.unit.ingredients > 0 then
@@ -123,7 +153,6 @@ for _, recipe in pairs(data.raw.recipe) do -- Find all science pack recipes
     end
   end
 end
-
 
 local im_a_tool = {"tool", "armor", "repair-tool"} -- Find all science pack rocket products
 for _, really_im_a_tool in pairs(im_a_tool) do
@@ -199,6 +228,77 @@ local rekit_silo = table.deepcopy(data.raw["rocket-silo"]["rocket-silo"])
 table.insert(rekit_silo.crafting_categories, "crafting")
 rekit_silo.name = "rekit-silo"
 data:extend({rekit_silo})
+
+-- Helper Functions
+function Re_Guessipe(ingredients)
+  local new_ingredients = {}
+  return ingredients
+end
+
+function Find_entity_type_by_name(name)
+  for type, _ in pairs(defines.prototypes.entity) do
+    if data.raw[type][name] then return type end
+  end
+end
+
+function Find_item_type_by_name(name)
+  for type, _ in pairs(defines.prototypes.item) do
+    if data.raw[type][name] then return type end
+  end
+end
+
+-- Full Re_Guessipe
+
+for recipe_name, recipe in pairs(data.raw.recipe) do
+  if not (recipe.re_recipe and recipe.re_recipe == "explicit") then
+    local has_entity_product = false
+    local valid_item_entity_pairs = {}
+    if recipe.result then
+      local item_type = Find_item_type_by_name(recipe.result)
+      if data.raw[item_type][recipe.result].place_result and MW_Data.guesser_entity_machined_part_pairs[Find_entity_type_by_name(data.raw[item_type][recipe.result].place_result)] then
+        has_entity_product = true
+        valid_item_entity_pairs[recipe.result] = Find_entity_type_by_name(data.raw[item_type][recipe.result].place_result)
+      end
+    end 
+
+    if recipe.results then
+      for _, result in pairs(recipe.results) do
+        if result.type ~= "fluid" then
+          local result_name = result.name or result[1]
+          local item_type = Find_item_type_by_name(result_name)
+          if data.raw[item_type][result_name] and data.raw[item_type][result_name].place_result and MW_Data.guesser_entity_machined_part_pairs[Find_entity_type_by_name(data.raw[item_type][result_name].place_result)] then
+            has_entity_product = true
+            valid_item_entity_pairs[result_name] = Find_entity_type_by_name(data.raw[item_type][recipe.result].place_result)
+          end 
+        end
+      end
+    end
+
+    if has_entity_product then
+      -- -- Sanitize the recipe
+      -- if recipe.normal ~= nil then
+      --   recipe.enabled = recipe.normal.enabled
+      --   recipe.energy_required = recipe.normal.energy_required
+      --   recipe.result = recipe.normal.result
+      --   recipe.ingredients = recipe.normal.ingredients
+      -- end
+
+      local machined_part_shapes = {}
+      for item, entity_type in pairs(valid_item_entity_pairs) do
+        for part, _ in pairs(MW_Data.guesser_entity_machined_part_pairs[entity_type]) do
+          if not machined_part_shapes[part] then machined_part_shapes[part] = true end
+        end
+      end
+      local a = 1
+
+      -- local new_ingredients = Re_Guessipe(table.deepcopy(recipe.ingredients))
+      -- recipe.ingredients = new_ingredients
+    end
+  end
+end
+
+
+
 
 --[[
 -- Here be curse knowledge. Be careful. There are some things that you cannot un-know. You have been warned. :]
