@@ -1160,6 +1160,11 @@ MW_Data.guesser_entity_machined_part_pairs = {
   -- ["Unit"]                    = map{MW_Machined_Part.PANELING, MW_Machined_Part.FRAMING, MW_Machined_Part.GEARING, MW_Machined_Part.PIPING, MW_Machined_Part.WIRING, MW_Machined_Part.SHIELDING, MW_Machined_Part.SHAFTING, MW_Machined_Part.BOLTS}, -- 'unit'
 }
 
+MW_Data.guesser_default_metals = {
+  
+}
+
+
 -- Minisembler Data (settings based)
 -- *********************************
 

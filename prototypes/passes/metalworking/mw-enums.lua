@@ -138,6 +138,72 @@ return {
 		MACHINING = "machining",
 		ASSAYING = "assaying",
 		TREATING = "treating"
-	}
+	},
+
+	MW_Default_Metals = {
+		-- Metals with known uses in other mods
+		MANGANESE  = "manganese",
+		CHROMIUM   = "chromium",
+		COBALT     = "cobalt",
+		INDIUM     = "Indium",
+		MOLYBDENUM = "molybdenum",
+		NIOBIUM    = "niobium",
+		TANTALUM   = "tantalum",
+		SILVER     = "silver",
+		PLATINUM   = "platinum",
+		PALADIUM   = "paladium",
+		OSMIUM     = "osmium",
+		VANADIUM   = "vanadium",
+		ARSENIC    = "arsenic",
+		BISMUTH    = "bismuth",
+		ANTIMONY   = "antimony",
+		ALUMINUM   = "aluminum",
+		TIN        = "tin",
+		TUNGSTEN   = "tungsten",
+		GOLD       = "gold",
+		ERBIUM     = "erbium",
+		
+		-- Metals to be possibly used in (future) randomizer
+		SELENIUM   = "selenium",
+		RHENIUM    = "rhenium",
+		CADMIUM    = "cadmium",
+		RHODIUM    = "rhodium",
+		RUTHENIUM  = "ruthenium",
+		IRIDIUM    = "iridum",
+
+		-- Alloys with known uses in other mods
+		TOOL_STEEL      = "tool-steel",
+		ALLOYED_STEEL   = "alloyed-steel",
+		STAINLESS_STEEL = "stainless-steel",
+		SPRING_STEEL    = "spring-steel",
+		BRONZE          = "bronze",
+		COPPER_TUNGSTEN = "copper-tungsten",
+		DURALUMIN       = "duralumin",
+		
+		
+		-- Alloys to be possibly used in (future) randomizer
+		ALNICO = "alnico",
+		
+		-- Fantasy stuff lol py you card you
+		-- NEXELIT_ANTIMONY     = "nexelit_antimony",
+		-- ANTIMONY_SILICATE    = "antimony_silicate",
+		-- SILVER_ZINC	         = "silver-zinc",
+		-- NEXELIT              = "nexelit",
+		-- SAMM                 = "samm",
+		-- MSTAN                = "mstan",
+		-- SUPER_STEEL          = "super-steel",
+		-- SUPER_ALLOY          = "super-alloy",
+		-- IRON_NIOBIUM         = "iron-niobium",
+		-- LEAD_ANTIMONY        = "lead-antimony",
+		-- ALUMINIUM_SILVER     = "aluminium-silver",
+		-- TIN_CHROMIUM         = "tin-chromium",
+		-- TIN_RARE_EARTH       = "tin-rare-earth",
+		-- COBALT_ALUMINIUM     = "cobalt-aluminium",
+		-- NEODYMIUM_FERROBORON = "neodymium-ferroboron",
+		-- FERROCHROME = "ferrochrome",
+		-- NIOBIUM_TITANIUM = "niobium-titanium",
+		-- ERBIUM_NICKEL = "erbium_nickel",
+
+	},
 }
 

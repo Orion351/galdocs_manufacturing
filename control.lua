@@ -16,6 +16,8 @@ script.on_init(function()
   end
 end)
 
+require()
+
 Mod_Names = {
   VANILLA = "vanilla",
   GM      = "galdocs-manufacturing",

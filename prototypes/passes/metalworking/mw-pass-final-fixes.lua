@@ -199,7 +199,7 @@ for _, tech in pairs(data.raw.technology) do
             ["recipe-names"] = science_pack_recipes[check_item],
             ["technology-name"] = tech.name,
           }
-          if #prerequisites == 0 then 
+          if #prerequisites == 0 then
             tech_map[check_item]["prerequisites"] = "none"
           else
             tech_map[check_item]["prerequisites"] = prerequisites
@@ -210,7 +210,7 @@ for _, tech in pairs(data.raw.technology) do
   end
 end
 
--- Get starter stuff
+-- Get starter Science Pack entry
 for name, recipes in pairs(science_pack_recipes) do
   for _, recipe in pairs(recipes) do
     if not tech_map[name] then 
@@ -224,10 +224,36 @@ for name, recipes in pairs(science_pack_recipes) do
   end
 end
 
-local rekit_silo = table.deepcopy(data.raw["rocket-silo"]["rocket-silo"])
-table.insert(rekit_silo.crafting_categories, "crafting")
-rekit_silo.name = "rekit-silo"
-data:extend({rekit_silo})
+-- Get Space Sciecne pack entry
+-- local rekit_silo = table.deepcopy(data.raw["rocket-silo"]["rocket-silo"])
+-- table.insert(rekit_silo.crafting_categories, "crafting")
+-- rekit_silo.name = "rekit-silo"
+-- data:extend({rekit_silo})
+
+-- Get Starter Property entry (not to be confused with starter science pack entry)
+tech_map["starter"] = {
+  ["item-name"] = "starter",
+  ["recipe-name"] = "starter",
+  ["technology-name"] = "none",
+  ["prerequisites"] = "none",
+}
+
+-- Assign properties to tech levels
+-- NOTE: There is a limitation here. If there is a branch of the tech tree that does not unlock new metals/properties, all products unlocked by that branch will only reflect the
+--   earliest available metal properties. To solve this, full compatibility ought be made.
+-- We will get two tables from this operation:
+--   1) What properties become available at this tech level ("marginal_properties")
+--   2) What properties are available at this tech level ("available_properties")
+
+-- Build starter properties
+
+for metal, metal_data in pairs(MW_Data.metal_data) do
+  if metal_data.tech_stock == "starter" then
+
+  end
+end
+
+
 
 -- Helper Functions
 function Re_Guessipe(ingredients)
