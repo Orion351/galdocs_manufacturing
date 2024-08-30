@@ -94,7 +94,7 @@ return {
 
 	MW_Property = {
 		BASIC                   = "basic",
-		ELECTRICALLY_CONDUCTIVE = "electrically-conductive",		
+		ELECTRICALLY_CONDUCTIVE = "electrically-conductive",
 		LIGHTWEIGHT             = "lightweight",
 		DUCTILE                 = "ductile",
 		THERMALLY_STABLE        = "thermally-stable",

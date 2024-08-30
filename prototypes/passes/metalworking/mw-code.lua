@@ -370,6 +370,8 @@ data.raw.resource["copper-ore"].effect_darkness_multiplier = 0
 data.raw.resource["copper-ore"].min_effect_alpha = 0
 data.raw.resource["copper-ore"].max_effect_alpha = GM_globals.show_ore_sPaRkLe
 
+
+
 -- Metals
 -- ======
 
@@ -417,8 +419,17 @@ local productivity_whitelist = {} -- Start the whitelist for productivity module
 -- Properties
 -- ==========
 
-for _, property in pairs(MW_Data.MW_Property) do  -- Make sprites for property icons for locale and other uses
-  data:extend({
+data:extend({ -- Virtual Signal Item Subgroup
+  {
+    type = "item-subgroup",
+    group = "signals",
+    name = "gm-properties",
+    order = "y-gm"
+  }
+})
+
+for _, property in pairs(MW_Data.MW_Property) do  -- Make sprites for property sprites and virtual signals
+  data:extend({ -- sprites
     {
       type = "sprite",
       name = property .. "-sprite",
@@ -428,9 +439,21 @@ for _, property in pairs(MW_Data.MW_Property) do  -- Make sprites for property i
       scale = 1.5
     }
   })
+
+  data:extend({ -- virtual signals
+    {
+      type = "virtual-signal",
+      name = property .. "-virtual-signal",
+      subgroup = "gm-properties",
+      order = "gm_properties " .. MW_Data.property_data[property].order,
+      icon = "__galdocs-manufacturing__/graphics/icons/signal/signal-" .. property .. ".png",
+      icon_size = 64,
+      icon_mipmaps = 4,
+      scale = 1,
+      localised_name = {"virtual-signal-name.gm-virtual-signal", {"gm." .. property}}
+    }
+  })
 end
-
-
 
 -- MW Byproducts
 -- =============
