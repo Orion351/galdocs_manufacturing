@@ -16,7 +16,10 @@ script.on_init(function()
   end
 end)
 
-require()
+-- require("scripts.minisembler_gui")
+
+local enums_file = require("prototypes.passes.metalworking.mw-enums")
+-- local data_file = require("prototypes.passes.metalworking.mw-data")
 
 Mod_Names = {
   VANILLA = "vanilla",

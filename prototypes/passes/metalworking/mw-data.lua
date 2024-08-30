@@ -369,6 +369,8 @@ else
   }
 end
 
+
+
 -- Property Data
 -- *************
 
@@ -1423,10 +1425,10 @@ if advanced then -- stocks_recipe_data : [stock | stock that crafts it] {stock t
   }
 else
   MW_Data.stocks_recipe_data = {
-    [MW_Stock.PLATE]          = {                                                     made_in = "smelting",                    plating_billet_count = 10, plating_fluid_count = 100                                                          },
-    [MW_Stock.SQUARE]         = {precursor = MW_Stock.PLATE , input = 1, output = 2,  made_in = MW_Minisembler.METAL_BANDSAW,  plating_billet_count = 5,  plating_fluid_count = 100, byproduct_name = MW_Byproduct.SWARF, byproduct_count = 1},
-    [MW_Stock.WIRE]           = {precursor = MW_Stock.SQUARE, input = 1, output = 2,  made_in = MW_Minisembler.METAL_EXTRUDER, plating_billet_count = 5,  plating_fluid_count = 100, byproduct_name = MW_Byproduct.SWARF, byproduct_count = 1},
-    [MW_Stock.PLATING_BILLET] = {precursor = MW_Stock.PLATE,  input = 1, output = 50, made_in = MW_Minisembler.METAL_BANDSAW,                                                        byproduct_name = MW_Byproduct.SWARF, byproduct_count = 1},
+    [MW_Stock.PLATE]          = {precursor = MW_Ore_Shape.ORE, input = 1, output = 1,  made_in = "smelting",                    plating_billet_count = 10, plating_fluid_count = 100                                                          },
+    [MW_Stock.SQUARE]         = {precursor = MW_Stock.PLATE ,  input = 1, output = 2,  made_in = MW_Minisembler.METAL_BANDSAW,  plating_billet_count = 5,  plating_fluid_count = 100, byproduct_name = MW_Byproduct.SWARF, byproduct_count = 1},
+    [MW_Stock.WIRE]           = {precursor = MW_Stock.SQUARE,  input = 1, output = 2,  made_in = MW_Minisembler.METAL_EXTRUDER, plating_billet_count = 5,  plating_fluid_count = 100, byproduct_name = MW_Byproduct.SWARF, byproduct_count = 1},
+    [MW_Stock.PLATING_BILLET] = {precursor = MW_Stock.PLATE,   input = 1, output = 50, made_in = MW_Minisembler.METAL_BANDSAW,                                                        byproduct_name = MW_Byproduct.SWARF, byproduct_count = 1},
   }
 end
 

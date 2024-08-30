@@ -817,7 +817,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
 
       local recipe_prototype = {}
       
-      -- *****
+      -- ***************
       if stock == MW_Data.MW_Stock.WAFER then -- Wafers
         table.insert(productivity_whitelist, #productivity_whitelist, metal .. "-" .. stock .. "-stock")
 
@@ -867,7 +867,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
 
             energy_required = 3.2,
 
-            order = MW_Data.metal_data[metal].order .. MW_Data.stock_data[stock].order,
+            order = "gm-stocks-" .. MW_Data.metal_data[metal].order .. MW_Data.stock_data[stock].order,
             category = "smelting",
             subgroup = "gm-stocks-" .. metal,
 
@@ -925,7 +925,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
 
             energy_required = 3.2,
 
-            order = MW_Data.metal_data[metal].order .. MW_Data.stock_data[stock].order,
+            order = "gm-stocks-" .. MW_Data.metal_data[metal].order .. MW_Data.stock_data[stock].order,
             category = "gm-remelting",
             subgroup = "gm-remelting-" .. metal,
 
@@ -944,7 +944,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
         
       end
 
-      -- *****
+      -- ***************
       if stock ~= MW_Data.MW_Stock.PLATE and stock ~= MW_Data.MW_Stock.WAFER then -- If it's not a plate or wafer, then make the recipe as normal
         -- Work out the special cases that get to be in player crafting
         local recipe_category = ""
@@ -1002,7 +1002,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
 
             energy_required = 0.3,
 
-            order = "gm_stocks" .. MW_Data.metal_data[metal].order .. MW_Data.stock_data[stock].order,
+            order = "gm-stocks-" .. MW_Data.metal_data[metal].order .. MW_Data.stock_data[stock].order,
             category = recipe_category,
             subgroup = "gm-stocks-" .. metal,
 
@@ -1068,7 +1068,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
 
             energy_required = 3.2,
 
-            order = MW_Data.metal_data[metal].order .. MW_Data.stock_data[stock].order,
+            order = "gm-stocks-" .. MW_Data.metal_data[metal].order .. MW_Data.stock_data[stock].order,
             category = "gm-remelting",
             subgroup = "gm-remelting-" .. metal,
 
@@ -1084,7 +1084,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
 
       end
 
-      -- *****
+      -- ***************
       if stock == MW_Data.MW_Stock.PLATE and MW_Data.metal_data[metal].alloy_plate_recipe then -- If it is a plate, make the special-case alloy-from-plate recipes
         -- Only add the Steel plate recipe_difficulty to the productivity whitelist
         if metal == MW_Data.MW_Metal.STEEL then
@@ -1151,7 +1151,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
 
             energy_required = 3.2 * output_count,
 
-            order = MW_Data.metal_data[metal].order .. MW_Data.stock_data[stock].order,
+            order = "gm-stocks-" .. MW_Data.metal_data[metal].order .. MW_Data.stock_data[stock].order,
             category = "smelting",
             subgroup = "gm-stocks-" .. metal,
 
@@ -1167,7 +1167,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
         table.insert(GM_global_mw_data.stock_recipes[item_prototype[1].name], {[recipe_prototype[1].name] = recipe_prototype[1]})
       end
 
-      -- *****
+      -- ***************
       if stock == MW_Data.MW_Stock.PLATE and MW_Data.metal_data[metal].alloy_ore_recipe then -- If it is a plate, make the special-case alloy-from-ore recipes
         -- Because this is a plate recipe, add it to the productivity whitelist -- except, it's an alloys, so ... don't. For now.
         table.insert(productivity_whitelist, #productivity_whitelist, metal .. "-" .. stock .. "-stock-from-ore")
@@ -1232,7 +1232,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
 
             energy_required = 3.2 * output_count,
 
-            order = MW_Data.metal_data[metal].order .. MW_Data.stock_data[stock].order,
+            order = "gm-stocks-" .. MW_Data.metal_data[metal].order .. MW_Data.stock_data[stock].order,
             category = "smelting",
             subgroup = "gm-stocks-" .. metal,
 
@@ -1248,7 +1248,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
         table.insert(GM_global_mw_data.stock_recipes[item_prototype[1].name], {[recipe_prototype[1].name] = recipe_prototype[1]})
       end
 
-      -- *****
+      -- ***************
       if stock == MW_Data.MW_Stock.PLATE and MW_Data.ore_data[metal] and MW_Data.ore_data[metal].ore_type == MW_Data.MW_Ore_Type.ELEMENT then -- If it is a plate, make the special-case elemental plate recipes that take ores instead of stocks.
         -- Because this is a plate recipe, add it to the productivity whitelist
         table.insert(productivity_whitelist, #productivity_whitelist, metal .. "-" .. stock .. "-stock")
@@ -1282,8 +1282,8 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
 
             ingredients = {{
               type = "item",
-              name = metal .. "-ore", MW_Data.stocks_recipe_data[stock].input, 
-              amount = 1
+              name = metal .. "-ore",
+              amount = MW_Data.stocks_recipe_data[stock].input
             }},
             crafting_machine_tint = {
               primary = MW_Data.metal_data[metal].tint_metal,
@@ -1299,7 +1299,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
 
             energy_required = 3.2,
             
-            order = MW_Data.metal_data[metal].order .. MW_Data.stock_data[stock].order,
+            order = "gm-stocks-" .. MW_Data.metal_data[metal].order .. MW_Data.stock_data[stock].order,
             category = "smelting",
             subgroup = "gm-stocks-" .. metal,
 

@@ -61,7 +61,6 @@ data:extend({ -- Ore Processing Subgroup
   }
 })
 
--- FIXME : Pebble Shadows suck currently?
 for ore, ore_data in pairs(MW_Data.ore_data) do -- Add Pebble and Gravel Items
   for _, shape in pairs(MW_Data.MW_Ore_Shape) do
     if ore_data.shapes and table.contains(ore_data.shapes, shape) and (shape ~= MW_Data.MW_Ore_Shape.ORE) and (shape ~= MW_Data.MW_Ore_Shape.ENRICHED)then
@@ -230,7 +229,7 @@ for ore, ore_data in pairs(MW_Data.ore_data) do -- Add Enriched Items and Recipe
           category = "smelting",
 
           group = "intermediate-products",
-          order = "c-gm-stocks-" .. MW_Data.metal_data[ore].order .. MW_Data.MW_Stock.PLATE,
+          order = "gm-stocks-" .. MW_Data.metal_data[ore].order .. MW_Data.stock_data[MW_Data.MW_Stock.PLATE].order .. "-b",
           subgroup = "gm-stocks-" .. ore,
 
           result = ore .. "-plate-stock",
@@ -781,97 +780,106 @@ end
 
 for ore, ore_data in pairs(MW_Data.ore_data) do -- Make gravel to plate and pebble to plate recipes
   if ore_data.ore_type == MW_Data.MW_Ore_Type.ELEMENT then
-    -- Gravel to plate recipes
-    local icons_data_recipe = { -- Make icon
-      {
-        icon = "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. ore .. "/" .. ore .. "-plate-stock-0000.png",
-        icon_size = 64,
-      },
-    }
+    local icons_data_recipe = {}
+    local recipe_prototype = {}
+    local ib_data = {}
 
-    -- Function from Icon Badges: ib-lib.lua
-    Build_img_badge_icon(icons_data_recipe, 
-    {"__galdocs-manufacturing__/graphics/icons/intermediates/ore/" .. ore .. "/" .. ore .. "-gravel-shadow.png",
-    "__galdocs-manufacturing__/graphics/icons/intermediates/ore/" .. ore .. "/" .. ore .. "-gravel-1.png"},
-    64, GM_globals.stock_badge_scale, 0, GM_globals.remelting_badge_corner, 0)
-
-    local ib_data = {} -- Prepare badge data for the items
-    ib_data.ib_let_badge  = ore_data.ib_data.ib_let_badge
-    ib_data.ib_let_invert = ore_data.ib_data.ib_let_invert
-    ib_data.ib_let_corner = ore_data.ib_data.ib_let_corner
-
-    local recipe_prototype = { -- Gravel to plate recipe
-      {
-        type = "recipe",
-        name = ore .. "-gravel-to-plate",
-        icons = icons_data_recipe,
-        -- enabled = MW_Data.metal_data[ore].tech_stock == "starter",
-        enabled = false,
-        ingredients = {{type = "item", name = ore .. "-gravel", amount = 1}},
-        results = {{type = "item", name = ore .. "-plate-stock", amount = 1}},
-        always_show_made_in = true,
-        hide_from_player_crafting = false,
-        energy_required = 3.2,
-        
-        order = order_count .. "gm-stocks-" .. ore .. "-gravel",
-        subgroup = "gm-stocks-" .. ore,
-        
-        category = "smelting", -- FIXME
-        localised_name = {"gm.gravel-to-plate-recipe-name", {"gm." .. ore}},
-        gm_recipe_data = {type = "ore-processing", metal = ore}
+    if table.contains(ore_data.shapes, MW_Data.MW_Ore_Shape.GRAVEL) then
+      -- Gravel to plate recipes
+      icons_data_recipe = { -- Make icon
+        {
+          icon = "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. ore .. "/" .. ore .. "-plate-stock-0000.png",
+          icon_size = 64,
+        },
       }
-    }
 
-    data:extend(recipe_prototype)
+      -- Function from Icon Badges: ib-lib.lua
+      Build_img_badge_icon(icons_data_recipe, 
+      {"__galdocs-manufacturing__/graphics/icons/intermediates/ore/" .. ore .. "/" .. ore .. "-gravel-shadow.png",
+      "__galdocs-manufacturing__/graphics/icons/intermediates/ore/" .. ore .. "/" .. ore .. "-gravel-1.png"},
+      64, GM_globals.stock_badge_scale, 0, GM_globals.remelting_badge_corner, 0)
 
-    GM_globals.GM_Badge_list["recipe"][ore .. "-gravel-to-plate"] = ib_data
-    -- Build_badge(data.raw.recipe[ore .. "-gravel-to-plate"], ib_data)
+      -- Prepare badge data for the items
+      ib_data.ib_let_badge  = ore_data.ib_data.ib_let_badge
+      ib_data.ib_let_invert = ore_data.ib_data.ib_let_invert
+      ib_data.ib_let_corner = ore_data.ib_data.ib_let_corner
+
+      recipe_prototype = { -- Gravel to plate recipe
+        {
+          type = "recipe",
+          name = ore .. "-gravel-to-plate",
+          icons = icons_data_recipe,
+          -- enabled = MW_Data.metal_data[ore].tech_stock == "starter",
+          enabled = false,
+          ingredients = {{type = "item", name = ore .. "-gravel", amount = MW_Data.K2_smelting_data[MW_Data.MW_Ore_Shape.GRAVEL].input_count}},
+          results = {{type = "item", name = ore .. "-plate-stock", amount = MW_Data.K2_smelting_data[MW_Data.MW_Ore_Shape.GRAVEL].output_count}},
+          always_show_made_in = true,
+          hide_from_player_crafting = false,
+          energy_required = 3.2,
+          
+          order = order_count .. "gm-stocks-" .. ore .. "-gravel",
+          subgroup = "gm-stocks-" .. ore,
+          
+          category = "smelting", -- FIXME
+          localised_name = {"gm.gravel-to-plate-recipe-name", {"gm." .. ore}},
+          gm_recipe_data = {type = "ore-processing", metal = ore}
+        }
+      }
+
+      data:extend(recipe_prototype)
+
+      GM_globals.GM_Badge_list["recipe"][ore .. "-gravel-to-plate"] = ib_data
+      -- Build_badge(data.raw.recipe[ore .. "-gravel-to-plate"], ib_data)
+    end
     
     -- Pebble to plate recipes
-    icons_data_recipe = { -- Make icon
-      {
-        icon = "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. ore .. "/" .. ore .. "-plate-stock-0000.png",
-        icon_size = 64,
-      },
-    }
-
-    -- Function from Icon Badges: ib-lib.lua
-    Build_img_badge_icon(icons_data_recipe, 
-    {"__galdocs-manufacturing__/graphics/icons/intermediates/ore/" .. ore .. "/" .. ore .. "-pebble-shadow.png",
-    "__galdocs-manufacturing__/graphics/icons/intermediates/ore/" .. ore .. "/" .. ore .. "-pebble-1.png"},
-    64, GM_globals.stock_badge_scale, 0, GM_globals.remelting_badge_corner, 0)
-
-    local ib_data = {} -- Prepare badge data for the items
-    ib_data.ib_let_badge  = ore_data.ib_data.ib_let_badge
-    ib_data.ib_let_invert = ore_data.ib_data.ib_let_invert
-    ib_data.ib_let_corner = ore_data.ib_data.ib_let_corner
-
-    recipe_prototype = { -- Pebble to plate recipe
-      {
-        type = "recipe",
-        name = ore .. "-pebble-to-plate",
-        icons = icons_data_recipe,
-        -- enabled = MW_Data.metal_data[ore].tech_stock == "starter",
-        enabled = false,
-        ingredients = {{type = "item", name = ore .. "-pebble", amount = GM_globals.pebble_to_gravel_ratio}},
-        results = {{type = "item", name = ore .. "-plate-stock", amount = 1}},
-        always_show_made_in = true,
-        hide_from_player_crafting = false,
-        energy_required = 3.2,
-        
-        order = order_count .. "gm-stocks-" .. ore .. "-pebble",
-        subgroup = "gm-stocks-" .. ore,
-        
-        category = "smelting", -- FIXME
-        localised_name = {"gm.pebble-to-plate-recipe-name", {"gm." .. ore}},
-        gm_recipe_data = {type = "ore-processing", metal = ore}
+    if table.contains(ore_data.shapes, MW_Data.MW_Ore_Shape.PEBBLE) then
+      icons_data_recipe = { -- Make icon
+        {
+          icon = "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. ore .. "/" .. ore .. "-plate-stock-0000.png",
+          icon_size = 64,
+        },
       }
-    }
 
-    data:extend(recipe_prototype)
-    
-    GM_globals.GM_Badge_list["recipe"][ore .. "-pebble-to-plate"] = ib_data
-    -- Build_badge(data.raw.recipe[ore .. "-pebble-to-plate"], ib_data)
+      -- Function from Icon Badges: ib-lib.lua
+      Build_img_badge_icon(icons_data_recipe, 
+      {"__galdocs-manufacturing__/graphics/icons/intermediates/ore/" .. ore .. "/" .. ore .. "-pebble-shadow.png",
+      "__galdocs-manufacturing__/graphics/icons/intermediates/ore/" .. ore .. "/" .. ore .. "-pebble-1.png"},
+      64, GM_globals.stock_badge_scale, 0, GM_globals.remelting_badge_corner, 0)
+
+      -- Prepare badge data for the items
+      ib_data = {}
+      ib_data.ib_let_badge  = ore_data.ib_data.ib_let_badge
+      ib_data.ib_let_invert = ore_data.ib_data.ib_let_invert
+      ib_data.ib_let_corner = ore_data.ib_data.ib_let_corner
+
+      recipe_prototype = { -- Pebble to plate recipe
+        {
+          type = "recipe",
+          name = ore .. "-pebble-to-plate",
+          icons = icons_data_recipe,
+          -- enabled = MW_Data.metal_data[ore].tech_stock == "starter",
+          enabled = false,
+          ingredients = {{type = "item", name = ore .. "-pebble", amount = MW_Data.K2_smelting_data[MW_Data.MW_Ore_Shape.PEBBLE].input_count}},
+          results = {{type = "item", name = ore .. "-plate-stock", amount = MW_Data.K2_smelting_data[MW_Data.MW_Ore_Shape.PEBBLE].output_count}},
+          always_show_made_in = true,
+          hide_from_player_crafting = false,
+          energy_required = 3.2,
+          
+          order = order_count .. "gm-stocks-" .. ore .. "-pebble",
+          subgroup = "gm-stocks-" .. ore,
+          
+          category = "smelting", -- FIXME
+          localised_name = {"gm.pebble-to-plate-recipe-name", {"gm." .. ore}},
+          gm_recipe_data = {type = "ore-processing", metal = ore}
+        }
+      }
+
+      data:extend(recipe_prototype)
+      
+      GM_globals.GM_Badge_list["recipe"][ore .. "-pebble-to-plate"] = ib_data
+      -- Build_badge(data.raw.recipe[ore .. "-pebble-to-plate"], ib_data)
+    end
   end
 end
 

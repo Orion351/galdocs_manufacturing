@@ -13,7 +13,7 @@ return {
 		ZINC             = "zinc",
 		NICKEL           = "nickel",
 	},
-		
+
 	MW_Ore_Type = {
 		NONMETAL = "nonmetal",
 		ELEMENT  = "element",
@@ -206,4 +206,3 @@ return {
 
 	},
 }
-

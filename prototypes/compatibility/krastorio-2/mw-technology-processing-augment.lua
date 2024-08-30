@@ -31,6 +31,8 @@ data.raw.technology["kr-enriched-ores"].unit = {
 
 -- Manipulate Gravel and Pebble Recipes (CHANGE IN THE FUTURE DURING ELECTRONICS PASS)
 table.insert(data.raw.technology["gm-osmium-stock-processing"].effects, {type = "unlock-recipe", recipe="osmium-pebble-to-plate"})
+table.insert(data.raw.technology["gm-osmium-stock-processing"].effects, {type = "unlock-recipe", recipe="osmium-gravel-to-plate"})
+table.insert(data.raw.technology["gm-niobium-stock-processing"].effects, {type = "unlock-recipe", recipe="niobium-pebble-to-plate"})
 table.insert(data.raw.technology["gm-niobium-stock-processing"].effects, {type = "unlock-recipe", recipe="niobium-gravel-to-plate"})
 
 -- Update prerequisites

@@ -131,7 +131,7 @@ end
 
 -- Re_Guessipe
 -- ***********
-
+--[[
 -- Prep
 local science_packs_items = {}
 for _, tech in pairs(data.raw.technology) do -- Find all the science pack items
@@ -252,7 +252,7 @@ for metal, metal_data in pairs(MW_Data.metal_data) do
 
   end
 end
-
+--]]
 
 
 -- Helper Functions
@@ -274,7 +274,7 @@ function Find_item_type_by_name(name)
 end
 
 -- Full Re_Guessipe
-
+--[[
 for recipe_name, recipe in pairs(data.raw.recipe) do
   if not (recipe.re_recipe and recipe.re_recipe == "explicit") then
     local has_entity_product = false
@@ -322,7 +322,7 @@ for recipe_name, recipe in pairs(data.raw.recipe) do
     end
   end
 end
-
+--]]
 
 
 

@@ -150,9 +150,11 @@ MW_Data.ore_data = table.merge_subtables(MW_Data.ore_data, { -- Icon Badges data
   [MW_Resource.COKE]            = {ib_data = {ib_let_badge = "CK"}},
 })
 
-MW_Data.smelting_data = { -- Set up the Smelting Recipes
-  [MW_Ore_Shape.ORE]    = {input_count = 1,  output_shape = MW_Data.MW_Stock.PLATE, output_count = 1},
+-- Okay so, this is a K2-specific set of data. Perhaps I should have a data structure in mw-data.lua to account for this? But ... we'll see.
+MW_Data.K2_smelting_data = { -- Set up the Smelting Recipes
+  -- [MW_Ore_Shape.ORE]    = {input_count = 2,  output_shape = MW_Data.MW_Stock.PLATE, output_count = 1},
   [MW_Ore_Shape.PEBBLE] = {input_count = 10, output_shape = MW_Data.MW_Stock.PLATE, output_count = 1},
+  [MW_Ore_Shape.GRAVEL] = {input_count = 2, output_shape = MW_Data.MW_Stock.PLATE, output_count = 1},
   -- [MW_Ore_Shape.PEBBLE] = {input_count = 1, output_shape = MW_Data.MW_Stock.WAFER, output_count = 1},
 }
 
@@ -506,6 +508,10 @@ else
   })
 end
 
+
+-- Properties, Stocks and Machined Parts couplings
+-- ***********************************************
+
 if advanced then -- property_machined_part_pairs : [property | list of machined parts that are able to have that property]
   MW_Data.property_machined_part_pairs = table.group_key_assign(MW_Data.property_machined_part_pairs, {
     [MW_Property.IMERSIUM_ENHANCED_HIGH_TENSILE]  = map{MW_Machined_Part.PANELING, MW_Machined_Part.LARGE_PANELING, MW_Machined_Part.FRAMING, MW_Machined_Part.GIRDERING, MW_Machined_Part.GEARING, MW_Machined_Part.FINE_GEARING,                                                        MW_Machined_Part.WIRING, MW_Machined_Part.SHIELDING, MW_Machined_Part.SHAFTING, MW_Machined_Part.BOLTS, MW_Machined_Part.RIVETS},
@@ -545,6 +551,7 @@ end
 
 -- Stock Coupliings
 -- ****************
+-- K2-ify the ratio of ore-to-plates for non-enriched ores for K2 balance
 MW_Data.stocks_recipe_data[MW_Stock.PLATE].input = 2
 
 
