@@ -100,6 +100,8 @@ table.insert(data.raw.technology["fluid-handling"].prerequisites, "gm-galvanized
 
 -- kr-fluids-chemistry
 table.insert(data.raw.technology["kr-fluids-chemistry"].prerequisites, "gm-nickel-and-invar-machined-part-processing")
+table.insert(data.raw.technology["kr-fluids-chemistry"].effects, {type = "unlock-recipe", recipe = "niobium-pebble-to-gravel"})
+table.insert(data.raw.technology["kr-fluids-chemistry"].effects, {type = "unlock-recipe", recipe = "niobium-gravel-to-pebble"})
 
 -- kr-mineral-water-gathering
 table.insert(data.raw.technology["kr-mineral-water-gathering"].prerequisites, "gm-annealed-copper-machined-part-processing")

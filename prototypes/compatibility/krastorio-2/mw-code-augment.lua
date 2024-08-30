@@ -193,6 +193,7 @@ for ore, ore_data in pairs(MW_Data.ore_data) do -- Add Enriched Items and Recipe
 
           always_show_made_in = true,
           always_show_products = true,
+          enabled = false,
 
           crafting_machine_tint = {primary = recipe_tint_primary},
 
@@ -657,7 +658,7 @@ for ore, ore_data in pairs(MW_Data.ore_data) do -- Make pebble -> gravel and gra
 
         icons = icons_data_recipe,
 
-        enabled = true, -- FIXME: these should go behind the relevant rare metals processing checks
+        enabled = false,
 
         ingredients = {{type = "item", name = ore .. "-pebble", amount = ore_data.pebble_to_gravel_input}},
         results = {{type = "item", name = ore .. "-gravel", amount = ore_data.pebble_to_gravel_output}},
@@ -707,7 +708,7 @@ for ore, ore_data in pairs(MW_Data.ore_data) do -- Make pebble -> gravel and gra
 
         icons = icons_data_recipe,
 
-        enabled = true, -- FIXME: these should go behind the relevant rare metals processing checks
+        enabled = false,
 
         ingredients = {{type = "item", name = ore .. "-gravel", amount = ore_data.gravel_to_pebble_input}},
         results = {{type = "item", name = ore .. "-pebble", amount = ore_data.gravel_to_pebble_output}},
@@ -794,7 +795,7 @@ for ore, ore_data in pairs(MW_Data.ore_data) do -- Make gravel to plate and pebb
       }
 
       -- Function from Icon Badges: ib-lib.lua
-      Build_img_badge_icon(icons_data_recipe, 
+      Build_img_badge_icon(icons_data_recipe,
       {"__galdocs-manufacturing__/graphics/icons/intermediates/ore/" .. ore .. "/" .. ore .. "-gravel-shadow.png",
       "__galdocs-manufacturing__/graphics/icons/intermediates/ore/" .. ore .. "/" .. ore .. "-gravel-1.png"},
       64, GM_globals.stock_badge_scale, 0, GM_globals.remelting_badge_corner, 0)
@@ -973,7 +974,9 @@ local enriched_alloy_recipe
 MW_Data.enriched_to_plate_alloy_recipes = {"brass-plate-stock-from-ore", "invar-plate-stock-from-ore"}
 for _, recipe in pairs(MW_Data.enriched_to_plate_alloy_recipes) do
   enriched_alloy_recipe = table.deepcopy(data.raw.recipe[recipe])
+
   enriched_alloy_recipe.enabled = false
+
   local new_ingredient = ""
   local new_name = ""
   for _, ingredient in pairs(enriched_alloy_recipe.ingredients) do
@@ -985,8 +988,14 @@ for _, recipe in pairs(MW_Data.enriched_to_plate_alloy_recipes) do
       ingredient[1] = string.sub(new_ingredient, 1, #new_ingredient - 4)
     end
   end
+
   new_name = string.sub(recipe, 1, #recipe - 4)
   enriched_alloy_recipe.name = new_name .. "-enriched"
+
+  local i, j = string.find(recipe, "-plate-")
+  local omg_what_metal_is_this_name_length = i
+  local metal = string.sub(recipe, 1, i - 1)
+
   local new_icon_data = {}
   for _, old_icon in pairs(enriched_alloy_recipe.icons) do
     local i, j = string.find(old_icon.icon, "-ore-")
@@ -994,8 +1003,70 @@ for _, recipe in pairs(MW_Data.enriched_to_plate_alloy_recipes) do
       old_icon.icon = string.sub(old_icon.icon, 1, i-1) .. "-enriched-" .. string.sub(old_icon.icon, j+3, #old_icon.icon)
     end
   end
+  
+  local ib_data = {} -- Prepare badge data for the items
+  ib_data.ib_let_badge  = MW_Data.metal_data[metal].ib_data.ib_let_badge
+  ib_data.ib_let_invert = MW_Data.metal_data[metal].ib_data.ib_let_invert
+  ib_data.ib_let_corner = MW_Data.metal_data[metal].ib_data.ib_let_corner
+  
+  GM_globals.GM_Badge_list["recipe"][enriched_alloy_recipe.name] = ib_data
+
   data:extend({enriched_alloy_recipe})
 end
+
+-- Fix Enriched Brass recipe
+-- local enriched_brass_recipe = table.deepcopy(data.raw.recipe["brass-plate-stock-from-ore"])
+-- enriched_brass_recipe.results = {type = "item", name = enriched_brass_recipe.result, amount = enriched_brass_recipe.result_count / 2}
+-- enriched_brass_recipe.name = "brass-plate-stock-from-enriched"
+-- local icons_enriched_brass = {
+--   {
+--     icon = "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/brass/brass-plate-stock-0000.png",
+--     icon_size = 64
+--   },
+-- }
+
+-- -- Function from Icon Badges: ib-lib.lua
+-- Build_img_badge_icon(icons_enriched_brass,
+-- {"__galdocs-manufacturing__/graphics/icons/intermediates/ore/copper/copper-enriched-shadow.png",
+-- "__galdocs-manufacturing__/graphics/icons/intermediates/ore/copper/copper-enriched-1.png"},
+-- 64, GM_globals.stock_badge_scale, 0, GM_globals.remelting_badge_corner, 0)
+
+-- enriched_brass_recipe.icons = icons_enriched_brass
+
+-- local ib_data_enriched_brass = {} -- Prepare badge data for the items
+-- ib_data_enriched_brass.ib_let_badge  = MW_Data.ore_data[MW_Data.MW_Metal.COPPER].ib_data.ib_let_badge
+-- ib_data_enriched_brass.ib_let_invert = MW_Data.ore_data[MW_Data.MW_Metal.COPPER].ib_data.ib_let_invert
+-- ib_data_enriched_brass.ib_let_corner = MW_Data.ore_data[MW_Data.MW_Metal.COPPER].ib_data.ib_let_corner
+
+-- GM_globals.GM_Badge_list["recipe"]["brass-plate-stock-from-enriched"] = ib_data_enriched_brass
+
+
+
+-- -- Fix Enriched Invar recipe
+-- local enriched_invar_recipe = table.deepcopy(data.raw.recipe["invar-plate-stock-from-ore"])
+-- enriched_invar_recipe.results = {type = "item", name = enriched_invar_recipe.result, amount = enriched_invar_recipe.result_count / 2}
+-- enriched_invar_recipe.name = "invar-plate-stock-from-enriched"
+-- local icons_enriched_invar = {
+--   {
+--     icon = "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/invar/invar-plate-stock-0000.png",
+--     icon_size = 64
+--   },
+-- }
+
+-- -- Function from Icon Badges: ib-lib.lua
+-- Build_img_badge_icon(icons_enriched_invar,
+-- {"__galdocs-manufacturing__/graphics/icons/intermediates/ore/copper/copper-enriched-shadow.png",
+-- "__galdocs-manufacturing__/graphics/icons/intermediates/ore/copper/copper-enriched-1.png"},
+-- 64, GM_globals.stock_badge_scale, 0, GM_globals.remelting_badge_corner, 0)
+
+-- enriched_invar_recipe.icons = icons_enriched_invar
+
+-- local ib_data_enriched_invar = {} -- Prepare badge data for the items
+-- ib_data_enriched_invar.ib_let_badge  = MW_Data.ore_data[MW_Data.MW_Metal.COPPER].ib_data.ib_let_badge
+-- ib_data_enriched_invar.ib_let_invert = MW_Data.ore_data[MW_Data.MW_Metal.COPPER].ib_data.ib_let_invert
+-- ib_data_enriched_invar.ib_let_corner = MW_Data.ore_data[MW_Data.MW_Metal.COPPER].ib_data.ib_let_corner
+
+-- GM_globals.GM_Badge_list["recipe"]["invar-plate-stock-from-enriched"] = ib_data_enriched_invar
 
 data.raw.recipe["brass-plate-stock-from-ore"].result_count = data.raw.recipe["brass-plate-stock-from-ore"].result_count / 2
 data.raw.recipe["invar-plate-stock-from-ore"].result_count = data.raw.recipe["invar-plate-stock-from-ore"].result_count / 2

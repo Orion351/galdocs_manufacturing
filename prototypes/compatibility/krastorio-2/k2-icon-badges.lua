@@ -271,12 +271,12 @@ K2_Badge_list["recipe"] = {
   ["rocket-fuel-with-hydrogen-chloride"]          = {ib_let_badge = "RF", },
 
   -- Plates
-  ["iron-plate"]                                  = {ib_let_badge = "Fe", ib_let_corner = "left-bottom", },
-  ["enriched-iron-plate"]                         = {ib_let_badge = "Fe", ib_let_corner = "left-bottom", },
-  ["copper-plate"]                                = {ib_let_badge = "Cu", ib_let_corner = "left-bottom", },
-  ["enriched-copper-plate"]                       = {ib_let_badge = "Cu", ib_let_corner = "left-bottom", },
-  ["rare-metals"]                                 = {ib_let_badge = "RM", ib_let_corner = "left-bottom", },
-  ["rare-metals-2"]                               = {ib_let_badge = "RM", ib_let_corner = "left-bottom", },
+  ["iron-plate"]                                  = {ib_let_badge = "Fe", },
+  ["enriched-iron-plate"]                         = {ib_let_badge = "Fe", },
+  ["copper-plate"]                                = {ib_let_badge = "Cu", },
+  ["enriched-copper-plate"]                       = {ib_let_badge = "Cu", },
+  ["rare-metals"]                                 = {ib_let_badge = "RM", },
+  ["rare-metals-2"]                               = {ib_let_badge = "RM", },
 
   -- Dirty Water Filtration
   ["dirty-water-filtration-1"]                    = {ib_let_badge = "Fe", },

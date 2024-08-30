@@ -1,4 +1,15 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.2.12
+Date: 2024-08-30
+  Changes:
+    - Annealed Copper / Galvanized Steel un-treatment recipes are no longer backwards
+    - Fixed Annealed Copper amounts when playing with K2
+    - Material Property signals added
+    - Non-enriched Recipes for K2 have been balanced to be in line with the rest of K2
+    - Pebble -> Plate and Gravel -> Plate recipes fixed
+    - Pebble <-> Gravel recipes properly gated behind technologies
+    - Fixed IB badge mixups
+---------------------------------------------------------------------------------------------------
 Version: 0.2.11
 Date: 2024-04-29
   Changes:

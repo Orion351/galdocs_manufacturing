@@ -874,8 +874,8 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
 
             results = recipe_results,
             main_product = recipe_main_product,
-            -- result = metal .. "-" .. stock .. "-stock",
-            -- result_count = 1,
+            result = metal .. "-" .. stock .. "-stock",
+            result_count = 1,
 
             crafting_machine_tint = {
               primary = MW_Data.metal_data[metal].tint_metal,
@@ -1076,6 +1076,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
               name = item_prototype[1].name,
               amount = MW_Data.stocks_recipe_data[stock].remelting_cost
             }},
+            results = {{type = "item", name = metal .. "-plate-stock", amount = MW_Data.stocks_recipe_data[stock].remelting_yield}},
             result = metal .. "-plate-stock",
             result_count = MW_Data.stocks_recipe_data[stock].remelting_yield,
 
@@ -1551,6 +1552,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the treated [M
         local recipe_ingredients = {}
         local recipe_gm_recipe_data = {}
         local recipe_category = ""
+        local untreatment_metal = ""
         -- Plating-specific properties for recipe
         if MW_Data.metal_data[metal].treatment_type == MW_Data.MW_Treatment_Type.PLATING then
           recipe_ingredients = {
@@ -1558,6 +1560,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the treated [M
             {type = "item", name = MW_Data.metal_data[metal].plate_metal .. "-plating-billet-stock", amount = MW_Data.metal_data[metal].plating_ratio_multiplier * MW_Data.stocks_recipe_data[stock].plating_billet_count},
             {type = "fluid", name = MW_Data.metal_data[metal].plating_fluid, amount = MW_Data.stocks_recipe_data[stock].plating_fluid_count}
           }
+          untreatment_metal = MW_Data.metal_data[metal].core_metal
           recipe_gm_recipe_data = {type = "stocks", metal = metal, stock = stock, special = "plating", core_metal = MW_Data.metal_data[metal].core_metal, plate_metal = MW_Data.metal_data[metal].plate_metal}
           recipe_category = "gm-electroplating"
         end
@@ -1565,8 +1568,9 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the treated [M
         -- Annealing-specific properties for recipe
         if MW_Data.metal_data[metal].treatment_type == MW_Data.MW_Treatment_Type.ANNEALING then
           recipe_ingredients = {
-            {name = MW_Data.metal_data[metal].source_metal .. "-" .. stock .. "-stock", amount = 1}
+            {type = "item", name = MW_Data.metal_data[metal].source_metal .. "-" .. stock .. "-stock", amount = 1}
           }
+          untreatment_metal = MW_Data.metal_data[metal].source_metal
           recipe_category = "gm-annealing"
           recipe_gm_recipe_data = {type = "stocks", metal = metal, stock = stock, special = "anealing", source_metal = MW_Data.metal_data[metal].source_metal}
         end
@@ -1578,7 +1582,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the treated [M
           hide_from_player_crafting = false
         end
 
-        -- *****
+        -- ***************
         local recipe_prototype = { -- recipe for the stock
           {
             type = "recipe",
@@ -1626,7 +1630,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the treated [M
         
         local recipe_untreatment_icon = ""
         local recipe_untreatment_ingredients = {}
-        local recipe_untreatment_result = metal .. "-" .. stock .. "-stock"
+        local recipe_untreatment_result = untreatment_metal .. "-" .. stock .. "-stock"
         local recipe_untreatment_category = ""
 
         -- Plating-specific properties for remelting and untreatement recipes
@@ -1642,7 +1646,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the treated [M
 
           recipe_untreatment_icon = "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. result_metal .. "/" .. result_metal .. "-" .. stock .. "-stock-0000.png"
           recipe_untreatment_ingredients = {
-            {type = "item", name = recipe_remelting_result, amount = 1}
+            {type = "item", name = metal .. "-" .. stock .. "-stock", amount = 1}
           }
           recipe_untreatment_category = "gm-" .. MW_Data.metal_data[metal].untreatment_minisembler
         end
@@ -1651,16 +1655,16 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the treated [M
         if MW_Data.metal_data[metal].treatment_type == MW_Data.MW_Treatment_Type.ANNEALING then
           result_metal = MW_Data.metal_data[metal].source_metal
           recipe_remelting_result = MW_Data.metal_data[metal].source_metal .. "-plate-stock"
-          recipe_remelting_result_count = 1
+          recipe_remelting_result_count = MW_Data.stocks_recipe_data[stock].remelting_yield
 
           main_remelting_icon = "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. MW_Data.metal_data[metal].source_metal .. "/" .. MW_Data.metal_data[metal].source_metal .. "-plate-stock-0000.png"
           recipe_remelting_ingredients = {
-            {type = "item", name = item_prototype[1].name, amount = 1}
+            {type = "item", name = item_prototype[1].name, amount = MW_Data.stocks_recipe_data[stock].remelting_cost}
           }
 
           recipe_untreatment_icon = "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. result_metal .. "/" .. result_metal .. "-" .. stock .. "-stock-0000.png"
           recipe_untreatment_ingredients = {
-            {type = "item", name = recipe_remelting_result, amount = 1}
+            {type = "item", name = metal .. "-" .. stock .. "-stock", amount = 1}
           }
           recipe_untreatment_category = "smelting"
         end
@@ -1737,7 +1741,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the treated [M
         if not GM_global_mw_data.stock_recipes[item_prototype[1].name] then GM_global_mw_data.stock_recipes[item_prototype[1].name] = {} end
         table.insert(GM_global_mw_data.stock_recipes[item_prototype[1].name], {[recipe_prototype[1].name] = recipe_prototype[1]})
 
-        -- *****
+        -- ***************
         ib_data.ib_let_badge  = MW_Data.metal_data[result_metal].ib_data.ib_let_badge
         ib_data.ib_let_invert = MW_Data.metal_data[result_metal].ib_data.ib_let_invert
         ib_data.ib_let_corner = MW_Data.metal_data[result_metal].ib_data.ib_let_corner

@@ -97,6 +97,9 @@ for _, new_recipe in pairs(MW_Data.enriched_to_plate_alloy_recipes) do
   table.insert(data.raw.technology["kr-enriched-ores"].effects, {type = "unlock-recipe", recipe=new_name})
 end
 
+table.insert(data.raw.technology["kr-enriched-ores"].effects, {type = "unlock-recipe", recipe = "osmium-pebble-to-gravel"})
+table.insert(data.raw.technology["kr-enriched-ores"].effects, {type = "unlock-recipe", recipe = "osmium-gravel-to-pebble"})
+
 -- Matter tchnologies
 for ore, ore_data in pairs(MW_Data.ore_data) do -- Make Matter recipes
   if ore_data.matter_recipe and ore_data.matter_recipe.new then
@@ -208,6 +211,26 @@ for _, recipe in pairs(lds_recipes) do
     end
   end
 end
+
+-- Un-post process the annealed copper recipes; thanks Krastor <3
+for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the treated [Metal] [Stock] Items and Recipes
+  if metal == MW_Data.MW_Metal.ANNEALED_COPPER then
+    for stock, _ in pairs(stocks) do
+      local recipe = data.raw.recipe[metal .. "-" .. stock .. "-stock-untreatment"]
+      if recipe.result_count then recipe.result_count = 1 end
+      if recipe.results then
+        for _, result in pairs(recipe.results) do
+          result.amount = 1
+        end
+      end
+      for _, ingredient in pairs(recipe.ingredients) do
+        ingredient.amount = 1
+      end
+    end
+  end
+end
+
+
 
 require("prototypes.compatibility.krastorio-2.mw-compat-final-fixes-badges")
 if K2_Badge_list then

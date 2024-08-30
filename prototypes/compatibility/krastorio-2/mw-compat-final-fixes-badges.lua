@@ -3,29 +3,28 @@ local MW_Data = GM_global_mw_data.MW_Data
 -- Items
 -- *****
 -- rare metals
-Build_badge(data.raw.item["enriched-rare-metals"], {ib_let_badge = "RM"})
-Build_badge(data.raw.item["raw-rare-metals"], {ib_let_badge = "RM"})
+GM_globals.GM_Badge_list["item"]["enriched-rare-metals"] = {ib_let_badge = "RM", MW_Data.metal_data[MW_Data.MW_Metal.RARE_METALS].ib_data.ib_let_corner}
+GM_globals.GM_Badge_list["item"]["raw-rare-metals"] = {ib_let_badge = "RM", MW_Data.metal_data[MW_Data.MW_Metal.RARE_METALS].ib_data.ib_let_corner}
 
 -- Recipes
 -- *******
 -- rare metals
-Build_badge(data.raw.recipe["enriched-rare-metals"], {ib_let_badge = "RM"})
+GM_globals.GM_Badge_list["recipe"]["enriched-rare-metals"] = {ib_let_badge = "RM", MW_Data.metal_data[MW_Data.MW_Metal.RARE_METALS].ib_data.ib_let_corner}
 
 -- water filtration recipes
-Build_badge(data.raw.recipe["dirty-water-filtration-1"], {ib_let_badge = "Fe"})
-Build_badge(data.raw.recipe["dirty-water-filtration-2"], {ib_let_badge = "Cu"})
+GM_globals.GM_Badge_list["recipe"]["dirty-water-filtration-1"] = {ib_let_badge = "Fe", MW_Data.metal_data[MW_Data.MW_Metal.IRON].ib_data.ib_let_corner}
+GM_globals.GM_Badge_list["recipe"]["dirty-water-filtration-2"] = {ib_let_badge = "Cu", MW_Data.metal_data[MW_Data.MW_Metal.COPPER].ib_data.ib_let_corner}
 
 -- matter recipes
-Build_badge(data.raw.recipe["matter-to-copper-plate"], {ib_let_badge = "Cu", ib_let_corner = GM_global_mw_data.matter_to_plate_corner})
-Build_badge(data.raw.recipe["matter-to-iron-plate"], {ib_let_badge = "Fe", ib_let_corner = GM_global_mw_data.matter_to_plate_corner})
-Build_badge(data.raw.recipe["matter-to-steel-plate"], {ib_let_badge = "ST", ib_let_invert = "your face", ib_let_corner = GM_global_mw_data.matter_to_plate_corner})
+GM_globals.GM_Badge_list["recipe"]["matter-to-copper-plate"] = {ib_let_badge = "Cu", ib_let_corner = GM_global_mw_data.matter_to_plate_corner}
+GM_globals.GM_Badge_list["recipe"]["matter-to-iron-plate"] = {ib_let_badge = "Fe", ib_let_corner = GM_global_mw_data.matter_to_plate_corner}
+GM_globals.GM_Badge_list["recipe"]["matter-to-steel-plate"] = {ib_let_badge = "ST", ib_let_invert = "your face", ib_let_corner = GM_global_mw_data.matter_to_plate_corner}
 
-Build_badge(data.raw.recipe["matter-to-copper-ore"], {ib_let_badge = "Cu", ib_let_corner = GM_global_mw_data.matter_to_ore_corner})
-Build_badge(data.raw.recipe["matter-to-iron-ore"], {ib_let_badge = "Fe", ib_let_corner = GM_global_mw_data.matter_to_ore_corner})
+GM_globals.GM_Badge_list["recipe"]["matter-to-copper-ore"] = {ib_let_badge = "Cu", ib_let_corner = GM_global_mw_data.matter_to_ore_corner}
+GM_globals.GM_Badge_list["recipe"]["matter-to-iron-ore"] = {ib_let_badge = "Fe", ib_let_corner = GM_global_mw_data.matter_to_ore_corner}
 
-Build_badge(data.raw.recipe["copper-ore-to-matter"], {ib_let_badge = "Cu", ib_let_corner = GM_global_mw_data.ore_to_matter_corner})
-Build_badge(data.raw.recipe["iron-ore-to-matter"], {ib_let_badge = "Fe", ib_let_corner = GM_global_mw_data.ore_to_matter_corner})
-
+GM_globals.GM_Badge_list["recipe"]["copper-ore-to-matter"] = {ib_let_badge = "Cu", ib_let_corner = GM_global_mw_data.ore_to_matter_corner}
+GM_globals.GM_Badge_list["recipe"]["iron-ore-to-matter"] = {ib_let_badge = "Fe", ib_let_corner = GM_global_mw_data.ore_to_matter_corner}
 
 -- Fix K2 plate-badge shadows
 for item_name, recipe_pairs in pairs(GM_global_mw_data.machined_part_recipes) do
