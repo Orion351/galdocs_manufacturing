@@ -3,11 +3,11 @@
 	"version": "0.3.1",
 	"title": "Galdoc's manufacturing",
 	"author": "Galdoc",
-	"factorio_version": "1.1",
+	"factorio_version": "2.0",
   "package":{
 		"ignore":[ "dev/**", "*.py", "*.md" ]
   },
-	"dependencies": ["base >= 1.1",
+	"dependencies": ["base >= 2.0",
 		"? Krastorio2 > 1.0",
 		"icon-badges >= 1.0.6",
 		"(?) bzlead",
