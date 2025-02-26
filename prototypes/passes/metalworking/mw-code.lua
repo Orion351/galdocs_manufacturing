@@ -162,11 +162,9 @@ for resource, resource_data in pairs(MW_Data.ore_data) do -- Replacing original 
     if resource_data.original then
       if resource_data.ore_in_name then
         data.raw.resource[resource .. "-ore"].stages.sheet.filename = "__galdocs-manufacturing__/graphics/entity/resource/" .. resource .. "/" .. resource .. "-ore.png"
-        data.raw.resource[resource .. "-ore"].stages.sheet.hr_version.filename = "__galdocs-manufacturing__/graphics/entity/resource/" .. resource .. "/hr-" .. resource .. "-ore.png"
         data.raw.resource[resource .. "-ore"].icon = "__galdocs-manufacturing__/graphics/icons/intermediates/ore/" .. resource .. "/" .. resource .. "-ore-1.png"
       else
         data.raw.resource[resource].stages.sheet.filename = "__galdocs-manufacturing__/graphics/entity/resource/" .. resource .. "/" .. resource .. ".png"
-        data.raw.resource[resource].stages.sheet.hr_version.filename = "__galdocs-manufacturing__/graphics/entity/resource/" .. resource .. "/hr-" .. resource .. ".png"
         -- data.raw.resource[resource].icon = "__galdocs-manufacturing__/graphics/icons/intermediates/ore/" .. resource .. "/" .. resource .. "-1.png"
       end
     end
@@ -213,18 +211,10 @@ local function resource_spawn(resource_parameters, autoplace_parameters) -- Put 
       {
         filename = "__galdocs-manufacturing__/graphics/entity/resource/" .. resource_parameters.name .. "/" .. resource_parameters.name .. "-ore.png",
         priority = "extra-high",
-        size = 64,
+        size = 128,
         frame_count = 8,
         variation_count = 8,
-        hr_version =
-        {
-          filename = "__galdocs-manufacturing__/graphics/entity/resource/" .. resource_parameters.name .. "/hr-" .. resource_parameters.name .. "-ore.png",
-          priority = "extra-high",
-          size = 128,
-          frame_count = 8,
-          variation_count = 8,
-          scale = 0.5
-        }
+        scale = 0.5,
       }
     },
     map_color = resource_parameters.map_color,
@@ -251,34 +241,18 @@ for resource, resource_data in pairs(MW_Data.ore_data) do -- Make mining debris
       table.insert(current_resource.pictures, {
         filename = "__galdocs-manufacturing__/graphics/particle/" .. resource .. oreyn .. "-particle/" .. resource .. oreyn .. "-particle-000" .. i .. ".png",
         priority = "extra-high",
-        width = 16,
-        height = 16,
+        width = 32,
+        height = 32,
         frame_count = 1,
-        hr_version =
-        {
-          filename = "__galdocs-manufacturing__/graphics/particle/" .. resource .. oreyn .. "-particle/hr-" .. resource .. oreyn .. "-particle-000" .. i .. ".png",
-          priority = "extra-high",
-          width = 32,
-          height = 32,
-          frame_count = 1,
-          scale = 0.5
-        }
+        scale = 0.5,
       })
       table.insert(current_resource.shadows, {
         filename = "__galdocs-manufacturing__/graphics/particle/" .. resource .. oreyn .. "-particle/" .. resource .. oreyn .. "-particle-shadow-000" .. i .. ".png",
         priority = "extra-high",
-        width = 16,
-        height = 16,
+        width = 32,
+        height = 32,
         frame_count = 1,
-        hr_version =
-        {
-          filename = "__galdocs-manufacturing__/graphics/particle/" .. resource .. oreyn .. "-particle/hr-" .. resource .. oreyn .. "-particle-shadow-000" .. i .. ".png",
-          priority = "extra-high",
-          width = 32,
-          height = 32,
-          frame_count = 1,
-          scale = 0.5
-        }
+        scale = 0.5,
       })
     end
     data.raw["optimized-particle"][resource .. oreyn .. "-particle"] = current_resource
@@ -343,24 +317,13 @@ data.raw.resource["copper-ore"].stages_effect = {
   {
     filename = "__galdocs-manufacturing__/graphics/entity/resource/copper/copper-shine-glow.png",
     priority = "extra-high",
-    width = 64,
-    height = 64,
+    width = 128,
+    height = 128,
     frame_count = 8,
     variation_count = 8,
     blend_mode = "additive-soft",
     flags = {"light"},
-    hr_version =
-    {
-      filename = "__galdocs-manufacturing__/graphics/entity/resource/copper/hr-copper-shine-glow.png",
-      priority = "extra-high",
-      width = 128,
-      height = 128,
-      frame_count = 8,
-      variation_count = 8,
-      scale = 0.5,
-      blend_mode = "additive-soft",
-      flags = {"light"}
-    }
+    scale = 0.5,
   }
 }
 
@@ -454,6 +417,8 @@ for _, property in pairs(MW_Data.MW_Property) do  -- Make sprites for property s
     }
   })
 end
+
+
 
 -- MW Byproducts
 -- =============
@@ -1809,8 +1774,6 @@ end
 
 -- Machined Parts
 -- ==============
-
-
 
 data:extend({ -- Make Metal Assaying recipe category and player crafting category
   {
