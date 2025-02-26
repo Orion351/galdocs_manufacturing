@@ -3,7 +3,7 @@ local MW_Data = GM_global_mw_data.MW_Data
 local technology_list = {}
 for minisembler, _ in pairs(MW_Data.minisemblers_recipe_parameters) do -- put minisemblers in the appropriate tech unlock
   table.insert(
-    technology_list, #technology_list,
+    technology_list,
     {
       type = "unlock-recipe",
       recipe = "gm-" .. minisembler .. "-recipe"
@@ -49,6 +49,7 @@ data:extend({ -- electric metal machining minisembler technology
     name = "gm-technology-minisemblers",
     icon_size = 256, icon_mipmaps = 4,
     icon = "__galdocs-manufacturing__/graphics/technology-icons/lathe-technology-icon.png",
+    prerequisites = {"automation-science-pack"},
     effects = technology_list,
     unit =
     {

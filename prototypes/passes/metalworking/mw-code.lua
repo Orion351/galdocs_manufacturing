@@ -278,12 +278,12 @@ for resource, resource_data in pairs(MW_Data.ore_data) do -- Build autoplace set
 
     data:extend({
       { -- autoplace-control = new game mapgen menu item to toggle ore generation options (frequency,size,richness,etc.)
-          type = "autoplace-control",
-          name = resource .. "-ore",
-          richness = true,
-          order = "x-b" .. resource,
-          category = "resource",
-          localised_name = {"", "[entity=" .. resource .. "-ore] ", {"entity-name." .. resource .. "-ore"}}
+        type = "autoplace-control",
+        name = resource .. "-ore",
+        richness = true,
+        order = "x-b" .. resource,
+        category = "resource",
+        localised_name = {"", "[entity=" .. resource .. "-ore] ", {"entity-name." .. resource .. "-ore"}}
       },
       resource_spawn(
         { -- resource_parameters
@@ -303,6 +303,8 @@ for resource, resource_data in pairs(MW_Data.ore_data) do -- Build autoplace set
         }
       )
     })
+    data.raw.planet["nauvis"].map_gen_settings.autoplace_controls[resource .. "-ore"] = {} -- Credit: Planetfall
+    data.raw.planet["nauvis"].map_gen_settings.autoplace_settings.entity.settings[resource .. "-ore"] = {}
     data.raw["map-gen-presets"]["default"]["rail-world"].basic_settings.autoplace_controls[resource .. "-ore"] = {frequency = 0.33333333333, size = 3}
   end
 end

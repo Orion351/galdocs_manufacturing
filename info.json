@@ -1,6 +1,6 @@
 {
 	"name": "galdocs-manufacturing",
-	"version": "0.3.1",
+	"version": "1.0.1",
 	"title": "Galdoc's manufacturing",
 	"author": "Galdoc",
 	"factorio_version": "2.0",
@@ -11,6 +11,7 @@
 		"? Krastorio2 > 1.0",
 		"icon-badges >= 1.0.6",
 		"(?) bzlead",
-		"(?) galdocs-testing"
+		"(?) galdocs-testing",
+		"! space-age"
 	]
 }
