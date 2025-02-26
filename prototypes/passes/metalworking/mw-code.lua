@@ -2759,7 +2759,6 @@ for _, tier in pairs(MW_Data.MW_Minisembler_Tier) do -- make the minisembler ent
   local direction_set = {}
   for minisembler, _ in pairs(MW_Data.minisemblers_recipe_parameters) do
     local current_normal_filename
-    local current_hr_filename
     for _, direction_name in pairs(animation_directions) do -- build current_animation, FIXME: Name the minisembler looping table more gooder
       local layer_set = {}
 
@@ -2768,33 +2767,19 @@ for _, tier in pairs(MW_Data.MW_Minisembler_Tier) do -- make the minisembler ent
         -- Set normal and hr filenames
         if direction_name == "north" then
           current_normal_filename = "__galdocs-manufacturing__/graphics/entity/minisemblers/" .. minisembler .. "/" .. minisembler .. "-v-" .. layer_name .. ".png"
-          current_hr_filename = "__galdocs-manufacturing__/graphics/entity/minisemblers/" .. minisembler .. "/hr-" .. minisembler .. "-v-" .. layer_name .. ".png"
         else
           current_normal_filename = "__galdocs-manufacturing__/graphics/entity/minisemblers/" .. minisembler .. "/" .. minisembler .. "-h-" .. layer_name .. ".png"
-          current_hr_filename = "__galdocs-manufacturing__/graphics/entity/minisemblers/" .. minisembler .. "/hr-" .. minisembler .. "-h-" .. layer_name .. ".png"
         end
 
         local layer = {
           filename = current_normal_filename,
           priority = "high",
           frame_count = MW_Data.minisemblers_rendering_data[tier][minisembler]["frame-count"],
-          line_length = MW_Data.minisemblers_rendering_data[tier][minisembler]["normal"][direction_name][layer_name]["line-length"] or MW_Data.minisemblers_rendering_data[tier][minisembler]["line-length"],
-          width = MW_Data.minisemblers_rendering_data[tier][minisembler]["normal"][direction_name][layer_name]["width"],
-          height = MW_Data.minisemblers_rendering_data[tier][minisembler]["normal"][direction_name][layer_name]["height"],
+          line_length = MW_Data.minisemblers_rendering_data[tier][minisembler][direction_name][layer_name]["line-length"] or MW_Data.minisemblers_rendering_data[tier][minisembler]["line-length"],
+          width = MW_Data.minisemblers_rendering_data[tier][minisembler][direction_name][layer_name]["width"],
+          height = MW_Data.minisemblers_rendering_data[tier][minisembler][direction_name][layer_name]["height"],
           draw_as_shadow = layer_name == "shadow",
-          shift = {MW_Data.minisemblers_rendering_data[tier][minisembler]["normal"][direction_name][layer_name]["shift-x"], MW_Data.minisemblers_rendering_data[tier][minisembler]["normal"][direction_name][layer_name]["shift-y"]},
-          hr_version =
-          {
-            filename = current_hr_filename,
-            priority = "high",
-            frame_count = MW_Data.minisemblers_rendering_data[tier][minisembler]["frame-count"],
-            line_length = MW_Data.minisemblers_rendering_data[tier][minisembler]["hr"][direction_name][layer_name]["line-length"] or MW_Data.minisemblers_rendering_data[tier][minisembler]["line-length"],
-            width = MW_Data.minisemblers_rendering_data[tier][minisembler]["hr"][direction_name][layer_name]["width"],
-            height = MW_Data.minisemblers_rendering_data[tier][minisembler]["hr"][direction_name][layer_name]["height"],
-            draw_as_shadow = layer_name == "shadow",
-            shift = {MW_Data.minisemblers_rendering_data[tier][minisembler]["hr"][direction_name][layer_name]["shift-x"], MW_Data.minisemblers_rendering_data[tier][minisembler]["hr"][direction_name][layer_name]["shift-y"]},
-            scale = MW_Data.minisemblers_rendering_data[tier][minisembler]["hr"][direction_name][layer_name]["scale"]
-          }
+          shift = {MW_Data.minisemblers_rendering_data[tier][minisembler][direction_name][layer_name]["shift-x"], MW_Data.minisemblers_rendering_data[tier][minisembler][direction_name][layer_name]["shift-y"]},
         }
 
         -- if layer_name == "base" then current_idle_animation = layer end
@@ -2820,33 +2805,19 @@ for _, tier in pairs(MW_Data.MW_Minisembler_Tier) do -- make the minisembler ent
         -- Set normal and hr filenames
         if direction_name == "north" then
           current_normal_filename = "__galdocs-manufacturing__/graphics/entity/minisemblers/" .. minisembler .. "/" .. minisembler .. "-v-" .. layer_name .. ".png"
-          current_hr_filename = "__galdocs-manufacturing__/graphics/entity/minisemblers/" .. minisembler .. "/hr-" .. minisembler .. "-v-" .. layer_name .. ".png"
         else
           current_normal_filename = "__galdocs-manufacturing__/graphics/entity/minisemblers/" .. minisembler .. "/" .. minisembler .. "-h-" .. layer_name .. ".png"
-          current_hr_filename = "__galdocs-manufacturing__/graphics/entity/minisemblers/" .. minisembler .. "/hr-" .. minisembler .. "-h-" .. layer_name .. ".png"
         end
 
         local layer = {
           filename = current_normal_filename,
           priority = "high",
           frame_count = MW_Data.minisemblers_rendering_data[tier][minisembler]["frame-count"],
-          line_length = MW_Data.minisemblers_rendering_data[tier][minisembler]["normal"][direction_name][layer_name]["line-length"] or MW_Data.minisemblers_rendering_data[tier][minisembler]["line-length"],
-          width = MW_Data.minisemblers_rendering_data[tier][minisembler]["normal"][direction_name][layer_name]["width"],
-          height = MW_Data.minisemblers_rendering_data[tier][minisembler]["normal"][direction_name][layer_name]["height"],
+          line_length = MW_Data.minisemblers_rendering_data[tier][minisembler][direction_name][layer_name]["line-length"] or MW_Data.minisemblers_rendering_data[tier][minisembler]["line-length"],
+          width = MW_Data.minisemblers_rendering_data[tier][minisembler][direction_name][layer_name]["width"],
+          height = MW_Data.minisemblers_rendering_data[tier][minisembler][direction_name][layer_name]["height"],
           draw_as_shadow = layer_name == "shadow",
-          shift = {MW_Data.minisemblers_rendering_data[tier][minisembler]["normal"][direction_name][layer_name]["shift-x"], MW_Data.minisemblers_rendering_data[tier][minisembler]["normal"][direction_name][layer_name]["shift-y"]},
-          hr_version =
-          {
-            filename = current_hr_filename,
-            priority = "high",
-            frame_count = MW_Data.minisemblers_rendering_data[tier][minisembler]["frame-count"],
-            line_length = MW_Data.minisemblers_rendering_data[tier][minisembler]["hr"][direction_name][layer_name]["line-length"] or MW_Data.minisemblers_rendering_data[tier][minisembler]["line-length"],
-            width = MW_Data.minisemblers_rendering_data[tier][minisembler]["hr"][direction_name][layer_name]["width"],
-            height = MW_Data.minisemblers_rendering_data[tier][minisembler]["hr"][direction_name][layer_name]["height"],
-            draw_as_shadow = layer_name == "shadow",
-            shift = {MW_Data.minisemblers_rendering_data[tier][minisembler]["hr"][direction_name][layer_name]["shift-x"], MW_Data.minisemblers_rendering_data[tier][minisembler]["hr"][direction_name][layer_name]["shift-y"]},
-            scale = MW_Data.minisemblers_rendering_data[tier][minisembler]["hr"][direction_name][layer_name]["scale"]
-          }
+          shift = {MW_Data.minisemblers_rendering_data[tier][minisembler][direction_name][layer_name]["shift-x"], MW_Data.minisemblers_rendering_data[tier][minisembler][direction_name][layer_name]["shift-y"]},
         }
 
         -- if layer_name == "base" then current_idle_animation = layer end
@@ -2862,19 +2833,6 @@ for _, tier in pairs(MW_Data.MW_Minisembler_Tier) do -- make the minisembler ent
       end
     end
     local current_idle_animation = direction_set
-    
-
-    -- local idle_direction_set = table.deepcopy(direction_set)
-    -- idle_direction_set["north"]["layers"][2]["filename"] = "__galdocs-manufacturing__/graphics/entity/minisemblers/" .. minisembler .. "/" .. minisembler .. "-v-idle.png"
-    -- idle_direction_set["north"]["layers"][2]["hr_version"]["filename"] = "__galdocs-manufacturing__/graphics/entity/minisemblers/" .. minisembler .. "/hr-" .. minisembler .. "-v-idle.png"
-    -- idle_direction_set["south"]["layers"][2]["filename"] = "__galdocs-manufacturing__/graphics/entity/minisemblers/" .. minisembler .. "/" .. minisembler .. "-v-idle.png"
-    -- idle_direction_set["south"]["layers"][2]["hr_version"]["filename"] = "__galdocs-manufacturing__/graphics/entity/minisemblers/" .. minisembler .. "/hr-" .. minisembler .. "-v-idle.png"
-    -- idle_direction_set["east"]["layers"][2]["filename"] = "__galdocs-manufacturing__/graphics/entity/minisemblers/" .. minisembler .. "/" .. minisembler .. "-h-idle.png"
-    -- idle_direction_set["east"]["layers"][2]["hr_version"]["filename"] = "__galdocs-manufacturing__/graphics/entity/minisemblers/" .. minisembler .. "/hr-" .. minisembler .. "-h-idle.png"
-    -- idle_direction_set["west"]["layers"][2]["filename"] = "__galdocs-manufacturing__/graphics/entity/minisemblers/" .. minisembler .. "/" .. minisembler .. "-h-idle.png"
-    -- idle_direction_set["west"]["layers"][2]["hr_version"]["filename"] = "__galdocs-manufacturing__/graphics/entity/minisemblers/" .. minisembler .. "/hr-" .. minisembler .. "-h-idle.png"
-    -- local current_idle_animation = idle_direction_set
-    
 
     local layer_set_2 = {}
     for layer_name, recipe_tint in pairs(working_visualization_layer_tint_pairs) do
@@ -2882,32 +2840,18 @@ for _, tier in pairs(MW_Data.MW_Minisembler_Tier) do -- make the minisembler ent
       for _, direction_name in pairs(animation_directions) do
         if direction_name == "north" then
           current_normal_filename = "__galdocs-manufacturing__/graphics/entity/minisemblers/" .. minisembler .. "/" .. minisembler .. "-v-" .. layer_name .. ".png"
-          current_hr_filename = "__galdocs-manufacturing__/graphics/entity/minisemblers/" .. minisembler .. "/hr-" .. minisembler .. "-v-" .. layer_name .. ".png"
         else
           current_normal_filename = "__galdocs-manufacturing__/graphics/entity/minisemblers/" .. minisembler .. "/" .. minisembler .. "-h-" .. layer_name .. ".png"
-          current_hr_filename = "__galdocs-manufacturing__/graphics/entity/minisemblers/" .. minisembler .. "/hr-" .. minisembler .. "-h-" .. layer_name .. ".png"
         end
         local direction = {
           filename = current_normal_filename,
           priority = "high",
           frame_count = MW_Data.minisemblers_rendering_data[tier][minisembler]["frame-count"],
-          line_length = MW_Data.minisemblers_rendering_data[tier][minisembler]["normal"][direction_name][layer_name]["line-length"] or MW_Data.minisemblers_rendering_data[tier][minisembler]["line-length"],
-          width = MW_Data.minisemblers_rendering_data[tier][minisembler]["normal"][direction_name][layer_name]["width"],
-          height = MW_Data.minisemblers_rendering_data[tier][minisembler]["normal"][direction_name][layer_name]["height"],
+          line_length = MW_Data.minisemblers_rendering_data[tier][minisembler][direction_name][layer_name]["line-length"] or MW_Data.minisemblers_rendering_data[tier][minisembler]["line-length"],
+          width = MW_Data.minisemblers_rendering_data[tier][minisembler][direction_name][layer_name]["width"],
+          height = MW_Data.minisemblers_rendering_data[tier][minisembler][direction_name][layer_name]["height"],
           draw_as_glow = layer_name == "sparks",
-          shift = {MW_Data.minisemblers_rendering_data[tier][minisembler]["normal"][direction_name][layer_name]["shift-x"], MW_Data.minisemblers_rendering_data[tier][minisembler]["normal"][direction_name][layer_name]["shift-y"]},
-          hr_version =
-          {
-            filename = current_hr_filename,
-            priority = "high",
-            frame_count = MW_Data.minisemblers_rendering_data[tier][minisembler]["frame-count"],
-            line_length = MW_Data.minisemblers_rendering_data[tier][minisembler]["hr"][direction_name][layer_name]["line-length"] or MW_Data.minisemblers_rendering_data[tier][minisembler]["line-length"],
-            width = MW_Data.minisemblers_rendering_data[tier][minisembler]["hr"][direction_name][layer_name]["width"],
-            height = MW_Data.minisemblers_rendering_data[tier][minisembler]["hr"][direction_name][layer_name]["height"],
-            draw_as_glow = layer_name == "sparks",
-            shift = {MW_Data.minisemblers_rendering_data[tier][minisembler]["hr"][direction_name][layer_name]["shift-x"], MW_Data.minisemblers_rendering_data[tier][minisembler]["hr"][direction_name][layer_name]["shift-y"]},
-            scale = MW_Data.minisemblers_rendering_data[tier][minisembler]["hr"][direction_name][layer_name]["scale"]
-          }
+          shift = {MW_Data.minisemblers_rendering_data[tier][minisembler][direction_name][layer_name]["shift-x"], MW_Data.minisemblers_rendering_data[tier][minisembler][direction_name][layer_name]["shift-y"]},
         }
         if (direction_name == "north") then
           direction_set["north_animation"] = direction
@@ -3050,32 +2994,17 @@ for _, tier in pairs(MW_Data.MW_Minisembler_Tier) do -- make the minisembler ent
           {
             filename = "__base__/graphics/entity/pipe-covers/pipe-cover-north.png",
             priority = "extra-high",
-            width = 64,
-            height = 64,
-            hr_version =
-            {
-              filename = "__base__/graphics/entity/pipe-covers/hr-pipe-cover-north.png",
-              priority = "extra-high",
-              width = 128,
-              height = 128,
-              scale = 0.5
-            }
+            width = 128,
+            height = 128,
+            scale = 0.5,
           },
           {
             filename = "__galdocs-manufacturing__/graphics/entity/minisemblers/2x1-pipe-graphics/pipe-cover-minisembler-north-shadow.png",
             priority = "extra-high",
-            width = 64,
-            height = 64,
+            width = 128,
+            height = 128,
             draw_as_shadow = true,
-            hr_version =
-            {
-              filename = "__galdocs-manufacturing__/graphics/entity/minisemblers/2x1-pipe-graphics/hr-pipe-cover-minisembler-north-shadow.png",
-              priority = "extra-high",
-              width = 128,
-              height = 128,
-              scale = 0.5,
-              draw_as_shadow = true
-            }
+            scale = 0.5,
           }
         }
       },
@@ -3086,32 +3015,17 @@ for _, tier in pairs(MW_Data.MW_Minisembler_Tier) do -- make the minisembler ent
           {
             filename = "__base__/graphics/entity/pipe-covers/pipe-cover-east.png",
             priority = "extra-high",
-            width = 64,
-            height = 64,
-            hr_version =
-            {
-              filename = "__base__/graphics/entity/pipe-covers/hr-pipe-cover-east.png",
-              priority = "extra-high",
-              width = 128,
-              height = 128,
-              scale = 0.5
-            }
+            width = 128,
+            height = 128,
+            scale = 0.5,
           },
           {
             filename = "__base__/graphics/entity/pipe-covers/pipe-cover-east-shadow.png",
             priority = "extra-high",
-            width = 64,
-            height = 64,
+            width = 128,
+            height = 128,
             draw_as_shadow = true,
-            hr_version =
-            {
-              filename = "__base__/graphics/entity/pipe-covers/hr-pipe-cover-east-shadow.png",
-              priority = "extra-high",
-              width = 128,
-              height = 128,
-              scale = 0.5,
-              draw_as_shadow = true
-            }
+            scale = 0.5,
           }
         }
       },
@@ -3122,32 +3036,17 @@ for _, tier in pairs(MW_Data.MW_Minisembler_Tier) do -- make the minisembler ent
           {
             filename = "__base__/graphics/entity/pipe-covers/pipe-cover-south.png",
             priority = "extra-high",
-            width = 64,
-            height = 64,
-            hr_version =
-            {
-              filename = "__base__/graphics/entity/pipe-covers/hr-pipe-cover-south.png",
-              priority = "extra-high",
-              width = 128,
-              height = 128,
-              scale = 0.5
-            }
+            width = 128,
+            height = 128,
+            scale = 0.5,
           },
           {
             filename = "__galdocs-manufacturing__/graphics/entity/minisemblers/2x1-pipe-graphics/pipe-cover-minisembler-south-shadow.png",
             priority = "extra-high",
-            width = 64,
-            height = 64,
+            width = 128,
+            height = 128,
             draw_as_shadow = true,
-            hr_version =
-            {
-              filename = "__galdocs-manufacturing__/graphics/entity/minisemblers/2x1-pipe-graphics/hr-pipe-cover-minisembler-south-shadow.png",
-              priority = "extra-high",
-              width = 128,
-              height = 128,
-              scale = 0.5,
-              draw_as_shadow = true
-            }
+            scale = 0.5,
           }
         }
       },
@@ -3158,32 +3057,17 @@ for _, tier in pairs(MW_Data.MW_Minisembler_Tier) do -- make the minisembler ent
           {
             filename = "__base__/graphics/entity/pipe-covers/pipe-cover-west.png",
             priority = "extra-high",
-            width = 64,
-            height = 64,
-            hr_version =
-            {
-              filename = "__base__/graphics/entity/pipe-covers/hr-pipe-cover-west.png",
-              priority = "extra-high",
-              width = 128,
-              height = 128,
-              scale = 0.5
-            }
+            width = 128,
+            height = 128,
+            scale = 0.5,
           },
           {
             filename = "__base__/graphics/entity/pipe-covers/pipe-cover-west-shadow.png",
             priority = "extra-high",
-            width = 64,
-            height = 64,
+            width = 128,
+            height = 128,
             draw_as_shadow = true,
-            hr_version =
-            {
-              filename = "__base__/graphics/entity/pipe-covers/hr-pipe-cover-west-shadow.png",
-              priority = "extra-high",
-              width = 128,
-              height = 128,
-              scale = 0.5,
-              draw_as_shadow = true
-            }
+            scale = 0.5,
           }
         }
       }
@@ -3195,69 +3079,37 @@ for _, tier in pairs(MW_Data.MW_Minisembler_Tier) do -- make the minisembler ent
         {
           filename = "__galdocs-manufacturing__/graphics/entity/minisemblers/2x1-pipe-graphics/minisembler-pipe-underrun-north.png",
           priority = "extra-high",
-          width = 44,
-          height = 31,
+          width = 88,
+          height = 61,
           shift = {0, 1},
-          hr_version =
-          {
-            filename = "__galdocs-manufacturing__/graphics/entity/minisemblers/2x1-pipe-graphics/hr-minisembler-pipe-underrun-north.png",
-            priority = "extra-high",
-            width = 88,
-            height = 61,
-            shift = {0, 1},
-            scale = 0.5
-          }
+          scale = 0.5,
         },
       south =
         {
           filename = "__galdocs-manufacturing__/graphics/entity/minisemblers/2x1-pipe-graphics/minisembler-pipe-underrun-south.png",
           priority = "extra-high",
-          width = 44,
-          height = 31,
+          width = 88,
+          height = 61,
           shift = util.by_pixel(0, -30),
-          hr_version =
-          {
-            filename = "__galdocs-manufacturing__/graphics/entity/minisemblers/2x1-pipe-graphics/hr-minisembler-pipe-underrun-south.png",
-            priority = "extra-high",
-            width = 88,
-            height = 61,
-            shift = util.by_pixel(0, -30),
-            scale = 0.5
-          }
+          scale = 0.5,
         },
       east =
         {
           filename = "__galdocs-manufacturing__/graphics/entity/minisemblers/2x1-pipe-graphics/minisembler-pipe-underrun.png",
           priority = "extra-high",
-          width = 64,
-          height = 64,
+          width = 128,
+          height = 128,
           shift = {-1, 0},
-          hr_version =
-          {
-            filename = "__galdocs-manufacturing__/graphics/entity/minisemblers/2x1-pipe-graphics/hr-minisembler-pipe-underrun.png",
-            priority = "extra-high",
-            width = 128,
-            height = 128,
-            shift = {-1, 0},
-            scale = 0.5
-          }
+          scale = 0.5,
         },
       west =
         {
           filename = "__galdocs-manufacturing__/graphics/entity/minisemblers/2x1-pipe-graphics/minisembler-pipe-underrun.png",
           priority = "extra-high",
-          width = 64,
-          height = 64,
+          width = 128,
+          height = 128,
           shift = {1, 0},
-          hr_version =
-          {
-            filename = "__galdocs-manufacturing__/graphics/entity/minisemblers/2x1-pipe-graphics/hr-minisembler-pipe-underrun.png",
-            priority = "extra-high",
-            width = 128,
-            height = 128,
-            shift = {1, 0},
-            scale = 0.5
-          }
+          scale = 0.5,
         },
     }
 
