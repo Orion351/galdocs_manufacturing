@@ -6,5 +6,4 @@ return {
   ["electroplater-v-sparks"] = require("electroplater-v-sparks"),
   ["electroplater-v-oxidation"] = require("electroplater-v-oxidation"),
   ["electroplater-v-workpiece"] = require("electroplater-v-workpiece"),
-
 }

@@ -2766,6 +2766,7 @@ for _, tier in pairs(MW_Data.MW_Minisembler_Tier) do -- make the minisembler ent
           height = MW_Data.minisemblers_rendering_data[tier][minisembler][direction_name][layer_name]["height"],
           draw_as_shadow = layer_name == "shadow",
           shift = {MW_Data.minisemblers_rendering_data[tier][minisembler][direction_name][layer_name]["shift-x"], MW_Data.minisemblers_rendering_data[tier][minisembler][direction_name][layer_name]["shift-y"]},
+          scale = MW_Data.minisemblers_rendering_data[tier][minisembler][direction_name][layer_name]["scale"]
         }
 
         -- if layer_name == "base" then current_idle_animation = layer end
@@ -2782,6 +2783,7 @@ for _, tier in pairs(MW_Data.MW_Minisembler_Tier) do -- make the minisembler ent
     end
     local current_animation = direction_set
     
+    -- Direction Set
     direction_set = {}
     for _, direction_name in pairs(animation_directions) do -- build current_animation, FIXME: Name the minisembler looping table more gooder
       local layer_set = {}
@@ -2804,6 +2806,7 @@ for _, tier in pairs(MW_Data.MW_Minisembler_Tier) do -- make the minisembler ent
           height = MW_Data.minisemblers_rendering_data[tier][minisembler][direction_name][layer_name]["height"],
           draw_as_shadow = layer_name == "shadow",
           shift = {MW_Data.minisemblers_rendering_data[tier][minisembler][direction_name][layer_name]["shift-x"], MW_Data.minisemblers_rendering_data[tier][minisembler][direction_name][layer_name]["shift-y"]},
+          scale = MW_Data.minisemblers_rendering_data[tier][minisembler][direction_name][layer_name]["scale"]
         }
 
         -- if layer_name == "base" then current_idle_animation = layer end
@@ -2838,6 +2841,7 @@ for _, tier in pairs(MW_Data.MW_Minisembler_Tier) do -- make the minisembler ent
           height = MW_Data.minisemblers_rendering_data[tier][minisembler][direction_name][layer_name]["height"],
           draw_as_glow = layer_name == "sparks",
           shift = {MW_Data.minisemblers_rendering_data[tier][minisembler][direction_name][layer_name]["shift-x"], MW_Data.minisemblers_rendering_data[tier][minisembler][direction_name][layer_name]["shift-y"]},
+          scale = MW_Data.minisemblers_rendering_data[tier][minisembler][direction_name][layer_name]["scale"]
         }
         if (direction_name == "north") then
           direction_set["north_animation"] = direction
@@ -3229,9 +3233,11 @@ for _, tier in pairs(MW_Data.MW_Minisembler_Tier) do -- make the minisembler ent
         always_draw_idle_animation = false,
 
         -- Graphical layers
-        animation = current_animation,
-        idle_animation = current_idle_animation,
-        working_visualisations = current_working_visualizations,
+        graphics_set = {
+          animation = current_animation,
+          idle_animation = current_idle_animation,
+          working_visualisations = current_working_visualizations,
+        },
 
         -- Crafting data
         crafting_categories = crafting_categories,
