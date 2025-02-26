@@ -410,27 +410,13 @@ end
 local current_ingredients
 local swap_in_ingredients = {}
 for _, recipe in pairs(data.raw.recipe) do
-
-  -- copy data out of "nomnomnomral"
-  if recipe.normal ~= nil then
-    recipe.enabled = recipe.normal.enabled
-    recipe.energy_required = recipe.normal.energy_required
-    recipe.result = recipe.normal.result
-    recipe.result_count = recipe.normal.result_count
-    recipe.results = recipe.normal.results
-    recipe.ingredients = recipe.normal.ingredients
+  if recipe.ingredients then
+    current_ingredients = recipe.ingredients
+    swap_in_ingredients = Set_up_swappable_ingredients(current_ingredients, mw_intermediates_to_replace)
+    current_ingredients = Remove_ingredients(current_ingredients, mw_intermediates_to_replace)
+    current_ingredients = Append_ingredients(current_ingredients, swap_in_ingredients)
+    data.raw.recipe[recipe.name].ingredients = current_ingredients
   end
-
-  -- fuss with ingredients
-  current_ingredients = recipe.ingredients
-  swap_in_ingredients = Set_up_swappable_ingredients(current_ingredients, mw_intermediates_to_replace)
-  current_ingredients = Remove_ingredients(current_ingredients, mw_intermediates_to_replace)
-  current_ingredients = Append_ingredients(current_ingredients, swap_in_ingredients)
-  data.raw.recipe[recipe.name].ingredients = current_ingredients
-
-  -- get rekt normal vs. expensive
-  data.raw.recipe[recipe.name].normal = nil
-  data.raw.recipe[recipe.name].expensive = nil
 end
 
 
@@ -446,84 +432,82 @@ local seen_byproducts = {}
 
 for recipe_name, recipe in pairs(data.raw.recipe) do -- Map which machined parts are actually used in re-recipe-ing
   -- Skip Downgrade recipes
-  if not string.find(recipe_name, "downgrade") then
-    current_ingredients = recipe.ingredients
+  if not((not string.find(recipe_name, "downgrade")) and recipe.ingredients) then goto continue end
+  current_ingredients = recipe.ingredients
 
-    for _, ingredient in pairs(current_ingredients) do
-      if type(ingredient) ~= "boolean" then
-        if ingredient.type ~= "fluid" then
-          
-          if ingredient.name ~= nil then
-            current_name = ingredient.name
-          else
-            current_name = ingredient[1]
+  for _, ingredient in pairs(current_ingredients) do
+    if type(ingredient) ~= "boolean" then
+      if ingredient.type ~= "fluid" then
+        
+        if ingredient.name ~= nil then
+          current_name = ingredient.name
+        else
+          current_name = ingredient[1]
+        end
+
+        local current_item = data.raw.item[current_name]
+        if current_item then
+          -- Is this a plating recipe? If so, add the plating-billet to seens stocks.
+          if recipe.gm_recipe_data and recipe.gm_recipe_data.special == "plating" and recipe.gm_recipe_data.type == "stocks"then
+            seen_stocks[recipe.gm_recipe_data.plate_metal .. "-plating-billet-stock"] = true
           end
 
-          local current_item = data.raw.item[current_name]
-          if current_item then
-            -- Is this a plating recipe? If so, add the plating-billet to seens stocks.
-            if recipe.gm_recipe_data and recipe.gm_recipe_data.special == "plating" and recipe.gm_recipe_data.type == "stocks"then
-              seen_stocks[recipe.gm_recipe_data.plate_metal .. "-plating-billet-stock"] = true
-            end
+          --- @diagnostic disable-next-line: undefined-field
+          if current_item.gm_item_data and current_item.gm_item_data.type == "machined-parts" then
+            -- Add the machined part to the list of ones we want to keep
+            seen_machined_parts[current_name] = true
 
-            --- @diagnostic disable-next-line: undefined-field
-            if current_item.gm_item_data and current_item.gm_item_data.type == "machined-parts" then
-              -- Add the machined part to the list of ones we want to keep
-              seen_machined_parts[current_name] = true
+            -- Add the backchain of all stocks that can make it to the list of stocks we want to keep
+            local current_backchain = MW_Data.machined_parts_recipe_data[current_item.gm_item_data.part].backchain
+            local current_property = current_item.gm_item_data.property
+            for _, stock in pairs(current_backchain) do
+              for _, metal in pairs(MW_Data.MW_Metal) do
 
-              -- Add the backchain of all stocks that can make it to the list of stocks we want to keep
-              local current_backchain = MW_Data.machined_parts_recipe_data[current_item.gm_item_data.part].backchain
-              local current_property = current_item.gm_item_data.property
-              for _, stock in pairs(current_backchain) do
-                for _, metal in pairs(MW_Data.MW_Metal) do
-
-                  -- If the metal has the property and it can be made into that sort of stock, add it to the 'seen' list
-                  if MW_Data.metal_properties_pairs[metal][current_property] and MW_Data.metal_stocks_pairs[metal][stock] then
-                    seen_stocks[metal .. "-" .. stock .. "-stock"] = true
-                    
-                    -- If a metal byproduct happens for this recipe (ignore the backchain; that gets done below), add this to the seen_byproducts list
-                    if GM_globals.mw_byproducts and MW_Data.machined_parts_recipe_data[current_item.gm_item_data.part].byproduct_name then
-                      local test_metal = metal
-                      local actual_metal = "same"
-                      if MW_Data.metal_data[test_metal].type == MW_Data.MW_Metal_Type.TREATMENT then
-                        if MW_Data.metal_data[test_metal].treatment_type == MW_Data.MW_Treatment_Type.PLATING then
-                          actual_metal = MW_Data.metal_data[test_metal].core_metal
-                        end
-                        if MW_Data.metal_data[test_metal].treatment_type == MW_Data.MW_Treatment_Type.ANNEALING then
-                          actual_metal = MW_Data.metal_data[test_metal].source_metal
-                        end
-                      end
+                -- If the metal has the property and it can be made into that sort of stock, add it to the 'seen' list
+                if MW_Data.metal_properties_pairs[metal][current_property] and MW_Data.metal_stocks_pairs[metal][stock] then
+                  seen_stocks[metal .. "-" .. stock .. "-stock"] = true
                   
-                      if actual_metal ~= "same" then
-                        test_metal = actual_metal
+                  -- If a metal byproduct happens for this recipe (ignore the backchain; that gets done below), add this to the seen_byproducts list
+                  if GM_globals.mw_byproducts and MW_Data.machined_parts_recipe_data[current_item.gm_item_data.part].byproduct_name then
+                    local test_metal = metal
+                    local actual_metal = "same"
+                    if MW_Data.metal_data[test_metal].type == MW_Data.MW_Metal_Type.TREATMENT then
+                      if MW_Data.metal_data[test_metal].treatment_type == MW_Data.MW_Treatment_Type.PLATING then
+                        actual_metal = MW_Data.metal_data[test_metal].core_metal
                       end
-                      seen_byproducts[test_metal .. "-" .. MW_Data.machined_parts_recipe_data[current_item.gm_item_data.part].byproduct_name] = true
+                      if MW_Data.metal_data[test_metal].treatment_type == MW_Data.MW_Treatment_Type.ANNEALING then
+                        actual_metal = MW_Data.metal_data[test_metal].source_metal
+                      end
                     end
+                
+                    if actual_metal ~= "same" then
+                      test_metal = actual_metal
+                    end
+                    seen_byproducts[test_metal .. "-" .. MW_Data.machined_parts_recipe_data[current_item.gm_item_data.part].byproduct_name] = true
                   end
+                end
 
-                  -- If the metal is the precursor to a Plated Treated Metal for which the above criteria applies, add it ot the 'seen' list
-                  for _, check_precursor_metal in pairs(MW_Data.MW_Metal) do
-                    if MW_Data.metal_data[check_precursor_metal].type == MW_Data.MW_Metal_Type.TREATMENT
-                      and MW_Data.metal_data[check_precursor_metal].treatment_type == MW_Data.MW_Treatment_Type.PLATING
-                      and metal == MW_Data.metal_data[check_precursor_metal].core_metal then
-                        seen_stocks[metal .. "-" .. stock .. "-stock"] = true
-                    end
-                    if MW_Data.metal_data[check_precursor_metal].type == MW_Data.MW_Metal_Type.TREATMENT
-                      and MW_Data.metal_data[check_precursor_metal].treatment_type == MW_Data.MW_Treatment_Type.ANNEALING
-                      and metal == MW_Data.metal_data[check_precursor_metal].source_metal then
-                        seen_stocks[metal .. "-" .. stock .. "-stock"] = true
-                    end
+                -- If the metal is the precursor to a Plated Treated Metal for which the above criteria applies, add it ot the 'seen' list
+                for _, check_precursor_metal in pairs(MW_Data.MW_Metal) do
+                  if MW_Data.metal_data[check_precursor_metal].type == MW_Data.MW_Metal_Type.TREATMENT
+                    and MW_Data.metal_data[check_precursor_metal].treatment_type == MW_Data.MW_Treatment_Type.PLATING
+                    and metal == MW_Data.metal_data[check_precursor_metal].core_metal then
+                      seen_stocks[metal .. "-" .. stock .. "-stock"] = true
                   end
-
+                  if MW_Data.metal_data[check_precursor_metal].type == MW_Data.MW_Metal_Type.TREATMENT
+                    and MW_Data.metal_data[check_precursor_metal].treatment_type == MW_Data.MW_Treatment_Type.ANNEALING
+                    and metal == MW_Data.metal_data[check_precursor_metal].source_metal then
+                      seen_stocks[metal .. "-" .. stock .. "-stock"] = true
+                  end
                 end
               end
-
             end
           end
         end
       end
     end
   end
+  ::continue::
 end
 
 if GM_globals.mw_byproducts then -- Get byproducts from Stocks recipes
@@ -749,19 +733,12 @@ end
 -- Put the "copper-cable" item back in so that people can connect up the wires of power poles manually again.
 -- This is kept separate for code clarity. It takes a bit longer. Meh.
 for _, recipe in pairs(data.raw.recipe) do
-  if recipe.ingredients ~= nil then
+  if recipe.ingredients then
     for _, ingredient in pairs(recipe.ingredients) do
-      if ingredient.name ~= nil then
-        if ingredient.name == "electrically-conductive-wiring-machined-part" then ingredient.name = "copper-cable" end
-      else
-        if ingredient[1] == "electrically-conductive-wiring-machined-part" then ingredient[1] = "copper-cable" end
-      end
+      if ingredient.name == "electrically-conductive-wiring-machined-part" then ingredient.name = "copper-cable" end
     end
   end
-  if recipe.result ~= nil then
-    if recipe.result == "electrically-conductive-wiring-machined-part" then recipe.result = "copper-cable" end
-  end
-  if recipe.results ~= nil and recipe.results ~= {} then
+  if recipe.results and #recipe.results > 0 then
     for _, result in pairs(recipe.results) do
       if result.name == "electrically-conductive-wiring-machined-part" then result.name = "copper-cable" end
     end

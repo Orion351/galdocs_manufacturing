@@ -4,18 +4,11 @@
 
 function Remove_ingredients(current, to_remove) -- Returns a list where all instances of ingredients in to_remove were pulled from current
   local new_ingredients = {}
-  local new_name = ""
   for _, ingredient in pairs(current) do
-
     if ingredient.type == "fluid" then
       table.insert(new_ingredients, ingredient)
     else
-      if ingredient.name ~= nil then
-        new_name = ingredient.name
-      else
-        new_name = ingredient[1]
-      end
-      if to_remove[new_name] == nil then
+      if to_remove[ingredient.name] == nil then
         table.insert(new_ingredients, ingredient)
       end
     end
@@ -28,42 +21,23 @@ function Append_ingredients(current, to_add) -- Returns a list where ingredients
   for _, ingredient in pairs(to_add) do
     local add_this = true
     for _, check_ingredient in pairs(current) do
-      local ingredient_name = nil
-      local check_ingredient_name = nil
-      if ingredient.name ~= nil then
-        ingredient_name = ingredient.name
-      else
-        ingredient_name = ingredient[1]
-      end
-      if check_ingredient.name ~= nil then
-        check_ingredient_name = check_ingredient.name
-      else
-        check_ingredient_name = check_ingredient[1]
-      end
-      if ingredient_name == check_ingredient_name then add_this = false end
+      if ingredient.name == check_ingredient.name then add_this = false end
     end
-    if add_this then table.insert(new_ingredients, ingredient) end
+    if add_this then
+      local longhand_ingredient = {type = "item", name = ingredient[1], amount = ingredient[2]}
+      table.insert(new_ingredients, longhand_ingredient)
+    end
   end
   return new_ingredients
 end
 
 function Set_up_swappable_ingredients(current, to_remove) -- Replaces ingredients in current with paired elements in to_remove, which is a table that matches old and new ingredients
   local new_ingredients = {}
-  local new_name = ""
+  
   local new_amount = 0
   for _, ingredient in pairs(current) do
-    if ingredient.name ~= nil then
-      new_name = ingredient.name
-    else
-      new_name = ingredient[1]
-    end
-    if ingredient.amount ~= nil then
-      new_amount = ingredient.amount
-    else
-      new_amount = ingredient[2]
-    end
-    if to_remove[new_name] ~= nil and to_remove[new_name] ~= "REMOVE" then
-      table.insert(new_ingredients, {to_remove[new_name], new_amount})
+    if to_remove[ingredient.name] ~= nil and to_remove[ingredient.name] ~= "REMOVE" then
+      table.insert(new_ingredients, {to_remove[ingredient.name], ingredient.amount})
     end
   end
   return new_ingredients
@@ -145,12 +119,6 @@ function Re_recipe(intermediates_to_remove, rerecipe_table_name, finished_part_n
 
     -- copy data out of "nomral"
     current_recipe = data.raw.recipe[name]
-    if current_recipe.normal ~= nil then
-      current_recipe.enabled = current_recipe.normal.enabled
-      current_recipe.energy_required = current_recipe.normal.energy_required
-      current_recipe.result = current_recipe.normal.result
-      current_recipe.ingredients = current_recipe.normal.ingredients
-    end
 
     -- fuss with ingredients
     current_ingredients = current_recipe.ingredients
@@ -159,10 +127,6 @@ function Re_recipe(intermediates_to_remove, rerecipe_table_name, finished_part_n
     used_recipe_list = Keep_track_of_used_ingredients(used_recipe_list, ingredients)
     data.raw.recipe[name].ingredients = current_ingredients
     data.raw.recipe[name].re_recipe = "explicit"
-
-    -- get rekt normal vs. expensive
-    data.raw.recipe[name].normal = nil
-    data.raw.recipe[name].expensive = nil
 
     -- Dump .csv file to log.
     if #finished_part_list > 0 then

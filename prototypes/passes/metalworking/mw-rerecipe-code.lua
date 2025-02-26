@@ -60,23 +60,9 @@ end
 local current_ingredients
 local swap_in_ingredients = {}
 for _, recipe in pairs(data.raw.recipe) do
-
-  -- copy data out of "nomral"
-  if recipe.normal ~= nil then
-    recipe.enabled = recipe.normal.enabled
-    recipe.energy_required = recipe.normal.energy_required
-    recipe.result = recipe.normal.result
-    recipe.ingredients = recipe.normal.ingredients
-  end
-
-  -- fuss with ingredients
   current_ingredients = recipe.ingredients
   swap_in_ingredients = Set_up_swappable_ingredients(current_ingredients, mw_van_intermediates_to_replace)
   current_ingredients = Remove_ingredients(current_ingredients, mw_van_intermediates_to_replace)
   current_ingredients = Append_ingredients(current_ingredients, swap_in_ingredients)
   data.raw.recipe[recipe.name].ingredients = current_ingredients
-
-  -- get rekt normal vs. expensive
-  -- data.raw.recipe[recipe.name].normal = nil
-  -- data.raw.recipe[recipe.name].expensive = nil
 end

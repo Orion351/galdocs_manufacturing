@@ -839,8 +839,6 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
 
             results = recipe_results,
             main_product = recipe_main_product,
-            result = metal .. "-" .. stock .. "-stock",
-            result_count = 1,
 
             crafting_machine_tint = {
               primary = MW_Data.metal_data[metal].tint_metal,
@@ -898,8 +896,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
               name = item_prototype[1].name,
               amount = MW_Data.stocks_recipe_data[stock].remelting_cost
             }},
-            result = metal .. "-plate-stock",
-            result_count = MW_Data.stocks_recipe_data[stock].remelting_yield,
+            results = {{type = "item", name = metal .. "-plate-stock", amount = MW_Data.stocks_recipe_data[stock].remelting_yield}},
 
             crafting_machine_tint = {
               primary = MW_Data.metal_data[metal].tint_metal,
@@ -1042,8 +1039,6 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
               amount = MW_Data.stocks_recipe_data[stock].remelting_cost
             }},
             results = {{type = "item", name = metal .. "-plate-stock", amount = MW_Data.stocks_recipe_data[stock].remelting_yield}},
-            result = metal .. "-plate-stock",
-            result_count = MW_Data.stocks_recipe_data[stock].remelting_yield,
 
             crafting_machine_tint = {
               primary = MW_Data.metal_data[metal].tint_metal,
@@ -1125,8 +1120,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
             icons = icons_data_recipe,
 
             ingredients = ingredient_list,
-            result = metal .. "-" .. stock .. "-stock",
-            result_count = output_count,
+            results = {{type = "item", name = metal .. "-" .. stock .. "-stock", amount = output_count}},
 
             crafting_machine_tint = {
               primary = MW_Data.metal_data[metal].tint_metal,
@@ -1206,8 +1200,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
             icons = icons_data_recipe,
 
             ingredients = ingredient_list,
-            result = metal .. "-" .. stock .. "-stock",
-            result_count = output_count,
+            results = {{type = "item", name = metal .. "-" .. stock .. "-stock", amount = output_count}},
 
             crafting_machine_tint = {
               primary = MW_Data.metal_data[metal].tint_metal,
@@ -1278,8 +1271,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
               primary = MW_Data.metal_data[metal].tint_metal,
               secondary = MW_Data.metal_data[metal].tint_oxidation
             },
-            result = metal .. "-" .. stock .. "-stock",
-            result_count = MW_Data.stocks_recipe_data[stock].output,
+            results = {{type = "item", name = metal .. "-" .. stock .. "-stock", amount = MW_Data.stocks_recipe_data[stock].output}},
             
             hide_from_player_crafting = false,
             allow_as_intermediate = stock_crafting_allow_as_intermediate,
@@ -1350,8 +1342,7 @@ if GM_globals.mw_byproducts then -- Make Byproudct remelting recipes for non-tre
               name = metal .. "-" .. byproduct,
               amount = recipe_data.input
             }},
-            result = metal .. "-".. recipe_data.output_shape .. "-stock",
-            result_count = recipe_data.output,
+            results = {{type = "item", name = metal .. "-".. recipe_data.output_shape .. "-stock", amount = recipe_data.output}},
 
             crafting_machine_tint = {
               primary = MW_Data.metal_data[metal].tint_metal,
@@ -1556,8 +1547,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the treated [M
             enabled = MW_Data.metal_data[metal].tech_stock == "starter",
 
             ingredients = recipe_ingredients,
-            result = metal .. "-" .. stock .. "-stock",
-            result_count = 1,
+            results = {{type = "item", name = metal .. "-" .. stock .. "-stock", amount = 1}},
             
             crafting_machine_tint = {
               primary = MW_Data.metal_data[metal].tint_metal,
@@ -1676,8 +1666,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the treated [M
             icons = remelting_icons_data_recipe,
 
             ingredients = recipe_remelting_ingredients,
-            result = recipe_remelting_result,
-            result_count = recipe_remelting_result_count,
+            results = {{type = "item", name = recipe_remelting_result, amount = recipe_remelting_result_count}},
 
             crafting_machine_tint = {
               primary = MW_Data.metal_data[metal].tint_metal,
@@ -1722,8 +1711,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the treated [M
               icons = untreatment_icons_data_recipe,
 
               ingredients = recipe_untreatment_ingredients,
-              result = recipe_untreatment_result,
-              result_count = 1,
+              results = {{type = "item", name = recipe_untreatment_result, amount = 1}},
 
               crafting_machine_tint = {
                 primary = MW_Data.metal_data[result_metal].tint_metal,
@@ -2354,8 +2342,7 @@ for metal, metal_data in pairs(MW_Data.metal_data) do -- Make "Basic" property d
                 name = property .. "-" .. part .. "-machined-part", 
                 amount = 1
               }},
-              result = "basic-" .. part .. "-machined-part",
-              result_count = 1,
+              results = {{type = "item", name = "basic-" .. part .. "-machined-part", amount = 1}},
 
               always_show_made_in = true,
               hide_from_player_crafting = false,-- recipe_hide_from_player_crafting,
@@ -2443,8 +2430,7 @@ for property, property_downgrade_list in pairs(MW_Data.property_downgrades) do -
             name = next_property .. "-" .. part .. "-machined-part", 
             amount = 1
           }},
-          result = previous_property .. "-" .. part .. "-machined-part",
-          result_count = 1,
+          results = {{type = "item", name = previous_property .. "-" .. part .. "-machined-part", amount = 1}},
 
           always_show_made_in = true,
           hide_from_player_crafting = false, -- recipe_hide_from_player_crafting,
@@ -2522,8 +2508,7 @@ for property_key, multi_properties in pairs(MW_Data.multi_property_with_key_pair
               name = property_key .. "-" .. part .. "-machined-part", 
               amount = 1
             }},
-            result = multi_property .. "-" .. part .. "-machined-part",
-            result_count = 1,
+            results = {{type = "item", name = multi_property .. "-" .. part .. "-machined-part", amount = 1}},
 
             always_show_made_in = true,
             hide_from_player_crafting = false, -- recipe_hide_from_player_crafting,
@@ -2697,8 +2682,7 @@ if multi_to_multi_map then -- -- Make 2-multi-property to 2-multi-property machi
             name = from_key .. "-" .. part .. "-machined-part", 
             amount = 1
           }},
-          result = to_key .. "-" .. part .. "-machined-part",
-          result_count = 1,
+          results = {{type = "item", name = to_key .. "-" .. part .. "-machined-part", amount = 1}},
 
           always_show_made_in = true,
           hide_from_player_crafting = false, -- recipe_hide_from_player_crafting,
@@ -3188,7 +3172,7 @@ for _, tier in pairs(MW_Data.MW_Minisembler_Tier) do -- make the minisembler ent
         icons = recipe_icons,
 
         ingredients = MW_Data.minisemblers_recipe_parameters[minisembler],
-        result = "gm-" .. minisembler,
+        results = {{type = "item", name = "gm-" .. minisembler, amount = 1}},
 
         energy_required = 1,
 
