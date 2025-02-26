@@ -331,7 +331,7 @@ data.raw.resource["copper-ore"].effect_animation_period = 1
 data.raw.resource["copper-ore"].effect_animation_period_deviation = .2
 data.raw.resource["copper-ore"].effect_darkness_multiplier = 0
 data.raw.resource["copper-ore"].min_effect_alpha = 0
-data.raw.resource["copper-ore"].max_effect_alpha = GM_globals.show_ore_sPaRkLe
+data.raw.resource["copper-ore"].max_effect_alpha = GM_globals.show_ore_sPaRkLe and 1 or 0
 
 
 
@@ -3097,18 +3097,20 @@ for _, tier in pairs(MW_Data.MW_Minisembler_Tier) do -- make the minisembler ent
         },
     }
 
+    -- collision_box = {{-0.29, -0.9}, {0.29, 0.9}}
     if MW_Data.minisembler_data[minisembler].shape_data[tier].uses_fluid then
       current_fluid_box = {
         {
           production_type = "input",
           pipe_covers = generic_minisembler_pipe_cover_pictures,
           pipe_picture = generic_minisembler_pipe_pictures,
-          base_area = 10,
-          height = 1,
-          base_level = 0,
+          volume = 10,
+          -- base_area = 10,
+          -- height = 1,
+          -- base_level = 0,
           pipe_connections = {
-            {type="input-output", position = {-1, 0.5}},
-            {type="input-output", position = {1, 0.5}}
+            {flow_direcrtion="input-output", position = {0, 0.5}, direction = defines.direction.west},
+            {flow_direcrtion="input-output", position = {0, 0.5}, direction = defines.direction.east}
           },
           secondary_draw_orders = {north = -1, east = -1, west = -1}
         }
@@ -3236,7 +3238,7 @@ for _, tier in pairs(MW_Data.MW_Minisembler_Tier) do -- make the minisembler ent
         {
           type = "electric",
           usage_priority = "secondary-input",
-          emissions_per_minute = .6
+          emissions_per_second = .01
         },
         energy_usage = "30kW",
 
@@ -3280,7 +3282,7 @@ for _, tier in pairs(MW_Data.MW_Minisembler_Tier) do -- make the minisembler ent
     order_count = order_count + 1
   end
 end
-
+local a = 1
 return MW_Data
 
 -- for /R %%i IN (*) DO (xcopy %%i "../../working" /Y)
