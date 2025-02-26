@@ -1,6 +1,6 @@
 {
 	"name": "galdocs-manufacturing",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"title": "Galdoc's manufacturing",
 	"author": "Galdoc",
 	"factorio_version": "2.0",
@@ -10,8 +10,8 @@
 	"dependencies": ["base >= 2.0",
 		"? Krastorio2 > 1.0",
 		"icon-badges >= 1.0.6",
-		"? quality >= 2.0.37",
-		"? elevated rails >= 2.0.37",
+		"? quality >= 2.0.32",
+		"? elevated rails >= 2.0.32",
 		"! space-age",
 		"(?) bzlead",
 		"(?) galdocs-testing"
