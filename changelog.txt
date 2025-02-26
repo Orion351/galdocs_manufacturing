@@ -2,7 +2,10 @@
 Version: 1.0.1
 Date: 2025-02-25
   Changes:
-    - Updated to 2.0
+    - Updated to 2.0 (NOT Space Age)
+    - Compatibility with Quality enabled
+    - Compatibility with Elevated Rails enabled
+    - Compatibility with Krastorio 2 is currently nonfunctional
 ---------------------------------------------------------------------------------------------------
 Version: 0.2.12
 Date: 2024-08-30

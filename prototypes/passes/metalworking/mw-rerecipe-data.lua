@@ -1,6 +1,7 @@
 return function(advanced)
+  local re_recipe_table = {}
   if advanced then
-    return {
+    re_recipe_table = {
       ["iron-chest"]                  = {{"basic-paneling", 4}, {"basic-framing", 2}, {"basic-bolts", 2}, },
       ["steel-chest"]                 = {{"high-tensile-paneling", 6}, {"high-tensile-framing", 8}, {"high-tensile-bolts", 2}, },
 
@@ -110,7 +111,7 @@ return function(advanced)
       ["energy-shield-mk2-equipment"] = {{"thermally-stable-paneling", 5}, {"lightweight-framing", 10}, {"radiation-resistant-shielding", 2}, {"very-high-tensile-bolts", 10}, },
       ["discharge-defense-equipment"] = {{"high-tensile-framing", 8}, {"lightweight-framing", 15}, {"electrically-conductive-wiring", 10}, {"high-tensile-bolts", 10}, },
     }
-    else return {
+    else re_recipe_table = {
       ["iron-chest"]                  = {{"basic-paneling", 4}, {"basic-framing", 2}, {"basic-bolts", 2}, },
       ["steel-chest"]                 = {{"high-tensile-paneling", 6}, {"high-tensile-framing", 8}, {"high-tensile-bolts", 2}, },
 
@@ -221,4 +222,24 @@ return function(advanced)
       ["discharge-defense-equipment"] = {{"high-tensile-framing", 8}, {"lightweight-framing", 15}, {"electrically-conductive-wiring", 10}, {"high-tensile-bolts", 10}, },
     }
   end
+
+  if GM_globals.quality then
+    if advanced then
+      re_recipe_table["recycler"]      = {{"corrosion-resistant-and-heavy-load-bearing-large-paneling", 3}, {"very-heavy-load-bearing-girdering", 2}, {"lightweight-and-very-high-tensile-shafting", 2}, {"thermally-stable-gearing", 2}, {"ductile-and-electrically-conductive-wiring", 2}, {"very-high-tensile-rivets", 20}}
+    else
+      re_recipe_table["recycler"]      = {{"corrosion-resistant-and-heavy-load-bearing-paneling", 1}, {"very-heavy-load-bearing-framing", 2}, {"lightweight-and-very-high-tensile-shafting", 2}, {"thermally-stable-gearing", 2}, {"ductile-and-electrically-conductive-wiring", 2}, {"very-high-tensile-bolts", 20}}
+    end
+  end
+
+  if GM_globals.quality then
+    if advanced then
+      re_recipe_table["rail-support"] = {{"very-heavy-load-bearing-girdering", 4}, {"very-high-tensile-rivets", 6}}
+      re_recipe_table["rail-ramp"]    = {{"very-heavy-load-bearing-girdering", 4}, {"very-high-tensile-rivets", 12}}
+    else
+      re_recipe_table["rail-support"] = {{"very-heavy-load-bearing-framing", 4}, {"very-high-tensile-bolts", 6}}
+      re_recipe_table["rail-ramp"]    = {{"very-heavy-load-bearing-framing", 4}, {"very-high-tensile-bolts", 12}}
+    end
+  end
+
+  return re_recipe_table
 end

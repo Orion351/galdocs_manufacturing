@@ -25,4 +25,7 @@ global_variables.remelting_badge_corner = "right-top"
 
 global_variables.minisembler_stack_size = 50
 
+global_variables.quality = mods["quality"]
+global_variables.elevated_rails = mods["elevated-rails"]
+
 return global_variables

@@ -491,6 +491,37 @@ MW_Data.minisembler_data = table.merge_subtables(MW_Data.minisembler_data, { -- 
   [MW_Minisembler.ELECTROPLATER]  = {ib_data = {ib_let_badge = "E"}},
 })
 
+MW_Data.minisembler_data = table.merge_subtables(MW_Data.minisembler_data, { -- Allowed Modules
+  [MW_Minisembler.WELDER]         = {allowed_modules = {"speed", "efficiency", "productivity", GM_globals.quality and "quality" or nil}},
+  [MW_Minisembler.DRILL_PRESS]    = {allowed_modules = {"speed", "efficiency", "productivity", GM_globals.quality and "quality" or nil}},
+  [MW_Minisembler.GRINDER]        = {allowed_modules = {"speed", "efficiency", "productivity", GM_globals.quality and "quality" or nil}},
+  [MW_Minisembler.METAL_BANDSAW]  = {allowed_modules = {"speed", "efficiency", "productivity", GM_globals.quality and "quality" or nil}},
+  [MW_Minisembler.METAL_EXTRUDER] = {allowed_modules = {"speed", "efficiency", "productivity", GM_globals.quality and "quality" or nil}},
+  [MW_Minisembler.MILL]           = {allowed_modules = {"speed", "efficiency", "productivity", GM_globals.quality and "quality" or nil}},
+  [MW_Minisembler.METAL_LATHE]    = {allowed_modules = {"speed", "efficiency", "productivity", GM_globals.quality and "quality" or nil}},
+  [MW_Minisembler.THREADER]       = {allowed_modules = {"speed", "efficiency", "productivity", GM_globals.quality and "quality" or nil}},
+  [MW_Minisembler.SPOOLER]        = {allowed_modules = {"speed", "efficiency", "productivity", GM_globals.quality and "quality" or nil}},
+  [MW_Minisembler.ROLLER]         = {allowed_modules = {"speed", "efficiency", "productivity", GM_globals.quality and "quality" or nil}},
+  [MW_Minisembler.BENDER]         = {allowed_modules = {"speed", "efficiency", "productivity", GM_globals.quality and "quality" or nil}},
+  [MW_Minisembler.METAL_ASSAYER]  = {allowed_modules = {"speed", "efficiency",                                                        }},
+  [MW_Minisembler.ELECTROPLATER]  = {allowed_modules = {"speed", "efficiency", "productivity", GM_globals.quality and "quality" or nil}},
+})
+
+MW_Data.minisembler_data = table.merge_subtables(MW_Data.minisembler_data, { -- Allowed Effects
+  [MW_Minisembler.WELDER]         = {allowed_effects = {"speed", "consumption", "pollution", "productivity", GM_globals.quality and "quality" or nil}},
+  [MW_Minisembler.DRILL_PRESS]    = {allowed_effects = {"speed", "consumption", "pollution", "productivity", GM_globals.quality and "quality" or nil}},
+  [MW_Minisembler.GRINDER]        = {allowed_effects = {"speed", "consumption", "pollution", "productivity", GM_globals.quality and "quality" or nil}},
+  [MW_Minisembler.METAL_BANDSAW]  = {allowed_effects = {"speed", "consumption", "pollution", "productivity", GM_globals.quality and "quality" or nil}},
+  [MW_Minisembler.METAL_EXTRUDER] = {allowed_effects = {"speed", "consumption", "pollution", "productivity", GM_globals.quality and "quality" or nil}},
+  [MW_Minisembler.MILL]           = {allowed_effects = {"speed", "consumption", "pollution", "productivity", GM_globals.quality and "quality" or nil}},
+  [MW_Minisembler.METAL_LATHE]    = {allowed_effects = {"speed", "consumption", "pollution", "productivity", GM_globals.quality and "quality" or nil}},
+  [MW_Minisembler.THREADER]       = {allowed_effects = {"speed", "consumption", "pollution", "productivity", GM_globals.quality and "quality" or nil}},
+  [MW_Minisembler.SPOOLER]        = {allowed_effects = {"speed", "consumption", "pollution", "productivity", GM_globals.quality and "quality" or nil}},
+  [MW_Minisembler.ROLLER]         = {allowed_effects = {"speed", "consumption", "pollution", "productivity", GM_globals.quality and "quality" or nil}},
+  [MW_Minisembler.BENDER]         = {allowed_effects = {"speed", "consumption", "pollution", "productivity", GM_globals.quality and "quality" or nil}},
+  [MW_Minisembler.METAL_ASSAYER]  = {allowed_effects = {"speed", "consumption", "pollution",                                                        }},
+  [MW_Minisembler.ELECTROPLATER]  = {allowed_effects = {"speed", "consumption", "pollution", "productivity", GM_globals.quality and "quality" or nil}},
+})
 
 MW_Data.minisembler_entity_data = { -- General worldspace entity data used by minisemblers. FIXME : This should live in a 'meta' file because it will apply to all phases, not just metalworking
   ["2x1"] = {collision_box = {{-0.29, -0.9}, {0.29, 0.9}}, selection_box = {{-0.5, -1}, {0.5, 1}}, fluid_box = {}}

@@ -593,6 +593,11 @@ local mp_crafting_allow_as_intermediate = true
 local mp_crafting_allow_decomposition = true
 local mp_crafting_allow_intermediates = true
 
+local modules_es   = {"speed", "efficiency"}
+local modules_eps  = {"speed", "efficiency", "productivity"}
+local modules_esq  = {"speed", "efficiency", GM_globals.quality and "quality" or nil}
+local modules_epqs = {"speed", "efficiency", "productivity", GM_globals.quality and "quality" or nil}
+
 for _, metal in pairs(MW_Data.MW_Metal) do -- Make [Metal] Stock Subgroups
   data:extend({
     { -- Make Stock Item Subgroups
@@ -852,7 +857,12 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
             allow_as_intermediate = stock_crafting_allow_as_intermediate,
             allow_decomposition = stock_crafting_allow_decomposition,
             allow_intermediates = stock_crafting_allow_intermediates,
-
+            
+            allowed_module_categories = modules_eps,
+            allow_productivity = true,
+            allow_pollution = true,
+            allow_speed = true,
+            allow_consumption = true,
             energy_required = 3.2,
 
             order = "gm-stocks-" .. MW_Data.metal_data[metal].order .. MW_Data.stock_data[stock].order,
@@ -909,6 +919,11 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
             hide_from_player_crafting = recipe_hide_from_player_crafting,
             allow_as_intermediate = false,
             allow_decomposition = false,
+
+            allowed_module_categories = modules_es,
+            allow_pollution = true,
+            allow_speed = true,
+            allow_consumption = true,
 
             energy_required = 3.2,
 
@@ -987,6 +1002,13 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
             allow_decomposition = stock_crafting_allow_decomposition,
             allow_intermediates = stock_crafting_allow_intermediates,
 
+            allowed_module_categories = modules_epqs,
+            allow_quality = GM_globals.quality,
+            allow_productivity = true,
+            allow_pollution = true,
+            allow_speed = true,
+            allow_consumption = true,
+
             energy_required = 0.3,
 
             order = "gm-stocks-" .. MW_Data.metal_data[metal].order .. MW_Data.stock_data[stock].order,
@@ -1051,7 +1073,8 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
             hide_from_player_crafting = recipe_hide_from_player_crafting,
             allow_as_intermediate = false,
             allow_decomposition = false,
-
+            
+            allowed_module_categories = modules_es,
             energy_required = 3.2,
 
             order = "gm-stocks-" .. MW_Data.metal_data[metal].order .. MW_Data.stock_data[stock].order,
@@ -1134,6 +1157,13 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
             allow_decomposition = stock_crafting_allow_decomposition,
             allow_intermediates = stock_crafting_allow_intermediates,
 
+            allowed_module_categories = modules_epqs,
+            allow_quality = GM_globals.quality,
+            allow_productivity = true,
+            allow_pollution = true,
+            allow_speed = true,
+            allow_consumption = true,
+
             energy_required = 3.2 * output_count,
 
             order = "gm-stocks-" .. MW_Data.metal_data[metal].order .. MW_Data.stock_data[stock].order,
@@ -1214,6 +1244,13 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
             allow_decomposition = stock_crafting_allow_decomposition,
             allow_intermediates = stock_crafting_allow_intermediates,
 
+            allowed_module_categories = modules_epqs,
+            allow_quality = GM_globals.quality,
+            allow_productivity = true,
+            allow_pollution = true,
+            allow_speed = true,
+            allow_consumption = true,
+
             energy_required = 3.2 * output_count,
 
             order = "gm-stocks-" .. MW_Data.metal_data[metal].order .. MW_Data.stock_data[stock].order,
@@ -1279,6 +1316,13 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
             allow_as_intermediate = stock_crafting_allow_as_intermediate,
             allow_decomposition = stock_crafting_allow_decomposition,
             allow_intermediates = stock_crafting_allow_intermediates,
+
+            allowed_module_categories = modules_epqs,
+            allow_quality = GM_globals.quality,
+            allow_productivity = true,
+            allow_pollution = true,
+            allow_speed = true,
+            allow_consumption = true,
 
             energy_required = 3.2,
             
@@ -1355,6 +1399,11 @@ if GM_globals.mw_byproducts then -- Make Byproudct remelting recipes for non-tre
             hide_from_player_crafting = recipe_hide_from_player_crafting,
             allow_as_intermediate = false,
             allow_decomposition = false,
+
+            allowed_module_categories = modules_es,
+            allow_pollution = true,
+            allow_speed = true,
+            allow_consumption = true,
 
             energy_required = 3.2,
 
@@ -1562,6 +1611,13 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the treated [M
             allow_decomposition = stock_crafting_allow_decomposition,
             allow_intermediates = stock_crafting_allow_intermediates,
 
+            allowed_module_categories = modules_epqs,
+            allow_quality = GM_globals.quality,
+            allow_productivity = true,
+            allow_pollution = true,
+            allow_speed = true,
+            allow_consumption = true,
+
             energy_required = 0.3,
 
             order = MW_Data.metal_data[metal].order .. MW_Data.stock_data[stock].order,
@@ -1680,6 +1736,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the treated [M
             allow_as_intermediate = false,
             allow_decomposition = false,
 
+            allowed_module_categories = modules_es,
             energy_required = 3.2,
 
             order = MW_Data.metal_data[metal].order .. MW_Data.stock_data[stock].order,
@@ -1725,6 +1782,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the treated [M
               allow_as_intermediate = false,
               allow_decomposition = false,
 
+              allowed_module_categories = modules_es,
               energy_required = 3.2,
 
               order = MW_Data.metal_data[metal].order .. MW_Data.stock_data[stock].order,
@@ -1748,17 +1806,17 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the treated [M
 end
 
 -- Check each module to see if 'productivity' is in its 'effect' list; if so, then add the plate-stock recipes to it.
-for _, module in pairs(data.raw.module) do
-  if module.effect["productivity"] then
-      local module_with_productivity = table.deepcopy(module)
-      if module_with_productivity.limitation then
-        for _, recipe_name in pairs(productivity_whitelist) do
-          table.insert(module_with_productivity.limitation, #module_with_productivity.limitation, recipe_name)
-        end
-      end
-      data:extend({module_with_productivity})
-  end
-end
+-- for _, module in pairs(data.raw.module) do
+--   if module.effect["productivity"] then
+--       local module_with_productivity = table.deepcopy(module)
+--       if module_with_productivity.limitation then
+--         for _, recipe_name in pairs(productivity_whitelist) do
+--           table.insert(module_with_productivity.limitation, #module_with_productivity.limitation, recipe_name)
+--         end
+--       end
+--       data:extend({module_with_productivity})
+--   end
+-- end
 
 
 
@@ -2040,6 +2098,13 @@ for property, parts in pairs(MW_Data.property_machined_part_pairs) do -- Make th
             allow_decomposition = mp_crafting_allow_decomposition,
             allow_intermediates = mp_crafting_allow_intermediates,
 
+            allowed_module_categories = modules_epqs,
+            allow_quality = GM_globals.quality,
+            allow_productivity = true,
+            allow_pollution = true,
+            allow_speed = true,
+            allow_consumption = true,
+
             energy_required = 0.3,
 
             order = MW_Data.property_data[property].order .. MW_Data.machined_part_data[part].order,
@@ -2267,6 +2332,11 @@ for property_key, multi_properties in pairs(MW_Data.multi_property_with_key_pair
               allow_decomposition = mp_crafting_allow_decomposition,
               allow_intermediates = mp_crafting_allow_intermediates,
 
+              allowed_module_categories = modules_es,
+              allow_pollution = true,
+              allow_speed = true,
+              allow_consumption = true,
+  
               energy_required = 0.3,
               
               order = MW_Data.property_data[MW_Data.multi_property_with_key_pairs[property_key][1]].order .. MW_Data.property_data[MW_Data.multi_property_with_key_pairs[property_key][2]].order .. MW_Data.machined_part_data[part].order,
@@ -2351,6 +2421,11 @@ for metal, metal_data in pairs(MW_Data.metal_data) do -- Make "Basic" property d
               allow_as_intermediate = false,
               allow_decomposition = false,
 
+              allowed_module_categories = modules_es,
+              allow_pollution = true,
+              allow_speed = true,
+              allow_consumption = true,
+  
               energy_required = 0.3,
 
               order = MW_Data.property_data[MW_Data.MW_Property.BASIC].order .. MW_Data.machined_part_data[part].order .. " z",
@@ -2439,6 +2514,11 @@ for property, property_downgrade_list in pairs(MW_Data.property_downgrades) do -
           allow_as_intermediate = false,
           allow_decomposition = false,
 
+          allowed_module_categories = modules_es,
+          allow_pollution = true,
+          allow_speed = true,
+          allow_consumption = true,
+
           energy_required = 0.3,
 
           order = MW_Data.property_data[previous_property].order .. MW_Data.machined_part_data[part].order .. " z",
@@ -2516,6 +2596,11 @@ for property_key, multi_properties in pairs(MW_Data.multi_property_with_key_pair
             hide_from_player_crafting = false, -- recipe_hide_from_player_crafting,
             allow_as_intermediate = false,
             allow_decomposition = false,
+
+            allowed_module_categories = modules_es,
+            allow_pollution = true,
+            allow_speed = true,
+            allow_consumption = true,
 
             energy_required = 0.3,
 
@@ -3182,6 +3267,7 @@ for _, tier in pairs(MW_Data.MW_Minisembler_Tier) do -- make the minisembler ent
         ingredients = MW_Data.minisemblers_recipe_parameters[minisembler],
         results = {{type = "item", name = "gm-" .. minisembler, amount = 1}},
 
+        allowed_module_categories = modules_es,
         energy_required = 1,
 
         localised_name = {"gm.minisembler-recipe-name", {"gm." .. minisembler}},
@@ -3279,12 +3365,14 @@ for _, tier in pairs(MW_Data.MW_Minisembler_Tier) do -- make the minisembler ent
         localised_name = {"gm.minisembler-entity-name", {"gm." .. minisembler}},
 
         -- Module Data
-        module_specification =
-        {
-          module_slots = 1,
-          module_info_icon_shift = {0, 0},
-        },
-        allowed_effects = {"speed", "consumption", "pollution"}
+        module_slots = 1,
+        allowed_module_categories = MW_Data.minisembler_data[minisembler].allowed_modules,
+        allowed_effects = MW_Data.minisembler_data[minisembler].allowed_effects,
+
+        -- module_specification =
+        -- {
+        --   module_info_icon_shift = {0, 0},
+        -- },
       }
     })
     order_count = order_count + 1
