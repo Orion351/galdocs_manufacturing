@@ -194,6 +194,15 @@ data.raw.technology["steel-processing"].effects = new_effects
 data.raw.technology["steel-processing"].prerequisites = {"gm-technology-minisemblers"}
 
 -- Fix individual technologies
+-- steam-power
+data.raw.technology["steam-power"].research_trigger.item = "iron-plate-stock"
+
+-- electronics
+data.raw.technology["electronics"].research_trigger.item = "copper-plate-stock"
+
+-- steel-axe
+data.raw.technology["steel-axe"].research_trigger.item = "steel-plate-stock"
+
 -- robotics
 table.insert(data.raw.technology["robotics"].prerequisites, "gm-titanium-machined-part-processing")
 

@@ -3,6 +3,9 @@ Version: 1.0.2
 Date: 2025-02-26
   Changes:
     - Fixed dpenedency version bug
+    - Replaced copper, iron and steel plates in trigger techs with their analogous stocks
+    - Fixed tiny stock icons on belts
+    - Fixed Transport Belt recipe
 ---------------------------------------------------------------------------------------------------
 Version: 1.0.1
 Date: 2025-02-26

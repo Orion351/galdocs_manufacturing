@@ -770,7 +770,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
           {
             size = 64,
             filename = "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. metal .. "/" .. metal .. "-" .. stock .. "-stock-000" .. i .. ".png",
-            scale = 0.25,
+            scale = 0.5,
           }
         }
     
@@ -2332,7 +2332,9 @@ for property_key, multi_properties in pairs(MW_Data.multi_property_with_key_pair
               allow_decomposition = mp_crafting_allow_decomposition,
               allow_intermediates = mp_crafting_allow_intermediates,
 
-              allowed_module_categories = modules_es,
+              allowed_module_categories = modules_epqs,
+              allow_quality = GM_globals.quality,
+              allow_productivity = true,
               allow_pollution = true,
               allow_speed = true,
               allow_consumption = true,
@@ -2421,7 +2423,8 @@ for metal, metal_data in pairs(MW_Data.metal_data) do -- Make "Basic" property d
               allow_as_intermediate = false,
               allow_decomposition = false,
 
-              allowed_module_categories = modules_es,
+              allowed_module_categories = modules_esq,
+              allow_quality = GM_globals.quality,
               allow_pollution = true,
               allow_speed = true,
               allow_consumption = true,
@@ -2514,7 +2517,8 @@ for property, property_downgrade_list in pairs(MW_Data.property_downgrades) do -
           allow_as_intermediate = false,
           allow_decomposition = false,
 
-          allowed_module_categories = modules_es,
+          allowed_module_categories = modules_esq,
+          allow_quality = GM_globals.quality,
           allow_pollution = true,
           allow_speed = true,
           allow_consumption = true,
@@ -2597,7 +2601,8 @@ for property_key, multi_properties in pairs(MW_Data.multi_property_with_key_pair
             allow_as_intermediate = false,
             allow_decomposition = false,
 
-            allowed_module_categories = modules_es,
+            allowed_module_categories = modules_esq,
+            allow_quality = GM_globals.quality,
             allow_pollution = true,
             allow_speed = true,
             allow_consumption = true,
