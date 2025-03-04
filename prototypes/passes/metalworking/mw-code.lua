@@ -12,6 +12,8 @@ local resource_autoplace = require("resource-autoplace")
 
 -- Utility variables
 local order_count = 0 -- FIXME : check alloy ordering
+require("circuit-connector-generated-definitions")
+-- require("circuit-connector-sprites")
 
 
 
@@ -117,7 +119,7 @@ for resource, resource_data in pairs(MW_Data.ore_data) do -- Ore Items
         {
           size = 64,
           filename = "__galdocs-manufacturing__/graphics/icons/intermediates/ore/" .. resource .. "/" .. resource .. "-ore-" .. i .. ".png",
-          scale = 0.25,
+          scale = 0.5,
         }
       }
       table.insert(pictures_data, {layers = single_picture})
@@ -514,14 +516,19 @@ if GM_globals.mw_byproducts then -- Make all Byproduct Items (and subgroups?)
           -- Break up produces_list for use in localization
           local byproduct_of_list_pieces = Localization_split(byproduct_of_list, 3, 6, true)
 
-          -- Entirely disable the tootips according to the user's settings
-          local localized_description_item = {}
-          if GM_globals.show_detailed_tooltips then
-            localized_description_item = {"gm.metal-byproduct-item-description-detailed", {"gm." .. metal}, {"gm." .. byproduct},
+          -- Tooltips
+          -- Make the tooltip
+          local localized_description_item = {
+            "gm.metal-byproduct-item-description-detailed", {"gm." .. metal}, {"gm." .. byproduct},
             byproduct_of_list_pieces[1], byproduct_of_list_pieces[2], byproduct_of_list_pieces[3], byproduct_of_list_pieces[4], byproduct_of_list_pieces[5], byproduct_of_list_pieces[6],
-            property_list_pieces[1], property_list_pieces[2], property_list_pieces[3], property_list_pieces[4], property_list_pieces[5], property_list_pieces[6],
+            property_list_pieces[1], property_list_pieces[2], property_list_pieces[3], property_list_pieces[4], property_list_pieces[5], property_list_pieces[6]
           }
-          else
+
+          -- Use for Factoriopedia
+          local factoriopedia_description_item = table.deepcopy(localized_description_item)
+          
+          -- Replace with simple version if applicable
+          if not GM_globals.show_detailed_tooltips then
             localized_description_item = {"gm.metal-byproduct-item-description-brief", {"gm." .. metal}, {"gm." .. byproduct}}
           end
 
@@ -539,7 +546,7 @@ if GM_globals.mw_byproducts then -- Make all Byproduct Items (and subgroups?)
               {
                 size = 64,
                 filename = "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. metal .. "/" .. metal .. "-" .. byproduct .. "-000" .. i .. ".png",
-                scale = 0.25,
+                scale = 0.5,
               }
             }
         
@@ -565,7 +572,8 @@ if GM_globals.mw_byproducts then -- Make all Byproduct Items (and subgroups?)
               subgroup = "gm-stocks-" .. metal,
 
               localised_name = {"gm.metal-byproduct-item-name", {"gm." .. metal}, {"gm." .. byproduct}},
-              localised_description = localized_description_item,
+              -- localised_description = localized_description_item,
+              factoriopedia_description = factoriopedia_description_item,
 
               gm_item_data = {type = "byproduct", metal = metal, byproduct = byproduct},
             }
@@ -1520,7 +1528,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the treated [M
             {
               size = 64,
               filename = "__galdocs-manufacturing__/graphics/icons/intermediates/stocks/" .. metal .. "/" .. metal .. "-" .. stock .. "-stock-000" .. i .. ".png",
-              scale = 0.25,
+              scale = 0.5,
             }
           }
 
@@ -1943,14 +1951,19 @@ for property, parts in pairs(MW_Data.property_machined_part_pairs) do -- Make th
     table.insert(made_in, {"gm." .. MW_Data.machined_parts_recipe_data[part].made_in})
     table.insert(made_in, {"gm.line-separator"})
 
-    -- Entirely disable the tootips according to the user's settings
-    local localized_description_item = {}
-    if GM_globals.show_detailed_tooltips then
-      localized_description_item = {"gm.metal-machined-part-item-description-detailed", {"gm." .. property}, {"gm." .. part}, made_in, 
+    -- Tooltips
+    -- Make the tooltip
+    local localized_description_item = {"gm.metal-machined-part-item-description-detailed", {"gm." .. property}, {"gm." .. part}, made_in, 
       metal_list_pieces[1], metal_list_pieces[2], metal_list_pieces[3], metal_list_pieces[4], metal_list_pieces[5], metal_list_pieces[6]}
-    else
+
+    -- Use for Factoriopedia
+    local factoriopedia_description_item = table.deepcopy(localized_description_item)
+
+    -- Replace with simple version if applicable
+    if not GM_globals.show_detailed_tooltips then
       localized_description_item = {"gm.metal-machined-part-item-description-brief", {"gm." .. property}, {"gm." .. part}}
     end
+  
 
     -- Check whether we should use the "basic" subgroups or regular subgroups
     local item_subgroup = ""
@@ -1980,6 +1993,7 @@ for property, parts in pairs(MW_Data.property_machined_part_pairs) do -- Make th
 
         localised_name = {"gm.metal-machined-part-item", {"gm." .. property}, {"gm." .. part}},
         localised_description = localized_description_item,
+        factoriopedia_description = factoriopedia_description_item,
         
         gm_item_data = {type = "machined-parts", property = property, part = part},
       }
@@ -2112,6 +2126,7 @@ for property, parts in pairs(MW_Data.property_machined_part_pairs) do -- Make th
             subgroup = item_subgroup,
 
             localised_name = {"gm.metal-machined-part-recipe", {"gm." .. property}, {"gm." .. part}, {"gm." .. metal}, {"gm." .. precursor}},
+            localised_description = localized_description_item,
 
             gm_recipe_data = {type = "machined-parts", property = property, part = part},
           }
@@ -2345,7 +2360,9 @@ for property_key, multi_properties in pairs(MW_Data.multi_property_with_key_pair
               category = "gm-" .. MW_Data.machined_parts_recipe_data[part].made_in,
               subgroup = "gm-machined-parts-" .. property_key,
 
-              -- localised_name = {"gm.metal-machined-part-recipe", {"gm." .. property}, {"gm." .. part}, {"gm." .. metal}, {"gm." .. machined_parts_precurors[part][1]}}
+              -- localised_name = {"gm.metal-machined-part-recipe", {"gm." .. property}, {"gm." .. part}, {"gm." .. metal}, {"gm." .. machined_parts_precurors[part][1]}},
+              localised_name = {"gm.metal-machined-part-item", item_name, {"gm." .. part}},
+              localized_description = localized_description_item,
 
               gm_recipe_data = {type = "machined-parts", properties = multi_properties, compound_property = property_key, part = part},
             }
@@ -2436,6 +2453,7 @@ for metal, metal_data in pairs(MW_Data.metal_data) do -- Make "Basic" property d
               subgroup = sugroup_thing,
 
               localised_name = {"gm.metal-machined-part-downgrade-recipe", {"gm.basic"}, {"gm." .. part}},
+              localized_description = data.raw.item["basic-" .. part .. "-machined-part"].localized_description,
 
               gm_recipe_data = {type = "machined-parts", start_property = property, end_property = MW_Data.MW_Property.BASIC, part = part, special = "downgrade"},
             }
@@ -2759,6 +2777,15 @@ if multi_to_multi_map then -- -- Make 2-multi-property to 2-multi-property machi
       if GM_globals.dedicated_handcrafting_downgrade_recipe_category then
         sugroup_thing = "gm-machined-parts-dedicated-handcrafting-downgrade-" .. to_key
       end
+          
+      -- Work out the localized name for multi property machined parts
+      local item_name = {""}
+      for _, property in pairs(MW_Data.multi_property_with_key_pairs[to_key]) do
+        table.insert(item_name, {"gm." .. property})
+        table.insert(item_name, ", ")
+      end
+      -- Get rid of trailing comma
+      if #item_name > 1 then table.remove(item_name, #item_name) end
 
       local recipe_prototype = {
         {
@@ -2788,6 +2815,7 @@ if multi_to_multi_map then -- -- Make 2-multi-property to 2-multi-property machi
           subgroup = sugroup_thing,
           
           -- localised_name = {"gm.metal-machined-part-downgrade-recipe", {"gm." .. to_key}, {"gm." .. part}},
+          localised_name = {"gm.metal-machined-part-downgrade-recipe", item_name, {"gm." .. part}},
 
           gm_recipe_data = {type = "machined-parts", start_compound_property = from_key, end_compound_property = to_key, part = part, special = "downgrade"},
         }
@@ -3229,9 +3257,15 @@ for _, tier in pairs(MW_Data.MW_Minisembler_Tier) do -- make the minisembler ent
         icon_mipmaps = 4
       }}
 
-      if (GM_globals.gm_show_minisembler_badges == "all" or GM_globals.gm_show_minisembler_badges == "recipe") then
-        Build_letter_badge_icon(recipe_icons, MW_Data.minisembler_data[minisembler].ib_data.ib_let_badge, "", "left-top")
-      end
+    if (GM_globals.gm_show_minisembler_badges == "all" or GM_globals.gm_show_minisembler_badges == "recipe") then
+      Build_letter_badge_icon(recipe_icons, MW_Data.minisembler_data[minisembler].ib_data.ib_let_badge, "", "left-top")
+    end
+
+    -- Circuit Connecting Stuff
+    local circuit_connector_data = circuit_connector_definitions.create_vector(universal_connector_template, MW_Data.minisemblers_rendering_data[tier][minisembler].connector_pos)
+
+    -- Dropoff Stuff
+    local dropoff_pos = MW_Data.minisembler_data[minisembler].dropoff_pos
 
     data:extend({ -- make the minisembler recipe categories, items, recipes and entities
       { -- recipe category
@@ -3316,6 +3350,7 @@ for _, tier in pairs(MW_Data.MW_Minisembler_Tier) do -- make the minisembler ent
         collision_box = collision_box,
         selection_box = selection_box,
         fluid_boxes = current_fluid_box,
+        vector_to_place_result = dropoff_pos,
 
         -- Display data
         alert_icon_shift = util.by_pixel(0, -12),
@@ -3373,6 +3408,10 @@ for _, tier in pairs(MW_Data.MW_Minisembler_Tier) do -- make the minisembler ent
         module_slots = 1,
         allowed_module_categories = MW_Data.minisembler_data[minisembler].allowed_modules,
         allowed_effects = MW_Data.minisembler_data[minisembler].allowed_effects,
+
+        -- Circuit
+        circuit_wire_max_distance = 9,
+        circuit_connector = circuit_connector_data
 
         -- module_specification =
         -- {

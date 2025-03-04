@@ -792,6 +792,132 @@ MW_Data.minisemblers_rendering_data = { -- Set up the minisembler rendering data
 
 require("prototypes.passes.metalworking.mw-minisembler-rendering-parser")
 
+-- {
+-- North
+-- East
+-- South
+-- West
+-- }
+
+-- West facing variant is 24
+-- South facing variant is 26
+-- Diagonal SW facing variant is 25
+-- Diagonal SE facing variant is (probably) 27
+
+MW_Data.minisemblers_rendering_data[MW_Minisembler_Tier.ELECTRIC][MW_Minisembler.BENDER]["connector_pos"] =
+  {
+    { variation = 27, main_offset = util.by_pixel(10, 20), shadow_offset = util.by_pixel(10, 21), show_shadow = true },
+    { variation = 25, main_offset = util.by_pixel(-13.5, 4.5), shadow_offset = util.by_pixel(-13.5, 5.5), show_shadow = true },
+  }
+  
+MW_Data.minisemblers_rendering_data[MW_Minisembler_Tier.ELECTRIC][MW_Minisembler.DRILL_PRESS]["connector_pos"] =
+  {
+    { variation = 24, main_offset = util.by_pixel(-15, -8.5), shadow_offset = util.by_pixel(0, -0.5), show_shadow = false },
+    { variation = 26, main_offset = util.by_pixel(-16, 3.5), shadow_offset = util.by_pixel(-14, 13.5), show_shadow = true },
+  }
+
+MW_Data.minisemblers_rendering_data[MW_Minisembler_Tier.ELECTRIC][MW_Minisembler.ELECTROPLATER]["connector_pos"] =
+  {
+    { variation = 24, main_offset = util.by_pixel(-15, -8.5), shadow_offset = util.by_pixel(0, -0.5), show_shadow = false },
+    { variation = 26, main_offset = util.by_pixel(-16, 3.5), shadow_offset = util.by_pixel(-14, 13.5), show_shadow = true },
+  }
+
+MW_Data.minisemblers_rendering_data[MW_Minisembler_Tier.ELECTRIC][MW_Minisembler.GRINDER]["connector_pos"] =
+  {
+    { variation = 24, main_offset = util.by_pixel(-15, -8.5), shadow_offset = util.by_pixel(0, -0.5), show_shadow = false },
+    { variation = 26, main_offset = util.by_pixel(-16, 3.5), shadow_offset = util.by_pixel(-14, 13.5), show_shadow = true },
+  }
+
+MW_Data.minisemblers_rendering_data[MW_Minisembler_Tier.ELECTRIC][MW_Minisembler.METAL_ASSAYER]["connector_pos"] =
+  {
+    { variation = 24, main_offset = util.by_pixel(-15, -8.5), shadow_offset = util.by_pixel(0, -0.5), show_shadow = false },
+    { variation = 26, main_offset = util.by_pixel(-16, 3.5), shadow_offset = util.by_pixel(-14, 13.5), show_shadow = true },
+  }
+
+MW_Data.minisemblers_rendering_data[MW_Minisembler_Tier.ELECTRIC][MW_Minisembler.METAL_BANDSAW]["connector_pos"] =
+  {
+    { variation = 24, main_offset = util.by_pixel(-15, -8.5), shadow_offset = util.by_pixel(0, -0.5), show_shadow = false },
+    { variation = 26, main_offset = util.by_pixel(-16, 3.5), shadow_offset = util.by_pixel(-14, 13.5), show_shadow = true },
+  }
+
+MW_Data.minisemblers_rendering_data[MW_Minisembler_Tier.ELECTRIC][MW_Minisembler.METAL_EXTRUDER]["connector_pos"] =
+  {
+    { variation = 24, main_offset = util.by_pixel(-15, -8.5), shadow_offset = util.by_pixel(0, -0.5), show_shadow = false },
+    { variation = 26, main_offset = util.by_pixel(-16, 3.5), shadow_offset = util.by_pixel(-14, 13.5), show_shadow = true },
+  }
+
+MW_Data.minisemblers_rendering_data[MW_Minisembler_Tier.ELECTRIC][MW_Minisembler.METAL_LATHE]["connector_pos"] =
+  {
+    { variation = 24, main_offset = util.by_pixel(-15, -8.5), shadow_offset = util.by_pixel(0, -0.5), show_shadow = false },
+    { variation = 26, main_offset = util.by_pixel(-16, 3.5), shadow_offset = util.by_pixel(-14, 13.5), show_shadow = true },
+  }
+
+MW_Data.minisemblers_rendering_data[MW_Minisembler_Tier.ELECTRIC][MW_Minisembler.MILL]["connector_pos"] =
+  {
+    { variation = 24, main_offset = util.by_pixel(-15, -8.5), shadow_offset = util.by_pixel(0, -0.5), show_shadow = false },
+    { variation = 26, main_offset = util.by_pixel(-16, 3.5), shadow_offset = util.by_pixel(-14, 13.5), show_shadow = true },
+  }
+
+MW_Data.minisemblers_rendering_data[MW_Minisembler_Tier.ELECTRIC][MW_Minisembler.ROLLER]["connector_pos"] =
+  {
+    { variation = 24, main_offset = util.by_pixel(-15, -8.5), shadow_offset = util.by_pixel(0, -0.5), show_shadow = false },
+    { variation = 26, main_offset = util.by_pixel(-16, 3.5), shadow_offset = util.by_pixel(-14, 13.5), show_shadow = true },
+  }
+
+MW_Data.minisemblers_rendering_data[MW_Minisembler_Tier.ELECTRIC][MW_Minisembler.SPOOLER]["connector_pos"] =
+  {
+    { variation = 24, main_offset = util.by_pixel(-15, -8.5), shadow_offset = util.by_pixel(0, -0.5), show_shadow = false },
+    { variation = 26, main_offset = util.by_pixel(-16, 3.5), shadow_offset = util.by_pixel(-14, 13.5), show_shadow = true },
+  }
+
+MW_Data.minisemblers_rendering_data[MW_Minisembler_Tier.ELECTRIC][MW_Minisembler.THREADER]["connector_pos"] =
+  {
+    { variation = 24, main_offset = util.by_pixel(-15, -8.5), shadow_offset = util.by_pixel(0, -0.5), show_shadow = false },
+    { variation = 26, main_offset = util.by_pixel(-16, 3.5), shadow_offset = util.by_pixel(-14, 13.5), show_shadow = true },
+  }
+
+MW_Data.minisemblers_rendering_data[MW_Minisembler_Tier.ELECTRIC][MW_Minisembler.WELDER]["connector_pos"] =
+  {
+    { variation = 24, main_offset = util.by_pixel(-15, -8.5), shadow_offset = util.by_pixel(0, -0.5), show_shadow = false },
+    { variation = 26, main_offset = util.by_pixel(-16, 3.5), shadow_offset = util.by_pixel(-14, 13.5), show_shadow = true },
+  }
+
+
+
+for minisembler, data in pairs(MW_Data.minisemblers_rendering_data[MW_Minisembler_Tier.ELECTRIC]) do
+  data["connector_pos"][3] = data["connector_pos"][1]
+  data["connector_pos"][4] = data["connector_pos"][2]
+end
+
+  -- MW_Data.minisemblers_rendering_data[MW_Minisembler_Tier.ELECTRIC][MW_Minisembler.WELDER]["connector_pos"] =
+  -- {
+  --   { variation = 24, main_offset = util.by_pixel(-15, -8.5), shadow_offset = util.by_pixel(0, -0.5), show_shadow = false },
+  --   { variation = 26, main_offset = util.by_pixel(-16, 3.5), shadow_offset = util.by_pixel(-14, 13.5), show_shadow = true },
+  --   { variation = 24, main_offset = util.by_pixel(-14.5, -8.5), shadow_offset = util.by_pixel(-12.5, 6), show_shadow = false },
+  --   { variation = 26, main_offset = util.by_pixel(13.5, 4.5), shadow_offset = util.by_pixel(-7, -12.5), show_shadow = true }
+  -- }
+
+
+local dropoff_pos_end      = {x = 0, y = -1.35}
+local dropoff_pos_side_ccw  = {x = .85, y = .5}
+local dropoff_pos_side_cw = {x = -.85, y = .5}
+
+
+MW_Data.minisembler_data = table.merge_subtables(MW_Data.minisembler_data, { -- Allowed Effects
+  [MW_Minisembler.WELDER]         = {dropoff_pos = dropoff_pos_end},
+  [MW_Minisembler.DRILL_PRESS]    = {dropoff_pos = dropoff_pos_side_cw},
+  [MW_Minisembler.GRINDER]        = {dropoff_pos = dropoff_pos_side_cw},
+  [MW_Minisembler.METAL_BANDSAW]  = {dropoff_pos = dropoff_pos_end},
+  [MW_Minisembler.METAL_EXTRUDER] = {dropoff_pos = dropoff_pos_side_cw},
+  [MW_Minisembler.MILL]           = {dropoff_pos = dropoff_pos_end},
+  [MW_Minisembler.METAL_LATHE]    = {dropoff_pos = dropoff_pos_side_ccw},
+  [MW_Minisembler.THREADER]       = {dropoff_pos = dropoff_pos_end},
+  [MW_Minisembler.SPOOLER]        = {dropoff_pos = dropoff_pos_end},
+  [MW_Minisembler.ROLLER]         = {dropoff_pos = dropoff_pos_end},
+  [MW_Minisembler.BENDER]         = {dropoff_pos = dropoff_pos_end},
+  [MW_Minisembler.METAL_ASSAYER]  = {dropoff_pos = dropoff_pos_end},
+  [MW_Minisembler.ELECTROPLATER]  = {},
+})
 
 
 -- ****************************
