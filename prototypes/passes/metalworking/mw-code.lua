@@ -878,6 +878,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
 
             always_show_made_in = true,
             hide_from_player_crafting = recipe_hide_from_player_crafting,
+            hide_from_signal_gui = false,
             allow_as_intermediate = stock_crafting_allow_as_intermediate,
             allow_decomposition = stock_crafting_allow_decomposition,
             allow_intermediates = stock_crafting_allow_intermediates,
@@ -1024,6 +1025,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
 
             always_show_made_in = true,
             hide_from_player_crafting = recipe_hide_from_player_crafting,
+            -- hide_from_signal_gui = false,
             allow_as_intermediate = stock_crafting_allow_as_intermediate,
             allow_decomposition = stock_crafting_allow_decomposition,
             allow_intermediates = stock_crafting_allow_intermediates,
@@ -1099,6 +1101,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
 
             always_show_made_in = true,
             hide_from_player_crafting = recipe_hide_from_player_crafting,
+            hide_from_signal_gui = false,
             allow_as_intermediate = false,
             allow_decomposition = false,
             
@@ -1182,6 +1185,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
             },
 
             hide_from_player_crafting = false,
+            hide_from_signal_gui = false,
             allow_as_intermediate = stock_crafting_allow_as_intermediate,
             allow_decomposition = stock_crafting_allow_decomposition,
             allow_intermediates = stock_crafting_allow_intermediates,
@@ -1272,6 +1276,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
             },
 
             hide_from_player_crafting = false,
+            hide_from_signal_gui = false,
             allow_as_intermediate = stock_crafting_allow_as_intermediate,
             allow_decomposition = stock_crafting_allow_decomposition,
             allow_intermediates = stock_crafting_allow_intermediates,
@@ -1348,6 +1353,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
             main_product = metal .. "-" .. stock .. "-stock",
             
             hide_from_player_crafting = false,
+            hide_from_signal_gui = false,
             allow_as_intermediate = stock_crafting_allow_as_intermediate,
             allow_decomposition = stock_crafting_allow_decomposition,
             allow_intermediates = stock_crafting_allow_intermediates,
@@ -1434,6 +1440,7 @@ if GM_globals.mw_byproducts then -- Make Byproudct remelting recipes for non-tre
 
             always_show_made_in = true,
             hide_from_player_crafting = recipe_hide_from_player_crafting,
+            hide_from_signal_gui = false,
             allow_as_intermediate = false,
             allow_decomposition = false,
 
@@ -1792,6 +1799,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the treated [M
             },
 
             always_show_made_in = true,
+            hide_from_signal_gui = false,
             hide_from_player_crafting = hide_from_player_crafting,
             allow_as_intermediate = false,
             allow_decomposition = false,
@@ -1839,6 +1847,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the treated [M
 
               always_show_made_in = true,
               hide_from_player_crafting = hide_from_player_crafting,
+              hide_from_signal_gui = false,
               allow_as_intermediate = false,
               allow_decomposition = false,
 
@@ -2180,6 +2189,7 @@ for property, parts in pairs(MW_Data.property_machined_part_pairs) do -- Make th
             
             hide_from_player_crafting = hide_from_player_crafting,
             always_show_made_in = true,
+            hide_from_signal_gui = false,
             allow_as_intermediate = mp_crafting_allow_as_intermediate,
             allow_decomposition = mp_crafting_allow_decomposition,
             allow_intermediates = mp_crafting_allow_intermediates,
@@ -2436,6 +2446,7 @@ for property_key, multi_properties in pairs(MW_Data.multi_property_with_key_pair
 
               always_show_made_in = true,
               hide_from_player_crafting = recipe_hide_from_player_crafting,
+              hide_from_signal_gui = false,
               allow_as_intermediate = mp_crafting_allow_as_intermediate,
               allow_decomposition = mp_crafting_allow_decomposition,
               allow_intermediates = mp_crafting_allow_intermediates,
@@ -2530,6 +2541,7 @@ for metal, metal_data in pairs(MW_Data.metal_data) do -- Make "Basic" property d
 
               always_show_made_in = true,
               hide_from_player_crafting = false,-- recipe_hide_from_player_crafting,
+              hide_from_signal_gui = false,
               allow_as_intermediate = false,
               allow_decomposition = false,
 
@@ -2629,6 +2641,7 @@ for property, property_downgrade_list in pairs(MW_Data.property_downgrades) do -
           allow_decomposition = false,
 
           allowed_module_categories = modules_esq,
+          hide_from_signal_gui = false,
           allow_quality = GM_globals.quality,
           allow_pollution = true,
           allow_speed = true,
@@ -2708,7 +2721,8 @@ for property_key, multi_properties in pairs(MW_Data.multi_property_with_key_pair
             results = {{type = "item", name = multi_property .. "-" .. part .. "-machined-part", amount = 1}},
 
             always_show_made_in = true,
-            hide_from_player_crafting = false, -- recipe_hide_from_player_crafting,
+            hide_from_player_crafting = false,
+            hide_from_signal_gui = false,
             allow_as_intermediate = false,
             allow_decomposition = false,
 
@@ -2898,6 +2912,7 @@ if multi_to_multi_map then -- -- Make 2-multi-property to 2-multi-property machi
 
           always_show_made_in = true,
           hide_from_player_crafting = false, -- recipe_hide_from_player_crafting,
+          hide_from_signal_gui = false,
           allow_as_intermediate = false,
           allow_decomposition = false,
 
