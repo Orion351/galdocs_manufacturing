@@ -1,5 +1,6 @@
 # Ignore a directory
 dev/**
+.vscode/**
 
 # Ignore all python code and zip files
 *.py
