@@ -519,18 +519,25 @@ if GM_globals.mw_byproducts then -- Make all Byproduct Items (and subgroups?)
           -- Tooltips
           -- Make the tooltip
           local localized_description_item = {
-            "gm.metal-byproduct-item-description-detailed", {"gm." .. metal}, {"gm." .. byproduct},
-            byproduct_of_list_pieces[1], byproduct_of_list_pieces[2], byproduct_of_list_pieces[3], byproduct_of_list_pieces[4], byproduct_of_list_pieces[5], byproduct_of_list_pieces[6],
+            -- "gm.metal-byproduct-item-description-detailed", {"gm." .. metal}, {"gm." .. byproduct},
+            -- byproduct_of_list_pieces[1], byproduct_of_list_pieces[2], byproduct_of_list_pieces[3], byproduct_of_list_pieces[4], byproduct_of_list_pieces[5], byproduct_of_list_pieces[6],
+            -- property_list_pieces[1], property_list_pieces[2], property_list_pieces[3], property_list_pieces[4], property_list_pieces[5], property_list_pieces[6]
+            "gm.metal-byproduct-item-description-normal", {"gm." .. metal}, {"gm." .. byproduct},
+            property_list_pieces[1], property_list_pieces[2], property_list_pieces[3], property_list_pieces[4], property_list_pieces[5], property_list_pieces[6]
+          }
+          
+          -- Use for Factoriopedia
+          local factoriopedia_description_item = {
+            "gm.metal-byproduct-item-description-factoriopedia", {"gm." .. metal}, {"gm." .. byproduct},
             property_list_pieces[1], property_list_pieces[2], property_list_pieces[3], property_list_pieces[4], property_list_pieces[5], property_list_pieces[6]
           }
 
-          -- Use for Factoriopedia
-          local factoriopedia_description_item = table.deepcopy(localized_description_item)
           
           -- Replace with simple version if applicable
           if not GM_globals.show_detailed_tooltips then
             localized_description_item = {"gm.metal-byproduct-item-description-brief", {"gm." .. metal}, {"gm." .. byproduct}}
           end
+
 
           local icons_data_item = { -- Make item icon
             {
@@ -572,7 +579,7 @@ if GM_globals.mw_byproducts then -- Make all Byproduct Items (and subgroups?)
               subgroup = "gm-stocks-" .. metal,
 
               localised_name = {"gm.metal-byproduct-item-name", {"gm." .. metal}, {"gm." .. byproduct}},
-              -- localised_description = localized_description_item,
+              localised_description = localized_description_item,
               factoriopedia_description = factoriopedia_description_item,
 
               gm_item_data = {type = "byproduct", metal = metal, byproduct = byproduct},
@@ -712,11 +719,11 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
       -- Add stocks to produces_list
       for product_stock, precursor_recipe_data in pairs(MW_Data.stocks_recipe_data) do
         if stock == precursor_recipe_data.precursor and MW_Data.metal_stocks_pairs[metal][product_stock] then
-          table.insert(produces_list, " - [item=" .. metal .. "-" .. product_stock .. "-stock]  ")
-          table.insert(produces_list, {"gm.metal-stock-item-name", {"gm." .. metal}, {"gm." .. product_stock}})
+          table.insert(produces_list, " - [item=" .. metal .. "-" .. product_stock .. "-stock] ")
+          -- table.insert(produces_list, {"gm.metal-stock-item-name", {"gm." .. metal}, {"gm." .. product_stock}})
           table.insert(produces_list, {"gm.in-a"})
-          table.insert(produces_list, " [item=gm-" .. precursor_recipe_data.made_in .. "]  ")
-          table.insert(produces_list, {"gm." .. precursor_recipe_data.made_in})
+          table.insert(produces_list, " [item=gm-" .. precursor_recipe_data.made_in .. "] ")
+          -- table.insert(produces_list, {"gm." .. precursor_recipe_data.made_in})
           table.insert(produces_list, {"gm.line-separator"})
         end
       end
@@ -724,42 +731,50 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
       -- Add machined-parts to produces_list
       for product_machined_part, precursor_recipe_data in pairs(MW_Data.machined_parts_recipe_data) do
         if stock == precursor_recipe_data.precursor then
-          table.insert(produces_list, " - [item=basic-" .. product_machined_part .. "-machined-part]  ")
-          table.insert(produces_list, {"gm." .. product_machined_part})
+          table.insert(produces_list, " - [item=basic-" .. product_machined_part .. "-machined-part] ")
+          -- table.insert(produces_list, {"gm." .. product_machined_part})
           table.insert(produces_list, {"gm.in-a"})
-          table.insert(produces_list, " [item=gm-" .. precursor_recipe_data.made_in .. "]  ")
-          table.insert(produces_list, {"gm." .. precursor_recipe_data.made_in})
+          table.insert(produces_list, " [item=gm-" .. precursor_recipe_data.made_in .. "] ")
+          -- table.insert(produces_list, {"gm." .. precursor_recipe_data.made_in})
           table.insert(produces_list, {"gm.line-separator"})
         end
       end
 
       -- Break up produces_list for use in localization
-      local produces_list_pieces = Localization_split(produces_list, 6, 6, true)
+      local produces_list_pieces = Localization_split(produces_list, 4, 6, true)
       -- If there weren't any entries for produces_list, then ... well ... this.
       if #produces_list_pieces[1] == 1 then
         table.insert(produces_list_pieces[1], " - None")
       end
 
       -- Populate made_in
-      local made_in = {""}
-      if stock ~= MW_Data.MW_Stock.PLATE then
-        table.insert(made_in, " - [item=gm-" .. MW_Data.stocks_recipe_data[stock].made_in .. "]  ")
-        table.insert(made_in, {"gm." .. MW_Data.stocks_recipe_data[stock].made_in})
-        table.insert(made_in, {"gm.line-separator"})
-      end
-      if stock == MW_Data.MW_Stock.PLATE then
-        table.insert(made_in, " - [item=stone-furnace]  ")
-        table.insert(made_in, {"gm.smelting-type"})
-        table.insert(made_in, {"gm.line-separator"})
-      end
+      -- local made_in = {""}
+      -- if stock ~= MW_Data.MW_Stock.PLATE then
+      --   table.insert(made_in, " - [item=gm-" .. MW_Data.stocks_recipe_data[stock].made_in .. "]  ")
+      --   table.insert(made_in, {"gm." .. MW_Data.stocks_recipe_data[stock].made_in})
+      --   table.insert(made_in, {"gm.line-separator"})
+      -- end
+      -- if stock == MW_Data.MW_Stock.PLATE then
+      --   table.insert(made_in, " - [item=stone-furnace]  ")
+      --   table.insert(made_in, {"gm.smelting-type"})
+      --   table.insert(made_in, {"gm.line-separator"})
+      -- end
 
-      -- Entirely disable the tootips according to the user's settings
-      local localized_description_item = {}
-      if GM_globals.show_detailed_tooltips then
-        localized_description_item = {"gm.metal-stock-item-description-detailed", {"gm." .. metal}, {"gm." .. stock}, made_in,
+      -- Tooltips
+      -- Make the tooltip
+      local localized_description_item = {
+        "gm.metal-stock-item-description-detailed", {"gm." .. metal}, {"gm." .. stock},
         property_list_pieces[1], property_list_pieces[2], property_list_pieces[3], property_list_pieces[4], property_list_pieces[5], property_list_pieces[6],
-        produces_list_pieces[1], produces_list_pieces[2], produces_list_pieces[3], produces_list_pieces[4], produces_list_pieces[5], produces_list_pieces[6]}
-      else
+        produces_list_pieces[1], produces_list_pieces[2], produces_list_pieces[3], produces_list_pieces[4], produces_list_pieces[5], produces_list_pieces[6]
+      }
+
+      -- Use for Factoriopedia
+      local factoriopedia_description_item = {
+        "gm.metal-stock-item-description-factoriopedia", {"gm." .. metal}, {"gm." .. stock},
+        property_list_pieces[1], property_list_pieces[2], property_list_pieces[3], property_list_pieces[4], property_list_pieces[5], property_list_pieces[6],
+      }
+      -- Replace with simple version if applicable
+      if not GM_globals.show_detailed_tooltips then
         localized_description_item = {"gm.metal-stock-item-description-brief", {"gm." .. metal}, {"gm." .. stock}}
       end
 
@@ -809,6 +824,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
 
           localised_name = {"gm.metal-stock-item-name", {"gm." .. metal}, {"gm." .. stock}},
           localised_description = localized_description_item,
+          factoriopedia_description = factoriopedia_description_item,
 
           gm_item_data = {type = "stocks", metal = metal, stock = stock},
         }
@@ -878,6 +894,8 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
             subgroup = "gm-stocks-" .. metal,
 
             localised_name = {"gm.metal-stock-item-name", {"gm." .. metal}, {"gm." .. stock}},
+            -- localised_description = localized_description_item,
+            -- factoriopedia_description = factoriopedia_description_item,
 
             gm_recipe_data = {type = "stocks", metal = metal, stock = stock},
           }
@@ -1024,6 +1042,8 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
             subgroup = "gm-stocks-" .. metal,
 
             localised_name = {"gm.metal-stock-item-name", {"gm." .. metal}, {"gm." .. stock}},
+            -- localised_description = localized_description_item,
+            -- factoriopedia_description = factoriopedia_description_item,  
 
             gm_recipe_data = {type = "stocks", metal = metal, stock = stock}
           }
@@ -1154,6 +1174,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
 
             ingredients = ingredient_list,
             results = {{type = "item", name = metal .. "-" .. stock .. "-stock", amount = output_count}},
+            main_product = metal .. "-" .. stock .. "-stock",
 
             crafting_machine_tint = {
               primary = MW_Data.metal_data[metal].tint_metal,
@@ -1179,6 +1200,8 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
             subgroup = "gm-stocks-" .. metal,
 
             localised_name = {"gm.metal-stock-item-name", {"gm." .. metal}, {"gm." .. stock}},
+            -- localised_description = localized_description_item,
+            -- factoriopedia_description = factoriopedia_description_item,  
 
             gm_recipe_data = {type = "stocks", metal = metal, stock = stock, special = "alloy-plate-recipe"},
           }
@@ -1241,6 +1264,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
 
             ingredients = ingredient_list,
             results = {{type = "item", name = metal .. "-" .. stock .. "-stock", amount = output_count}},
+            main_product = metal .. "-" .. stock .. "-stock",
 
             crafting_machine_tint = {
               primary = MW_Data.metal_data[metal].tint_metal,
@@ -1266,6 +1290,8 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
             subgroup = "gm-stocks-" .. metal,
 
             localised_name = {"gm.metal-stock-item-name", {"gm." .. metal}, {"gm." .. stock}},
+            -- localised_description = localized_description_item,
+            -- factoriopedia_description = factoriopedia_description_item,  
 
             gm_recipe_data = {type = "stocks", metal = metal, stock = stock, special = "alloy-ore-recipe"},
           }
@@ -1319,6 +1345,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
               secondary = MW_Data.metal_data[metal].tint_oxidation
             },
             results = {{type = "item", name = metal .. "-" .. stock .. "-stock", amount = MW_Data.stocks_recipe_data[stock].output}},
+            main_product = metal .. "-" .. stock .. "-stock",
             
             hide_from_player_crafting = false,
             allow_as_intermediate = stock_crafting_allow_as_intermediate,
@@ -1339,6 +1366,8 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
             subgroup = "gm-stocks-" .. metal,
 
             localised_name = {"gm.metal-stock-item-name", {"gm." .. metal}, {"gm." .. stock}},
+            -- localised_description = localized_description_item,
+            -- factoriopedia_description = factoriopedia_description_item,  
 
             gm_recipe_data = {type = "stocks", metal = metal, stock = stock},
           }
@@ -1472,48 +1501,70 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the treated [M
         -- Add in the machined-parts to the list
         for product_machined_part, precursor_recipe_data in pairs(MW_Data.machined_parts_recipe_data) do
           if stock == precursor_recipe_data.precursor then
-            table.insert(produces_list, " - [item=basic-" .. product_machined_part .. "-machined-part]  ")
-            table.insert(produces_list, {"gm." .. product_machined_part})
+            table.insert(produces_list, " - [item=basic-" .. product_machined_part .. "-machined-part] ")
+            -- table.insert(produces_list, {"gm." .. product_machined_part})
             table.insert(produces_list, {"gm.in-a"})
-            table.insert(produces_list, " [item=gm-" .. precursor_recipe_data.made_in .. "]  ")
-            table.insert(produces_list, {"gm." .. precursor_recipe_data.made_in})
+            table.insert(produces_list, " [item=gm-" .. precursor_recipe_data.made_in .. "] ")
+            -- table.insert(produces_list, {"gm." .. precursor_recipe_data.made_in})
             table.insert(produces_list, {"gm.line-separator"})
           end
         end
 
         -- Break up produces_list for use in localization
-        local produces_list_pieces = Localization_split(produces_list, 6, 6, true)
+        local produces_list_pieces = Localization_split(produces_list, 4, 6, true)
         -- If there weren't any entries for produces_list, then ... well ... this.
         if #produces_list_pieces[1] == 1 then
           table.insert(produces_list_pieces[1], " - None")
         end
 
         -- Populate made_in
-        local made_in = {""}
+        -- local made_in = {""}
 
-        -- Plating
-        if MW_Data.metal_data[metal].treatment_type == MW_Data.MW_Treatment_Type.PLATING then
-          table.insert(made_in, " - [item=gm-" .. MW_Data.MW_Minisembler.ELECTROPLATER .. "]  ")
-          table.insert(made_in, {"gm." .. MW_Data.MW_Minisembler.ELECTROPLATER})
-          table.insert(made_in, {"gm.line-separator"})
-        end
+        -- -- Plating
+        -- if MW_Data.metal_data[metal].treatment_type == MW_Data.MW_Treatment_Type.PLATING then
+        --   table.insert(made_in, " - [item=gm-" .. MW_Data.MW_Minisembler.ELECTROPLATER .. "]  ")
+        --   table.insert(made_in, {"gm." .. MW_Data.MW_Minisembler.ELECTROPLATER})
+        --   table.insert(made_in, {"gm.line-separator"})
+        -- end
 
-        -- Annealing
-        if MW_Data.metal_data[metal].treatment_type == MW_Data.MW_Treatment_Type.ANNEALING then
-          table.insert(made_in, " - [item=stone-furnace]  ")
-          table.insert(made_in, {"gm.smelting-type"})
-          table.insert(made_in, {"gm.line-separator"})
-        end
+        -- -- Annealing
+        -- if MW_Data.metal_data[metal].treatment_type == MW_Data.MW_Treatment_Type.ANNEALING then
+        --   table.insert(made_in, " - [item=stone-furnace]  ")
+        --   table.insert(made_in, {"gm.smelting-type"})
+        --   table.insert(made_in, {"gm.line-separator"})
+        -- end
 
-        -- Entirely disable the tootips according to the user's settings
-        local localized_description_item = {}
-        if GM_globals.show_detailed_tooltips then
-          localized_description_item = {"gm.metal-stock-item-description-detailed", {"gm." .. metal}, {"gm." .. stock}, made_in, 
+        -- Tooltips
+        -- Make the tooltip
+        local localized_description_item =
+        {
+          "gm.metal-stock-item-description-detailed", {"gm." .. metal}, {"gm." .. stock},
+            property_list_pieces[1], property_list_pieces[2], property_list_pieces[3], property_list_pieces[4], property_list_pieces[5], property_list_pieces[6],
+            produces_list_pieces[1], produces_list_pieces[2], produces_list_pieces[3], produces_list_pieces[4], produces_list_pieces[5], produces_list_pieces[6]
+        }
+
+        -- Use for Factoriopedia
+        local factoriopedia_description_item =
+        {
+          "gm.metal-stock-item-description-factoriopedia", {"gm." .. metal}, {"gm." .. stock},
           property_list_pieces[1], property_list_pieces[2], property_list_pieces[3], property_list_pieces[4], property_list_pieces[5], property_list_pieces[6],
-          produces_list_pieces[1], produces_list_pieces[2], produces_list_pieces[3], produces_list_pieces[4], produces_list_pieces[5], produces_list_pieces[6]}
-        else
+        }
+        
+        -- Replace with simple version if applicable
+        if not GM_globals.show_detailed_tooltips then
           localized_description_item = {"gm.metal-stock-item-description-brief", {"gm." .. metal}, {"gm." .. stock}}
         end
+
+
+        -- Entirely disable the tootips according to the user's settings
+        -- local localized_description_item = {}
+        -- if GM_globals.show_detailed_tooltips then
+        --   localized_description_item = {"gm.metal-stock-item-description-detailed", {"gm." .. metal}, {"gm." .. stock},
+        --   property_list_pieces[1], property_list_pieces[2], property_list_pieces[3], property_list_pieces[4], property_list_pieces[5], property_list_pieces[6],
+        --   produces_list_pieces[1], produces_list_pieces[2], produces_list_pieces[3], produces_list_pieces[4], produces_list_pieces[5], produces_list_pieces[6]}
+        -- else
+        --   localized_description_item = {"gm.metal-stock-item-description-brief", {"gm." .. metal}, {"gm." .. stock}}
+        -- end
 
         local icons_data_item = {
           {
@@ -1555,6 +1606,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the treated [M
 
             localised_name = {"gm.metal-stock-item-name", {"gm." .. metal}, {"gm." .. stock}},
             localised_description = localized_description_item,
+            factoriopedia_description = factoriopedia_description_item,
 
             gm_item_data = {type = "stocks", metal = metal, stock = stock, special = "treatment"},
           }
@@ -1931,8 +1983,8 @@ for property, parts in pairs(MW_Data.property_machined_part_pairs) do -- Make th
       if properties[property] then
         local precursor = MW_Data.machined_parts_recipe_data[part].precursor
         if MW_Data.metal_stocks_pairs[metal][precursor] then
-          table.insert(metal_list, " - [item=" .. metal .. "-" .. precursor ..  "-stock]  ")
-          table.insert(metal_list, {"gm.metal-stock-item-name", {"gm." .. metal}, {"gm." .. precursor}})
+          table.insert(metal_list, " - [item=" .. metal .. "-" .. precursor ..  "-stock] ")
+          -- table.insert(metal_list, {"gm.metal-stock-item-name", {"gm." .. metal}, {"gm." .. precursor}})
           table.insert(metal_list, {"gm.line-separator"})
         end
       end
@@ -1946,24 +1998,44 @@ for property, parts in pairs(MW_Data.property_machined_part_pairs) do -- Make th
     end
 
     -- Populate made_in
-    local made_in = {""}
-    table.insert(made_in, " - [item=gm-" .. MW_Data.machined_parts_recipe_data[part].made_in .. "]  ")
-    table.insert(made_in, {"gm." .. MW_Data.machined_parts_recipe_data[part].made_in})
-    table.insert(made_in, {"gm.line-separator"})
+    -- local made_in = {""}
+    -- table.insert(made_in, " - [item=gm-" .. MW_Data.machined_parts_recipe_data[part].made_in .. "]  ")
+    -- table.insert(made_in, {"gm." .. MW_Data.machined_parts_recipe_data[part].made_in})
+    -- table.insert(made_in, {"gm.line-separator"})
 
     -- Tooltips
     -- Make the tooltip
-    local localized_description_item = {"gm.metal-machined-part-item-description-detailed", {"gm." .. property}, {"gm." .. part}, made_in, 
-      metal_list_pieces[1], metal_list_pieces[2], metal_list_pieces[3], metal_list_pieces[4], metal_list_pieces[5], metal_list_pieces[6]}
+    -- local localized_description_item = {"gm.metal-machined-part-item-description-detailed", {"gm." .. property}, {"gm." .. part}, made_in, 
+    --   metal_list_pieces[1], metal_list_pieces[2], metal_list_pieces[3], metal_list_pieces[4], metal_list_pieces[5], metal_list_pieces[6]}
+
+    -- -- Use for Factoriopedia
+    -- local factoriopedia_description_item = table.deepcopy(localized_description_item)
+
+    -- -- Replace with simple version if applicable
+    -- if not GM_globals.show_detailed_tooltips then
+    --   localized_description_item = {"gm.metal-machined-part-item-description-brief", {"gm." .. property}, {"gm." .. part}}
+    -- end
+  
+    -- Tooltips
+    -- Make the tooltip
+    local localized_description_item =
+    {
+      "gm.metal-machined-part-item-description-detailed", {"gm." .. property}, {"gm." .. part},
+      metal_list_pieces[1], metal_list_pieces[2], metal_list_pieces[3], metal_list_pieces[4], metal_list_pieces[5], metal_list_pieces[6]
+    }
 
     -- Use for Factoriopedia
-    local factoriopedia_description_item = table.deepcopy(localized_description_item)
-
+    local factoriopedia_description_item =
+    {
+      "gm.metal-machined-part-item-description-factoriopedia", {"gm." .. property}, {"gm." .. part},
+      -- metal_list_pieces[1], metal_list_pieces[2], metal_list_pieces[3], metal_list_pieces[4], metal_list_pieces[5], metal_list_pieces[6]
+    }
+    
     -- Replace with simple version if applicable
     if not GM_globals.show_detailed_tooltips then
       localized_description_item = {"gm.metal-machined-part-item-description-brief", {"gm." .. property}, {"gm." .. part}}
     end
-  
+
 
     -- Check whether we should use the "basic" subgroups or regular subgroups
     local item_subgroup = ""
@@ -2126,7 +2198,8 @@ for property, parts in pairs(MW_Data.property_machined_part_pairs) do -- Make th
             subgroup = item_subgroup,
 
             localised_name = {"gm.metal-machined-part-recipe", {"gm." .. property}, {"gm." .. part}, {"gm." .. metal}, {"gm." .. precursor}},
-            localised_description = localized_description_item,
+            -- localised_description = localized_description_item,
+            factoriopedia_description = factoriopedia_description_item,
 
             gm_recipe_data = {type = "machined-parts", property = property, part = part},
           }
@@ -2190,7 +2263,7 @@ for property_key, multi_properties in pairs(MW_Data.multi_property_with_key_pair
           local metal_list = {""}
           for _, possible_metal in pairs(MW_Data.multi_property_metal_pairs[property_key]) do
             table.insert(metal_list, " - [item=" .. possible_metal .. "-" .. MW_Data.machined_parts_recipe_data[part].precursor ..  "-stock]  ")
-            table.insert(metal_list, {"gm.metal-stock-item-name", {"gm." .. possible_metal}, {"gm." .. MW_Data.machined_parts_recipe_data[part].precursor}})
+            -- table.insert(metal_list, {"gm.metal-stock-item-name", {"gm." .. possible_metal}, {"gm." .. MW_Data.machined_parts_recipe_data[part].precursor}})
             table.insert(metal_list, {"gm.line-separator"})
           end
 
@@ -2200,13 +2273,7 @@ for property_key, multi_properties in pairs(MW_Data.multi_property_with_key_pair
           if #metal_list_pieces[1] == 1 then
             table.insert(metal_list_pieces[1], " - None")
           end
-
-          -- For the tooltip, list what minisembler makes this machined part
-          local made_in = {""}
-          table.insert(made_in, " - [item=gm-" .. MW_Data.machined_parts_recipe_data[part].made_in .. "]  ")
-          table.insert(made_in, {"gm." .. MW_Data.machined_parts_recipe_data[part].made_in})
-          table.insert(made_in, {"gm.line-separator"})
-
+          
           -- Work out the localized name for multi property machined parts
           local item_name = {""}
           for _, property in pairs(multi_properties) do
@@ -2216,12 +2283,37 @@ for property_key, multi_properties in pairs(MW_Data.multi_property_with_key_pair
           -- Get rid of trailing comma
           if #item_name > 1 then table.remove(item_name, #item_name) end
 
-          -- Entirely disable the tootips according to the user's settings
-          local localized_description_item = {}
-          if GM_globals.show_detailed_tooltips then
-            localized_description_item = {"gm.metal-machined-part-item-description-detailed", item_name, {"gm." .. part}, made_in, 
-            metal_list_pieces[1], metal_list_pieces[2], metal_list_pieces[3], metal_list_pieces[4], metal_list_pieces[5], metal_list_pieces[6]}
-          else
+          -- -- For the tooltip, list what minisembler makes this machined part
+          -- local made_in = {""}
+          -- table.insert(made_in, " - [item=gm-" .. MW_Data.machined_parts_recipe_data[part].made_in .. "]  ")
+          -- -- table.insert(made_in, {"gm." .. MW_Data.machined_parts_recipe_data[part].made_in})
+          -- table.insert(made_in, {"gm.line-separator"})
+
+          -- -- Entirely disable the tootips according to the user's settings
+          -- local localized_description_item = {}
+          -- if GM_globals.show_detailed_tooltips then
+          --   localized_description_item = {"gm.metal-machined-part-item-description-detailed", item_name, {"gm." .. part}, made_in, 
+          --   metal_list_pieces[1], metal_list_pieces[2], metal_list_pieces[3], metal_list_pieces[4], metal_list_pieces[5], metal_list_pieces[6]}
+          -- else
+          --   localized_description_item = {"gm.metal-machined-part-item-description-brief", item_name, {"gm." .. part}}
+          -- end
+
+          -- Tooltips
+          -- Make the tooltip
+          local localized_description_item =
+          {
+            "gm.metal-machined-part-item-description-detailed", item_name, {"gm." .. part},
+            metal_list_pieces[1], metal_list_pieces[2], metal_list_pieces[3], metal_list_pieces[4], metal_list_pieces[5], metal_list_pieces[6]          }
+
+          -- Use for Factoriopedia
+          local factoriopedia_description_item =
+          {
+            "gm.metal-machined-part-item-description-factoriopedia", item_name, {"gm." .. part},
+            -- metal_list_pieces[1], metal_list_pieces[2], metal_list_pieces[3], metal_list_pieces[4], metal_list_pieces[5], metal_list_pieces[6]
+          }
+          
+          -- Replace with simple version if applicable
+          if not GM_globals.show_detailed_tooltips then
             localized_description_item = {"gm.metal-machined-part-item-description-brief", item_name, {"gm." .. part}}
           end
 
@@ -2259,6 +2351,7 @@ for property_key, multi_properties in pairs(MW_Data.multi_property_with_key_pair
 
               localised_name = {"gm.metal-machined-part-item", item_name, {"gm." .. part}},
               localised_description = localized_description_item,
+              factoriopedia_description = factoriopedia_description_item,
 
               gm_item_data = {type = "machined-parts", properties = multi_properties, compound_property = property_key, part = part},
             }
@@ -2362,7 +2455,7 @@ for property_key, multi_properties in pairs(MW_Data.multi_property_with_key_pair
 
               -- localised_name = {"gm.metal-machined-part-recipe", {"gm." .. property}, {"gm." .. part}, {"gm." .. metal}, {"gm." .. machined_parts_precurors[part][1]}},
               localised_name = {"gm.metal-machined-part-item", item_name, {"gm." .. part}},
-              localized_description = localized_description_item,
+              -- localized_description = localized_description_item,
 
               gm_recipe_data = {type = "machined-parts", properties = multi_properties, compound_property = property_key, part = part},
             }
