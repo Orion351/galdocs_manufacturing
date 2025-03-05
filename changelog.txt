@@ -1,9 +1,11 @@
 ---------------------------------------------------------------------------------------------------
 Version: 1.0.3
-Date: 2025-03-04
+Date: 2025-03-05
   Changes:
     - Minisemblers now drop off their outputs instead of requiring an inserter to remove them
     - Upgraded Minisemblers to connect to circuit networks
+    - Fixed tooltips to account for 2.0 features
+    - Known bug with factoriopedia tooltips
 ---------------------------------------------------------------------------------------------------
 Version: 1.0.2
 Date: 2025-02-26

@@ -8,10 +8,10 @@
 		"ignore":[ "dev/**", "*.py", "*.md" ]
   },
 	"dependencies": ["base >= 2.0",
-		"? Krastorio2 > 1.0",
-		"icon-badges >= 1.0.6",
-		"? quality >= 2.0.32",
-		"? elevated rails >= 2.0.32",
+		"! Krastorio2 > 1.0",
+		"icon-badges",
+		"? quality",
+		"? elevated rails",
 		"! space-age",
 		"(?) bzlead",
 		"(?) galdocs-testing"
