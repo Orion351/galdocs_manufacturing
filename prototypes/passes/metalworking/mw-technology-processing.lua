@@ -6,7 +6,7 @@ for minisembler, _ in pairs(MW_Data.minisemblers_recipe_parameters) do -- put mi
     technology_list,
     {
       type = "unlock-recipe",
-      recipe = "gm-" .. minisembler .. "-recipe"
+      recipe = "gm-" .. minisembler
     }
   )
 end

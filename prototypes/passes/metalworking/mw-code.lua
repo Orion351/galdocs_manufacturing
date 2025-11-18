@@ -854,7 +854,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
         end
         
         local recipe_results = {
-          {type = "item", name = metal .. "-" .. stock .. "-stock", amount = 1}
+          {type = "item", name = metal .. "-" .. stock .. "-stock", amount = MW_Data.stocks_recipe_data[stock].output}
         }
 
         local recipe_main_product = metal .. "-" .. stock .. "-stock"
@@ -994,7 +994,7 @@ for metal, stocks in pairs(MW_Data.metal_stocks_pairs) do -- Make the non-treate
         end
 
         local recipe_results = {
-          {type = "item", name = metal .. "-" .. stock .. "-stock", amount = 1}
+          {type = "item", name = metal .. "-" .. stock .. "-stock", amount = MW_Data.stocks_recipe_data[stock].output}
         }
 
         if GM_globals.mw_byproducts and MW_Data.stocks_recipe_data[stock].byproduct_name then
@@ -3391,6 +3391,7 @@ for _, tier in pairs(MW_Data.MW_Minisembler_Tier) do -- make the minisembler ent
         
         order = "a[galdocs-".. minisembler .. "-" .. order_count .. "]",
         subgroup = "gm-minisemblers",
+        hidden_in_factoriopedia = true,
         
         place_result = "gm-" .. minisembler,
 
@@ -3405,9 +3406,10 @@ for _, tier in pairs(MW_Data.MW_Minisembler_Tier) do -- make the minisembler ent
       },
       { -- recipe
         type = "recipe",
-        name = "gm-" .. minisembler .."-recipe",
+        name = "gm-" .. minisembler,
 
         enabled = false,
+        -- hidden_in_factoriopedia = true,
 
         icons = recipe_icons,
 

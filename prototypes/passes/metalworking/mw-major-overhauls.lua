@@ -16,7 +16,7 @@ local overhaul_modpack_data = {
     passes = {
       metalworking = {
         -- data phase
-        enums = false, data = false, code = false, technology = false, technology_processing = false,
+        enums = true, data = true, code = true, technology = true, technology_processing = true,
         
         -- data final fixes phase
         replace_list = false, re_recipe = false, pull_list = false, flat_replace = false, 

@@ -8,7 +8,7 @@
 		"ignore":[ "dev/**", "*.py", "*.md" ]
   },
 	"dependencies": ["base >= 2.0",
-		"! Krastorio2 > 1.0",
+		"(?) Krastorio2 > 1.0",
 		"icon-badges",
 		"? quality",
 		"? elevated-rails",
