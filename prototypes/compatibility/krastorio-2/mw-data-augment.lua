@@ -113,21 +113,21 @@ MW_Data.ore_data = table.merge_subtables(MW_Data.ore_data, { -- ordering
 })
 
 MW_Data.ore_data = table.merge_subtables(MW_Data.ore_data, { -- i hate dumb names
-  [MW_Resource.RARE_METALS]     = {has_dumb_name = "raw-rare-metals"},
-  [MW_Resource.IMERSITE_POWDER] = {has_dumb_name = "imersite-powder"}
+  [MW_Resource.RARE_METALS]     = {has_dumb_name = "kr-rare-metal-ore"},
+  [MW_Resource.IMERSITE_POWDER] = {has_dumb_name = "kr-imersite-powder"}
 })
 
 MW_Data.ore_data = table.merge_subtables(MW_Data.ore_data, { -- Enriched Recipes
   [MW_Resource.COPPER]      = {enriched_recipe = {new = false, enable = true,  replace = true,  purifier_name = "sulfuric-acid",     purifier_amount = 3}},
   [MW_Resource.IRON]        = {enriched_recipe = {new = false, enable = true,  replace = true,  purifier_name = "sulfuric-acid",     purifier_amount = 3}},
   [MW_Resource.LEAD]        = {enriched_recipe = {new = true,  enable = true,  replace = false, purifier_name = "sulfuric-acid",     purifier_amount = 3}},
-  [MW_Resource.TITANIUM]    = {enriched_recipe = {new = true,  enable = true,  replace = false, purifier_name = "hydrogen-chloride", purifier_amount = 3}},
+  [MW_Resource.TITANIUM]    = {enriched_recipe = {new = true,  enable = true,  replace = false, purifier_name = "kr-hydrogen-chloride", purifier_amount = 3}},
   [MW_Resource.ZINC]        = {enriched_recipe = {new = true,  enable = true,  replace = false, purifier_name = "sulfuric-acid",     purifier_amount = 3}},
   [MW_Resource.NICKEL]      = {enriched_recipe = {new = true,  enable = true,  replace = false, purifier_name = "sulfuric-acid",     purifier_amount = 3}},
   [MW_Resource.RARE_METALS] = {enriched_recipe = {new = false, enable = false, replace = false,                                                          }},
 
-  [MW_Resource.OSMIUM]      = {enriched_recipe = {new = true,  enable = true,  purifier_name = "hydrogen-chloride", purifier_amount = 3}},
-  [MW_Resource.NIOBIUM]     = {enriched_recipe = {new = true,  enable = true,  purifier_name = "hydrogen-chloride", purifier_amount = 3}},
+  [MW_Resource.OSMIUM]      = {enriched_recipe = {new = true,  enable = true,  purifier_name = "kr-hydrogen-chloride", purifier_amount = 3}},
+  [MW_Resource.NIOBIUM]     = {enriched_recipe = {new = true,  enable = true,  purifier_name = "kr-hydrogen-chloride", purifier_amount = 3}},
 })
 
 MW_Data.ore_data = table.merge_subtables(MW_Data.ore_data, { -- Matter-to-Ore and Ore-to-Matter Recipes
@@ -414,6 +414,8 @@ MW_Data.ore_data = table.merge_subtables(MW_Data.ore_data, { -- Set up crushing 
     enriched_crushing_ingredient = {metal = MW_Resource.RARE_METALS, shape = MW_Ore_Shape.ENRICHED, amount = 1}
   },
 })
+
+-- in KR, there are "kr-rare-metals" ('rare metal plate'), "kr-rare-metal-ore" and "kr-enriched-rare-metals"
 
 MW_Data.ore_data = table.merge_subtables(MW_Data.ore_data, { -- Pebble / Gravel interface
   [MW_Resource.OSMIUM] = {

@@ -144,7 +144,7 @@ for ore, ore_data in pairs(MW_Data.ore_data) do -- Add Enriched Items and Recipe
       data:extend({ -- Item
         {
           type = "item",
-          name = "enriched-" .. ore,
+          name = "kr-enriched-" .. ore,
 
           icons = icons_data_item,
 
@@ -159,8 +159,8 @@ for ore, ore_data in pairs(MW_Data.ore_data) do -- Add Enriched Items and Recipe
         },
       })
     else
-      data.raw.item["enriched-" .. ore].icons = icons_data_item
-      data.raw.item["enriched-" .. ore].pictures = pictures_data
+      data.raw.item["kr-enriched-" .. ore].icons = icons_data_item
+      data.raw.item["kr-enriched-" .. ore].pictures = pictures_data
     end
     GM_globals.GM_Badge_list["item"]["enriched-" .. ore] = ib_data
     -- Build_badge(data.raw.item["enriched-" .. ore], ib_data)
@@ -174,13 +174,13 @@ for ore, ore_data in pairs(MW_Data.ore_data) do -- Add Enriched Items and Recipe
       data:extend({ -- recipe for ore to enriched
         {
           type = "recipe",
-          name = "enriched-" .. ore,
+          name = "kr-enriched-" .. ore,
 
           icons = icons_data_item,
           
           results = {
-            {type = "fluid", name = "dirty-water", amount = 25},
-            {type = "item", name = "enriched-" .. ore, amount = 6}
+            {type = "fluid", name = "kr-dirty-water", amount = 25},
+            {type = "item", name = "kr-enriched-" .. ore, amount = 6}
           },
           ingredients = {
             {type = "fluid", name = "water", amount = 25},
@@ -225,7 +225,7 @@ for ore, ore_data in pairs(MW_Data.ore_data) do -- Add Enriched Items and Recipe
       data:extend({ -- enriched to plate recipe
         {
           type = "recipe",
-          name = "enriched-" .. ore .. "-plate",
+          name = "kr-" .. ore .. "-plate-stock-from-enriched-" .. ore,
           icons = icons_enriched_to_plate_recipe,
           category = "smelting",
 
@@ -233,11 +233,10 @@ for ore, ore_data in pairs(MW_Data.ore_data) do -- Add Enriched Items and Recipe
           order = "gm-stocks-" .. MW_Data.metal_data[ore].order .. MW_Data.stock_data[MW_Data.MW_Stock.PLATE].order .. "-b",
           subgroup = "gm-stocks-" .. ore,
 
-          result = ore .. "-plate-stock",
-          result_count = 5,
+          results = {{type = "item", name = ore .. "-plate-stock", amount = 5}},
           ingredients = {{
             type = "item",
-            name = "enriched-" .. ore,
+            name = "kr-enriched-" .. ore,
             amount = 5
           }},
           energy_required = 16,
@@ -268,12 +267,12 @@ for ore, ore_data in pairs(MW_Data.ore_data) do -- Add Enriched Items and Recipe
       data:extend({ -- dirty water filtration recipe
         {
           type = "recipe",
-          name = "dirty-water-filtration-" .. ore,
+          name = "kr-filter-" .. ore .. "-ore-from-dirty-water", -- "dirty-water-filtration-" .. ore,
 
           icons = icons_dirty_water_filtration_recipe,
           
           ingredients = {
-            {type = "fluid", name = "dirty-water", amount = 100}
+            {type = "fluid", name = "kr-dirty-water", amount = 100}
           },
           results = {
             {type = "fluid", name = "water", amount = 100},
@@ -286,7 +285,7 @@ for ore, ore_data in pairs(MW_Data.ore_data) do -- Add Enriched Items and Recipe
           energy_required = 2,
 
           order = "w011[dirty-water-filtration-" .. ore .. "]",
-          category = "fluid-filtration",
+          category = "kr-fluid-filtration",
           group = "intermediate-products",
           subgroup = "raw-material",
 
@@ -304,12 +303,9 @@ for ore, ore_data in pairs(MW_Data.ore_data) do -- Add Enriched Items and Recipe
       })
 
     end
-    -- Build_badge(data.raw.recipe["enriched-" .. ore], ib_data)
-    -- Build_badge(data.raw.recipe["enriched-" .. ore .. "-plate"], ib_data)
-    -- Build_badge(data.raw.recipe["dirty-water-filtration-" .. ore], ib_data)
-    GM_globals.GM_Badge_list["recipe"]["enriched-" .. ore] = ib_data
-    GM_globals.GM_Badge_list["recipe"]["enriched-" .. ore .. "-plate"] = ib_data
-    GM_globals.GM_Badge_list["recipe"]["dirty-water-filtration-" .. ore] = ib_data
+    GM_globals.GM_Badge_list["recipe"]["kr-enriched-" .. ore] = ib_data
+    GM_globals.GM_Badge_list["recipe"]["kr-enriched-" .. ore .. "-plate"] = ib_data
+    GM_globals.GM_Badge_list["recipe"]["kr-filter-" .. ore .. "-ore-from-dirty-water"] = ib_data
 
   end
 end
@@ -350,12 +346,12 @@ for ore, ore_data in pairs(MW_Data.ore_data) do -- Make Matter recipes
       data:extend({ -- matter to ore recipe
         {
           type = "recipe",
-          name = "matter-to-" .. ore .. "-ore",
+          name = "kr-matter-to-" .. ore .. "-ore",
 
           icons = icons_matter_to_ore_recipe,
 
           ingredients = {
-            {type = "fluid", name = "matter", amount = ore_data.matter_recipe.matter_count},
+            {type = "fluid", name = "kr-matter", amount = ore_data.matter_recipe.matter_count},
           },
           results = {
             {type = "item", name = ore .. "-ore", amount = ore_data.matter_recipe.ore_count}
@@ -373,15 +369,14 @@ for ore, ore_data in pairs(MW_Data.ore_data) do -- Make Matter recipes
           always_show_products = true,
           show_amount_in_title = false,
 
-          order = "z[matter-to-" .. ore .. "-ore]",
-          subgroup = "matter-deconversion",
-          category = "matter-deconversion",
+          order = "z[kr-matter-to-" .. ore .. "-ore]",
+          subgroup = "kr-matter-deconversion",
+          category = "kr-matter-deconversion",
 
           localised_name = {"gm.matter-to-ore-recipe-name", { "gm." .. ore }}
         }
       })
-      GM_globals.GM_Badge_list["recipe"]["matter-to-" .. ore .. "-ore"] = ib_data
-      -- Build_badge(data.raw.recipe["matter-to-" .. ore .. "-ore"], ib_data)
+      GM_globals.GM_Badge_list["recipe"]["kr-matter-to-" .. ore .. "-ore"] = ib_data
     end
 
     if ore_data.matter_recipe.ore_to_matter_recipe then -- ore-to-matter
@@ -413,7 +408,7 @@ for ore, ore_data in pairs(MW_Data.ore_data) do -- Make Matter recipes
       data:extend({ -- matter to ore recipe
         {
           type = "recipe",
-          name = ore .. "-ore-to-matter",
+          name = "kr-kr-" .. ore .. "-ore-to-matter",
 
           enabled = false,
 
@@ -423,7 +418,7 @@ for ore, ore_data in pairs(MW_Data.ore_data) do -- Make Matter recipes
             {type = "item", name = ore .. "-ore", amount = ore_data.matter_recipe.ore_count}
           },
           results = {
-            {type = "fluid", name = "matter", amount = ore_data.matter_recipe.matter_count},
+            {type = "fluid", name = "kr-matter", amount = ore_data.matter_recipe.matter_count},
           },
 
           energy_required = 1,
@@ -438,15 +433,14 @@ for ore, ore_data in pairs(MW_Data.ore_data) do -- Make Matter recipes
           always_show_products = true,
           show_amount_in_title = false,
 
-          order = "z[" .. ore .. "-ore-to-matter]",
-          subgroup = "matter-conversion",
-          category = "matter-conversion", 
+          order = "z[kr-kr-" .. ore .. "-ore-to-matter]",
+          subgroup = "kr-matter-conversion",
+          category = "kr-matter-conversion", 
 
           localised_name = {"gm.ore-to-matter-recipe-name", { "gm." .. ore }}
         }
       })
-      GM_globals.GM_Badge_list["recipe"][ore .. "-ore-to-matter"] = ib_data
-      -- Build_badge(data.raw.recipe[ore .. "-ore-to-matter"], ib_data)
+      GM_globals.GM_Badge_list["recipe"]["kr-kr-" .. ore .. "-ore-to-matter"] = ib_data
     end
 
     if MW_Data.metal_data[ore] and MW_Data.metal_data[ore].matter_recipe and MW_Data.metal_data[ore].matter_recipe.matter_to_plate_recipe then -- matter-to-plate
@@ -478,19 +472,19 @@ for ore, ore_data in pairs(MW_Data.ore_data) do -- Make Matter recipes
       data:extend({ -- matter to plate recipe
         {
           type = "recipe",
-          name = "matter-to-" .. ore .. "-plate",
+          name = "kr-matter-to-" .. ore .. "-plate",
 
           enabled = false,
 
           icons = icons_matter_to_plate_recipe,
 
           ingredients = {
-            {type = "fluid", name = "matter", amount = MW_Data.metal_data[ore].matter_recipe.matter_count},
-            {type = "item", name = "matter-stabilizer", amount = 1, catalyst_amouint = 1}
+            {type = "fluid", name = "kr-matter", amount = MW_Data.metal_data[ore].matter_recipe.matter_count},
+            {type = "item", name = "kr-matter-stabilizer", amount = 1, catalyst_amouint = 1}
           },
           results = {
             {type = "item", name = ore .. "-plate-stock", amount = MW_Data.metal_data[ore].matter_recipe.plate_count},
-            {type = "item", name = "matter-stabilizer", probability = 0.99, amount_max = 1, catalyst_amount = 1, amount = 1}
+            {type = "item", name = "kr-matter-stabilizer", probability = 0.99, amount_max = 1, catalyst_amount = 1, amount = 1}
           },
           main_product = ore .. "-plate-stock",
 
@@ -508,15 +502,14 @@ for ore, ore_data in pairs(MW_Data.ore_data) do -- Make Matter recipes
 
           crafting_machine_tint = {primary = recipe_tint_primary},
 
-          order = "z[matter-to-" .. ore .. "-plate]",
-          subgroup = "matter-deconversion",
-          category = "matter-deconversion",
+          order = "z[kr-matter-to-" .. ore .. "-plate]",
+          subgroup = "kr-matter-deconversion",
+          category = "kr-matter-deconversion",
 
           localised_name = {"gm.matter-to-plate-recipe-name", { "gm." .. ore }}
         }
       })
-      GM_globals.GM_Badge_list["recipe"]["matter-to-" .. ore .. "-plate"] = ib_data
-      -- Build_badge(data.raw.recipe["matter-to-" .. ore .. "-plate"], ib_data)
+      GM_globals.GM_Badge_list["recipe"]["kr-matter-to-" .. ore .. "-plate"] = ib_data
     end
   end
 end
@@ -525,6 +518,11 @@ for ore, ore_data in pairs(MW_Data.ore_data) do -- Make Mixed-Ore and Enriched-M
   if ore_data.introduced == Mod_Names.K2 then
     if ore_data.ore_type == MW_Data.MW_Ore_Type.MIXED and ore_data.ore_crushing_result then -- Mixed-Ore Processing
       local item_name = ore .. "-ore"
+      
+      if ore == MW_Data.MW_Resource.RARE_METALS then
+        item_name = "kr-rare-metal-ore"
+      end
+
       if ore_data.has_dumb_name then item_name = ore_data.has_dumb_name end
 
       local crushing_ingredients = {{
@@ -566,10 +564,10 @@ for ore, ore_data in pairs(MW_Data.ore_data) do -- Make Mixed-Ore and Enriched-M
           hide_from_player_crafting = recipe_hide_from_player_crafting,
           always_show_products = true,
           order = "b[" .. item_name .. "-crushing]",
-          category = "crushing",
+          category = "kr-crushing",
           subgroup = "K2-ore-sorting",
           localised_name = {"gm.ore-crushing", {"gm." .. ore}},
-          gm_recipe_data = {type = "crushing", ore = ore}
+          gm_recipe_data = {type = "kr-crushing", ore = ore}
         }
       })
 
@@ -579,6 +577,10 @@ for ore, ore_data in pairs(MW_Data.ore_data) do -- Make Mixed-Ore and Enriched-M
 
     if ore_data.ore_type == MW_Data.MW_Ore_Type.MIXED and ore_data.enriched_crushing_result then -- Enriched-Mixed-Ore Processing
       local item_name = "enriched-" .. ore
+
+      if ore == MW_Data.MW_Resource.RARE_METALS then
+        item_name = "kr-enriched-rare-metals"
+      end
 
       local crushing_ingredients = {{
         type = "item",
@@ -618,10 +620,10 @@ for ore, ore_data in pairs(MW_Data.ore_data) do -- Make Mixed-Ore and Enriched-M
           always_show_made_in = true,
           hide_from_player_crafting = recipe_hide_from_player_crafting,
           order = "b[" .. item_name .. "-crushing]",
-          category = "crushing",
+          category = "kr-crushing",
           subgroup = "K2-ore-sorting",
           localised_name = {"gm.enriched-ore-crushing", {"gm." .. ore}},
-          gm_recipe_data = {type = "crushing", ore = ore}
+          gm_recipe_data = {type = "kr-crushing", ore = ore}
         }
       })
 
@@ -736,7 +738,7 @@ end
 -- Add Automation Cores to Minisembler recipes
 for _, tier in pairs(MW_Data.MW_Minisembler_Tier) do -- make the minisembler entities overall
   for minisembler, _ in pairs(MW_Data.minisemblers_recipe_parameters) do
-    table.insert(data.raw.recipe["gm-" .. minisembler .."-recipe"].ingredients, {type = "item", name = "automation-core", amount = 1})
+    table.insert(data.raw.recipe["gm-" .. minisembler].ingredients, {type = "item", name = "kr-automation-core", amount = 1})
   end
 end
 
@@ -965,14 +967,14 @@ data.raw.item["kr-steel-pipe-to-ground"].localised_description = {"gm.new-steel-
 data.raw.item["kr-steel-pump"].localised_name                  = {"gm.new-steel-pump"}
 data.raw.item["kr-steel-pump"].localised_description           = {"gm.new-steel-pump-description"}
 
-data.raw.recipe["lithium-sulfur-battery"].result_count = 2
+data.raw.recipe["kr-lithium-sulfur-battery"].results[1].amount = 2
 
 
 -- Redoing the Alloy Recipes
 local enriched_alloy_recipe
 
 MW_Data.enriched_to_plate_alloy_recipes = {"brass-plate-stock-from-ore", "invar-plate-stock-from-ore"}
-for _, recipe in pairs(MW_Data.enriched_to_plate_alloy_recipes) do
+for _, recipe in pairs(MW_Data.enriched_to_plate_alloy_recipes) do -- Add Enriched to Alloy Plate Recipes
   enriched_alloy_recipe = table.deepcopy(data.raw.recipe[recipe])
 
   enriched_alloy_recipe.enabled = false
@@ -981,20 +983,20 @@ for _, recipe in pairs(MW_Data.enriched_to_plate_alloy_recipes) do
   local new_name = ""
   for _, ingredient in pairs(enriched_alloy_recipe.ingredients) do
     if ingredient.name then
-      new_ingredient = "enriched-" .. ingredient.name
+      new_ingredient = "kr-enriched-" .. ingredient.name
       ingredient.name = string.sub(new_ingredient, 1, #new_ingredient - 4)
     else
-      new_ingredient = "enriched-" .. ingredient[1]
+      new_ingredient = "kr-enriched-" .. ingredient[1]
       ingredient[1] = string.sub(new_ingredient, 1, #new_ingredient - 4)
     end
   end
 
-  new_name = string.sub(recipe, 1, #recipe - 4)
-  enriched_alloy_recipe.name = new_name .. "-enriched"
-
   local i, j = string.find(recipe, "-plate-")
   local omg_what_metal_is_this_name_length = i
   local metal = string.sub(recipe, 1, i - 1)
+
+  new_name = string.sub(recipe, 1, #recipe - 4)
+  enriched_alloy_recipe.name = "kr-" .. metal .. "-plate-stock-from-enriched"
 
   local new_icon_data = {}
   for _, old_icon in pairs(enriched_alloy_recipe.icons) do
@@ -1068,8 +1070,8 @@ end
 
 -- GM_globals.GM_Badge_list["recipe"]["invar-plate-stock-from-enriched"] = ib_data_enriched_invar
 
-data.raw.recipe["brass-plate-stock-from-ore"].result_count = data.raw.recipe["brass-plate-stock-from-ore"].result_count / 2
-data.raw.recipe["invar-plate-stock-from-ore"].result_count = data.raw.recipe["invar-plate-stock-from-ore"].result_count / 2
+data.raw.recipe["brass-plate-stock-from-ore"].results[1].amount = data.raw.recipe["brass-plate-stock-from-ore"].results[1].amount / 2
+data.raw.recipe["invar-plate-stock-from-ore"].results[1].amount = data.raw.recipe["invar-plate-stock-from-ore"].results[1].amount / 2
 
 -- Ore to Plate Recipes (non-enriched) FIXME: This ought to be a part of the data properties?
 -- ********************

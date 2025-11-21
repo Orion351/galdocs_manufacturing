@@ -19,10 +19,10 @@ local overhaul_modpack_data = {
         enums = true, data = true, code = true, technology = true, technology_processing = true,
         
         -- data final fixes phase
-        replace_list = false, re_recipe = false, pull_list = false, flat_replace = false, 
+        replace_list = true, re_recipe = true, pull_list = true, flat_replace = true, 
         
         -- OMG final final fixes
-        compat_final_fixes = false
+        compat_final_fixes = true
 
       }
     }

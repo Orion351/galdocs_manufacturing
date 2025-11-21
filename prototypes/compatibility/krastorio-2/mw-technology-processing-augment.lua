@@ -37,9 +37,9 @@ table.insert(data.raw.technology["gm-niobium-stock-processing"].effects, {type =
 
 -- Update prerequisites
 -- Niobimersium
-table.insert(data.raw.technology["kr-imersite-solar-panel-equipment"].prerequisites, "gm-niobimersium-machined-part-processing")
+table.insert(data.raw.technology["kr-superior-solar-panel-equipment"].prerequisites, "gm-niobimersium-machined-part-processing")
 table.insert(data.raw.technology["kr-advanced-solar-panel"].prerequisites, "gm-niobimersium-machined-part-processing")
-table.insert(data.raw.technology["kr-imersite-night-vision-equipment"].prerequisites, "gm-niobimersium-machined-part-processing")
+table.insert(data.raw.technology["kr-superior-night-vision-equipment"].prerequisites, "gm-niobimersium-machined-part-processing")
 table.insert(data.raw.technology["kr-ai-core"].prerequisites, "gm-niobimersium-machined-part-processing")
 data.raw.technology["kr-fusion-energy"].prerequisites             = table.swap_string(data.raw.technology["kr-fusion-energy"].prerequisites, "gm-niobimersium-machined-part-processing", "utility-science-pack")
 
@@ -67,7 +67,7 @@ local new_effects
 
 -- Minisemblers
 data.raw.technology["gm-technology-minisemblers"].prerequisites = {"kr-automation-core"}
-data.raw.technology["gm-technology-minisemblers"].unit = {count = 10, time = 10, ingredients = {{"basic-tech-card", 1}}}
+data.raw.technology["gm-technology-minisemblers"].unit = {count = 10, time = 10, ingredients = {{"kr-basic-tech-card", 1}}}
 
 -- Tech Cards
 -- Logistic Tech Card
@@ -88,7 +88,7 @@ table.insert(data.raw.technology["kr-singularity-tech-card"].prerequisites, "gm-
 
 
 -- kr-containers
-if krastorio.general.getSafeSettingValue("kr-containers") then
+if settings.startup["kr-containers"] then
   data.raw.technology["kr-containers"].prerequisites = table.swap_string(data.raw.technology["kr-containers"].prerequisites, "steel-machined-part-processing", "steel-processing")
 end
 
@@ -110,7 +110,7 @@ table.insert(data.raw.technology["kr-mineral-water-gathering"].prerequisites, "g
 table.insert(data.raw.technology["kr-gas-power-station"].prerequisites, "gm-annealed-copper-machined-part-processing")
 
 -- kr-portable-generator
-table.insert(data.raw.technology["kr-portable-generator"].prerequisites, "gm-titanium-machined-part-processing")
+table.insert(data.raw.technology["kr-portable-generator-equipment"].prerequisites, "gm-titanium-machined-part-processing")
 
 -- kr-atmosphere-condensation
 table.insert(data.raw.technology["kr-atmosphere-condensation"].prerequisites, "gm-titanium-machined-part-processing")
@@ -192,18 +192,18 @@ table.insert(data.raw.technology["kr-superior-exoskeleton-equipment"].prerequisi
 
 -- kr-automation
 local kr_automation_recipes_to_remove = {
-  "kr-s-c-copper-cable",
-  "kr-s-c-copper-cable-enriched",
-  "kr-s-c-iron-stick",
-  "kr-s-c-iron-stick-enriched",
-  "kr-s-c-iron-gear-wheel",
-  "kr-s-c-iron-gear-wheel-enriched",
-  "kr-s-c-iron-beam",
-  "kr-s-c-iron-beam-enriched",
-  "kr-s-c-steel-beam",
-  "kr-s-c-steel-gear-wheel",
-  "kr-s-c-imersium-beam",
-  "kr-s-c-imersium-gear-wheel",
+  "kr-copper-cable-from-copper-ore",
+  "kr-copper-cable-from-enriched-copper",
+  "kr-iron-stick-from-iron-ore",
+  "kr-iron-stick-from-enriched-iron",
+  "kr-iron-gear-wheel-from-iron-ore",
+  "kr-iron-gear-wheel-from-enriched-iron",
+  "kr-iron-beam-from-iron-ore",
+  "kr-iron-beam-from-enriched-iron",
+  "kr-easy-steel-beam",
+  "kr-easy-steel-gear-wheel",
+  "kr-easy-imersium-beam",
+  "kr-easy-imersium-gear-wheel",
 }
 local new_effects = {}
 local old_effects = table.deepcopy(data.raw.technology["kr-automation"].effects)

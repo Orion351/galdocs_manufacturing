@@ -20,11 +20,14 @@ function Append_ingredients(current, to_add) -- Returns a list where ingredients
   local new_ingredients = current
   for _, ingredient in pairs(to_add) do
     local add_this = true
+    -- if not ingredient.name then
+    --   ingredient = {name = ingredient[1], amount = ingredient[2], type = "item"}
+    -- end
     for _, check_ingredient in pairs(current) do
       if ingredient.name == check_ingredient.name then add_this = false end
     end
     if add_this then
-      local longhand_ingredient = {type = "item", name = ingredient[1], amount = ingredient[2]}
+      local longhand_ingredient = ingredient
       table.insert(new_ingredients, longhand_ingredient)
     end
   end
@@ -37,7 +40,7 @@ function Set_up_swappable_ingredients(current, to_remove) -- Replaces ingredient
   local new_amount = 0
   for _, ingredient in pairs(current) do
     if to_remove[ingredient.name] ~= nil and to_remove[ingredient.name] ~= "REMOVE" then
-      table.insert(new_ingredients, {to_remove[ingredient.name], ingredient.amount})
+      table.insert(new_ingredients, {type = "item", name = to_remove[ingredient.name], amount = ingredient.amount})
     end
   end
   return new_ingredients
@@ -45,7 +48,7 @@ end
 
 function Keep_track_of_used_ingredients(current_list, list_to_check)
   for _, ingredient_pair in pairs(list_to_check) do
-    if current_list[ingredient_pair[1]] == nil then current_list[ingredient_pair[1]] = true end
+    if current_list[ingredient_pair.name] == nil then current_list[ingredient_pair.name] = true end
   end
   return current_list
 end
@@ -109,12 +112,12 @@ function Re_recipe(intermediates_to_remove, rerecipe_table_name, finished_part_n
   for name, ingredients in pairs(intermediates_to_add_table) do
 
     -- sanitize ingredients
-    for _, ingredient in pairs(ingredients) do
+    for i, ingredient in pairs(ingredients) do
       local sanitized_ingredient = {}
       if ingredient.type then sanitized_ingredient.type = ingredient.type else sanitized_ingredient.type = "item" end
       if ingredient.name then sanitized_ingredient.name = ingredient.name else sanitized_ingredient.name = ingredient[1] end
       if ingredient.amount then sanitized_ingredient.amount = ingredient.amount else sanitized_ingredient.amount = ingredient[2] end
-      ingredient = sanitized_ingredient
+      ingredients[i] = sanitized_ingredient
     end
 
     -- copy data out of "nomral"

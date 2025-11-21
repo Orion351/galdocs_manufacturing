@@ -1,9 +1,9 @@
 local MW_Data = GM_global_mw_data.MW_Data
 
 -- "basic-tech-card"
--- "advanced-tech-card"
--- "singularity-tech-card"
--- "matter-tech-card" (cyan)
+-- "kr-advanced-tech-card"
+-- "kr-singularity-tech-card"
+-- "kr-matter-tech-card" (cyan)
 -- "space-science-pack" (aka optimization tech card)
 -- all the rest are "science packs"
 
@@ -155,7 +155,7 @@ data:extend({ -- Make the technologies for the stocks and machined parts
       count = 500,
       ingredients =
       {
-        {"matter-tech-card", 1},
+        {"kr-matter-tech-card", 1},
         {"utility-science-pack", 1},
         {"production-science-pack", 1},
       },
@@ -177,7 +177,7 @@ data:extend({ -- Make the technologies for the stocks and machined parts
       count = 500,
       ingredients =
       {
-        {"matter-tech-card", 1},
+        {"kr-matter-tech-card", 1},
         {"utility-science-pack", 1},
         {"production-science-pack", 1},
       },
@@ -200,10 +200,10 @@ data:extend({ -- Make the technologies for the stocks and machined parts
       count = 500,
       ingredients =
       {
-        {"matter-tech-card", 1},
+        {"kr-matter-tech-card", 1},
         {"utility-science-pack", 1},
         {"production-science-pack", 1},
-        {"advanced-tech-card", 1},
+        {"kr-advanced-tech-card", 1},
       },
       time = 60
     },
@@ -223,10 +223,10 @@ data:extend({ -- Make the technologies for the stocks and machined parts
       count = 500,
       ingredients =
       {
-        {"matter-tech-card", 1},
+        {"kr-matter-tech-card", 1},
         {"utility-science-pack", 1},
         {"production-science-pack", 1},
-        {"advanced-tech-card", 1},
+        {"kr-advanced-tech-card", 1},
       },
       time = 60
     },
@@ -250,9 +250,9 @@ data:extend({ -- Make the technologies for the stocks and machined parts
         {"production-science-pack", 1},
         {"utility-science-pack", 1},
         {"space-science-pack", 1},
-        {"matter-tech-card", 1},
-        {"advanced-tech-card", 1},
-        {"singularity-tech-card", 1},
+        {"kr-matter-tech-card", 1},
+        {"kr-advanced-tech-card", 1},
+        {"kr-singularity-tech-card", 1},
       },
       time = 60
     },
@@ -275,9 +275,9 @@ data:extend({ -- Make the technologies for the stocks and machined parts
         {"production-science-pack", 1},
         {"utility-science-pack", 1},
         {"space-science-pack", 1},
-        {"matter-tech-card", 1},
-        {"advanced-tech-card", 1},
-        {"singularity-tech-card", 1},
+        {"kr-matter-tech-card", 1},
+        {"kr-advanced-tech-card", 1},
+        {"kr-singularity-tech-card", 1},
       },
       time = 60
     },

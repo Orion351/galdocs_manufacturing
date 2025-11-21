@@ -288,25 +288,25 @@ K2_Badge_list["recipe"] = {
   ["imersite-crystal"]                            = {ib_let_badge = "Im", },
 
   -- Smelting-Crafting
-  ["kr-s-c-copper-cable"]                         = {ib_let_badge = "Cu", ib_let_corner = "left-bottom"},
-  ["kr-s-c-copper-cable-enriched"]                = {ib_let_badge = "Cu", ib_let_corner = "left-bottom"},
+  ["kr-copper-cable-from-copper-ore"]                         = {ib_let_badge = "Cu", ib_let_corner = "left-bottom"},
+  ["kr-copper-cable-from-enriched-copper"]                = {ib_let_badge = "Cu", ib_let_corner = "left-bottom"},
 
-  ["kr-s-c-iron-stick"]                           = {ib_let_badge = "Fe", ib_let_corner = "left-bottom"},
-  ["kr-s-c-iron-stick-enriched"]                  = {ib_let_badge = "Fe", ib_let_corner = "left-bottom"},
+  ["kr-iron-stick-from-iron-ore"]                           = {ib_let_badge = "Fe", ib_let_corner = "left-bottom"},
+  ["kr-iron-stick-from-enriched-iron"]                  = {ib_let_badge = "Fe", ib_let_corner = "left-bottom"},
 
-  ["kr-s-c-iron-gear-wheel"]                      = {ib_let_badge = "Fe", ib_let_corner = "left-bottom"},
-  ["kr-s-c-iron-gear-wheel-enriched"]             = {ib_let_badge = "Fe", ib_let_corner = "left-bottom"},
+  ["kr-iron-gear-wheel-from-iron-ore"]                      = {ib_let_badge = "Fe", ib_let_corner = "left-bottom"},
+  ["kr-iron-gear-wheel-from-enriched-iron"]             = {ib_let_badge = "Fe", ib_let_corner = "left-bottom"},
 
-  ["kr-s-c-iron-beam"]                            = {ib_let_badge = "Fe", ib_let_corner = "left-bottom"},
-  ["kr-s-c-iron-beam-enriched"]                   = {ib_let_badge = "Fe", ib_let_corner = "left-bottom"},
+  ["kr-iron-beam-from-iron-ore"]                            = {ib_let_badge = "Fe", ib_let_corner = "left-bottom"},
+  ["kr-iron-beam-from-enriched-iron"]                   = {ib_let_badge = "Fe", ib_let_corner = "left-bottom"},
 
-  ["kr-s-c-steel-gear-wheel"]                     = {ib_let_badge = "ST", ib_let_corner = "left-bottom",  ib_let_invert = true},
+  ["kr-easy-steel-gear-wheel"]                     = {ib_let_badge = "ST", ib_let_corner = "left-bottom",  ib_let_invert = true},
 
-  ["kr-s-c-steel-beam"]                           = {ib_let_badge = "ST", ib_let_corner = "left-bottom",  ib_let_invert = true},
+  ["kr-easy-steel-beam"]                           = {ib_let_badge = "ST", ib_let_corner = "left-bottom",  ib_let_invert = true},
 
-  ["kr-s-c-imersium-gear-wheel"]                  = {ib_let_badge = "Im", ib_let_corner = "left-bottom"},
+  ["kr-easy-imersium-gear-wheel"]                  = {ib_let_badge = "Im", ib_let_corner = "left-bottom"},
 
-  ["kr-s-c-imersium-beam"]                        = {ib_let_badge = "Im", ib_let_corner = "left-bottom"},
+  ["kr-easy-imersium-beam"]                        = {ib_let_badge = "Im", ib_let_corner = "left-bottom"},
 
   -- Atmosphere
   ["water-from-atmosphere"]                       = {ib_let_badge = "W",  },

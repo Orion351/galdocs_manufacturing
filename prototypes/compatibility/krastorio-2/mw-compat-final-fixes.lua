@@ -9,11 +9,11 @@ local MW_Data = GM_global_mw_data.MW_Data
 -- Recipes
 -- *******
 -- enriched-to-plate recipes
-data.raw.recipe["rare-metals-2"].enabled = false
-data.raw.recipe["rare-metals-2"].hidden = true
+data.raw.recipe["kr-rare-metals-from-enriched-rare-metals"].enabled = false
+data.raw.recipe["kr-rare-metals-from-enriched-rare-metals"].hidden = true
 
 -- Filtered water insanity; WHY IS IRON 1 AND COPPER 2
-data.raw.recipe["dirty-water-filtration-1"].icons = {
+data.raw.recipe["kr-filter-iron-ore-from-dirty-water"].icons = {
   {
     icon = "__Krastorio2Assets__/icons/fluids/dirty-water.png",
     icon_size = 64
@@ -25,7 +25,7 @@ data.raw.recipe["dirty-water-filtration-1"].icons = {
     shift = { 0, 4 }
   }
 }
-data.raw.recipe["dirty-water-filtration-2"].icons = {
+data.raw.recipe["kr-filter-copper-ore-from-dirty-water"].icons = {
   {
     icon = "__Krastorio2Assets__/icons/fluids/dirty-water.png",
     icon_size = 64
@@ -38,8 +38,8 @@ data.raw.recipe["dirty-water-filtration-2"].icons = {
   }
 }
 
-data.raw.recipe["dirty-water-filtration-3"].enabled = false
-data.raw.recipe["dirty-water-filtration-3"].hidden = true
+data.raw.recipe["kr-filter-rare-metal-ore-from-dirty-water"].enabled = false
+data.raw.recipe["kr-filter-rare-metal-ore-from-dirty-water"].hidden = true
 
 
 
@@ -66,7 +66,7 @@ table.insert(data.raw.technology["logistics"].prerequisites, "steel-machined-par
 table.insert(data.raw.technology["gate"].prerequisites, "steel-machined-part-processing")
 
 -- kr-nuclear-locomotive
-if not krastorio.general.getSafeSettingValue("kr-rebalance-fuels") then
+if not settings.startup["kr-rebalance-fuels"] then
   table.insert(data.raw.technology["kr-nuclear-locomotive"].prerequisites, "gm-osmium-machined-part-processing")
 end
 
@@ -74,26 +74,26 @@ end
 new_effects = {}
 for ore, ore_data in pairs(MW_Data.ore_data) do
   if ore ~= MW_Data.MW_Resource.RARE_METALS and ore_data.shapes and table.contains(ore_data.shapes, MW_Data.MW_Ore_Shape.ENRICHED)  then
-    table.insert(new_effects, {type = "unlock-recipe", recipe = "enriched-" .. ore})
-    table.insert(new_effects, {type = "unlock-recipe", recipe = "enriched-" .. ore .. "-plate"})
+    table.insert(new_effects, {type = "unlock-recipe", recipe = "kr-enriched-" .. ore})
+    table.insert(new_effects, {type = "unlock-recipe", recipe = "kr-" .. ore .. "-plate-stock-from-enriched-" .. ore,})
     if (ore == MW_Data.MW_Resource.COPPER) then
-      table.insert(new_effects, {type = "unlock-recipe", recipe = "dirty-water-filtration-2"})
+      table.insert(new_effects, {type = "unlock-recipe", recipe = "kr-filter-copper-ore-from-dirty-water"})
     end
     if (ore == MW_Data.MW_Resource.IRON) then
-      table.insert(new_effects, {type = "unlock-recipe", recipe = "dirty-water-filtration-1"})
+      table.insert(new_effects, {type = "unlock-recipe", recipe = "kr-filter-iron-ore-from-dirty-water"})
     end
     if (ore ~= MW_Data.MW_Resource.COPPER) and (ore ~= MW_Data.MW_Resource.IRON) then
-      table.insert(new_effects, {type = "unlock-recipe", recipe = "dirty-water-filtration-" .. ore})
+      table.insert(new_effects, {type = "unlock-recipe", recipe = "kr-filter-" .. ore .. "-ore-from-dirty-water"})
     end
   end
 end
 
-table.insert(new_effects, {type = "unlock-recipe", recipe = "enriched-rare-metals"})
+table.insert(new_effects, {type = "unlock-recipe", recipe = "kr-enriched-rare-metals"})
 data.raw.technology["kr-enriched-ores"].effects = new_effects
 
 for _, new_recipe in pairs(MW_Data.enriched_to_plate_alloy_recipes) do
   local new_name = string.sub(new_recipe, 1, #new_recipe - 4)
-  new_name = new_name .. "-enriched"
+  new_name = "kr-" .. new_name .. "-enriched"
   table.insert(data.raw.technology["kr-enriched-ores"].effects, {type = "unlock-recipe", recipe=new_name})
 end
 
@@ -104,10 +104,10 @@ table.insert(data.raw.technology["kr-enriched-ores"].effects, {type = "unlock-re
 for ore, ore_data in pairs(MW_Data.ore_data) do -- Make Matter recipes
   if ore_data.matter_recipe and ore_data.matter_recipe.new then
       local new_effects = {}
-      table.insert(new_effects, {type = "unlock-recipe", recipe = "matter-to-" .. ore .. "-ore"})
-      table.insert(new_effects, {type = "unlock-recipe", recipe = ore .. "-ore-to-matter"})
+      table.insert(new_effects, {type = "unlock-recipe", recipe = "kr-matter-to-" .. ore .. "-ore"})
+      table.insert(new_effects, {type = "unlock-recipe", recipe = "kr-kr-" .. ore .. "-ore-to-matter"})
       if MW_Data.metal_data[ore] and MW_Data.metal_data[ore].matter_recipe and MW_Data.metal_data[ore].matter_recipe.matter_to_plate_recipe then
-        table.insert(new_effects, {type = "unlock-recipe", recipe = "matter-to-" .. ore .. "-plate"})
+        table.insert(new_effects, {type = "unlock-recipe", recipe = "kr-matter-to-" .. ore .. "-plate"})
       end
 
       data:extend({ -- Build technologies
@@ -123,7 +123,7 @@ for ore, ore_data in pairs(MW_Data.ore_data) do -- Make Matter recipes
           unit = {count = 350, time = 45, ingredients = {
             {"production-science-pack", 1},
             {"utility-science-pack", 1},
-            {"matter-tech-card", 1},
+            {"kr-matter-tech-card", 1},
           }},
           localised_name = {"gm.matter-tech-name", {"gm." .. ore}}
         }
@@ -133,7 +133,7 @@ end
 
 local old_metals = {"copper", "iron", "steel"}
 for _, old_metal in pairs(old_metals) do
-  local current_recipe = data.raw.recipe["matter-to-" .. old_metal .. "-plate"]
+  local current_recipe = data.raw.recipe["kr-matter-to-" .. old_metal .. "-plate"]
   for _, old_icon in pairs(current_recipe.icons) do
     local i, j = string.find(old_icon.icon, "plate")
     if i ~= nil then
@@ -168,13 +168,19 @@ end
 
 -- Fix up the crash site stuff
 local crash_site_entities = {
-  {"assembling-machine", "kr-crash-site-assembling-machine-1-repaired"},
-  {"assembling-machine", "kr-crash-site-assembling-machine-2-repaired"},
-  {"container", "kr-crash-site-chest-1"},
-  {"container", "kr-crash-site-chest-2"},
-  {"electric-energy-interface", "kr-crash-site-generator"},
-  {"lab", "kr-crash-site-lab-repaired"},
-  {"simple-entity-with-owner", "kr-mineable-wreckage"},
+  {"assembling-machine", "kr-spaceship-material-fabricator-1"},
+  {"assembling-machine", "kr-spaceship-material-fabricator-2"},
+  {"container", "crash-site-chest-1"},
+  {"container", "crash-site-chest-2"},
+  {"electric-energy-interface", "kr-spaceship-reactor"},
+  {"lab", "kr-spaceship-research-computer"},
+  -- {"simple-entity-with-owner", "kr-mineable-wreckage"},
+  {"simple-entity-with-owner", "crash-site-spaceship-wreck-small-1"},
+  {"simple-entity-with-owner", "crash-site-spaceship-wreck-small-2"},
+  {"simple-entity-with-owner", "crash-site-spaceship-wreck-small-3"},
+  {"simple-entity-with-owner", "crash-site-spaceship-wreck-small-4"},
+  {"simple-entity-with-owner", "crash-site-spaceship-wreck-small-5"},
+  {"simple-entity-with-owner", "crash-site-spaceship-wreck-small-6"},
 }
 
 local i_hate_copper_cable = {}
@@ -196,9 +202,9 @@ end
 
 -- Pull LDS from a few of the OG recipes that no longer need as much
 local lds_recipes = {
-  "fusion-reactor-equipment",
-  "advanced-exoskeleton-equipment",
-  "imersite-night-vision-equipment",
+  "kr-fusion-reactor-equipment",
+  "kr-advanced-exoskeleton-equipment",
+  "kr-superior-night-vision-equipment",
 }
 
 for _, recipe in pairs(lds_recipes) do

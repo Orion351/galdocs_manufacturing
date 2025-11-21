@@ -3,95 +3,95 @@ return function(advanced)
     return {
       ["iron-plate"]                      = true,
       -- ["enriched-iron-plate"]             = true,  (already stamped down my own version)
-      ["matter-to-iron-plate"]            = true,
+      ["kr-matter-to-iron-plate"]            = true,
 
       ["copper-plate"]                    = true,
       -- ["enriched-copper-plate"]           = true,  (already stamped down my own version)
-      ["matter-to-copper-plate"]          = true,
+      ["kr-matter-to-copper-plate"]          = true,
 
       ["steel-plate"]                     = true,
-      ["matter-to-steel-plate"]           = true,
+      ["kr-matter-to-steel-plate"]           = true,
 
-      ["rare-metals"]                     = true,
-      ["rare-metals-2"]                   = true,
-      ["matter-to-rare-metals"]           = true,
+      ["kr-rare-metals"]                     = true,
+      ["kr-rare-metals-from-enriched-rare-metals"]                   = true,
+      ["kr-matter-to-kr-rare-metals"]           = true,
 
-      ["imersium-plate"]                  = true,
+      ["kr-imersium-plate"]                  = true,
 
       ["iron-gear-wheel"]                 = true,
-      ["kr-s-c-iron-gear-wheel"]          = true,
-      ["kr-s-c-iron-gear-wheel-enriched"] = true,
+      ["kr-iron-gear-wheel-from-iron-ore"]          = true,
+      ["kr-iron-gear-wheel-from-enriched-iron"] = true,
 
-      ["steel-gear-wheel"]                = true,
-      ["kr-s-c-steel-gear-wheel"]         = true,
+      ["kr-steel-gear-wheel"]                = true,
+      ["kr-easy-steel-gear-wheel"]         = true,
 
-      ["imersium-gear-wheel"]             = true,
-      ["kr-s-c-imersium-gear-wheel"]      = true,
+      ["kr-imersium-gear-wheel"]             = true,
+      ["kr-easy-imersium-gear-wheel"]      = true,
 
-      ["iron-beam"]                       = true,
-      ["kr-s-c-iron-beam"]                = true,
-      ["kr-s-c-iron-beam-enriched"]       = true,
+      ["kr-iron-beam"]                       = true,
+      ["kr-iron-beam-from-iron-ore"]                = true,
+      ["kr-iron-beam-from-enriched-iron"]       = true,
 
-      ["steel-beam"]                      = true,
-      ["kr-s-c-steel-beam"]               = true,
+      ["kr-steel-beam"]                      = true,
+      ["kr-easy-steel-beam"]               = true,
 
-      ["imersium-beam"]                   = true,
-      ["kr-s-c-imersium-beam"]            = true,
+      ["kr-imersium-beam"]                   = true,
+      ["kr-easy-imersium-beam"]            = true,
 
       ["iron-stick"]                      = true,
-      ["kr-s-c-iron-stick"]               = true,
-      ["kr-s-c-iron-stick-enriched"]      = true,
+      ["kr-iron-stick-from-iron-ore"]               = true,
+      ["kr-iron-stick-from-enriched-iron"]      = true,
 
       ["copper-cable"]                    = true,
-      ["kr-s-c-copper-cable"]             = true,
-      ["kr-s-c-copper-cable-enriched"]    = true,
+      ["kr-copper-cable-from-copper-ore"]             = true,
+      ["kr-copper-cable-from-enriched-copper"]    = true,
     }
   else
     return {
       ["iron-plate"]                      = true,
       -- ["enriched-iron-plate"]             = true,  (already stamped down my own version)
-      ["matter-to-iron-plate"]            = true,
+      ["kr-matter-to-iron-plate"]            = true,
 
       ["copper-plate"]                    = true,
       -- ["enriched-copper-plate"]           = true,  (already stamped down my own version)
-      ["matter-to-copper-plate"]          = true,
+      ["kr-matter-to-copper-plate"]          = true,
 
       ["steel-plate"]                     = true,
-      ["matter-to-steel-plate"]           = true,
+      ["kr-matter-to-steel-plate"]           = true,
 
-      ["rare-metals"]                     = true,
-      ["rare-metals-2"]                   = true,
-      ["matter-to-rare-metals"]           = true,
+      ["kr-rare-metals"]                     = true,
+      ["kr-rare-metals-from-enriched-rare-metals"]                   = true,
+      ["kr-matter-to-kr-rare-metals"]           = true,
 
-      ["imersium-plate"]                  = true,
+      ["kr-imersium-plate"]                  = true,
 
       ["iron-gear-wheel"]                 = true,
-      ["kr-s-c-iron-gear-wheel"]          = true,
-      ["kr-s-c-iron-gear-wheel-enriched"] = true,
+      ["kr-iron-gear-wheel-from-iron-ore"]          = true,
+      ["kr-iron-gear-wheel-from-enriched-iron"] = true,
 
-      ["steel-gear-wheel"]                = true,
-      ["kr-s-c-steel-gear-wheel"]         = true,
+      ["kr-steel-gear-wheel"]                = true,
+      ["kr-easy-steel-gear-wheel"]         = true,
 
-      ["imersium-gear-wheel"]             = true,
-      ["kr-s-c-imersium-gear-wheel"]      = true,
+      ["kr-imersium-gear-wheel"]             = true,
+      ["kr-easy-imersium-gear-wheel"]      = true,
 
-      ["iron-beam"]                       = true,
-      ["kr-s-c-iron-beam"]                = true,
-      ["kr-s-c-iron-beam-enriched"]       = true,
+      ["kr-iron-beam"]                       = true,
+      ["kr-iron-beam-from-iron-ore"]                = true,
+      ["kr-iron-beam-from-enriched-iron"]       = true,
 
-      ["steel-beam"]                      = true,
-      ["kr-s-c-steel-beam"]               = true,
+      ["kr-steel-beam"]                      = true,
+      ["kr-easy-steel-beam"]               = true,
 
-      ["imersium-beam"]                   = true,
-      ["kr-s-c-imersium-beam"]            = true,
+      ["kr-imersium-beam"]                   = true,
+      ["kr-easy-imersium-beam"]            = true,
 
       ["iron-stick"]                      = true,
-      ["kr-s-c-iron-stick"]               = true,
-      ["kr-s-c-iron-stick-enriched"]      = true,
+      ["kr-iron-stick-from-iron-ore"]               = true,
+      ["kr-iron-stick-from-enriched-iron"]      = true,
 
       ["copper-cable"]                    = true,
-      ["kr-s-c-copper-cable"]             = true,
-      ["kr-s-c-copper-cable-enriched"]    = true,
+      ["kr-copper-cable-from-copper-ore"]             = true,
+      ["kr-copper-cable-from-enriched-copper"]    = true,
     }
   end
 end

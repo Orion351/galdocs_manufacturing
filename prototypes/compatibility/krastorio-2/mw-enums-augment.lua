@@ -1,11 +1,11 @@
 local MW_Data = GM_global_mw_data.MW_Data
 
 MW_Data.MW_Resource = table.merge(MW_Data.MW_Resource, {
-  RARE_METALS      = "rare-metals",
+  RARE_METALS      = "kr-rare-metals",
   OSMIUM           = "osmium",
   NIOBIUM          = "niobium",
-  IMERSITE_POWDER  = "imersite-powder",
-  COKE             = "coke",
+  IMERSITE_POWDER  = "kr-imersite-powder",
+  COKE             = "kr-coke",
 })
 
 MW_Data.MW_Ore_Shape = table.merge(MW_Data.MW_Ore_Shape, {
