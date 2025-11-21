@@ -3409,7 +3409,7 @@ for _, tier in pairs(MW_Data.MW_Minisembler_Tier) do -- make the minisembler ent
         name = "gm-" .. minisembler,
 
         enabled = false,
-        -- hidden_in_factoriopedia = true,
+        hidden_in_factoriopedia = true,
 
         icons = recipe_icons,
 

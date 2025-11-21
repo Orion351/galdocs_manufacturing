@@ -3,7 +3,7 @@ K2_Badge_list = {}
 -- Item prototypes
 K2_Badge_list["item"] = {
   -- Plates
-  ["imersium-plate"]                              = {ib_let_badge = "Im", },
+  ["imersium-plate"]                             = {ib_let_badge = "Im", },
   ["steel-plate"]                                 = {ib_let_badge = "ST",  ib_let_invert = true},
   ["rare-metals"]                                 = {ib_let_badge = "RM", },
   ["glass"]                                       = {ib_let_badge = "G",  },

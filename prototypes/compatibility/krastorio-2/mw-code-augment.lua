@@ -245,6 +245,8 @@ for ore, ore_data in pairs(MW_Data.ore_data) do -- Add Enriched Items and Recipe
           always_show_products = true,
           allow_productivity = true,
           crafting_machine_tint = {primary = recipe_tint_primary},
+
+          localised_name = {"gm.enriched-ore-to-plate", ore}
         }
       })
 
@@ -304,7 +306,7 @@ for ore, ore_data in pairs(MW_Data.ore_data) do -- Add Enriched Items and Recipe
 
     end
     GM_globals.GM_Badge_list["recipe"]["kr-enriched-" .. ore] = ib_data
-    GM_globals.GM_Badge_list["recipe"]["kr-enriched-" .. ore .. "-plate"] = ib_data
+    GM_globals.GM_Badge_list["recipe"]["kr-" .. ore .. "-plate-stock-from-enriched-" .. ore] = ib_data
     GM_globals.GM_Badge_list["recipe"]["kr-filter-" .. ore .. "-ore-from-dirty-water"] = ib_data
 
   end
