@@ -26,6 +26,8 @@ return function(advanced)
 
       ["kr-superior-substation"]                           = {{"imersium-enhanced-high-tensile-large-paneling", 4}, {"imersium-grade-load-bearing-girdering", 2}, {"superconducting-wiring", 10}, {"imersium-enhanced-high-tensile-wiring", 10}, {"imersium-enhanced-high-tensile-rivets", 6}, },
 
+      ["kr-nuclear-locomotive"]                           = {{"very-heavy-load-bearing-girdering", 10}, {"ductile-gearing", 10}, {"corrosion-resistant-and-very-high-tensile-piping", 10}, {"thermally-stable-shafting", 2}, {"ductile-and-electrically-conductive-wiring", 30}, {"radiation-resistant-and-high-tensile-shielding", 6}, {"very-high-tensile-rivets", 20}, },
+
       ["kr-tesla-coil"]                                   = {{"thermally-stable-large-paneling", 4}, {"very-heavy-load-bearing-girdering", 10}, {"thermally-stable-shafting", 1}, {"ductile-and-electrically-conductive-wiring", 100}, {"radiation-resistant-shielding", 10}, {"very-high-tensile-rivets", 4}, },
 
       ["kr-steel-pipe"]                                   = {{"corrosion-resistant-and-high-tensile-piping", 1}, {"high-tensile-rivets", 1}, },
@@ -102,6 +104,7 @@ return function(advanced)
 
       ["kr-matter-stabilizer"]                               = {{"imersium-enhanced-high-tensile-paneling", 4}, {"imersium-grade-load-bearing-framing", 4}, {"superconducting-wiring", 2}, {"imersium-enhanced-high-tensile-bolts", 2}, },
 
+      ["logistic-science-pack"]                           = {{"ductile-fine-gearing", 3}, {"thermally-stable-shielding", 1}, {"corrosion-resistant-and-heavy-load-bearing-girdering", 2}, },
       ["kr-advanced-tech-card"]                              = {{"imersium-enhanced-high-tensile-fine-gearing", 5}, },
 
       ["kr-railgun-turret"]                               = {{"very-heavy-load-bearing-girdering", 4}, {"ductile-gearing", 2}, {"superconducting-shafting", 2}, {"superconducting-wiring", 10}, {"lightweight-and-very-high-tensile-shielding", 4}, {"very-high-tensile-bolts", 10}, },
@@ -144,6 +147,7 @@ return function(advanced)
       ["kr-vehicle-roboport-equipment"]                                = {{"lightweight-and-high-tensile-paneling", 1}, {"lightweight-and-high-tensile-framing", 1}, {"electrically-conductive-wiring", 5}, {"very-high-tensile-bolts", 5}, },
 
       ["kr-superior-night-vision-equipment"]              = {{"radiation-resistant-and-high-tensile-framing", 10}, {"lightweight-and-high-tensile-bolts", 10}, },
+      ["kr-advanced-radar"]                               = {{"very-high-tensile-large-paneling", 2}, {"very-heavy-load-bearing-girdering", 1}, {"ductile-gearing", 1}, {"lightweight-and-very-high-tensile-shafting", 1}, {"electrically-conductive-wiring", 6}, {"very-high-tensile-rivets", 6}, },
     }
     
     -- kr-containers
@@ -166,25 +170,25 @@ return function(advanced)
     end
 
     -- kr-rebalance-fuels
-    if settings.startup["kr-rebalance-fuels"] then
-      re_recipe_table = table.group_key_assign(re_recipe_table, {
-        ["kr-nuclear-locomotive"]                           = {{"very-heavy-load-bearing-girdering", 10}, {"ductile-gearing", 10}, {"corrosion-resistant-and-very-high-tensile-piping", 10}, {"thermally-stable-shafting", 2}, {"ductile-and-electrically-conductive-wiring", 30}, {"radiation-resistant-and-high-tensile-shielding", 6}, {"very-high-tensile-rivets", 20}, },
-      })
-    end
+    -- if settings.startup["kr-rebalance-fuels"] then
+    --   re_recipe_table = table.group_key_assign(re_recipe_table, {
+    --     ["kr-nuclear-locomotive"]                           = {{"very-heavy-load-bearing-girdering", 10}, {"ductile-gearing", 10}, {"corrosion-resistant-and-very-high-tensile-piping", 10}, {"thermally-stable-shafting", 2}, {"ductile-and-electrically-conductive-wiring", 30}, {"radiation-resistant-and-high-tensile-shielding", 6}, {"very-high-tensile-rivets", 20}, },
+    --   })
+    -- end
 
     -- kr-rebalance-radar
-    if settings.startup["kr-rebalance-radar"] then
-      re_recipe_table = table.group_key_assign(re_recipe_table, {
-        ["kr-advanced-radar"]                               = {{"very-high-tensile-large-paneling", 2}, {"very-heavy-load-bearing-girdering", 1}, {"ductile-gearing", 1}, {"lightweight-and-very-high-tensile-shafting", 1}, {"electrically-conductive-wiring", 6}, {"very-high-tensile-rivets", 6}, },
-      })
-    end
+    -- if settings.startup["kr-rebalance-radar"] then
+    --   re_recipe_table = table.group_key_assign(re_recipe_table, {
+    --     ["kr-advanced-radar"]                               = {{"very-high-tensile-large-paneling", 2}, {"very-heavy-load-bearing-girdering", 1}, {"ductile-gearing", 1}, {"lightweight-and-very-high-tensile-shafting", 1}, {"electrically-conductive-wiring", 6}, {"very-high-tensile-rivets", 6}, },
+    --   })
+    -- end
 
     -- kr-logistic-science-pack-recipe
-    if settings.startup["kr-logistic-science-pack-recipe"] == "Krastorio 2" then
-      re_recipe_table = table.group_key_assign(re_recipe_table, {
-        ["logistic-science-pack"]                           = {{"ductile-fine-gearing", 3}, {"thermally-stable-shielding", 1}, {"corrosion-resistant-and-heavy-load-bearing-girdering", 2}, },
-      })
-    end
+    -- if settings.startup["kr-logistic-science-pack-recipe"] == "Krastorio 2" then
+    --   re_recipe_table = table.group_key_assign(re_recipe_table, {
+    --     ["logistic-science-pack"]                           = {{"ductile-fine-gearing", 3}, {"thermally-stable-shielding", 1}, {"corrosion-resistant-and-heavy-load-bearing-girdering", 2}, },
+    --   })
+    -- end
 
     return re_recipe_table
 
@@ -214,6 +218,8 @@ return function(advanced)
         -- ["kr-superior-long-filter-inserter"]                = {{"imersium-grade-load-bearing-framing", 2}, {"imersium-grade-thermally-stable-gearing", 2}, {"imersium-grade-load-bearing-shafting", 1}, {"imersium-enhanced-high-tensile-bolts", 1}, },
 
         ["kr-superior-substation"]                          = {{"imersium-enhanced-high-tensile-paneling", 2}, {"imersium-grade-load-bearing-framing", 2}, {"superconducting-wiring", 8}, {"imersium-enhanced-high-tensile-wiring", 8}, {"imersium-enhanced-high-tensile-bolts", 4}, },
+
+        ["kr-nuclear-locomotive"]                           = {{"very-heavy-load-bearing-framing", 8}, {"ductile-gearing", 8}, {"corrosion-resistant-and-very-high-tensile-piping", 10}, {"thermally-stable-shafting", 2}, {"ductile-and-electrically-conductive-wiring", 30}, {"radiation-resistant-and-high-tensile-shielding", 5}, {"very-high-tensile-bolts", 20}, },
 
         ["kr-tesla-coil"]                                   = {{"thermally-stable-paneling", 4}, {"very-heavy-load-bearing-framing", 12}, {"thermally-stable-shafting", 1}, {"ductile-and-electrically-conductive-wiring", 100}, {"radiation-resistant-shielding", 10}, {"very-high-tensile-bolts", 8}, },
 
@@ -291,6 +297,7 @@ return function(advanced)
 
         ["kr-matter-stabilizer"]                               = {{"imersium-enhanced-high-tensile-paneling", 2}, {"imersium-grade-load-bearing-framing", 2}, {"superconducting-wiring", 2}, {"imersium-enhanced-high-tensile-bolts", 1}, },
 
+        ["logistic-science-pack"]                           = {{"ductile-gearing", 2}, {"thermally-stable-shielding", 1}, {"corrosion-resistant-and-heavy-load-bearing-framing", 2}, },
         ["kr-advanced-tech-card"]                              = {{"imersium-enhanced-high-tensile-gearing", 3}, },
 
         ["kr-railgun-turret"]                               = {{"very-heavy-load-bearing-framing", 6}, {"ductile-gearing", 3}, {"superconducting-shafting", 3}, {"superconducting-wiring", 10}, {"lightweight-and-very-high-tensile-shielding", 4}, {"very-high-tensile-bolts", 12}, },
@@ -333,6 +340,8 @@ return function(advanced)
         ["kr-vehicle-roboport-equipment"]                                = {{"lightweight-and-high-tensile-paneling", 1}, {"lightweight-and-high-tensile-framing", 1}, {"electrically-conductive-wiring", 5}, {"very-high-tensile-bolts", 5}, },
         
         ["kr-superior-night-vision-equipment"]              = {{"radiation-resistant-and-high-tensile-framing", 10}, {"lightweight-and-high-tensile-bolts", 10}, },
+
+        ["kr-advanced-radar"]                               = {{"very-high-tensile-paneling", 3}, {"very-heavy-load-bearing-framing", 2}, {"ductile-gearing", 1}, {"lightweight-and-very-high-tensile-shafting", 1}, {"electrically-conductive-wiring", 6}, {"very-high-tensile-bolts", 8}, },      
       }
 
     -- kr-containers
@@ -353,26 +362,27 @@ return function(advanced)
         ["kr-superior-loader"]                              = {{"imersium-enhanced-high-tensile-paneling", 2}, {"imersium-grade-load-bearing-framing", 2}, {"imersium-grade-thermally-stable-gearing", 3}, {"corrosion-resistant-and-very-high-tensile-bolts", 8}, },
       })
     end
+    
     -- kr-rebalance-fuels
-    if not settings.startup["kr-rebalance-fuels"] then
-      re_recipe_table = table.group_key_assign(re_recipe_table, {
-        ["kr-nuclear-locomotive"]                           = {{"very-heavy-load-bearing-framing", 8}, {"ductile-gearing", 8}, {"corrosion-resistant-and-very-high-tensile-piping", 10}, {"thermally-stable-shafting", 2}, {"ductile-and-electrically-conductive-wiring", 30}, {"radiation-resistant-and-high-tensile-shielding", 5}, {"very-high-tensile-bolts", 20}, },
-      })
-    end
+    -- if not settings.startup["kr-rebalance-fuels"] then
+    --   re_recipe_table = table.group_key_assign(re_recipe_table, {
+    --     ["kr-nuclear-locomotive"]                           = {{"very-heavy-load-bearing-framing", 8}, {"ductile-gearing", 8}, {"corrosion-resistant-and-very-high-tensile-piping", 10}, {"thermally-stable-shafting", 2}, {"ductile-and-electrically-conductive-wiring", 30}, {"radiation-resistant-and-high-tensile-shielding", 5}, {"very-high-tensile-bolts", 20}, },
+    --   })
+    -- end
 
     -- kr-rebalance-radar
-    if settings.startup["kr-rebalance-radar"] then
-      re_recipe_table = table.group_key_assign(re_recipe_table, {
-        ["kr-advanced-radar"]                               = {{"very-high-tensile-paneling", 3}, {"very-heavy-load-bearing-framing", 2}, {"ductile-gearing", 1}, {"lightweight-and-very-high-tensile-shafting", 1}, {"electrically-conductive-wiring", 6}, {"very-high-tensile-bolts", 8}, },
-      })
-    end
+    -- if settings.startup["kr-rebalance-radar"] then
+    --   re_recipe_table = table.group_key_assign(re_recipe_table, {
+    --     ["kr-advanced-radar"]                               = {{"very-high-tensile-paneling", 3}, {"very-heavy-load-bearing-framing", 2}, {"ductile-gearing", 1}, {"lightweight-and-very-high-tensile-shafting", 1}, {"electrically-conductive-wiring", 6}, {"very-high-tensile-bolts", 8}, },
+    --   })
+    -- end
 
     -- kr-logistic-science-pack-recipe
-    if settings.startup["kr-logistic-science-pack-recipe"] == "Krastorio 2" then
-      re_recipe_table = table.group_key_assign(re_recipe_table, {
-        ["logistic-science-pack"]                           = {{"ductile-gearing", 2}, {"thermally-stable-shielding", 1}, {"corrosion-resistant-and-heavy-load-bearing-framing", 2}, },
-      })
-    end
+    -- if settings.startup["kr-logistic-science-pack-recipe"] == "Krastorio 2" then
+    --   re_recipe_table = table.group_key_assign(re_recipe_table, {
+    --     ["logistic-science-pack"]                           = {{"ductile-gearing", 2}, {"thermally-stable-shielding", 1}, {"corrosion-resistant-and-heavy-load-bearing-framing", 2}, },
+    --   })
+    -- end
 
     return re_recipe_table
   end

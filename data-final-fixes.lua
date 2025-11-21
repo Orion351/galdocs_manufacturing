@@ -182,7 +182,9 @@ data.raw.character.character.inventory_size = data.raw.character.character.inven
 
 -- Add extra crafting column slots
 if GM_globals.extra_crafting_columns and data.raw["utility-constants"].default.select_slot_row_count == 10 then -- 10 is vanilla default
-  data.raw["utility-constants"].default.select_slot_row_count = GM_globals.num_extra_columns
+
+  data.raw["utility-constants"].default.select_slot_row_count = GM_globals.num_extra_crafting_rows
+  data.raw["utility-constants"].default.select_group_row_count = GM_globals.num_extra_group_rows
 end
 
 -- Notes about tabs and slots
