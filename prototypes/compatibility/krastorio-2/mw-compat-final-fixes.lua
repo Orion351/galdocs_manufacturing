@@ -152,7 +152,7 @@ end
 local new_effects = {}
 local matter_rare_metals_tech = data.raw.technology["kr-matter-rare-metals-processing"]
 for _, effect in pairs(matter_rare_metals_tech.effects) do
-  local i, j = string.find(effect.recipe, "raw")
+  local i, j = string.find(effect.recipe, "metal-")
   if i ~= nil then
     table.insert(new_effects, effect)
   end
